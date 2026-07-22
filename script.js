@@ -1,88 +1,208 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+
     const panels = document.querySelectorAll(".panel");
-    const totalPanels = panels.length;
 
-    // Controls how much scrolling each panel requires
-    // 1 = normal speed
-    // 2 = cinematic
-    // 2.5 = slow
-    // 3 = very slow
-    const SCROLL_FACTOR = 3;
-
-    const vh = window.innerHeight;
-    const scrollDistance = vh * SCROLL_FACTOR;
-
-    // Create scrolling space
-    document.body.style.height = `${totalPanels * SCROLL_FACTOR * 100}vh`;
+    const SCROLL_FACTOR = 1.5;
 
 
-    // Initial state:
-    // First panel visible, all others above viewport
-    panels.forEach((panel, index) => {
 
-        if (index === 0) {
-            panel.style.transform = "translateY(0)";
-        } else {
-            panel.style.transform = "translateY(-100%)";
-        }
-
-    });
+    /*
+    =========================
+    PANEL MOVEMENT
+    =========================
+    */
 
 
     function updatePanels() {
 
+
         const scrollY = window.scrollY;
-        const viewportHeight = window.innerHeight;
-        const distance = viewportHeight * SCROLL_FACTOR;
+
+        const panelHeight = window.innerHeight;
+
 
 
         panels.forEach((panel, index) => {
 
-            // First panel stays fixed
+
+
+            // FIRST PANEL ALWAYS DOWN
+
             if (index === 0) {
+
+                panel.style.transform =
+                    "translateY(0)";
+
                 return;
+
             }
 
 
-            // Each panel gets its own scrolling window
-            const start = (index - 1) * distance;
 
-            let progress = (scrollY - start) / distance;
-
-
-            // Keep between 0 and 1
-            progress = Math.max(0, Math.min(progress, 1));
+            const start =
+                index *
+                panelHeight *
+                SCROLL_FACTOR;
 
 
-            // Move from above viewport (-100%)
-            // to fully visible (0%)
-            const translateY = -100 + (progress * 100);
+
+            const progress =
+                (scrollY - start) /
+                (panelHeight * SCROLL_FACTOR);
 
 
-            panel.style.transform = `translateY(${translateY}%)`;
+
+            const position =
+                Math.max(
+                    -100,
+                    Math.min(
+                        0,
+                        -100 + (progress * 100)
+                    )
+                );
+
+
+
+            panel.style.transform =
+                `translateY(${position}%)`;
+
+
 
         });
+
 
     }
 
 
-    // Initial calculation
+
+
+
+    /*
+    =========================
+    IMAGE PARALLAX
+    =========================
+    */
+
+
+    function updateImageParallax() {
+
+
+        panels.forEach(panel => {
+
+
+            const image =
+                panel.querySelector(".panel-image");
+
+
+
+            if (!image) return;
+
+
+
+            const rect =
+                panel.getBoundingClientRect();
+
+
+
+            const centerOffset =
+                rect.top +
+                rect.height / 2 -
+                window.innerHeight / 2;
+
+
+
+            const movement =
+                centerOffset * -0.82;
+
+
+
+            image.style.transform =
+                `translateY(${movement}px)`;
+
+
+        });
+
+
+    }
+
+
+
+
+
+    /*
+    =========================
+    SCROLL PERFORMANCE
+    =========================
+    */
+
+
+    let ticking = false;
+
+
+
+    function onScroll() {
+
+
+        if (!ticking) {
+
+
+            requestAnimationFrame(() => {
+
+
+                updatePanels();
+
+                updateImageParallax();
+
+
+                ticking = false;
+
+
+            });
+
+
+            ticking = true;
+
+        }
+
+    }
+
+
+
+
+    window.addEventListener(
+        "scroll",
+        onScroll,
+        { passive:true }
+    );
+
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            updatePanels();
+
+            updateImageParallax();
+
+        }
+    );
+
+
+
+
+    /*
+    =========================
+    INITIAL STATE
+    =========================
+    */
+
+
     updatePanels();
 
+    updateImageParallax();
 
-    // Scroll updates
-    window.addEventListener("scroll", updatePanels, {
-        passive: true
-    });
-
-
-    // Recalculate if browser size changes
-    window.addEventListener("resize", () => {
-
-        updatePanels();
-
-    });
 
 
 });
