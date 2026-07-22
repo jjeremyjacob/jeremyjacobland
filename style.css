@@ -139,7 +139,7 @@ body {
 .panel-02 {
 
     background-image:
-    url("images/section2.webp");
+    url("images/section2.gif");
 
     z-index:2;
 
@@ -167,7 +167,7 @@ body {
 .panel-04 {
 
     background-image:
-    url("images/section4.webp");
+    url("images/section4.gif");
 
     z-index:4;
 
@@ -195,7 +195,7 @@ body {
 .panel-06 {
 
     background-image:
-    url("images/section6.webp");
+    url("images/section6.gif");
 
     z-index:6;
 
@@ -429,4 +429,30 @@ body {
     }
 
 
+}
+
+.bottom-text {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 9999;
+
+    font-family: Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+
+    animation: bounceSideways 12s ease-in-out infinite alternate;
+}
+
+@keyframes bounceSideways {
+    from {
+        transform: translateX(20px);
+    }
+
+    to {
+        transform: translateX(calc(100vw - 100% - 20px));
+    }
 }
