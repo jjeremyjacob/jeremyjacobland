@@ -1,325 +1,269 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
 
-    /*
-    =========================
-    PANEL MOVEMENT
-    =========================
-    */
+/*
+=========================
+PANELS
+=========================
+*/
 
 
-    const panels = document.querySelectorAll(".panel");
+const panels =
+document.querySelectorAll(".panel");
 
-    const SCROLL_FACTOR = 1.5;
 
+const SCROLL_FACTOR = 1.5;
 
 
-    function updatePanels() {
 
+function updatePanels(){
 
-        const scrollY = window.scrollY;
 
-        const panelHeight = window.innerHeight;
+const scrollY =
+window.scrollY;
 
 
+const panelHeight =
+window.innerHeight;
 
-        panels.forEach((panel, index) => {
 
 
+panels.forEach((panel,index)=>{
 
-            if (index === 0) {
 
+if(index===0){
 
-                panel.style.transform =
-                    "translateY(0)";
+panel.style.transform =
+"translateY(0)";
 
+return;
 
-                return;
+}
 
-            }
 
 
+const start =
+index *
+panelHeight *
+SCROLL_FACTOR;
 
-            const start =
-                index *
-                panelHeight *
-                SCROLL_FACTOR;
 
 
+const progress =
+(scrollY-start) /
+(panelHeight*SCROLL_FACTOR);
 
-            const progress =
-                (scrollY - start) /
-                (panelHeight * SCROLL_FACTOR);
 
 
+const position =
+Math.max(
+-100,
+Math.min(
+0,
+-100+(progress*100)
+)
+);
 
-            const position =
-                Math.max(
-                    -100,
-                    Math.min(
-                        0,
-                        -100 + (progress * 100)
-                    )
-                );
 
 
+panel.style.transform =
+`translateY(${position}%)`;
 
-            panel.style.transform =
-                `translateY(${position}%)`;
 
 
-        });
+});
 
 
-    }
+}
 
 
 
 
 
-    /*
-    =========================
-    IMAGE PARALLAX
-    =========================
-    */
 
+/*
+=========================
+IMAGE PARALLAX
+=========================
+*/
 
-    function updateImageParallax() {
 
+function updateImageParallax(){
 
-        panels.forEach(panel => {
 
+panels.forEach(panel=>{
 
-            const image =
-                panel.querySelector(".panel-image");
 
+const image =
+panel.querySelector(".panel-image");
 
 
-            if (!image) return;
+if(!image)return;
 
 
 
-            const rect =
-                panel.getBoundingClientRect();
+const rect =
+panel.getBoundingClientRect();
 
 
 
-            const offset =
-                rect.top +
-                rect.height / 2 -
-                window.innerHeight / 2;
+const offset =
+rect.top +
+rect.height/2 -
+window.innerHeight/2;
 
 
 
-            image.style.transform =
-                `translateY(${offset * -0.82}px)`;
+image.style.transform =
+`translateY(${offset*-0.82}px)`;
 
 
-        });
+});
 
 
-    }
+}
 
 
 
 
 
-    /*
-    =========================
-    SCROLL PERFORMANCE
-    =========================
-    */
 
 
-    let ticking = false;
+/*
+=========================
+VIDEO LOADING
+=========================
+*/
 
 
+const mobile =
+window.innerWidth <= 768;
 
-    function onScroll(){
 
 
-        if(!ticking){
+const videoContainers =
+document.querySelectorAll(".video-frame");
 
 
-            requestAnimationFrame(()=>{
 
+videoContainers.forEach(container=>{
 
-                updatePanels();
 
-                updateImageParallax();
+const iframe =
+container.querySelector(
+mobile
+? ".mobile-frame"
+: ".desktop-frame"
+);
 
 
-                ticking=false;
 
+if(!iframe)return;
 
-            });
 
 
-            ticking=true;
+iframe.src =
+iframe.dataset.src;
 
-        }
 
 
-    }
+iframe.onload = ()=>{
 
 
+container.classList.add(
+"video-ready"
+);
 
-    window.addEventListener(
-        "scroll",
-        onScroll,
-        {passive:true}
-    );
 
+};
 
 
-    window.addEventListener(
-        "resize",
-        () => {
 
-            updatePanels();
+});
 
-            updateImageParallax();
 
-        }
-    );
 
 
 
 
 
 
+/*
+=========================
+SCROLL PERFORMANCE
+=========================
+*/
 
-    /*
-    =========================
-    PRIORITY VIDEO LOADING
-    =========================
-    */
 
+let ticking=false;
 
-    const isMobile =
-        window.innerWidth <= 768;
 
 
+function scrollUpdate(){
 
-    const videoPanels = [
 
-        ".panel-02",
+if(!ticking){
 
-        ".panel-04",
 
-        ".panel-10"
+requestAnimationFrame(()=>{
 
-    ];
 
+updatePanels();
 
+updateImageParallax();
 
-    const videoFrames =
-        videoPanels.map(panel => {
 
+ticking=false;
 
-            const container =
-                document.querySelector(panel);
 
+});
 
-            if(!container) return null;
 
+ticking=true;
 
 
-            return container.querySelector(
-                isMobile
-                ? ".mobile-frame"
-                : ".desktop-frame"
-            );
+}
 
 
-        });
+}
 
 
 
+window.addEventListener(
+"scroll",
+scrollUpdate,
+{passive:true}
+);
 
 
-    function loadVideo(index){
 
+window.addEventListener(
+"resize",
+()=>{
 
-        if(index >= videoFrames.length)
-            return;
+updatePanels();
 
+updateImageParallax();
 
+}
+);
 
-        const iframe =
-            videoFrames[index];
 
 
 
-        if(!iframe)
-            return;
 
 
 
-        iframe.src =
-            iframe.dataset.src;
+/*
+=========================
+INITIAL
+=========================
+*/
 
 
+updatePanels();
 
-        const player =
-            new Vimeo.Player(iframe);
-
-
-
-        player.ready().then(()=>{
-
-
-            console.log(
-                "Video ready",
-                index + 1
-            );
-
-
-
-            iframe.parentElement.classList.add(
-                "video-ready"
-            );
-
-
-
-            /*
-            load next video
-            */
-
-            loadVideo(index + 1);
-
-
-
-        }).catch(error=>{
-
-
-            console.log(error);
-
-
-        });
-
-
-    }
-
-
-
-    loadVideo(0);
-
-
-
-
-
-
-    /*
-    =========================
-    INITIAL STATE
-    =========================
-    */
-
-
-    updatePanels();
-
-    updateImageParallax();
+updateImageParallax();
 
 
 });

@@ -5,6 +5,7 @@
 }
 
 
+
 html,
 body {
 
@@ -14,6 +15,7 @@ body {
     overflow-x:hidden;
 
 }
+
 
 
 body {
@@ -26,7 +28,6 @@ body {
     Helvetica,
     Arial,
     sans-serif;
-
 
     height:1800dvh;
 
@@ -46,15 +47,18 @@ body {
     position:fixed;
 
     top:0;
+
     left:0;
 
 
     width:100%;
 
+
     height:100dvh;
 
 
     overflow:hidden;
+
 
 
     background-size:cover;
@@ -77,9 +81,13 @@ body {
 
     will-change:transform;
 
+
     backface-visibility:hidden;
 
+    -webkit-backface-visibility:hidden;
+
 }
+
 
 
 
@@ -89,16 +97,21 @@ body {
 
     content:"";
 
+
     position:absolute;
 
+
     left:0;
+
 
     bottom:-50px;
 
 
     width:100%;
 
+
     height:50px;
+
 
 
     background:
@@ -115,6 +128,7 @@ body {
 
 
 
+
 /* =========================
    PANEL POSITIONS
 ========================= */
@@ -125,7 +139,9 @@ body {
     background-image:
     url("images/section1.webp");
 
+
     z-index:1;
+
 
     transform:
     translateY(0);
@@ -136,12 +152,15 @@ body {
 
 .panel-02 {
 
+
     z-index:2;
+
 
     transform:
     translateY(-100%);
 
 }
+
 
 
 
@@ -150,23 +169,29 @@ body {
     background-image:
     url("images/section3.webp");
 
+
     z-index:3;
+
 
     transform:
     translateY(-100%);
 
 }
+
 
 
 
 .panel-04 {
 
+
     z-index:4;
+
 
     transform:
     translateY(-100%);
 
 }
+
 
 
 
@@ -175,12 +200,15 @@ body {
     background-image:
     url("images/section5.webp");
 
+
     z-index:5;
+
 
     transform:
     translateY(-100%);
 
 }
+
 
 
 
@@ -189,12 +217,15 @@ body {
     background-image:
     url("images/section6.webp");
 
-    z-index:7;
+
+    z-index:6;
+
 
     transform:
     translateY(-100%);
 
 }
+
 
 
 
@@ -203,12 +234,15 @@ body {
     background-image:
     url("images/section7.webp");
 
+
     z-index:7;
+
 
     transform:
     translateY(-100%);
 
 }
+
 
 
 
@@ -217,12 +251,15 @@ body {
     background-image:
     url("images/section8.webp");
 
+
     z-index:8;
+
 
     transform:
     translateY(-100%);
 
 }
+
 
 
 
@@ -231,23 +268,30 @@ body {
     background-image:
     url("images/section9.webp");
 
+
     z-index:9;
+
 
     transform:
     translateY(-100%);
 
 }
+
 
 
 
 .panel-10 {
 
+
     z-index:10;
+
 
     transform:
     translateY(-100%);
 
 }
+
+
 
 
 
@@ -262,15 +306,19 @@ body {
 
     position:absolute;
 
+
     inset:0;
 
 
     z-index:5;
 
 
+
     display:flex;
 
+
     justify-content:center;
+
 
     align-items:center;
 
@@ -278,9 +326,11 @@ body {
 
 
 
+
 .panel-image {
 
     width:100px;
+
 
     height:auto;
 
@@ -304,6 +354,7 @@ body {
 
     position:absolute;
 
+
     inset:0;
 
 
@@ -313,9 +364,12 @@ body {
     z-index:1;
 
 
+
     background-size:cover;
 
+
     background-position:center;
+
 
     background-repeat:no-repeat;
 
@@ -326,6 +380,7 @@ body {
 
 
 /* Poster fallback images */
+
 
 .panel-02 .video-frame {
 
@@ -358,29 +413,29 @@ body {
 
 
 
-/* Vimeo iframe */
+/* =========================
+   VIMEO IFRAME
+========================= */
 
 
 .video-frame iframe {
 
+
     position:absolute;
 
 
+
     top:50%;
+
 
     left:50%;
 
 
 
-    width:100vw;
-
-    height:56.25vw;
+    width:177.78vh;
 
 
-
-    min-height:100vh;
-
-    min-width:177.78vh;
+    height:100vh;
 
 
 
@@ -389,11 +444,16 @@ body {
 
 
 
+    -webkit-transform:
+    translate(-50%,-50%);
+
+
+
     border:none;
 
 
 
-    pointer-events:none;
+    pointer-events:auto;
 
 
 
@@ -408,6 +468,14 @@ body {
 
     z-index:2;
 
+
+
+
+    -webkit-backface-visibility:hidden;
+
+    backface-visibility:hidden;
+
+
 }
 
 
@@ -415,7 +483,9 @@ body {
 
 
 
+
 /* Vimeo fades over poster */
+
 
 .video-frame.video-ready iframe {
 
@@ -427,7 +497,12 @@ body {
 
 
 
-/* Desktop / Mobile switching */
+
+
+
+/* =========================
+   DESKTOP / MOBILE SWITCHING
+========================= */
 
 
 .desktop-frame {
@@ -450,12 +525,14 @@ body {
 
 
 
+
 /* =========================
    MOBILE
 ========================= */
 
 
 @media(max-width:768px){
+
 
 
     body {
@@ -466,12 +543,16 @@ body {
 
 
 
+
     .panel {
+
 
         height:100dvh;
 
 
+
         border-bottom:
+
         8px solid rgba(69,41,28,1);
 
     }
@@ -488,6 +569,7 @@ body {
 
 
 
+
     .mobile-frame {
 
         display:block;
@@ -500,20 +582,32 @@ body {
     .video-frame iframe {
 
 
-        width:100vw;
-
-        height:56.25vw;
+        width:177.78vh;
 
 
-        min-height:100vh;
+        height:100vh;
 
-        min-width:177.78vh;
+
+
+        top:50%;
+
+
+        left:50%;
+
 
 
         transform:
+
+        translate(-50%,-50%);
+
+
+
+        -webkit-transform:
+
         translate(-50%,-50%);
 
     }
+
 
 
 
@@ -532,6 +626,7 @@ body {
 
 
 
+
 /* =========================
    EMAIL TEXT
 ========================= */
@@ -539,17 +634,22 @@ body {
 
 .bottom-text {
 
+
     position:fixed;
 
 
+
     bottom:20px;
+
 
 
     left:0;
 
 
 
+
     white-space:nowrap;
+
 
 
     pointer-events:none;
@@ -560,9 +660,13 @@ body {
 
 
 
+
     font-family:
+
     Georgia,
+
     serif;
+
 
 
 
@@ -574,7 +678,9 @@ body {
 
 
 
+
     animation:
+
     bounceSideways 12s ease-in-out infinite alternate;
 
 }
@@ -583,21 +689,31 @@ body {
 
 
 
+
+
 @keyframes bounceSideways {
+
 
 
     from {
 
+
         transform:
+
         translateX(20px);
+
 
     }
 
 
+
     to {
 
+
         transform:
+
         translateX(calc(100vw - 100% - 20px));
+
 
     }
 
