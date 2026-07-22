@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +11,16 @@
 
     <link rel="stylesheet" href="style.css">
 
-</head>
+    <!-- Faster Vimeo loading -->
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com">
+    <link rel="preconnect" href="https://f.vimeocdn.com">
 
+    <!-- Preload poster images -->
+    <link rel="preload" as="image" href="images/section2.webp">
+    <link rel="preload" as="image" href="images/section10.webp">
+
+</head>
 
 <body>
 
@@ -23,13 +32,29 @@
 </section>
 
 
-
 <!-- PANEL 2 -->
 
 <section class="panel panel-02">
 
-</section>
+    <div class="video-frame video-poster-02">
 
+        <iframe
+            class="desktop-frame"
+            src=""
+            data-src="https://player.vimeo.com/video/1060073983?background=1&autoplay=1&loop=1&muted=1&autopause=0"
+            allow="autoplay; fullscreen">
+        </iframe>
+
+        <iframe
+            class="mobile-frame"
+            src=""
+            data-src="https://player.vimeo.com/video/1212118661?background=1&autoplay=1&loop=1&muted=1&autopause=0"
+            allow="autoplay; fullscreen">
+        </iframe>
+
+    </div>
+
+</section>
 
 
 <!-- PANEL 3 -->
@@ -39,13 +64,29 @@
 </section>
 
 
-
 <!-- PANEL 4 -->
 
 <section class="panel panel-04">
 
-</section>
+    <div class="video-frame video-poster-04">
 
+        <iframe
+                  class="desktop-frame"
+                  src=""
+            data-src="https://player.vimeo.com/video/1085343551?background=1&autoplay=1&loop=1&muted=1&autopause=0"
+            allow="autoplay; fullscreen">
+        </iframe>
+
+        <iframe
+            class="mobile-frame"
+            src=""
+            data-src="https://player.vimeo.com/video/1212118661?background=1&autoplay=1&loop=1&muted=1&autopause=0"
+            allow="autoplay; fullscreen">
+        </iframe>
+
+    </div>
+
+</section>
 
 
 <!-- PANEL 5 -->
@@ -55,15 +96,11 @@
 </section>
 
 
-
-
-<!-- PANEL 6  -->
+<!-- PANEL 6 -->
 
 <section class="panel panel-06">
 
 </section>
-
-
 
 
 <!-- PANEL 7 -->
@@ -73,31 +110,25 @@
 </section>
 
 
-
-
-
-<!-- PANEL 8 : IMAGE / CONTENT -->
+<!-- PANEL 8 -->
 
 <section class="panel panel-08">
-
 
     <div class="panel-content">
 
         <a href="https://jjeremyjacob.github.io/jeremyjacob/" target="_blank">
-        <img
-            src="images/findme.webp"
-            style="width: 230px;"
-            class="panel-image"
-            alt="">
-</a>
+
+            <img
+                src="images/findme.webp"
+                style="width:230px;"
+                class="panel-image"
+                alt="">
+
+        </a>
 
     </div>
 
-
 </section>
-
-
-
 
 
 <!-- PANEL 9 -->
@@ -107,48 +138,38 @@
 </section>
 
 
-
-
-
-<!-- PANEL 10 : VIDEO -->
+<!-- PANEL 10 -->
 
 <section class="panel panel-10">
 
-
-    <div class="video-frame">
-
+    <div class="video-frame video-poster-10">
 
         <iframe
-            class="desktop-frame"
-            src="https://player.vimeo.com/video/1059894734?background=1&autoplay=1&loop=1&muted=1"
-            frameborder="0"
+                  class="desktop-frame"
+                  src=""
+            data-src="https://player.vimeo.com/video/1059894305?background=1&autoplay=1&loop=1&muted=1&autopause=0"
             allow="autoplay; fullscreen">
         </iframe>
-
-
 
         <iframe
             class="mobile-frame"
-            src="https://player.vimeo.com/video/1212004521?background=1&autoplay=1&loop=1&muted=1"
-            frameborder="0"
+            src=""
+            data-src="https://player.vimeo.com/video/1212118661?background=1&autoplay=1&loop=1&muted=1&autopause=0"
             allow="autoplay; fullscreen">
         </iframe>
 
-
     </div>
-
 
 </section>
 
+
 <div class="bottom-text">
-                → → → → ThEjeRemyJacoB@gMaiL.com ← ←
+    → → → → ThEjeRemyJacoB@gMaiL.com ← ←
 </div>
 
-
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script src="script.js"></script>
 
-
-
 </body>
-
 </html>
+```

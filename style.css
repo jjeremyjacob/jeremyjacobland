@@ -28,14 +28,11 @@ body {
     sans-serif;
 
 
-    /*
-    10 panels
-    extra room for final reveal
-    */
-
     height:1800dvh;
 
 }
+
+
 
 
 
@@ -117,8 +114,9 @@ body {
 
 
 
+
 /* =========================
-   INITIAL PANEL POSITIONS
+   PANEL POSITIONS
 ========================= */
 
 
@@ -137,9 +135,6 @@ body {
 
 
 .panel-02 {
-
-    background-image:
-    url("images/section2.gif");
 
     z-index:2;
 
@@ -165,9 +160,6 @@ body {
 
 
 .panel-04 {
-
-    background-image:
-    url("images/section4.gif");
 
     z-index:4;
 
@@ -195,9 +187,9 @@ body {
 .panel-06 {
 
     background-image:
-    url("images/section6.gif");
+    url("images/section6.webp");
 
-    z-index:6;
+    z-index:7;
 
     transform:
     translateY(-100%);
@@ -262,7 +254,7 @@ body {
 
 
 /* =========================
-   CENTER CONTENT
+   CONTENT
 ========================= */
 
 
@@ -295,12 +287,8 @@ body {
 
     will-change:transform;
 
-
-    transform:
-    translateY(0);
-
-
 }
+
 
 
 
@@ -322,34 +310,124 @@ body {
     overflow:hidden;
 
 
-    z-index:0;
+    z-index:1;
+
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
 
 }
 
+
+
+
+
+/* Poster fallback images */
+
+.panel-02 .video-frame {
+
+    background-image:
+    url("images/section2.webp");
+
+}
+
+
+
+.panel-04 .video-frame {
+
+    background-image:
+    url("images/section4.webp");
+
+}
+
+
+
+.panel-10 .video-frame {
+
+    background-image:
+    url("images/section10.webp");
+
+}
+
+
+
+
+
+
+
+/* Vimeo iframe */
 
 
 .video-frame iframe {
 
     position:absolute;
 
+
     top:50%;
+
     left:50%;
 
+
+
     width:100vw;
-    height:56.25vw; /* 16:9 ratio */
+
+    height:56.25vw;
+
+
 
     min-height:100vh;
+
     min-width:177.78vh;
+
+
 
     transform:
     translate(-50%,-50%);
 
+
+
     border:none;
+
+
 
     pointer-events:none;
 
+
+
+    opacity:0;
+
+
+
+    transition:
+    opacity 1.2s ease;
+
+
+
+    z-index:2;
+
 }
 
+
+
+
+
+
+/* Vimeo fades over poster */
+
+.video-frame.video-ready iframe {
+
+    opacity:1;
+
+}
+
+
+
+
+
+/* Desktop / Mobile switching */
 
 
 .desktop-frame {
@@ -365,6 +443,9 @@ body {
     display:none;
 
 }
+
+
+
 
 
 
@@ -389,10 +470,13 @@ body {
 
         height:100dvh;
 
+
         border-bottom:
         8px solid rgba(69,41,28,1);
 
     }
+
+
 
 
 
@@ -412,11 +496,22 @@ body {
 
 
 
+
     .video-frame iframe {
 
-        width:100vh;
 
-        height:177.78vw;
+        width:100vw;
+
+        height:56.25vw;
+
+
+        min-height:100vh;
+
+        min-width:177.78vh;
+
+
+        transform:
+        translate(-50%,-50%);
 
     }
 
@@ -431,28 +526,79 @@ body {
 
 }
 
+
+
+
+
+
+
+/* =========================
+   EMAIL TEXT
+========================= */
+
+
 .bottom-text {
-    position: fixed;
-    bottom: 20px;
-    left: 0;
 
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 9999;
+    position:fixed;
 
-    font-family: Georgia, serif;
-    font-size: 14px;
-    letter-spacing: 1px;
 
-    animation: bounceSideways 12s ease-in-out infinite alternate;
+    bottom:20px;
+
+
+    left:0;
+
+
+
+    white-space:nowrap;
+
+
+    pointer-events:none;
+
+
+
+    z-index:9999;
+
+
+
+    font-family:
+    Georgia,
+    serif;
+
+
+
+    font-size:14px;
+
+
+
+    letter-spacing:1px;
+
+
+
+    animation:
+    bounceSideways 12s ease-in-out infinite alternate;
+
 }
 
+
+
+
+
 @keyframes bounceSideways {
+
+
     from {
-        transform: translateX(20px);
+
+        transform:
+        translateX(20px);
+
     }
 
+
     to {
-        transform: translateX(calc(100vw - 100% - 20px));
+
+        transform:
+        translateX(calc(100vw - 100% - 20px));
+
     }
+
 }
