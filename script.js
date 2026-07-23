@@ -1,269 +1,216 @@
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
+    /*
+    =========================
+    PANELS
+    =========================
+    */
 
-/*
-=========================
-PANELS
-=========================
-*/
+    const panels =
+        document.querySelectorAll(".panel");
 
+    const SCROLL_FACTOR = 1.5;
 
-const panels =
-document.querySelectorAll(".panel");
+    function updatePanels() {
 
+        const scrollY =
+            window.scrollY;
 
-const SCROLL_FACTOR = 1.5;
+        const panelHeight =
+            window.innerHeight;
 
+        panels.forEach((panel, index) => {
 
+            if (index === 0) {
 
-function updatePanels(){
+                panel.style.transform =
+                    "translateY(0)";
 
+                return;
 
-const scrollY =
-window.scrollY;
+            }
 
+            const start =
+                index *
+                panelHeight *
+                SCROLL_FACTOR;
 
-const panelHeight =
-window.innerHeight;
+            const progress =
+                (scrollY - start) /
+                (panelHeight * SCROLL_FACTOR);
 
+            const position =
+                Math.max(
+                    -100,
+                    Math.min(
+                        0,
+                        -100 + (progress * 100)
+                    )
+                );
 
+            panel.style.transform =
+                `translateY(${position}%)`;
 
-panels.forEach((panel,index)=>{
+        });
 
+    }
 
-if(index===0){
+    /*
+    =========================
+    IMAGE PARALLAX
+    =========================
+    */
 
-panel.style.transform =
-"translateY(0)";
+    function updateImageParallax() {
 
-return;
+        panels.forEach(panel => {
 
-}
+            const image =
+                panel.querySelector(".panel-image");
 
+            if (!image) return;
 
+            const rect =
+                panel.getBoundingClientRect();
 
-const start =
-index *
-panelHeight *
-SCROLL_FACTOR;
+            const offset =
+                rect.top +
+                rect.height / 2 -
+                window.innerHeight / 2;
 
+            image.style.transform =
+                `translateY(${offset * -0.82}px)`;
 
+        });
 
-const progress =
-(scrollY-start) /
-(panelHeight*SCROLL_FACTOR);
+    }
 
+    /*
+    =========================
+    VIDEO LOADING
+    =========================
+    */
 
+    const mobile =
+        window.innerWidth <= 768;
 
-const position =
-Math.max(
--100,
-Math.min(
-0,
--100+(progress*100)
-)
-);
+    const videoContainers =
+        document.querySelectorAll(".video-frame");
 
+    videoContainers.forEach(container => {
 
+        const iframe =
+            container.querySelector(
+                mobile
+                    ? ".mobile-frame"
+                    : ".desktop-frame"
+            );
 
-panel.style.transform =
-`translateY(${position}%)`;
+        if (!iframe) return;
 
+        iframe.src =
+            iframe.dataset.src;
 
+        iframe.onload = () => {
 
-});
+            container.classList.add(
+                "video-ready"
+            );
 
+        };
 
-}
+    });
 
+    /*
+    =========================
+    INVERT MOBILE SWIPE
+    =========================
+    */
 
+    if ("ontouchstart" in window) {
 
+        let touchStartY = 0;
 
+        window.addEventListener("touchstart", (e) => {
 
+            touchStartY =
+                e.touches[0].clientY;
 
-/*
-=========================
-IMAGE PARALLAX
-=========================
-*/
+        }, { passive: true });
 
+        window.addEventListener("touchmove", (e) => {
 
-function updateImageParallax(){
+            const touchY =
+                e.touches[0].clientY;
 
+            const deltaY =
+                touchY - touchStartY;
 
-panels.forEach(panel=>{
+            // Reverse native direction
+            window.scrollBy(
+                0,
+                -deltaY * 2
+            );
 
+            touchStartY =
+                touchY;
 
-const image =
-panel.querySelector(".panel-image");
+            e.preventDefault();
 
+        }, { passive: false });
 
-if(!image)return;
+    }
 
+    /*
+    =========================
+    SCROLL PERFORMANCE
+    =========================
+    */
 
+    let ticking = false;
 
-const rect =
-panel.getBoundingClientRect();
+    function scrollUpdate() {
 
+        if (!ticking) {
 
+            requestAnimationFrame(() => {
 
-const offset =
-rect.top +
-rect.height/2 -
-window.innerHeight/2;
+                updatePanels();
+                updateImageParallax();
 
+                ticking = false;
 
+            });
 
-image.style.transform =
-`translateY(${offset*-0.82}px)`;
+            ticking = true;
 
+        }
 
-});
+    }
 
+    window.addEventListener(
+        "scroll",
+        scrollUpdate,
+        { passive: true }
+    );
 
-}
+    window.addEventListener(
+        "resize",
+        () => {
 
+            updatePanels();
+            updateImageParallax();
 
+        }
+    );
 
+    /*
+    =========================
+    INITIAL
+    =========================
+    */
 
-
-
-
-/*
-=========================
-VIDEO LOADING
-=========================
-*/
-
-
-const mobile =
-window.innerWidth <= 768;
-
-
-
-const videoContainers =
-document.querySelectorAll(".video-frame");
-
-
-
-videoContainers.forEach(container=>{
-
-
-const iframe =
-container.querySelector(
-mobile
-? ".mobile-frame"
-: ".desktop-frame"
-);
-
-
-
-if(!iframe)return;
-
-
-
-iframe.src =
-iframe.dataset.src;
-
-
-
-iframe.onload = ()=>{
-
-
-container.classList.add(
-"video-ready"
-);
-
-
-};
-
-
-
-});
-
-
-
-
-
-
-
-
-/*
-=========================
-SCROLL PERFORMANCE
-=========================
-*/
-
-
-let ticking=false;
-
-
-
-function scrollUpdate(){
-
-
-if(!ticking){
-
-
-requestAnimationFrame(()=>{
-
-
-updatePanels();
-
-updateImageParallax();
-
-
-ticking=false;
-
-
-});
-
-
-ticking=true;
-
-
-}
-
-
-}
-
-
-
-window.addEventListener(
-"scroll",
-scrollUpdate,
-{passive:true}
-);
-
-
-
-window.addEventListener(
-"resize",
-()=>{
-
-updatePanels();
-
-updateImageParallax();
-
-}
-);
-
-
-
-
-
-
-
-/*
-=========================
-INITIAL
-=========================
-*/
-
-
-updatePanels();
-
-updateImageParallax();
-
+    updatePanels();
+    updateImageParallax();
 
 });
