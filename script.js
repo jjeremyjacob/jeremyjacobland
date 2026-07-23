@@ -1,216 +1,269 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-    /*
-    =========================
-    PANELS
-    =========================
-    */
 
-    const panels =
-        document.querySelectorAll(".panel");
+/*
+=========================
+PANELS
+=========================
+*/
 
-    const SCROLL_FACTOR = 1.5;
 
-    function updatePanels() {
+const panels =
+document.querySelectorAll(".panel");
 
-        const scrollY =
-            window.scrollY;
 
-        const panelHeight =
-            window.innerHeight;
+const SCROLL_FACTOR = 1.5;
 
-        panels.forEach((panel, index) => {
 
-            if (index === 0) {
 
-                panel.style.transform =
-                    "translateY(0)";
+function updatePanels(){
 
-                return;
 
-            }
+const scrollY =
+window.scrollY;
 
-            const start =
-                index *
-                panelHeight *
-                SCROLL_FACTOR;
 
-            const progress =
-                (scrollY - start) /
-                (panelHeight * SCROLL_FACTOR);
+const panelHeight =
+window.innerHeight;
 
-            const position =
-                Math.max(
-                    -100,
-                    Math.min(
-                        0,
-                        -100 + (progress * 100)
-                    )
-                );
 
-            panel.style.transform =
-                `translateY(${position}%)`;
 
-        });
+panels.forEach((panel,index)=>{
 
-    }
 
-    /*
-    =========================
-    IMAGE PARALLAX
-    =========================
-    */
+if(index===0){
 
-    function updateImageParallax() {
+panel.style.transform =
+"translateY(0)";
 
-        panels.forEach(panel => {
+return;
 
-            const image =
-                panel.querySelector(".panel-image");
+}
 
-            if (!image) return;
 
-            const rect =
-                panel.getBoundingClientRect();
 
-            const offset =
-                rect.top +
-                rect.height / 2 -
-                window.innerHeight / 2;
+const start =
+index *
+panelHeight *
+SCROLL_FACTOR;
 
-            image.style.transform =
-                `translateY(${offset * -0.82}px)`;
 
-        });
 
-    }
+const progress =
+(scrollY-start) /
+(panelHeight*SCROLL_FACTOR);
 
-    /*
-    =========================
-    VIDEO LOADING
-    =========================
-    */
 
-    const mobile =
-        window.innerWidth <= 768;
 
-    const videoContainers =
-        document.querySelectorAll(".video-frame");
+const position =
+Math.max(
+-100,
+Math.min(
+0,
+-100+(progress*100)
+)
+);
 
-    videoContainers.forEach(container => {
 
-        const iframe =
-            container.querySelector(
-                mobile
-                    ? ".mobile-frame"
-                    : ".desktop-frame"
-            );
 
-        if (!iframe) return;
+panel.style.transform =
+`translateY(${position}%)`;
 
-        iframe.src =
-            iframe.dataset.src;
 
-        iframe.onload = () => {
 
-            container.classList.add(
-                "video-ready"
-            );
+});
 
-        };
 
-    });
+}
 
-    /*
-    =========================
-    INVERT MOBILE SWIPE
-    =========================
-    */
 
-    if ("ontouchstart" in window) {
 
-        let touchStartY = 0;
 
-        window.addEventListener("touchstart", (e) => {
 
-            touchStartY =
-                e.touches[0].clientY;
 
-        }, { passive: true });
+/*
+=========================
+IMAGE PARALLAX
+=========================
+*/
 
-        window.addEventListener("touchmove", (e) => {
 
-            const touchY =
-                e.touches[0].clientY;
+function updateImageParallax(){
 
-            const deltaY =
-                touchY - touchStartY;
 
-            // Reverse native direction
-            window.scrollBy(
-                0,
-                -deltaY * 2
-            );
+panels.forEach(panel=>{
 
-            touchStartY =
-                touchY;
 
-            e.preventDefault();
+const image =
+panel.querySelector(".panel-image");
 
-        }, { passive: false });
 
-    }
+if(!image)return;
 
-    /*
-    =========================
-    SCROLL PERFORMANCE
-    =========================
-    */
 
-    let ticking = false;
 
-    function scrollUpdate() {
+const rect =
+panel.getBoundingClientRect();
 
-        if (!ticking) {
 
-            requestAnimationFrame(() => {
 
-                updatePanels();
-                updateImageParallax();
+const offset =
+rect.top +
+rect.height/2 -
+window.innerHeight/2;
 
-                ticking = false;
 
-            });
 
-            ticking = true;
+image.style.transform =
+`translateY(${offset*-0.82}px)`;
 
-        }
 
-    }
+});
 
-    window.addEventListener(
-        "scroll",
-        scrollUpdate,
-        { passive: true }
-    );
 
-    window.addEventListener(
-        "resize",
-        () => {
+}
 
-            updatePanels();
-            updateImageParallax();
 
-        }
-    );
 
-    /*
-    =========================
-    INITIAL
-    =========================
-    */
 
-    updatePanels();
-    updateImageParallax();
+
+
+
+/*
+=========================
+VIDEO LOADING
+=========================
+*/
+
+
+const mobile =
+window.innerWidth <= 768;
+
+
+
+const videoContainers =
+document.querySelectorAll(".video-frame");
+
+
+
+videoContainers.forEach(container=>{
+
+
+const iframe =
+container.querySelector(
+mobile
+? ".mobile-frame"
+: ".desktop-frame"
+);
+
+
+
+if(!iframe)return;
+
+
+
+iframe.src =
+iframe.dataset.src;
+
+
+
+iframe.onload = ()=>{
+
+
+container.classList.add(
+"video-ready"
+);
+
+
+};
+
+
+
+});
+
+
+
+
+
+
+
+
+/*
+=========================
+SCROLL PERFORMANCE
+=========================
+*/
+
+
+let ticking=false;
+
+
+
+function scrollUpdate(){
+
+
+if(!ticking){
+
+
+requestAnimationFrame(()=>{
+
+
+updatePanels();
+
+updateImageParallax();
+
+
+ticking=false;
+
+
+});
+
+
+ticking=true;
+
+
+}
+
+
+}
+
+
+
+window.addEventListener(
+"scroll",
+scrollUpdate,
+{passive:true}
+);
+
+
+
+window.addEventListener(
+"resize",
+()=>{
+
+updatePanels();
+
+updateImageParallax();
+
+}
+);
+
+
+
+
+
+
+
+/*
+=========================
+INITIAL
+=========================
+*/
+
+
+updatePanels();
+
+updateImageParallax();
+
 
 });
