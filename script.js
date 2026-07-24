@@ -1,517 +1,209 @@
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
+const TOTAL_LAYERS = 12;
+const DURATION = 6000;
+const STAGGER_DELAY = 550;
 
-/*
-=========================
-RESET SCROLL POSITION
-=========================
-*/
+    const world = document.querySelector(".world");
+    const sigilsContainer = document.querySelector(".sigils");
 
+    const sigilSet = [
+        "❂","⟴","⇶","⊙",
+        "e","✦","◉","⟡",
+        "▢","■","✶","✷"
+    ];
 
-if ("scrollRestoration" in history){
+    const layers = [];
+    const sigils = [];
+    const layerState = new Array(TOTAL_LAYERS).fill(true);
 
-    history.scrollRestoration = "manual";
 
-}
+    /* =========================
+       IMAGE RESOLVER
+       WEBP → PNG → GIF
+    ========================= */
 
+    function resolveImage(i) {
 
-window.scrollTo(
-    0,
-    0
-);
+        const base = `images/layer_${String(i).padStart(4,"0")}_${i + 1}`;
 
+        const webp = `${base}.webp`;
+        const png = `${base}.png`;
+        const gif = `${base}.gif`;
 
 
+        return new Promise((resolve) => {
 
 
+            function testImage(src, fallback) {
 
+                const img = new Image();
 
-/*
-=========================
-PANELS
-=========================
-*/
+                img.onload = () => resolve(src);
 
+                img.onerror = fallback;
 
-const panels =
-document.querySelectorAll(".panel");
+                img.src = src;
 
+            }
 
-const SCROLL_FACTOR = 1.5;
 
+            testImage(webp, () => {
 
+                testImage(png, () => {
 
+                    testImage(gif, () => {
 
+                        resolve(null);
 
-
-
-
-
-/*
-=========================
-PAGE HEIGHT
-=========================
-*/
-
-
-function setPageHeight(){
-
-
-    const totalPanels =
-    panels.length;
-
-
-    document.body.style.height =
-    `${totalPanels * SCROLL_FACTOR * 100}vh`;
-
-
-}
-
-
-
-setPageHeight();
-
-
-
-
-
-
-
-
-
-/*
-=========================
-PANEL MOVEMENT
-=========================
-*/
-
-
-function updatePanels(){
-
-
-    const scrollY =
-    window.scrollY;
-
-
-    const panelHeight =
-    window.innerHeight;
-
-
-
-    panels.forEach((panel,index)=>{
-
-
-        // first panel stays
-
-        if(index === 0){
-
-
-            panel.style.transform =
-            "translateY(0)";
-
-
-            return;
-
-        }
-
-
-
-
-        const start =
-        (index - 1) *
-        panelHeight *
-        SCROLL_FACTOR;
-
-
-
-
-        const progress =
-        (scrollY - start) /
-        (panelHeight * SCROLL_FACTOR);
-
-
-
-
-        const position =
-        Math.max(
-            -100,
-            Math.min(
-                0,
-                -100 + (progress * 100)
-            )
-        );
-
-
-
-        panel.style.transform =
-        `translateY(${position}%)`;
-
-
-
-    });
-
-
-}
-
-
-
-
-
-
-
-
-
-/*
-=========================
-IMAGE PARALLAX
-=========================
-*/
-
-
-function updateImageParallax(){
-
-
-    panels.forEach(panel=>{
-
-
-        const image =
-        panel.querySelector(".panel-image");
-
-
-
-        if(!image)
-        return;
-
-
-
-        const rect =
-        panel.getBoundingClientRect();
-
-
-
-        const offset =
-        rect.top +
-        rect.height / 2 -
-        window.innerHeight / 2;
-
-
-
-
-        image.style.transform =
-        `translateY(${offset * -0.82}px)`;
-
-
-    });
-
-
-}
-
-
-
-
-
-
-
-
-
-/*
-=========================
-VIMEO LOADING
-=========================
-*/
-
-
-const isMobile =
-window.innerWidth <= 768;
-
-
-
-const videos =
-document.querySelectorAll(".video-frame");
-
-
-
-
-
-
-function loadVideo(container){
-
-
-    if(container.dataset.loaded)
-    return;
-
-
-
-    const iframe =
-    isMobile
-    ?
-    container.querySelector(".mobile-frame")
-    :
-    container.querySelector(".desktop-frame");
-
-
-
-    if(!iframe)
-    return;
-
-
-
-    let src =
-    iframe.dataset.src;
-
-
-
-    // add autoplay parameters
-
-    if(!src.includes("autoplay")){
-
-        src +=
-        "&autoplay=1&autopause=0&playsinline=1";
-
-    }
-
-
-
-    iframe.src =
-    src;
-
-
-
-    container.dataset.loaded =
-    "true";
-
-
-
-
-    iframe.onload = ()=>{
-
-
-        if(typeof Vimeo === "undefined")
-        return;
-
-
-
-        const player =
-        new Vimeo.Player(iframe);
-
-
-
-        player.setVolume(0);
-
-
-
-        player.play()
-
-        .then(()=>{
-
-
-            container.classList.add(
-                "video-ready"
-            );
-
-
-        })
-
-        .catch(()=>{
-
-
-            // retry for iOS Safari
-
-            setTimeout(()=>{
-
-
-                player.play()
-
-                .then(()=>{
-
-
-                    container.classList.add(
-                        "video-ready"
-                    );
-
+                    });
 
                 });
 
-
-            },1000);
-
+            });
 
 
         });
 
-
-
-    };
-
-
-
-}
+    }
 
 
 
+    /* =========================
+       BUILD LAYERS
+    ========================= */
+
+    for (let i = 0; i < TOTAL_LAYERS; i++) {
+
+        const layer = document.createElement("div");
+
+        layer.className = "layer";
+        layer.id = `layer${i + 1}`;
+
+
+        // ALL LAYERS START DOWN
+        layer.style.transform = "translateY(0)";
+
+        layer.style.transition =
+            `transform ${DURATION}ms cubic-bezier(.22,1,.36,1)`;
+
+
+        world.appendChild(layer);
+
+        layers.push(layer);
 
 
 
+        resolveImage(i).then((src) => {
+
+            if (src) {
+
+                layer.style.backgroundImage =
+                    `url("${src}")`;
+
+            }
+
+        });
+
+    }
 
 
 
-/*
-=========================
-LOAD VIDEOS WHEN NEEDED
-=========================
-*/
+    /* =========================
+       BUILD SIGILS
+    ========================= */
+
+    sigilSet.forEach((label, index) => {
 
 
-const videoObserver =
-new IntersectionObserver(
-(entries)=>{
+        const sigil = document.createElement("div");
+
+        sigil.textContent = label;
 
 
-    entries.forEach(entry=>{
+        sigil.classList.add("active");
 
 
-        if(entry.isIntersecting){
+        sigil.addEventListener("click", () => {
+
+            toggleLayer(index);
+
+        });
 
 
-            loadVideo(
-                entry.target
-            );
+        sigilsContainer.appendChild(sigil);
 
-
-        }
+        sigils.push(sigil);
 
 
     });
 
 
-},
-{
+/* =========================
+   LOWER ALL
+========================= */
 
-    rootMargin:"800px 0px",
+const liftAll = document.createElement("div");
 
-    threshold:0.01
+liftAll.textContent = "+";
+
+liftAll.classList.add("lift-all");
+
+
+liftAll.addEventListener("click", () => {
+
+for (let i = 0; i < TOTAL_LAYERS; i++) {
+
+    setTimeout(() => {
+
+        layerState[i] = true;
+
+        layers[i].style.transform =
+            "translateY(0)";
+
+
+        if (sigils[i]) {
+
+            sigils[i].classList.add("active");
+
+        }
+
+    }, i * STAGGER_DELAY);
+
+}
+
 
 });
 
 
+sigilsContainer.appendChild(liftAll);
 
 
 
-videos.forEach(video=>{
+    /* =========================
+       TOGGLE SINGLE LAYER
+    ========================= */
+
+    function toggleLayer(index) {
 
 
-    videoObserver.observe(video);
+        layerState[index] = !layerState[index];
 
 
-});
-
-
-
-
-
-
-
-
-
-/*
-=========================
-SCROLL PERFORMANCE
-=========================
-*/
-
-
-let ticking = false;
+        layers[index].style.transform =
+            layerState[index]
+            ? "translateY(0)"
+            : "translateY(-140%)";
 
 
 
-function scrollUpdate(){
-
-
-    if(!ticking){
-
-
-        requestAnimationFrame(()=>{
-
-
-            updatePanels();
-
-            updateImageParallax();
-
-
-            ticking=false;
-
-
-        });
-
-
-        ticking=true;
+        sigils[index].classList.toggle(
+            "active",
+            layerState[index]
+        );
 
 
     }
-
-
-}
-
-
-
-window.addEventListener(
-"scroll",
-scrollUpdate,
-{
-    passive:true
-}
-);
-
-
-
-
-
-
-
-
-
-/*
-=========================
-RESIZE
-=========================
-*/
-
-
-window.addEventListener(
-"resize",
-()=>{
-
-
-    setPageHeight();
-
-
-    updatePanels();
-
-
-    updateImageParallax();
-
-
-});
-
-
-
-
-
-
-
-
-
-/*
-=========================
-INITIAL
-=========================
-*/
-
-
-updatePanels();
-
-updateImageParallax();
-
 
 
 
