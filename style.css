@@ -40,8 +40,6 @@ body {
 
 
 
-
-
 /* =========================
    PANELS
 ========================= */
@@ -63,7 +61,6 @@ body {
 
 
     overflow:hidden;
-
 
 
     background-size:cover;
@@ -95,10 +92,7 @@ body {
 
 
 
-
-
 .panel::after {
-
 
     content:"";
 
@@ -118,7 +112,6 @@ body {
     height:50px;
 
 
-
     background:
     linear-gradient(
         to bottom,
@@ -126,20 +119,13 @@ body {
         transparent
     );
 
-
 }
 
 
 
-
-
-
-
-
 /* =========================
-   PANEL BACKGROUNDS
+   DESKTOP PANEL BACKGROUNDS
 ========================= */
-
 
 
 .panel-01 {
@@ -149,22 +135,18 @@ body {
 
     z-index:1;
 
-    transform:
-    translateY(0);
+    transform:translateY(0);
 
 }
-
 
 
 .panel-02 {
 
     z-index:2;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-03 {
@@ -174,22 +156,18 @@ body {
 
     z-index:3;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-04 {
 
     z-index:4;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-05 {
@@ -199,11 +177,9 @@ body {
 
     z-index:5;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-06 {
@@ -213,11 +189,9 @@ body {
 
     z-index:6;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-07 {
@@ -227,11 +201,9 @@ body {
 
     z-index:7;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-08 {
@@ -241,11 +213,9 @@ body {
 
     z-index:8;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-09 {
@@ -255,22 +225,18 @@ body {
 
     z-index:9;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-10 {
 
     z-index:10;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-11 {
@@ -280,11 +246,9 @@ body {
 
     z-index:11;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-12 {
@@ -294,11 +258,9 @@ body {
 
     z-index:12;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
 
 
 .panel-13 {
@@ -308,14 +270,9 @@ body {
 
     z-index:13;
 
-    transform:
-    translateY(-100%);
+    transform:translateY(-100%);
 
 }
-
-
-
-
 
 
 
@@ -342,6 +299,8 @@ body {
 
 }
 
+
+
 .panel-contentleft {
 
     position:absolute;
@@ -353,12 +312,11 @@ body {
 
     display:flex;
 
-    justify-content:left;
+    justify-content:flex-start;
 
     align-items:center;
 
 }
-
 
 
 
@@ -376,9 +334,6 @@ body {
 
 
 
-
-
-
 /* =========================
    VIDEO PANELS
 ========================= */
@@ -386,32 +341,22 @@ body {
 
 .video-frame {
 
-
     position:absolute;
-
 
     inset:0;
 
-
     overflow:hidden;
-
 
     z-index:1;
 
 
-
     background-size:cover;
-
 
     background-position:center;
 
-
     background-repeat:no-repeat;
 
-
 }
-
-
 
 
 
@@ -443,10 +388,6 @@ body {
 
 
 
-
-
-
-
 /* =========================
    VIMEO
 ========================= */
@@ -454,48 +395,37 @@ body {
 
 .video-frame iframe {
 
-
     position:absolute;
 
 
     top:50%;
 
-
     left:50%;
-
 
 
     width:177.78vh;
 
-
     height:100vh;
-
 
 
     transform:
     translate(-50%,-50%);
 
 
-
     border:none;
-
 
 
     pointer-events:auto;
 
 
-
     opacity:0;
-
 
 
     transition:
     opacity 1.2s ease;
 
 
-
     z-index:2;
-
 
 
     backface-visibility:hidden;
@@ -515,13 +445,8 @@ body {
 
 
 
-
-
-
-
-
 /* =========================
-   DESKTOP / MOBILE
+   DESKTOP / MOBILE IFRAMES
 ========================= */
 
 
@@ -530,7 +455,6 @@ body {
     display:block;
 
 }
-
 
 
 .mobile-frame {
@@ -543,15 +467,13 @@ body {
 
 
 
-
-
-
 /* =========================
    MOBILE
 ========================= */
 
 
 @media(max-width:768px){
+
 
 
 .panel {
@@ -568,6 +490,120 @@ body {
 
 
 
+/* MOBILE IMAGES */
+
+
+.panel-01 {
+
+    background-image:
+    url("images/section1-mobile.webp");
+
+}
+
+
+.panel-03 {
+
+    background-image:
+    url("images/section3-mobile.webp");
+
+}
+
+
+.panel-05 {
+
+    background-image:
+    url("images/section5-mobile.webp");
+
+}
+
+
+.panel-06 {
+
+    background-image:
+    url("images/section6-mobile.webp");
+
+}
+
+
+.panel-07 {
+
+    background-image:
+    url("images/section7-mobile.webp");
+
+}
+
+
+.panel-08 {
+
+    background-image:
+    url("images/section8-mobile.webp");
+
+}
+
+
+.panel-09 {
+
+    background-image:
+    url("images/section9-mobile.webp");
+
+}
+
+
+.panel-11 {
+
+    background-image:
+    url("images/section11-mobile.webp");
+
+}
+
+
+.panel-12 {
+
+    background-image:
+    url("images/section12-mobile.webp");
+
+}
+
+
+.panel-13 {
+
+    background-image:
+    url("images/section13-mobile.webp");
+
+}
+
+
+
+
+/* MOBILE VIDEO POSTERS */
+
+
+.panel-02 .video-frame {
+
+    background-image:
+    url("images/section2-mobile.webp");
+
+}
+
+
+.panel-04 .video-frame {
+
+    background-image:
+    url("images/section4-mobile.webp");
+
+}
+
+
+.panel-10 .video-frame {
+
+    background-image:
+    url("images/section10-mobile.webp");
+
+}
+
+
+
+
 .desktop-frame {
 
     display:none;
@@ -575,12 +611,12 @@ body {
 }
 
 
-
 .mobile-frame {
 
     display:block;
 
 }
+
 
 
 
@@ -613,10 +649,6 @@ body {
 
 
 }
-
-
-
-
 
 
 
@@ -667,8 +699,6 @@ body {
 
 
 }
-
-
 
 
 
