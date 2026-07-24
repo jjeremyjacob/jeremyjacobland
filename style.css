@@ -1,158 +1,710 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
+
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+
+    width:100%;
+    height:100%;
+
+    overflow-x:hidden;
+
 }
+
+
+
+a {
+
+    color:white;
+    text-decoration:none;
+
+}
+
+
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    background: #0a0000;
+    background:#000;
 
-    font-family: Arial, Helvetica, sans-serif;
+    color:#fff;
+
+    font-family:
+    Helvetica,
+    Arial,
+    sans-serif;
+
 }
+
+
+
+
+
+
 
 /* =========================
-   STAGE (9:16)
+   PANELS
 ========================= */
 
-.scene {
-    position: relative;
 
-    width: min(520px, 90vw);
-    aspect-ratio: 9 / 16;
+.panel {
 
-    max-height: 88vh;
+    position:fixed;
 
-    background: #000;
+    top:0;
 
-    border: 6px solid #1e1305;
-    border-radius: 8px;
+    left:0;
 
-    overflow: hidden;
+
+    width:100%;
+
+
+    height:100dvh;
+
+
+    overflow:hidden;
+
+
+    background-size:cover;
+
+    background-position:center bottom;
+
+    background-repeat:no-repeat;
+
+
+
+    border-bottom:
+    12px solid rgba(69,41,28,1);
+
+
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.8);
+
+
+
+    will-change:transform;
+
+
+    backface-visibility:hidden;
+
+    -webkit-backface-visibility:hidden;
+
 }
+
+
+
+.panel::after {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-50px;
+
+    width:100%;
+
+    height:50px;
+
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(0,0,0,.35),
+        transparent
+    );
+
+}
+
+
+
+
+
+
 
 /* =========================
-   WORLD
+   DESKTOP BACKGROUNDS
 ========================= */
 
-.world {
-    position: absolute;
-    inset: 0;
+
+.panel-01 {
+
+    background-image:
+    url("images/section1.webp");
+
+    z-index:1;
+
 }
+
+
+.panel-02 {
+
+    z-index:2;
+
+}
+
+
+.panel-03 {
+
+    background-image:
+    url("images/section3.webp");
+
+    z-index:3;
+
+}
+
+
+.panel-04 {
+
+    z-index:4;
+
+}
+
+
+.panel-05 {
+
+    background-image:
+    url("images/section5.webp");
+
+    z-index:5;
+
+}
+
+
+.panel-06 {
+
+    background-image:
+    url("images/section6.webp");
+
+    z-index:6;
+
+}
+
+
+.panel-07 {
+
+    background-image:
+    url("images/section7.webp");
+
+    z-index:7;
+
+}
+
+
+.panel-08 {
+
+    background-image:
+    url("images/section8.webp");
+
+    z-index:8;
+
+}
+
+
+.panel-09 {
+
+    background-image:
+    url("images/section9.webp");
+
+    z-index:9;
+
+}
+
+
+.panel-10 {
+
+    z-index:10;
+
+}
+
+
+
+
+
+
 
 /* =========================
-   LAYERS
+   CONTENT
 ========================= */
 
-.layer {
-  position: absolute;
-    inset: 0;
 
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
+.panel-content {
 
-    transform: translateY(0);
+    position:absolute;
 
-    transition:
-        transform 6s cubic-bezier(.22,1,.36,1);
+    inset:0;
 
-    will-change: transform;
+    z-index:5;
+
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
 }
+
+
+
+
+
+.panel-contentleft {
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:5;
+
+
+    display:flex;
+
+    justify-content:flex-start;
+
+    align-items:center;
+
+}
+
+
+.panel-contentright {
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:5;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    padding-right:0px;
+
+}
+
+
+
+
+.panel-image {
+
+    width:100px;
+
+    height:auto;
+
+    will-change:transform;
+
+}
+
+
+
+
+
+
+
+
 
 /* =========================
-   NAVIGATION (12 + LIFT)
-   4 columns x 3 rows
+   VIDEO PANELS
 ========================= */
 
-.sigils {
-    position: absolute;
 
-    left: 50%;
-    bottom: 26px;
-    transform: translateX(-50%);
+.video-frame {
 
-    display: grid;
+    position:absolute;
 
-    grid-template-columns: repeat(4, auto);
-    grid-template-rows: repeat(3, auto);
+    inset:0;
 
-    gap: 14px 22px;
+    overflow:hidden;
 
-    z-index: 1000;
+    z-index:1;
 
-    user-select: none;
 
-    align-items: center;
-    justify-items: center;
+    background-size:cover;
+
+   background-position:center bottom;
+
+    background-repeat:no-repeat;
+
 }
 
-.sigils div {
 
-    color: #2a2216;
 
-    font-size: 28px;
 
-    cursor: pointer;
 
-    line-height: 1;
+.panel-02 .video-frame {
 
-    transition:
-        color .25s ease,
-        transform .25s ease;
+    background-image:
+    url("images/section2.webp");
+
 }
 
-.sigils div:hover {
-    color: #ad8a6e;
-    transform: scale(1.2);
+
+
+.panel-04 .video-frame {
+
+    background-image:
+    url("images/section4.webp");
+
 }
 
-.sigils div.active {
-    color: #5a4630;
+
+
+.panel-10 .video-frame {
+
+    background-image:
+    url("images/section10.webp");
+
 }
+
+
+
+
+
+
+
+
+/* =========================
+   VIMEO NO FADE
+========================= */
+
+
+.video-frame iframe {
+
+    position:absolute;
+
+
+    top:50%;
+
+    left:50%;
+
+
+    width:177.78vh;
+
+    height:100vh;
+
+
+
+    transform:
+    translate(-50%,-50%);
+
+
+
+    border:0;
+
+
+
+    opacity:1;
+
+    visibility:visible;
+
+
+
+    z-index:2;
+
+
+
+    pointer-events:auto;
+
+
+
+    backface-visibility:hidden;
+
+    -webkit-backface-visibility:hidden;
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   DESKTOP / MOBILE
+========================= */
+
+
+.desktop-frame {
+
+    display:block;
+
+}
+
+
+.mobile-frame {
+
+    display:none;
+
+}
+
+
+
+
+
+
+
 
 /* =========================
    MOBILE
 ========================= */
 
-@media (max-width:768px){
 
-    .scene{
-        width:94vw;
-        max-height: 85vh;
-    }
+@media(max-width:768px){
 
-    .sigils{
-        gap:12px 16px;
-        bottom:16px;
-    }
 
-    .sigils div{
-        font-size:18px;
-    }
+
+.panel {
+
+    height:100dvh;
+
+
+    border-bottom:
+    8px solid rgba(69,41,28,1);
+
 }
+
+
+
+
+
+
+/* MOBILE IMAGES */
+
+
+.panel-01 {
+
+    background-image:
+    url("images/section1-mobile.webp");
+
+}
+
+
+.panel-03 {
+
+    background-image:
+    url("images/section3-mobile.webp");
+
+}
+
+
+.panel-05 {
+
+    background-image:
+    url("images/section5-mobile.webp");
+
+}
+
+
+.panel-06 {
+
+    background-image:
+    url("images/section6-mobile.webp");
+
+}
+
+
+.panel-07 {
+
+    background-image:
+    url("images/section7-mobile.webp");
+
+}
+
+
+.panel-08 {
+
+    background-image:
+    url("images/section8-mobile.webp");
+
+}
+
+
+.panel-09 {
+
+    background-image:
+    url("images/section9-mobile.webp");
+
+}
+
+
+
+
+
+
+
+
+/* MOBILE VIDEO POSTERS */
+
+
+.panel-02 .video-frame {
+
+    background-image:
+    url("images/section2-mobile.webp");
+
+}
+
+
+
+.panel-04 .video-frame {
+
+    background-image:
+    url("images/section4-mobile.webp");
+
+}
+
+
+
+.panel-10 .video-frame {
+
+    background-image:
+    url("images/section10-mobile.webp");
+
+}
+
+
+
+
+
+
+
+
+.desktop-frame {
+
+    display:none;
+
+}
+
+
+
+.mobile-frame {
+
+    display:block;
+
+}
+
+
+
+
+
+
+.video-frame iframe {
+
+
+    width:177.78vh;
+
+    height:100vh;
+
+
+    top:50%;
+
+    left:50%;
+
+
+    transform:
+    translate(-50%,-50%);
+
+
+}
+
+
+
+
+
+
+.panel-image {
+
+    width:100px;
+
+}
+
+
+
+}
+
+
+
+
+
+
+
 
 /* =========================
-   LIFT ALL CENTER FIX
+   EMAIL TEXT
 ========================= */
 
-.sigils .lift-all {
-    grid-column: 1 / -1;  /* span full width of grid */
-    justify-self: center; /* center it visually */
-    font-size: 32px;
-    margin-top: 4px;
+
+.bottom-text {
+
+
+    position:fixed;
+
+
+    bottom:20px;
+
+
+    left:0;
+
+
+    white-space:nowrap;
+
+
+    pointer-events:none;
+
+
+    z-index:9999;
+
+
+
+    font-family:
+    Georgia,
+    serif;
+
+
+
+    font-size:14px;
+
+
+    letter-spacing:1px;
+
+
+
+    animation:
+    bounceSideways 12s ease-in-out infinite alternate;
+
+
 }
 
-.lower-all {
-    cursor: pointer;
+
+
+
+
+@keyframes bounceSideways {
+
+
+from {
+
+    transform:
+    translateX(20px);
+
+}
+
+
+
+to {
+
+    transform:
+    translateX(calc(100vw - 100% - 20px));
+
+}
+
+
 }

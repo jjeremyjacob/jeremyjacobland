@@ -1,209 +1,517 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-const TOTAL_LAYERS = 12;
-const DURATION = 6000;
-const STAGGER_DELAY = 550;
 
-    const world = document.querySelector(".world");
-    const sigilsContainer = document.querySelector(".sigils");
+/*
+=========================
+RESET SCROLL POSITION
+=========================
+*/
 
-    const sigilSet = [
-        "❂","⟴","⇶","⊙",
-        "e","✦","◉","⟡",
-        "▢","■","✶","✷"
-    ];
 
-    const layers = [];
-    const sigils = [];
-    const layerState = new Array(TOTAL_LAYERS).fill(true);
+if ("scrollRestoration" in history){
 
+    history.scrollRestoration = "manual";
 
-    /* =========================
-       IMAGE RESOLVER
-       WEBP → PNG → GIF
-    ========================= */
+}
 
-    function resolveImage(i) {
 
-        const base = `images/layer_${String(i).padStart(4,"0")}_${i + 1}`;
+window.scrollTo(
+    0,
+    0
+);
 
-        const webp = `${base}.webp`;
-        const png = `${base}.png`;
-        const gif = `${base}.gif`;
 
 
-        return new Promise((resolve) => {
 
 
-            function testImage(src, fallback) {
 
-                const img = new Image();
 
-                img.onload = () => resolve(src);
+/*
+=========================
+PANELS
+=========================
+*/
 
-                img.onerror = fallback;
 
-                img.src = src;
+const panels =
+document.querySelectorAll(".panel");
 
-            }
 
+const SCROLL_FACTOR = 1.5;
 
-            testImage(webp, () => {
 
-                testImage(png, () => {
 
-                    testImage(gif, () => {
 
-                        resolve(null);
 
-                    });
 
-                });
 
-            });
 
 
-        });
+/*
+=========================
+PAGE HEIGHT
+=========================
+*/
 
-    }
 
+function setPageHeight(){
 
 
-    /* =========================
-       BUILD LAYERS
-    ========================= */
+    const totalPanels =
+    panels.length;
 
-    for (let i = 0; i < TOTAL_LAYERS; i++) {
 
-        const layer = document.createElement("div");
+    document.body.style.height =
+    `${totalPanels * SCROLL_FACTOR * 100}vh`;
 
-        layer.className = "layer";
-        layer.id = `layer${i + 1}`;
 
+}
 
-        // ALL LAYERS START DOWN
-        layer.style.transform = "translateY(0)";
 
-        layer.style.transition =
-            `transform ${DURATION}ms cubic-bezier(.22,1,.36,1)`;
 
+setPageHeight();
 
-        world.appendChild(layer);
 
-        layers.push(layer);
 
 
 
-        resolveImage(i).then((src) => {
 
-            if (src) {
 
-                layer.style.backgroundImage =
-                    `url("${src}")`;
 
-            }
 
-        });
+/*
+=========================
+PANEL MOVEMENT
+=========================
+*/
 
-    }
 
+function updatePanels(){
 
 
-    /* =========================
-       BUILD SIGILS
-    ========================= */
+    const scrollY =
+    window.scrollY;
 
-    sigilSet.forEach((label, index) => {
 
+    const panelHeight =
+    window.innerHeight;
 
-        const sigil = document.createElement("div");
 
-        sigil.textContent = label;
 
+    panels.forEach((panel,index)=>{
 
-        sigil.classList.add("active");
 
+        // first panel stays
 
-        sigil.addEventListener("click", () => {
+        if(index === 0){
 
-            toggleLayer(index);
 
-        });
+            panel.style.transform =
+            "translateY(0)";
 
 
-        sigilsContainer.appendChild(sigil);
+            return;
 
-        sigils.push(sigil);
+        }
+
+
+
+
+        const start =
+        (index - 1) *
+        panelHeight *
+        SCROLL_FACTOR;
+
+
+
+
+        const progress =
+        (scrollY - start) /
+        (panelHeight * SCROLL_FACTOR);
+
+
+
+
+        const position =
+        Math.max(
+            -100,
+            Math.min(
+                0,
+                -100 + (progress * 100)
+            )
+        );
+
+
+
+        panel.style.transform =
+        `translateY(${position}%)`;
+
 
 
     });
 
 
-/* =========================
-   LOWER ALL
-========================= */
-
-const liftAll = document.createElement("div");
-
-liftAll.textContent = "+";
-
-liftAll.classList.add("lift-all");
+}
 
 
-liftAll.addEventListener("click", () => {
-
-for (let i = 0; i < TOTAL_LAYERS; i++) {
-
-    setTimeout(() => {
-
-        layerState[i] = true;
-
-        layers[i].style.transform =
-            "translateY(0)";
 
 
-        if (sigils[i]) {
 
-            sigils[i].classList.add("active");
+
+
+
+
+/*
+=========================
+IMAGE PARALLAX
+=========================
+*/
+
+
+function updateImageParallax(){
+
+
+    panels.forEach(panel=>{
+
+
+        const image =
+        panel.querySelector(".panel-image");
+
+
+
+        if(!image)
+        return;
+
+
+
+        const rect =
+        panel.getBoundingClientRect();
+
+
+
+        const offset =
+        rect.top +
+        rect.height / 2 -
+        window.innerHeight / 2;
+
+
+
+
+        image.style.transform =
+        `translateY(${offset * -0.82}px)`;
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+=========================
+VIMEO LOADING
+=========================
+*/
+
+
+const isMobile =
+window.innerWidth <= 768;
+
+
+
+const videos =
+document.querySelectorAll(".video-frame");
+
+
+
+
+
+
+function loadVideo(container){
+
+
+    if(container.dataset.loaded)
+    return;
+
+
+
+    const iframe =
+    isMobile
+    ?
+    container.querySelector(".mobile-frame")
+    :
+    container.querySelector(".desktop-frame");
+
+
+
+    if(!iframe)
+    return;
+
+
+
+    let src =
+    iframe.dataset.src;
+
+
+
+    // add autoplay parameters
+
+    if(!src.includes("autoplay")){
+
+        src +=
+        "&autoplay=1&autopause=0&playsinline=1";
+
+    }
+
+
+
+    iframe.src =
+    src;
+
+
+
+    container.dataset.loaded =
+    "true";
+
+
+
+
+    iframe.onload = ()=>{
+
+
+        if(typeof Vimeo === "undefined")
+        return;
+
+
+
+        const player =
+        new Vimeo.Player(iframe);
+
+
+
+        player.setVolume(0);
+
+
+
+        player.play()
+
+        .then(()=>{
+
+
+            container.classList.add(
+                "video-ready"
+            );
+
+
+        })
+
+        .catch(()=>{
+
+
+            // retry for iOS Safari
+
+            setTimeout(()=>{
+
+
+                player.play()
+
+                .then(()=>{
+
+
+                    container.classList.add(
+                        "video-ready"
+                    );
+
+
+                });
+
+
+            },1000);
+
+
+
+        });
+
+
+
+    };
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+=========================
+LOAD VIDEOS WHEN NEEDED
+=========================
+*/
+
+
+const videoObserver =
+new IntersectionObserver(
+(entries)=>{
+
+
+    entries.forEach(entry=>{
+
+
+        if(entry.isIntersecting){
+
+
+            loadVideo(
+                entry.target
+            );
+
 
         }
 
-    }, i * STAGGER_DELAY);
 
-}
+    });
+
+
+},
+{
+
+    rootMargin:"800px 0px",
+
+    threshold:0.01
+
+});
+
+
+
+
+
+videos.forEach(video=>{
+
+
+    videoObserver.observe(video);
 
 
 });
 
 
-sigilsContainer.appendChild(liftAll);
 
 
 
-    /* =========================
-       TOGGLE SINGLE LAYER
-    ========================= */
-
-    function toggleLayer(index) {
-
-
-        layerState[index] = !layerState[index];
-
-
-        layers[index].style.transform =
-            layerState[index]
-            ? "translateY(0)"
-            : "translateY(-140%)";
 
 
 
-        sigils[index].classList.toggle(
-            "active",
-            layerState[index]
-        );
+
+/*
+=========================
+SCROLL PERFORMANCE
+=========================
+*/
+
+
+let ticking = false;
+
+
+
+function scrollUpdate(){
+
+
+    if(!ticking){
+
+
+        requestAnimationFrame(()=>{
+
+
+            updatePanels();
+
+            updateImageParallax();
+
+
+            ticking=false;
+
+
+        });
+
+
+        ticking=true;
 
 
     }
+
+
+}
+
+
+
+window.addEventListener(
+"scroll",
+scrollUpdate,
+{
+    passive:true
+}
+);
+
+
+
+
+
+
+
+
+
+/*
+=========================
+RESIZE
+=========================
+*/
+
+
+window.addEventListener(
+"resize",
+()=>{
+
+
+    setPageHeight();
+
+
+    updatePanels();
+
+
+    updateImageParallax();
+
+
+});
+
+
+
+
+
+
+
+
+
+/*
+=========================
+INITIAL
+=========================
+*/
+
+
+updatePanels();
+
+updateImageParallax();
+
 
 
 
