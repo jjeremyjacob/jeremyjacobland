@@ -16,15 +16,28 @@ const SCROLL_FACTOR = 1.5;
 
 
 
+
+
+
 /*
 =========================
-AUTOMATIC PAGE HEIGHT
+PAGE HEIGHT
 =========================
 */
 
 
+function setPageHeight(){
+
+
 document.body.style.height =
-`${(panels.length + 1) * SCROLL_FACTOR * 100}vh`;
+`${panels.length * SCROLL_FACTOR * 100}vh`;
+
+
+}
+
+
+setPageHeight();
+
 
 
 
@@ -53,7 +66,7 @@ window.innerHeight;
 panels.forEach((panel,index)=>{
 
 
-// FIRST PANEL STAYS FIXED
+// first panel stays visible
 
 if(index===0){
 
@@ -75,8 +88,8 @@ SCROLL_FACTOR;
 
 
 const progress =
-(scrollY-start) /
-(panelHeight*SCROLL_FACTOR);
+(scrollY - start) /
+(panelHeight * SCROLL_FACTOR);
 
 
 
@@ -85,7 +98,7 @@ Math.max(
 -100,
 Math.min(
 0,
--100+(progress*100)
+-100 + (progress * 100)
 )
 );
 
@@ -100,6 +113,7 @@ panel.style.transform =
 
 
 }
+
 
 
 
@@ -124,7 +138,8 @@ const image =
 panel.querySelector(".panel-image");
 
 
-if(!image)return;
+if(!image)
+return;
 
 
 
@@ -135,19 +150,20 @@ panel.getBoundingClientRect();
 
 const offset =
 rect.top +
-rect.height/2 -
-window.innerHeight/2;
+(rect.height / 2) -
+(window.innerHeight / 2);
 
 
 
 image.style.transform =
-`translateY(${offset*-0.82}px)`;
+`translateY(${offset * -0.82}px)`;
 
 
 });
 
 
 }
+
 
 
 
@@ -162,7 +178,7 @@ VIMEO LAZY LOADING
 */
 
 
-const mobile =
+const isMobile =
 window.innerWidth <= 768;
 
 
@@ -172,24 +188,46 @@ document.querySelectorAll(".video-frame");
 
 
 
-videoContainers.forEach(container=>{
+
+function loadVideo(container){
+
+
+if(container.dataset.loaded)
+return;
+
 
 
 const iframe =
-container.querySelector(
-mobile
-? ".mobile-frame"
-: ".desktop-frame"
-);
+isMobile
+?
+container.querySelector(".mobile-frame")
+:
+container.querySelector(".desktop-frame");
 
 
 
-if(!iframe)return;
+if(!iframe)
+return;
+
+
+
+const source =
+iframe.dataset.src;
+
+
+
+if(!source)
+return;
 
 
 
 iframe.src =
-iframe.dataset.src;
+source;
+
+
+
+container.dataset.loaded =
+"true";
 
 
 
@@ -205,7 +243,52 @@ container.classList.add(
 
 
 
+}
+
+
+
+
+
+const videoObserver =
+new IntersectionObserver(
+(entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+loadVideo(entry.target);
+
+
+}
+
+
 });
+
+
+},
+{
+
+threshold:0.25
+
+}
+);
+
+
+
+
+
+videoContainers.forEach(container=>{
+
+
+videoObserver.observe(container);
+
+
+});
+
 
 
 
@@ -221,7 +304,7 @@ SCROLL PERFORMANCE
 */
 
 
-let ticking=false;
+let ticking = false;
 
 
 
@@ -237,6 +320,7 @@ requestAnimationFrame(()=>{
 updatePanels();
 
 updateImageParallax();
+
 
 
 ticking=false;
@@ -258,8 +342,12 @@ ticking=true;
 window.addEventListener(
 "scroll",
 scrollUpdate,
-{passive:true}
+{
+passive:true
+}
 );
+
+
 
 
 
@@ -278,14 +366,11 @@ window.addEventListener(
 ()=>{
 
 
-// recalculate height if device rotates
-
-document.body.style.height =
-`${panels.length * SCROLL_FACTOR * 100}vh`;
-
+setPageHeight();
 
 
 updatePanels();
+
 
 updateImageParallax();
 
@@ -294,21 +379,8 @@ updateImageParallax();
 
 
 
-function setPageHeight(){
-
-    document.body.style.height =
-    `${(panels.length + .7) * SCROLL_FACTOR * 100}vh`;
-
-}
 
 
-setPageHeight();
-
-
-window.addEventListener(
-"resize",
-setPageHeight
-);
 
 
 
