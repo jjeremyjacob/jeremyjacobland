@@ -89,8 +89,13 @@ PANEL MOVEMENT
 function updatePanels(){
 
 
+    const maxScroll =
+    document.documentElement.scrollHeight -
+    window.innerHeight;
+
+
     const scrollY =
-    window.scrollY;
+    maxScroll - window.scrollY;
 
 
     const panelHeight =
@@ -100,8 +105,6 @@ function updatePanels(){
 
     panels.forEach((panel,index)=>{
 
-
-        // first panel stays
 
         if(index === 0){
 
@@ -261,8 +264,6 @@ function loadVideo(container){
 
 
 
-    // add autoplay parameters
-
     if(!src.includes("autoplay")){
 
         src +=
@@ -314,8 +315,6 @@ function loadVideo(container){
 
         .catch(()=>{
 
-
-            // retry for iOS Safari
 
             setTimeout(()=>{
 
@@ -503,16 +502,23 @@ window.addEventListener(
 
 /*
 =========================
-INITIAL
+INITIAL POSITION
 =========================
 */
 
 
-updatePanels();
+requestAnimationFrame(()=>{
 
-updateImageParallax();
+    window.scrollTo(
+        0,
+        document.documentElement.scrollHeight
+    );
 
+    updatePanels();
 
+    updateImageParallax();
+
+});
 
 
 });
