@@ -13,6 +13,8 @@ body {
 
     overflow-x:hidden;
 
+    overflow-anchor:none;
+
 }
 
 
@@ -92,7 +94,14 @@ body {
 
     -webkit-backface-visibility:hidden;
 
+
+    transform-style:preserve-3d;
+
+    -webkit-transform-style:preserve-3d;
+
 }
+
+
 
 
 
@@ -125,6 +134,7 @@ body {
     );
 
 }
+
 
 
 
@@ -263,6 +273,7 @@ body {
 
 
 
+
 /* =========================
    CONTENT
 ========================= */
@@ -314,9 +325,12 @@ body {
 
     height:auto;
 
+
     will-change:transform;
 
+
 }
+
 
 
 
@@ -336,9 +350,12 @@ body {
 
     inset:0;
 
+
     overflow:hidden;
 
+
     z-index:1;
+
 
 
     background-size:cover;
@@ -347,7 +364,9 @@ body {
 
     background-repeat:no-repeat;
 
+
 }
+
 
 
 
@@ -385,6 +404,7 @@ body {
 
 
 
+
 /* =========================
    VIMEO
 ========================= */
@@ -413,14 +433,21 @@ body {
 
 
 
+    -webkit-transform:
+    translate(-50%,-50%);
+
+
+
     border:0;
 
 
-    pointer-events:auto;
+
+    pointer-events:none;
 
 
 
     opacity:0;
+
 
     visibility:hidden;
 
@@ -439,16 +466,23 @@ body {
 
     -webkit-backface-visibility:hidden;
 
+
 }
+
+
+
 
 
 
 
 .video-frame.video-ready iframe {
 
+
     opacity:1;
 
+
     visibility:visible;
+
 
 }
 
@@ -485,7 +519,6 @@ body {
 
 
 
-
 /* =========================
    MOBILE
 ========================= */
@@ -504,13 +537,15 @@ body {
 
     8px solid rgba(69,41,28,1);
 
+
 }
 
 
 
 
 
-/* MOBILE IMAGES */
+
+/* MOBILE BACKGROUNDS */
 
 
 .panel-01 {
@@ -521,12 +556,14 @@ body {
 }
 
 
+
 .panel-03 {
 
     background-image:
     url("images/section3-mobile.webp");
 
 }
+
 
 
 .panel-05 {
@@ -537,12 +574,14 @@ body {
 }
 
 
+
 .panel-06 {
 
     background-image:
     url("images/section6-mobile.webp");
 
 }
+
 
 
 .panel-07 {
@@ -553,12 +592,14 @@ body {
 }
 
 
+
 .panel-08 {
 
     background-image:
     url("images/section8-mobile.webp");
 
 }
+
 
 
 .panel-09 {
@@ -569,6 +610,7 @@ body {
 }
 
 
+
 .panel-11 {
 
     background-image:
@@ -577,12 +619,14 @@ body {
 }
 
 
+
 .panel-12 {
 
     background-image:
     url("images/section12-mobile.webp");
 
 }
+
 
 
 .panel-13 {
@@ -651,6 +695,7 @@ body {
 
 
 
+
 .video-frame iframe {
 
 
@@ -665,6 +710,10 @@ body {
 
 
     transform:
+    translate(-50%,-50%);
+
+
+    -webkit-transform:
     translate(-50%,-50%);
 
 
@@ -739,6 +788,7 @@ body {
 
 
 }
+
 
 
 
