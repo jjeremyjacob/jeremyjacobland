@@ -3,6 +3,36 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 /*
 =========================
+FORCE START AT PANEL 1
+=========================
+*/
+
+
+if ("scrollRestoration" in history){
+
+    history.scrollRestoration = "manual";
+
+}
+
+
+setTimeout(()=>{
+
+    window.scrollTo({
+        top:0,
+        left:0,
+        behavior:"instant"
+    });
+
+},50);
+
+
+
+
+
+
+
+/*
+=========================
 PANELS
 =========================
 */
@@ -13,6 +43,8 @@ document.querySelectorAll(".panel");
 
 
 const SCROLL_FACTOR = 1.5;
+
+
 
 
 
@@ -44,7 +76,7 @@ setPageHeight();
 
 /*
 =========================
-PANEL MOVEMENT
+PANEL SCROLL ANIMATION
 =========================
 */
 
@@ -64,14 +96,19 @@ window.innerHeight;
 panels.forEach((panel,index)=>{
 
 
+
 if(index===0){
+
 
     panel.style.transform =
     "translateY(0)";
 
+
     return;
 
+
 }
+
 
 
 
@@ -86,6 +123,7 @@ SCROLL_FACTOR;
 const progress =
 (scrollY - start) /
 (panelHeight * SCROLL_FACTOR);
+
 
 
 
@@ -134,6 +172,7 @@ const image =
 panel.querySelector(".panel-image");
 
 
+
 if(!image)
 return;
 
@@ -169,7 +208,7 @@ image.style.transform =
 
 /*
 =========================
-VIMEO LOADING
+VIMEO LAZY LOADING
 =========================
 */
 
@@ -207,18 +246,18 @@ return;
 
 
 
-const url =
+const source =
 iframe.dataset.src;
 
 
 
-if(!url)
+if(!source)
 return;
 
 
 
 iframe.src =
-url;
+source;
 
 
 
@@ -245,9 +284,14 @@ container.classList.add(
 
 
 
+
+
+
+
 /*
 =========================
-LOAD FIRST VIDEO NOW
+LOAD FIRST VIDEO
+IMMEDIATELY
 =========================
 */
 
@@ -266,9 +310,10 @@ if(videoContainers.length){
 
 
 
+
 /*
 =========================
-PRELOAD UPCOMING VIDEOS
+LOAD UPCOMING VIDEOS
 =========================
 */
 
@@ -283,9 +328,14 @@ entries.forEach(entry=>{
 
 if(entry.isIntersecting){
 
-    loadVideo(entry.target);
+
+    loadVideo(
+        entry.target
+    );
+
 
 }
+
 
 
 });
@@ -294,14 +344,11 @@ if(entry.isIntersecting){
 },
 {
 
-
 rootMargin:
 "500px 0px",
 
-
 threshold:
 0.01
-
 
 });
 
@@ -329,7 +376,6 @@ if(index !== 0){
 
 
 
-
 /*
 =========================
 SCROLL PERFORMANCE
@@ -337,7 +383,7 @@ SCROLL PERFORMANCE
 */
 
 
-let ticking=false;
+let ticking = false;
 
 
 
@@ -419,7 +465,7 @@ updateImageParallax();
 
 /*
 =========================
-INITIAL LOAD
+INITIAL DRAW
 =========================
 */
 
