@@ -31,6 +31,7 @@ setTimeout(()=>{
 
 
 
+
 /*
 =========================
 PANELS
@@ -76,7 +77,7 @@ setPageHeight();
 
 /*
 =========================
-PANEL SCROLL ANIMATION
+PANEL ANIMATION
 =========================
 */
 
@@ -99,16 +100,12 @@ panels.forEach((panel,index)=>{
 
 if(index===0){
 
+panel.style.transform =
+"translateY(0)";
 
-    panel.style.transform =
-    "translateY(0)";
-
-
-    return;
-
+return;
 
 }
-
 
 
 
@@ -121,9 +118,8 @@ SCROLL_FACTOR;
 
 
 const progress =
-(scrollY - start) /
-(panelHeight * SCROLL_FACTOR);
-
+(scrollY-start) /
+(panelHeight*SCROLL_FACTOR);
 
 
 
@@ -132,7 +128,7 @@ Math.max(
 -100,
 Math.min(
 0,
--100 + (progress * 100)
+-100+(progress*100)
 )
 );
 
@@ -147,6 +143,7 @@ panel.style.transform =
 
 
 }
+
 
 
 
@@ -185,13 +182,13 @@ panel.getBoundingClientRect();
 
 const offset =
 rect.top +
-(rect.height / 2) -
-(window.innerHeight / 2);
+rect.height/2 -
+window.innerHeight/2;
 
 
 
 image.style.transform =
-`translateY(${offset * -0.82}px)`;
+`translateY(${offset*-0.82}px)`;
 
 
 });
@@ -206,9 +203,10 @@ image.style.transform =
 
 
 
+
 /*
 =========================
-VIMEO LAZY LOADING
+VIMEO PLAYER API
 =========================
 */
 
@@ -218,8 +216,9 @@ window.innerWidth <= 768;
 
 
 
-const videoContainers =
+const videoFrames =
 document.querySelectorAll(".video-frame");
+
 
 
 
@@ -246,18 +245,18 @@ return;
 
 
 
-const source =
+const url =
 iframe.dataset.src;
 
 
 
-if(!source)
+if(!url)
 return;
 
 
 
 iframe.src =
-source;
+url;
 
 
 
@@ -266,12 +265,70 @@ container.dataset.loaded =
 
 
 
+
+
 iframe.onload = ()=>{
+
+
+const player =
+new Vimeo.Player(iframe);
+
+
+
+player.setVolume(0);
+
+
+
+function startVideo(){
+
+
+player.play()
+
+.then(()=>{
 
 
 container.classList.add(
 "video-ready"
 );
+
+
+})
+
+
+.catch(()=>{
+
+
+// Safari retry
+
+setTimeout(()=>{
+
+
+player.play()
+.then(()=>{
+
+
+container.classList.add(
+"video-ready"
+);
+
+
+});
+
+
+},1000);
+
+
+
+});
+
+
+}
+
+
+
+startVideo();
+
+
 
 
 };
@@ -291,16 +348,17 @@ container.classList.add(
 /*
 =========================
 LOAD FIRST VIDEO
-IMMEDIATELY
 =========================
 */
 
 
-if(videoContainers.length){
+if(videoFrames.length){
 
-    loadVideo(
-        videoContainers[0]
-    );
+
+loadVideo(
+videoFrames[0]
+);
+
 
 }
 
@@ -311,9 +369,10 @@ if(videoContainers.length){
 
 
 
+
 /*
 =========================
-LOAD UPCOMING VIDEOS
+LAZY LOAD OTHER VIDEOS
 =========================
 */
 
@@ -329,9 +388,9 @@ entries.forEach(entry=>{
 if(entry.isIntersecting){
 
 
-    loadVideo(
-        entry.target
-    );
+loadVideo(
+entry.target
+);
 
 
 }
@@ -345,7 +404,7 @@ if(entry.isIntersecting){
 {
 
 rootMargin:
-"500px 0px",
+"800px 0px",
 
 threshold:
 0.01
@@ -357,17 +416,19 @@ threshold:
 
 
 
-videoContainers.forEach((video,index)=>{
+
+videoFrames.forEach((video,index)=>{
 
 
-if(index !== 0){
+if(index!==0){
 
-    videoObserver.observe(video);
+videoObserver.observe(video);
 
 }
 
 
 });
+
 
 
 
@@ -383,11 +444,11 @@ SCROLL PERFORMANCE
 */
 
 
-let ticking = false;
+let ticking=false;
 
 
 
-function scrollUpdate(){
+function handleScroll(){
 
 
 if(!ticking){
@@ -419,11 +480,12 @@ ticking=true;
 
 window.addEventListener(
 "scroll",
-scrollUpdate,
+handleScroll,
 {
 passive:true
 }
 );
+
 
 
 
@@ -465,7 +527,7 @@ updateImageParallax();
 
 /*
 =========================
-INITIAL DRAW
+INITIAL UPDATE
 =========================
 */
 
