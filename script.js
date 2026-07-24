@@ -16,6 +16,28 @@ const SCROLL_FACTOR = 1.5;
 
 
 
+/*
+=========================
+AUTOMATIC PAGE HEIGHT
+=========================
+*/
+
+
+document.body.style.height =
+`${(panels.length + 1) * SCROLL_FACTOR * 100}vh`;
+
+
+
+
+
+
+/*
+=========================
+PANEL SCROLL ANIMATION
+=========================
+*/
+
+
 function updatePanels(){
 
 
@@ -31,6 +53,8 @@ window.innerHeight;
 panels.forEach((panel,index)=>{
 
 
+// FIRST PANEL STAYS FIXED
+
 if(index===0){
 
 panel.style.transform =
@@ -39,6 +63,7 @@ panel.style.transform =
 return;
 
 }
+
 
 
 
@@ -75,6 +100,7 @@ panel.style.transform =
 
 
 }
+
 
 
 
@@ -131,7 +157,7 @@ image.style.transform =
 
 /*
 =========================
-VIDEO LOADING
+VIMEO LAZY LOADING
 =========================
 */
 
@@ -237,26 +263,59 @@ scrollUpdate,
 
 
 
+
+
+
+/*
+=========================
+RESIZE
+=========================
+*/
+
+
 window.addEventListener(
 "resize",
 ()=>{
+
+
+// recalculate height if device rotates
+
+document.body.style.height =
+`${panels.length * SCROLL_FACTOR * 100}vh`;
+
+
 
 updatePanels();
 
 updateImageParallax();
 
+
+});
+
+
+
+function setPageHeight(){
+
+    document.body.style.height =
+    `${(panels.length + .7) * SCROLL_FACTOR * 100}vh`;
+
 }
+
+
+setPageHeight();
+
+
+window.addEventListener(
+"resize",
+setPageHeight
 );
-
-
-
 
 
 
 
 /*
 =========================
-INITIAL
+INITIAL LOAD
 =========================
 */
 
@@ -264,6 +323,7 @@ INITIAL
 updatePanels();
 
 updateImageParallax();
+
 
 
 });
