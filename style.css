@@ -270,6 +270,24 @@ body {
 }
 
 
+.panel-contentright {
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:5;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    padding-right:0px;
+
+}
+
 
 
 
