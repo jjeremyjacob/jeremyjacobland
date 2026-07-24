@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 /*
 =========================
-FORCE START AT PANEL 1
+RESET SCROLL POSITION
 =========================
 */
 
@@ -15,16 +15,10 @@ if ("scrollRestoration" in history){
 }
 
 
-setTimeout(()=>{
-
-    window.scrollTo({
-        top:0,
-        left:0,
-        behavior:"instant"
-    });
-
-},50);
-
+window.scrollTo(
+    0,
+    0
+);
 
 
 
@@ -43,10 +37,8 @@ const panels =
 document.querySelectorAll(".panel");
 
 
-const TOTAL_PANELS = 10;
-
-
 const SCROLL_FACTOR = 1.5;
+
 
 
 
@@ -65,11 +57,16 @@ PAGE HEIGHT
 function setPageHeight(){
 
 
-document.body.style.height =
-`${((TOTAL_PANELS - 1) * SCROLL_FACTOR * 100) + 100}vh`;
+    const totalPanels =
+    panels.length;
+
+
+    document.body.style.height =
+    `${totalPanels * SCROLL_FACTOR * 100}vh`;
 
 
 }
+
 
 
 setPageHeight();
@@ -81,9 +78,10 @@ setPageHeight();
 
 
 
+
 /*
 =========================
-PANEL SCROLL ANIMATION
+PANEL MOVEMENT
 =========================
 */
 
@@ -91,63 +89,66 @@ PANEL SCROLL ANIMATION
 function updatePanels(){
 
 
-const scrollY =
-window.scrollY;
+    const scrollY =
+    window.scrollY;
 
 
-const panelHeight =
-window.innerHeight;
-
-
-
-panels.forEach((panel,index)=>{
-
-
-if(index===0){
-
-
-panel.style.transform =
-"translateY(0)";
-
-
-return;
-
-
-}
+    const panelHeight =
+    window.innerHeight;
 
 
 
-
-const start =
-index *
-panelHeight *
-SCROLL_FACTOR;
+    panels.forEach((panel,index)=>{
 
 
+        // first panel stays
 
-const progress =
-(scrollY - start) /
-(panelHeight * SCROLL_FACTOR);
-
+        if(index === 0){
 
 
-const position =
-Math.max(
--100,
-Math.min(
-0,
--100 + (progress * 100)
-)
-);
+            panel.style.transform =
+            "translateY(0)";
+
+
+            return;
+
+        }
 
 
 
-panel.style.transform =
-`translateY(${position}%)`;
+
+        const start =
+        (index - 1) *
+        panelHeight *
+        SCROLL_FACTOR;
 
 
 
-});
+
+        const progress =
+        (scrollY - start) /
+        (panelHeight * SCROLL_FACTOR);
+
+
+
+
+        const position =
+        Math.max(
+            -100,
+            Math.min(
+                0,
+                -100 + (progress * 100)
+            )
+        );
+
+
+
+        panel.style.transform =
+        `translateY(${position}%)`;
+
+
+
+    });
 
 
 }
@@ -170,36 +171,37 @@ IMAGE PARALLAX
 function updateImageParallax(){
 
 
-panels.forEach(panel=>{
+    panels.forEach(panel=>{
 
 
-const image =
-panel.querySelector(".panel-image");
-
-
-
-if(!image)
-return;
+        const image =
+        panel.querySelector(".panel-image");
 
 
 
-const rect =
-panel.getBoundingClientRect();
+        if(!image)
+        return;
 
 
 
-const offset =
-rect.top +
-(rect.height / 2) -
-(window.innerHeight / 2);
+        const rect =
+        panel.getBoundingClientRect();
 
 
 
-image.style.transform =
-`translateY(${offset * -0.82}px)`;
+        const offset =
+        rect.top +
+        rect.height / 2 -
+        window.innerHeight / 2;
 
 
-});
+
+
+        image.style.transform =
+        `translateY(${offset * -0.82}px)`;
+
+
+    });
 
 
 }
@@ -214,7 +216,7 @@ image.style.transform =
 
 /*
 =========================
-VIMEO PLAYER API
+VIMEO LOADING
 =========================
 */
 
@@ -224,8 +226,9 @@ window.innerWidth <= 768;
 
 
 
-const videoFrames =
+const videos =
 document.querySelectorAll(".video-frame");
+
 
 
 
@@ -234,124 +237,112 @@ document.querySelectorAll(".video-frame");
 function loadVideo(container){
 
 
-if(container.dataset.loaded)
-return;
+    if(container.dataset.loaded)
+    return;
 
 
 
-const iframe =
-isMobile
-?
-container.querySelector(".mobile-frame")
-:
-container.querySelector(".desktop-frame");
+    const iframe =
+    isMobile
+    ?
+    container.querySelector(".mobile-frame")
+    :
+    container.querySelector(".desktop-frame");
 
 
 
-if(!iframe)
-return;
+    if(!iframe)
+    return;
 
 
 
-iframe.src =
-iframe.dataset.src;
+    let src =
+    iframe.dataset.src;
 
 
 
-container.dataset.loaded =
-"true";
+    // add autoplay parameters
 
+    if(!src.includes("autoplay")){
 
+        src +=
+        "&autoplay=1&autopause=0&playsinline=1";
 
+    }
 
 
-iframe.onload = ()=>{
 
+    iframe.src =
+    src;
 
-const player =
-new Vimeo.Player(iframe);
 
 
+    container.dataset.loaded =
+    "true";
 
-player.setVolume(0);
 
 
 
-function playVideo(){
+    iframe.onload = ()=>{
 
 
-player.play()
+        if(typeof Vimeo === "undefined")
+        return;
 
-.then(()=>{
 
 
-container.classList.add(
-"video-ready"
-);
+        const player =
+        new Vimeo.Player(iframe);
 
 
-})
 
-.catch(()=>{
+        player.setVolume(0);
 
 
-setTimeout(()=>{
 
+        player.play()
 
-player.play()
+        .then(()=>{
 
-.then(()=>{
 
+            container.classList.add(
+                "video-ready"
+            );
 
-container.classList.add(
-"video-ready"
-);
 
+        })
 
-});
+        .catch(()=>{
 
 
-},1000);
+            // retry for iOS Safari
 
+            setTimeout(()=>{
 
-});
 
+                player.play()
 
-}
+                .then(()=>{
 
 
+                    container.classList.add(
+                        "video-ready"
+                    );
 
-playVideo();
 
+                });
 
 
-};
+            },1000);
 
 
 
-}
+        });
 
 
 
+    };
 
-
-
-
-
-
-/*
-=========================
-LOAD FIRST VIDEO
-=========================
-*/
-
-
-if(videoFrames.length){
-
-
-loadVideo(
-videoFrames[0]
-);
 
 
 }
@@ -366,7 +357,7 @@ videoFrames[0]
 
 /*
 =========================
-LAZY LOAD OTHER VIDEOS
+LOAD VIDEOS WHEN NEEDED
 =========================
 */
 
@@ -376,29 +367,29 @@ new IntersectionObserver(
 (entries)=>{
 
 
-entries.forEach(entry=>{
+    entries.forEach(entry=>{
 
 
-if(entry.isIntersecting){
+        if(entry.isIntersecting){
 
 
-loadVideo(
-entry.target
-);
+            loadVideo(
+                entry.target
+            );
 
 
-}
+        }
 
 
-});
+    });
 
 
 },
 {
 
-rootMargin:"800px 0px",
+    rootMargin:"800px 0px",
 
-threshold:0.01
+    threshold:0.01
 
 });
 
@@ -406,14 +397,10 @@ threshold:0.01
 
 
 
-videoFrames.forEach((video,index)=>{
+videos.forEach(video=>{
 
 
-if(index > 0){
-
-videoObserver.observe(video);
-
-}
+    videoObserver.observe(video);
 
 
 });
@@ -440,27 +427,27 @@ let ticking = false;
 function scrollUpdate(){
 
 
-if(!ticking){
+    if(!ticking){
 
 
-requestAnimationFrame(()=>{
+        requestAnimationFrame(()=>{
 
 
-updatePanels();
+            updatePanels();
 
-updateImageParallax();
-
-
-ticking=false;
+            updateImageParallax();
 
 
-});
+            ticking=false;
 
 
-ticking=true;
+        });
 
 
-}
+        ticking=true;
+
+
+    }
 
 
 }
@@ -471,7 +458,7 @@ window.addEventListener(
 "scroll",
 scrollUpdate,
 {
-passive:true
+    passive:true
 }
 );
 
@@ -495,13 +482,13 @@ window.addEventListener(
 ()=>{
 
 
-setPageHeight();
+    setPageHeight();
 
 
-updatePanels();
+    updatePanels();
 
 
-updateImageParallax();
+    updateImageParallax();
 
 
 });
@@ -516,7 +503,7 @@ updateImageParallax();
 
 /*
 =========================
-INITIAL DRAW
+INITIAL
 =========================
 */
 
@@ -524,6 +511,7 @@ INITIAL DRAW
 updatePanels();
 
 updateImageParallax();
+
 
 
 
