@@ -18,7 +18,6 @@ const SCROLL_FACTOR = 1.5;
 
 
 
-
 /*
 =========================
 PAGE HEIGHT
@@ -28,10 +27,8 @@ PAGE HEIGHT
 
 function setPageHeight(){
 
-
-document.body.style.height =
-`${panels.length * SCROLL_FACTOR * 100}vh`;
-
+    document.body.style.height =
+    `${panels.length * SCROLL_FACTOR * 100}vh`;
 
 }
 
@@ -44,9 +41,10 @@ setPageHeight();
 
 
 
+
 /*
 =========================
-PANEL SCROLL ANIMATION
+PANEL MOVEMENT
 =========================
 */
 
@@ -66,14 +64,12 @@ window.innerHeight;
 panels.forEach((panel,index)=>{
 
 
-// first panel stays visible
-
 if(index===0){
 
-panel.style.transform =
-"translateY(0)";
+    panel.style.transform =
+    "translateY(0)";
 
-return;
+    return;
 
 }
 
@@ -173,7 +169,7 @@ image.style.transform =
 
 /*
 =========================
-VIMEO LAZY LOADING
+VIMEO LOADING
 =========================
 */
 
@@ -211,18 +207,18 @@ return;
 
 
 
-const source =
+const url =
 iframe.dataset.src;
 
 
 
-if(!source)
+if(!url)
 return;
 
 
 
 iframe.src =
-source;
+url;
 
 
 
@@ -249,6 +245,34 @@ container.classList.add(
 
 
 
+/*
+=========================
+LOAD FIRST VIDEO NOW
+=========================
+*/
+
+
+if(videoContainers.length){
+
+    loadVideo(
+        videoContainers[0]
+    );
+
+}
+
+
+
+
+
+
+
+/*
+=========================
+PRELOAD UPCOMING VIDEOS
+=========================
+*/
+
+
 const videoObserver =
 new IntersectionObserver(
 (entries)=>{
@@ -259,9 +283,7 @@ entries.forEach(entry=>{
 
 if(entry.isIntersecting){
 
-
-loadVideo(entry.target);
-
+    loadVideo(entry.target);
 
 }
 
@@ -272,19 +294,30 @@ loadVideo(entry.target);
 },
 {
 
-threshold:0.25
+
+rootMargin:
+"500px 0px",
+
+
+threshold:
+0.01
+
+
+});
+
+
+
+
+
+
+videoContainers.forEach((video,index)=>{
+
+
+if(index !== 0){
+
+    videoObserver.observe(video);
 
 }
-);
-
-
-
-
-
-videoContainers.forEach(container=>{
-
-
-videoObserver.observe(container);
 
 
 });
@@ -304,7 +337,7 @@ SCROLL PERFORMANCE
 */
 
 
-let ticking = false;
+let ticking=false;
 
 
 
@@ -320,7 +353,6 @@ requestAnimationFrame(()=>{
 updatePanels();
 
 updateImageParallax();
-
 
 
 ticking=false;
