@@ -24,8 +24,6 @@ window.scrollTo(
 
 
 
-
-
 /*
 =========================
 PANELS
@@ -38,10 +36,6 @@ document.querySelectorAll(".panel");
 
 
 const SCROLL_FACTOR = 1.5;
-
-
-
-
 
 
 
@@ -62,7 +56,7 @@ function setPageHeight(){
 
 
     document.body.style.height =
-    `${totalPanels * SCROLL_FACTOR * 100}vh`;
+    `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
 
 
 }
@@ -70,10 +64,6 @@ function setPageHeight(){
 
 
 setPageHeight();
-
-
-
-
 
 
 
@@ -89,24 +79,44 @@ PANEL MOVEMENT
 function updatePanels(){
 
 
-    const maxScroll =
-    document.documentElement.scrollHeight -
-    window.innerHeight;
-
-
-    const scrollY =
-    maxScroll - window.scrollY;
-
-
     const panelHeight =
     window.innerHeight;
+
+
+    const isMobile =
+    window.innerWidth <= 768;
+
+
+    let scrollY;
+
+
+    if(isMobile){
+
+
+        const maxScroll =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+
+        scrollY =
+        maxScroll - window.scrollY;
+
+
+    }else{
+
+
+        scrollY =
+        window.scrollY;
+
+
+    }
 
 
 
     panels.forEach((panel,index)=>{
 
 
-        if(index === 0){
+        if(index===0){
 
 
             panel.style.transform =
@@ -119,12 +129,10 @@ function updatePanels(){
 
 
 
-
         const start =
         (index - 1) *
         panelHeight *
         SCROLL_FACTOR;
-
 
 
 
@@ -134,13 +142,12 @@ function updatePanels(){
 
 
 
-
         const position =
-        Math.max(
-            -100,
-            Math.min(
-                0,
-                -100 + (progress * 100)
+        Math.min(
+            0,
+            Math.max(
+                -100,
+                -100 + progress * 100
             )
         );
 
@@ -155,9 +162,6 @@ function updatePanels(){
 
 
 }
-
-
-
 
 
 
@@ -181,22 +185,18 @@ function updateImageParallax(){
         panel.querySelector(".panel-image");
 
 
-
         if(!image)
         return;
-
 
 
         const rect =
         panel.getBoundingClientRect();
 
 
-
         const offset =
         rect.top +
         rect.height / 2 -
         window.innerHeight / 2;
-
 
 
 
@@ -214,9 +214,6 @@ function updateImageParallax(){
 
 
 
-
-
-
 /*
 =========================
 VIMEO LOADING
@@ -228,11 +225,8 @@ const isMobile =
 window.innerWidth <= 768;
 
 
-
 const videos =
 document.querySelectorAll(".video-frame");
-
-
 
 
 
@@ -266,8 +260,10 @@ function loadVideo(container){
 
     if(!src.includes("autoplay")){
 
+
         src +=
         "&autoplay=1&autopause=0&playsinline=1";
+
 
     }
 
@@ -277,10 +273,8 @@ function loadVideo(container){
     src;
 
 
-
     container.dataset.loaded =
     "true";
-
 
 
 
@@ -335,19 +329,13 @@ function loadVideo(container){
             },1000);
 
 
-
         });
-
 
 
     };
 
 
-
 }
-
-
-
 
 
 
@@ -395,7 +383,6 @@ new IntersectionObserver(
 
 
 
-
 videos.forEach(video=>{
 
 
@@ -403,9 +390,6 @@ videos.forEach(video=>{
 
 
 });
-
-
-
 
 
 
@@ -437,13 +421,13 @@ function scrollUpdate(){
             updateImageParallax();
 
 
-            ticking=false;
+            ticking = false;
 
 
         });
 
 
-        ticking=true;
+        ticking = true;
 
 
     }
@@ -454,15 +438,12 @@ function scrollUpdate(){
 
 
 window.addEventListener(
-"scroll",
-scrollUpdate,
-{
-    passive:true
-}
+    "scroll",
+    scrollUpdate,
+    {
+        passive:true
+    }
 );
-
-
-
 
 
 
@@ -483,17 +464,12 @@ window.addEventListener(
 
     setPageHeight();
 
-
     updatePanels();
-
 
     updateImageParallax();
 
 
 });
-
-
-
 
 
 
@@ -509,14 +485,33 @@ INITIAL POSITION
 
 requestAnimationFrame(()=>{
 
-    window.scrollTo(
-        0,
-        document.documentElement.scrollHeight
-    );
+
+    if(window.innerWidth <= 768){
+
+
+        window.scrollTo(
+            0,
+            document.documentElement.scrollHeight -
+            window.innerHeight
+        );
+
+
+    }else{
+
+
+        window.scrollTo(
+            0,
+            0
+        );
+
+
+    }
+
 
     updatePanels();
 
     updateImageParallax();
+
 
 });
 
