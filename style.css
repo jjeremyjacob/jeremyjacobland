@@ -239,7 +239,7 @@ body {
 
     inset:0;
 
-    z-index:5;
+    z-index:20;
 
 
     display:flex;
@@ -260,7 +260,7 @@ body {
 
     inset:0;
 
-    z-index:5;
+    z-index:20;
 
 
     display:flex;
@@ -278,7 +278,7 @@ body {
 
     inset:0;
 
-    z-index:5;
+    z-index:20;
 
     display:flex;
 
