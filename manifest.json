@@ -1,5 +1,8 @@
 {
-  "name": "Jeremy Jacob — Transmissions From Another World",
+  "name":"Transmissions From Another World",
+
+"about":
+"Experimental moving images, performance, film, and visual storytelling by artist Jeremy Jacob.",
   "short_name": "Jeremy Jacob",
   "description": "Transmissions from another world. A cinematic archive of images, performances, films, and visual landscapes created by Jeremy Jacob.",
   "start_url": "/",

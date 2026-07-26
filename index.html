@@ -27,11 +27,13 @@ Transmissions from another world. A living archive of moving images, performance
 <meta name="keywords" content="
 Jeremy Jacob,
 artist,
+filmmaker,
 moving image,
 performance,
 film,
 visual art,
 contemporary art,
+experimental film,
 transmissions from another world
 ">
 
@@ -42,13 +44,27 @@ transmissions from another world
 <meta name="theme-color" content="#45291c">
 
 
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-title"
+content="Jeremy Jacob">
+
+<meta name="apple-mobile-web-app-status-bar-style"
+content="black">
+
+
+
+
 
 <!-- =========================
-     FAVICONS / APP ICONS
+     FAVICONS
 ========================= -->
 
 
-<link rel="icon" href="/images/favicon.ico">
+<link rel="icon"
+type="image/x-icon"
+href="/images/favicon.ico">
+
 
 <link rel="icon"
 type="image/png"
@@ -80,7 +96,8 @@ href="/manifest.json">
 ========================= -->
 
 
-<meta property="og:type" content="website">
+<meta property="og:type"
+content="website">
 
 
 <meta property="og:title"
@@ -113,6 +130,10 @@ content="https://jeremyjacob.com/images/social-preview.jpg">
 content="https://jeremyjacob.com/images/social-preview.jpg">
 
 
+<meta property="og:image:type"
+content="image/jpeg">
+
+
 <meta property="og:image:width"
 content="1200">
 
@@ -121,14 +142,9 @@ content="1200">
 content="630">
 
 
-<meta property="og:image:type"
-content="image/jpeg">
-
-
 <meta property="og:image:alt"
-content="
-Jeremy Jacob — Transmissions From Another World
-">
+content="Jeremy Jacob — Transmissions From Another World">
+
 
 
 
@@ -141,6 +157,10 @@ Jeremy Jacob — Transmissions From Another World
 
 
 <meta property="og:video"
+content="https://player.vimeo.com/video/1059894305">
+
+
+<meta property="og:video:secure_url"
 content="https://player.vimeo.com/video/1059894305">
 
 
@@ -162,7 +182,7 @@ content="1080">
 
 
 <!-- =========================
-     TWITTER / X CARD
+     TWITTER / X
 ========================= -->
 
 
@@ -202,29 +222,81 @@ content="@jeremyjacobland">
 
 {
  "@context":"https://schema.org",
- "@type":"VisualArtwork",
 
- "name":"Jeremy Jacob — Transmissions From Another World",
+ "@graph":[
 
- "description":
- "A collection of moving images, performances, films, and visual fragments created by artist Jeremy Jacob.",
+ {
+  "@type":"Person",
 
- "creator":{
-    "@type":"Person",
-    "name":"Jeremy Jacob",
-    "url":"https://jeremyjacob.com/",
-    "sameAs":[
-      "https://www.instagram.com/jeremyjacobland",
-      "https://www.x.com/jeremyjacobland",
-      "https://www.tiktok.com/@jeremyjacobland"
-    ]
+  "@id":"https://jeremyjacob.com/#person",
+
+  "name":"Jeremy Jacob",
+
+  "url":"https://jeremyjacob.com/",
+
+  "image":
+  "https://jeremyjacob.com/images/social-preview.jpg",
+
+  "jobTitle":
+  "Artist and filmmaker",
+
+  "sameAs":[
+   "https://www.instagram.com/jeremyjacobland",
+   "https://www.x.com/jeremyjacobland",
+   "https://www.tiktok.com/@jeremyjacobland"
+  ]
+
  },
 
- "image":
- "https://jeremyjacob.com/images/social-preview.jpg",
 
- "url":
- "https://jeremyjacob.com/"
+ {
+
+  "@type":"WebSite",
+
+  "@id":"https://jeremyjacob.com/#website",
+
+  "url":"https://jeremyjacob.com/",
+
+  "name":"Jeremy Jacob — Transmissions From Another World",
+
+  "description":
+  "A living archive of moving images, performances, films, and fragments created by artist Jeremy Jacob.",
+
+  "creator":
+  {
+    "@id":"https://jeremyjacob.com/#person"
+  }
+
+ },
+
+
+ {
+
+  "@type":"CreativeWork",
+
+  "@id":"https://jeremyjacob.com/#work",
+
+  "name":
+  "Transmissions From Another World",
+
+  "description":
+  "Signals, fragments, and transmissions from a world built between memory, movement, and imagination.",
+
+  "creator":
+  {
+    "@id":"https://jeremyjacob.com/#person"
+  },
+
+  "image":
+  "https://jeremyjacob.com/images/social-preview.jpg",
+
+  "url":
+  "https://jeremyjacob.com/"
+
+ }
+
+ ]
+
 }
 
 </script>
@@ -235,6 +307,7 @@ content="@jeremyjacobland">
 
 
 <link rel="stylesheet" href="style.css">
+
 
 
 
@@ -260,10 +333,6 @@ href="https://i.vimeocdn.com">
 
 
 
-<!-- =========================
-     VIMEO PLAYER API
-========================= -->
-
 
 <script src="https://player.vimeo.com/api/player.js"></script>
 
@@ -272,15 +341,15 @@ href="https://i.vimeocdn.com">
 
 
 
-
 <!-- =========================
-     FIRST SCREEN PRELOAD
+     FIRST FRAME PRELOAD
 ========================= -->
 
 
 <link rel="preload"
 as="image"
-href="images/section1.webp">
+href="images/section1.webp"
+fetchpriority="high">
 
 
 <link rel="preload"
@@ -304,9 +373,462 @@ href="images/section1-mobile.webp">
 
 
 
+<h1 class="seo-title">
+Jeremy Jacob — Transmissions From Another World
+</h1>
+
+
+
+<div class="seo-content">
+
+Transmissions from another world.
+A living archive of moving images, performances, films, and visual fragments created by artist Jeremy Jacob.
+
+</div>
+
+
+
+
+
+
+
+<section 
+class="panel panel-01"
+data-image="images/section1.webp"
+style="background-image:url('images/section1.webp');"
+aria-label="Transmissions From Another World by Jeremy Jacob">
+
+</section>
+
+
+
+
+
+
+
+
+<section class="panel panel-02">
+
+
+<div 
+class="video-frame"
+aria-label="Jeremy Jacob moving image transmission">
+
+
+<iframe
+class="desktop-frame"
+title="Jeremy Jacob — Transmissions From Another World — Moving Image Transmission"
+data-src="https://player.vimeo.com/video/1212723719?background=1&muted=1&loop=1"
+allow="autoplay; fullscreen; picture-in-picture"
+allowfullscreen
+webkitallowfullscreen
+playsinline
+frameborder="0">
+</iframe>
+
+
+<iframe
+class="mobile-frame"
+title="Jeremy Jacob — Transmissions From Another World — Mobile Moving Image Transmission"
+data-src="https://player.vimeo.com/video/1212004521?background=1&muted=1&loop=1"
+allow="autoplay; fullscreen; picture-in-picture"
+allowfullscreen
+webkitallowfullscreen
+playsinline
+frameborder="0">
+</iframe>
+
+
+</div>
+
+
+<div class="panel-contentleft">
+
+
+<img
+src="images/jeremyjacob.webp"
+class="panel-image logo-image"
+loading="lazy"
+decoding="async"
+alt="Jeremy Jacob artist portrait">
+
+
+</div>
+
+
+</section>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Jeremy Jacob — Transmissions From Another World
+</title>
+
+
+<meta name="description" content="
+Transmissions from another world. A living archive of moving images, performances, films, and fragments created by artist Jeremy Jacob.
+">
+
+
+<meta name="author" content="Jeremy Jacob">
+
+
+<meta name="robots" content="index, follow">
+
+
+<meta name="keywords" content="
+Jeremy Jacob,
+artist,
+filmmaker,
+moving image,
+performance,
+film,
+visual art,
+contemporary art,
+experimental film,
+transmissions from another world
+">
+
+
+<link rel="canonical" href="https://jeremyjacob.com/">
+
+
+<meta name="theme-color" content="#45291c">
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-title"
+content="Jeremy Jacob">
+
+<meta name="apple-mobile-web-app-status-bar-style"
+content="black">
+
+
+
+
+
 <!-- =========================
-     ACCESSIBLE DESCRIPTION
+     FAVICONS
 ========================= -->
+
+
+<link rel="icon"
+type="image/x-icon"
+href="/images/favicon.ico">
+
+
+<link rel="icon"
+type="image/png"
+sizes="192x192"
+href="/images/icon-192.png">
+
+
+<link rel="icon"
+type="image/png"
+sizes="512x512"
+href="/images/icon-512.png">
+
+
+<link rel="apple-touch-icon"
+href="/images/icon-192.png">
+
+
+<link rel="manifest"
+href="/manifest.json">
+
+
+
+
+
+
+
+<!-- =========================
+     OPEN GRAPH
+========================= -->
+
+
+<meta property="og:type"
+content="website">
+
+
+<meta property="og:title"
+content="Jeremy Jacob — Transmissions From Another World">
+
+
+<meta property="og:description"
+content="
+Signals, fragments, and transmissions from a world built between memory, movement, and imagination.
+">
+
+
+<meta property="og:url"
+content="https://jeremyjacob.com/">
+
+
+<meta property="og:site_name"
+content="Jeremy Jacob">
+
+
+<meta property="og:locale"
+content="en_US">
+
+
+<meta property="og:image"
+content="https://jeremyjacob.com/images/social-preview.jpg">
+
+
+<meta property="og:image:secure_url"
+content="https://jeremyjacob.com/images/social-preview.jpg">
+
+
+<meta property="og:image:type"
+content="image/jpeg">
+
+
+<meta property="og:image:width"
+content="1200">
+
+
+<meta property="og:image:height"
+content="630">
+
+
+<meta property="og:image:alt"
+content="Jeremy Jacob — Transmissions From Another World">
+
+
+
+
+
+
+
+<!-- =========================
+     OPEN GRAPH VIDEO
+========================= -->
+
+
+<meta property="og:video"
+content="https://player.vimeo.com/video/1059894305">
+
+<meta property="og:video:secure_url"
+content="https://player.vimeo.com/video/1059894305">
+
+<meta property="og:video:type"
+content="text/html">
+
+
+<meta property="og:video:width"
+content="1920">
+
+
+<meta property="og:video:height"
+content="1080">
+
+
+
+
+
+
+
+<!-- =========================
+     TWITTER / X
+========================= -->
+
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+
+<meta name="twitter:title"
+content="Jeremy Jacob — Transmissions From Another World">
+
+
+<meta name="twitter:description"
+content="
+Signals, fragments, and transmissions from a world built between memory, movement, and imagination.
+">
+
+
+<meta name="twitter:image"
+content="https://jeremyjacob.com/images/social-preview.jpg">
+
+
+<meta name="twitter:creator"
+content="@jeremyjacobland">
+
+
+
+
+
+
+
+<!-- =========================
+     STRUCTURED DATA
+========================= -->
+
+
+<script type="application/ld+json">
+
+{
+ "@context":"https://schema.org",
+
+ "@graph":[
+
+ {
+  "@type":"Person",
+
+  "@id":"https://jeremyjacob.com/#person",
+
+  "name":"Jeremy Jacob",
+
+  "url":"https://jeremyjacob.com/",
+
+  "image":
+  "https://jeremyjacob.com/images/social-preview.jpg",
+
+  "jobTitle":
+  "Artist and filmmaker",
+
+  "sameAs":[
+   "https://www.instagram.com/jeremyjacobland",
+   "https://www.x.com/jeremyjacobland",
+   "https://www.tiktok.com/@jeremyjacobland"
+  ]
+
+ },
+
+
+ {
+
+  "@type":"WebSite",
+
+  "@id":"https://jeremyjacob.com/#website",
+
+  "url":"https://jeremyjacob.com/",
+
+  "name":"Jeremy Jacob — Transmissions From Another World",
+
+  "description":
+  "A living archive of moving images, performances, films, and fragments created by artist Jeremy Jacob.",
+
+  "creator":
+  {
+    "@id":"https://jeremyjacob.com/#person"
+  }
+
+ },
+
+
+ {
+
+  "@type":"CreativeWork",
+
+  "@id":"https://jeremyjacob.com/#work",
+
+  "name":
+  "Transmissions From Another World",
+
+  "description":
+  "Signals, fragments, and transmissions from a world built between memory, movement, and imagination.",
+
+  "creator":
+  {
+    "@id":"https://jeremyjacob.com/#person"
+  },
+
+  "image":
+  "https://jeremyjacob.com/images/social-preview.jpg",
+
+  "url":
+  "https://jeremyjacob.com/"
+
+ }
+
+ ]
+
+}
+
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css">
+
+
+
+
+
+
+<!-- =========================
+     VIMEO OPTIMIZATION
+========================= -->
+
+
+<link rel="preconnect"
+href="https://player.vimeo.com">
+
+
+<link rel="preconnect"
+href="https://f.vimeocdn.com">
+
+
+<link rel="dns-prefetch"
+href="https://i.vimeocdn.com">
+
+
+
+
+
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+
+
+
+
+
+<!-- =========================
+     FIRST FRAME PRELOAD
+========================= -->
+
+
+<link rel="preload"
+as="image"
+href="images/section1.webp"
+fetchpriority="high">
+
+
+<link rel="preload"
+as="image"
+href="images/section1-mobile.webp">
+
+
+
+</head>
+
+
+
+
+
+
+<body>
+
+
+
+<main>
+
 
 
 <h1 class="seo-title">
@@ -328,15 +850,13 @@ A living archive of moving images, performances, films, and visual fragments cre
 
 
 
-<!-- =========================
-     PANEL 1
-========================= -->
-
+<!-- PANEL 1 -->
 
 <section 
 class="panel panel-01"
 data-image="images/section1.webp"
-style="background-image:url('images/section1.webp');">
+style="background-image:url('images/section1.webp');"
+aria-label="Transmissions From Another World by Jeremy Jacob">
 
 </section>
 
@@ -346,10 +866,7 @@ style="background-image:url('images/section1.webp');">
 
 
 
-<!-- =========================
-     PANEL 2 VIDEO
-========================= -->
-
+<!-- PANEL 2 VIDEO -->
 
 <section class="panel panel-02">
 
@@ -360,6 +877,7 @@ style="background-image:url('images/section1.webp');">
 
 <iframe
 class="desktop-frame"
+title="Jeremy Jacob — moving image transmission from another world"
 data-src="https://player.vimeo.com/video/1212723719?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture"
 allowfullscreen
@@ -371,9 +889,9 @@ frameborder="0">
 
 
 
-
 <iframe
 class="mobile-frame"
+title="Jeremy Jacob — mobile moving image transmission"
 data-src="https://player.vimeo.com/video/1212004521?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture"
 allowfullscreen
@@ -405,352 +923,3 @@ alt="Jeremy Jacob artist portrait">
 
 
 </section>
-
-
-
-
-
-
-
-
-<!-- =========================
-     PANEL 3
-========================= -->
-
-
-<section
-class="panel panel-03"
-data-image="images/section3.webp">
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-     PANEL 4 VIDEO
-========================= -->
-
-
-<section class="panel panel-04">
-
-
-<div class="video-frame">
-
-
-
-<iframe
-class="desktop-frame"
-data-src="https://player.vimeo.com/video/1085343551?background=1&muted=1&loop=1"
-allow="autoplay; fullscreen; picture-in-picture"
-allowfullscreen
-webkitallowfullscreen
-playsinline
-frameborder="0">
-</iframe>
-
-
-
-
-
-<iframe
-class="mobile-frame"
-data-src="https://player.vimeo.com/video/1212130397?background=1&muted=1&loop=1"
-allow="autoplay; fullscreen; picture-in-picture"
-allowfullscreen
-webkitallowfullscreen
-playsinline
-frameborder="0">
-</iframe>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-     PANEL 5
-========================= -->
-
-
-<section
-class="panel panel-05"
-data-image="images/section5.webp">
-
-</section>
-
-<!-- =========================
-     PANEL 6
-========================= -->
-
-
-<section
-class="panel panel-06"
-data-image="images/section6.webp">
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- =========================
-     PANEL 7
-========================= -->
-
-
-<section
-class="panel panel-07"
-data-image="images/section7.webp">
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- =========================
-     PANEL 8
-========================= -->
-
-
-<section
-class="panel panel-08"
-data-image="images/section8.webp">
-
-
-<div class="panel-contentleft">
-
-
-<a 
-href="https://jjeremyjacob.github.io/jeremyjacob/"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="Find Jeremy Jacob online">
-
-
-<img
-src="images/findme.webp"
-class="panel-image find-image"
-loading="lazy"
-decoding="async"
-alt="Find Jeremy Jacob online">
-
-
-</a>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- =========================
-     PANEL 9
-========================= -->
-
-
-<section
-class="panel panel-09"
-data-image="images/section9.webp">
-
-
-
-<div class="panel-content social-links">
-
-
-
-<a 
-href="https://www.x.com/jeremyjacobland"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="Jeremy Jacob on X">
-
-
-<img
-src="images/x.webp"
-class="panel-image social-image"
-loading="lazy"
-decoding="async"
-alt="Jeremy Jacob on X">
-
-
-</a>
-
-
-
-
-
-<a 
-href="https://www.instagram.com/jeremyjacobland"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="Jeremy Jacob on Instagram">
-
-
-<img
-src="images/instagram.webp"
-class="panel-image social-image"
-loading="lazy"
-decoding="async"
-alt="Jeremy Jacob on Instagram">
-
-
-</a>
-
-
-
-
-
-<a 
-href="https://www.tiktok.com/@jeremyjacobland"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="Jeremy Jacob on TikTok">
-
-
-<img
-src="images/tiktok.webp"
-class="panel-image social-image"
-loading="lazy"
-decoding="async"
-alt="Jeremy Jacob on TikTok">
-
-
-</a>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- =========================
-     PANEL 10 VIDEO
-========================= -->
-
-
-<section class="panel panel-10">
-
-
-
-<div class="panel-contentleft">
-
-
-<img
-src="images/email.webp"
-class="bottom-image email-image"
-loading="lazy"
-decoding="async"
-alt="Contact Jeremy Jacob">
-
-
-</div>
-
-
-
-
-
-<div class="video-frame">
-
-
-
-<iframe
-class="desktop-frame"
-data-src="https://player.vimeo.com/video/1059894305?background=1&muted=1&loop=1"
-allow="autoplay; fullscreen; picture-in-picture"
-allowfullscreen
-webkitallowfullscreen
-playsinline
-frameborder="0">
-</iframe>
-
-
-
-
-
-<iframe
-class="mobile-frame"
-data-src="https://player.vimeo.com/video/1103767067?background=1&muted=1&loop=1"
-allow="autoplay; fullscreen; picture-in-picture"
-allowfullscreen
-webkitallowfullscreen
-playsinline
-frameborder="0">
-</iframe>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-</main>
-
-
-
-
-
-
-
-<!-- =========================
-     SITE SCRIPT
-========================= -->
-
-
-<script src="script.js"></script>
-
-
-
-
-
-</body>
-
-</html>
