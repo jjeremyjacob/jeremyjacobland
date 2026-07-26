@@ -767,58 +767,6 @@ a {
 
 
 /* =========================
-   GRAIN OVERLAY
-========================= */
-
-body::after {
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    background:
-    url("images/grain.webp");
-
-    background-repeat:repeat;
-
-    opacity:.1;
-
-    mix-blend-mode:screen;
-
-    z-index:999;
-
-    animation:
-    grainFlicker 1.25s infinite;
-
-}
-
-
-
-@keyframes grainFlicker {
-
-    0%   { opacity:.04; }
-
-    10%  { opacity:.08; }
-
-    20%  { opacity:.05; }
-
-    35%  { opacity:.09; }
-
-    50%  { opacity:.03; }
-
-    65%  { opacity:.07; }
-
-    80%  { opacity:.05; }
-
-    100% { opacity:.06; }
-
-}
-
-/* =========================
    TRANSMISSION INTRO
 ========================= */
 
