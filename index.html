@@ -17,8 +17,8 @@
 
 <!-- Vimeo optimization -->
 
-<link rel="preconnect" href="https://player.vimeo.com">
-<link rel="preconnect" href="https://i.vimeocdn.com">
+<link rel="preconnect" href="https://f.vimeocdn.com">
+<link rel="dns-prefetch" href="https://player.vimeo.com">
 
 
 <!-- Vimeo Player API -->
@@ -29,6 +29,7 @@
 
 <!-- First screen preload -->
 
+<link rel="preload" as="image" href="images/section1.webp">
 <link rel="preload" as="image" href="images/section1-mobile.webp">
 
 
@@ -45,7 +46,11 @@
      PANEL 1
 ========================= -->
 
-<section class="panel panel-01"></section>
+
+<section 
+class="panel panel-01"
+data-image="images/section1.webp">
+</section>
 
 
 
@@ -107,6 +112,8 @@ frameborder="0">
 src="images/jeremyjacob.webp"
 class="panel-image"
 style="width:130px;"
+loading="lazy"
+decoding="async"
 alt="Jeremy Jacob">
 
 
@@ -129,7 +136,10 @@ alt="Jeremy Jacob">
 ========================= -->
 
 
-<section class="panel panel-03"></section>
+<section
+class="panel panel-03"
+data-image="images/section3.webp">
+</section>
 
 
 
@@ -196,24 +206,19 @@ frameborder="0">
 ========================= -->
 
 
-<section class="panel panel-05"></section>
-
-
-
-
-
-
-
-
+<section
+class="panel panel-05"
+data-image="images/section5.webp">
+</section>
 
 <!-- =========================
      PANEL 6
 ========================= -->
 
 
-<section class="panel panel-06">
-
-
+<section
+class="panel panel-06"
+data-image="images/section6.webp">
 </section>
 
 
@@ -229,7 +234,10 @@ frameborder="0">
 ========================= -->
 
 
-<section class="panel panel-07"></section>
+<section
+class="panel panel-07"
+data-image="images/section7.webp">
+</section>
 
 
 
@@ -244,7 +252,10 @@ frameborder="0">
 ========================= -->
 
 
-<section class="panel panel-08">
+<section
+class="panel panel-08"
+data-image="images/section8.webp">
+
 
 
 <div class="panel-contentleft">
@@ -259,6 +270,8 @@ rel="noopener noreferrer">
 src="images/findme.webp"
 class="panel-image"
 style="width:200px;"
+loading="lazy"
+decoding="async"
 alt="Find Me">
 
 
@@ -269,38 +282,93 @@ alt="Find Me">
 
 
 </section>
+
+
+
+
+
+
+
+
+
 <!-- =========================
      PANEL 9
 ========================= -->
 
-<section class="panel panel-09">
 
-   <div class="panel-content social-links">
+<section
+class="panel panel-09"
+data-image="images/section9.webp">
 
-    <a href="https://www.x.com/jeremyjacobland" target="_blank" rel="noopener noreferrer">
-    <img
+
+
+<div class="panel-content social-links">
+
+
+
+<a href="https://www.x.com/jeremyjacobland"
+target="_blank"
+rel="noopener noreferrer">
+
+
+<img
 src="images/x.webp"
 class="panel-image"
+loading="lazy"
+decoding="async"
 alt="X">
-    </a>
 
-    <a href="https://www.instagram.com/jeremyjacobland" target="_blank" rel="noopener noreferrer">
-        <img
+
+</a>
+
+
+
+
+
+<a href="https://www.instagram.com/jeremyjacobland"
+target="_blank"
+rel="noopener noreferrer">
+
+
+<img
 src="images/instagram.webp"
 class="panel-image"
+loading="lazy"
+decoding="async"
 alt="Instagram">
-    </a>
 
-    <a href="https://www.tiktok.com/@jeremyjacobland" target="_blank" rel="noopener noreferrer">
-       <img
+
+</a>
+
+
+
+
+
+<a href="https://www.tiktok.com/@jeremyjacobland"
+target="_blank"
+rel="noopener noreferrer">
+
+
+<img
 src="images/tiktok.webp"
 class="panel-image"
+loading="lazy"
+decoding="async"
 alt="TikTok">
-    </a>
+
+
+</a>
+
+
 
 </div>
 
+
+
 </section>
+
+
+
 
 
 
@@ -314,15 +382,24 @@ alt="TikTok">
 
 <section class="panel panel-10">
 
-    <div class="panel-contentleft">
 
-        <img
-        src="images/email.webp"
-        class="bottom-image"
-        style="width:350px;"
-        alt="Email">
 
-    </div>
+<div class="panel-contentleft">
+
+
+<img
+src="images/email.webp"
+class="bottom-image"
+style="width:350px;"
+loading="lazy"
+decoding="async"
+alt="Email">
+
+
+</div>
+
+
+
 
 
 <div class="video-frame">

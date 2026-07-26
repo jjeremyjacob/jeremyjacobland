@@ -62,11 +62,142 @@ function setPageHeight(){
 }
 
 
-
 setPageHeight();
 
 
+/*
+=========================
+LAZY LOAD PANEL IMAGES
+DESKTOP + MOBILE
+=========================
+*/
 
+
+function loadPanelImages(){
+
+
+    const isMobile =
+    window.innerWidth <= 768;
+
+
+
+    const imageObserver =
+    new IntersectionObserver(
+    (entries)=>{
+
+
+        entries.forEach(entry=>{
+
+
+            if(entry.isIntersecting){
+
+
+                const panel =
+                entry.target;
+
+
+
+                let image =
+                panel.dataset.image;
+
+
+
+                if(!image)
+                return;
+
+
+
+
+                /*
+                MOBILE IMAGE SWAP
+                */
+
+
+                if(isMobile){
+
+
+                    image =
+                    image.replace(
+                        ".webp",
+                        "-mobile.webp"
+                    );
+
+
+                }
+
+
+
+
+                /*
+                PRELOAD IMAGE
+                */
+
+
+                const img =
+                new Image();
+
+
+
+                img.onload = ()=>{
+
+
+                    panel.style.backgroundImage =
+                    `url("${image}")`;
+
+
+                };
+
+
+
+                img.src =
+                image;
+
+
+
+
+                imageObserver.unobserve(panel);
+
+
+
+            }
+
+
+        });
+
+
+
+    },
+    {
+
+
+        /*
+        LOAD BEFORE ARRIVAL
+        */
+
+
+        rootMargin:"500px 0px"
+
+
+    });
+
+
+
+
+
+    panels.forEach(panel=>{
+
+
+        imageObserver.observe(panel);
+
+
+    });
+
+
+
+}
+
+
+loadPanelImages();
 
 
 /*
@@ -87,7 +218,9 @@ function updatePanels(){
     window.innerWidth <= 768;
 
 
+
     let scrollY;
+
 
 
     if(isMobile){
@@ -102,7 +235,8 @@ function updatePanels(){
         maxScroll - window.scrollY;
 
 
-    }else{
+    }
+    else{
 
 
         scrollY =
@@ -110,6 +244,7 @@ function updatePanels(){
 
 
     }
+
 
 
 
@@ -125,6 +260,7 @@ function updatePanels(){
 
             return;
 
+
         }
 
 
@@ -133,6 +269,7 @@ function updatePanels(){
         (index - 1) *
         panelHeight *
         SCROLL_FACTOR;
+
 
 
 
@@ -161,7 +298,9 @@ function updatePanels(){
     });
 
 
+
 }
+
 
 
 
@@ -170,22 +309,31 @@ function updatePanels(){
 
 /*
 =========================
-IMAGE PARALLAX
+INDEPENDENT IMAGE PARALLAX
 =========================
 */
 
+
 function updateImageParallax(){
 
+
     panels.forEach(panel=>{
+
 
         const images =
         panel.querySelectorAll(".panel-image");
 
+
+
         if(!images.length)
         return;
 
+
+
         const rect =
         panel.getBoundingClientRect();
+
+
 
         const offset =
         rect.top +
@@ -193,26 +341,46 @@ function updateImageParallax(){
         window.innerHeight / 2;
 
 
+
+
         images.forEach((image,index)=>{
+
+
 
             let speed;
 
 
+
             if(index === 0){
 
-                speed = -0.9; // X
 
-            } 
-            else if(index === 1){
+                speed = -0.9; // first image
 
-                speed = -0.6; // Instagram
-
-            } 
-            else if(index === 2){
-
-                speed = 0.3; // TikTok
 
             }
+            else if(index === 1){
+
+
+                speed = -0.6; // second image
+
+
+            }
+            else if(index === 2){
+
+
+                speed = -0.3; // third image
+
+
+            }
+            else{
+
+
+                speed = -0.82;
+
+
+            }
+
+
 
 
             image.style.transform =
@@ -222,10 +390,15 @@ function updateImageParallax(){
         });
 
 
+
     });
 
 
 }
+
+
+
+
 
 
 
@@ -242,8 +415,10 @@ const isMobile =
 window.innerWidth <= 768;
 
 
+
 const videos =
 document.querySelectorAll(".video-frame");
+
 
 
 
@@ -253,6 +428,7 @@ function loadVideo(container){
 
     if(container.dataset.loaded)
     return;
+
 
 
 
@@ -268,10 +444,32 @@ function loadVideo(container){
     if(!iframe)
     return;
 
+/*
+=========================
+REMOVE UNUSED VIDEO
+=========================
+*/
+
+
+const unusedFrame =
+isMobile
+?
+container.querySelector(".desktop-frame")
+:
+container.querySelector(".mobile-frame");
+
+
+
+if(unusedFrame){
+
+    unusedFrame.remove();
+
+}
 
 
     let src =
     iframe.dataset.src;
+
 
 
 
@@ -286,8 +484,10 @@ function loadVideo(container){
 
 
 
+
     iframe.src =
     src;
+
 
 
     container.dataset.loaded =
@@ -295,11 +495,15 @@ function loadVideo(container){
 
 
 
+
+
     iframe.onload = ()=>{
+
 
 
         if(typeof Vimeo === "undefined")
         return;
+
 
 
 
@@ -308,7 +512,9 @@ function loadVideo(container){
 
 
 
+
         player.setVolume(0);
+
 
 
 
@@ -327,6 +533,7 @@ function loadVideo(container){
         .catch(()=>{
 
 
+
             setTimeout(()=>{
 
 
@@ -343,13 +550,17 @@ function loadVideo(container){
                 });
 
 
+
             },1000);
+
 
 
         });
 
 
+
     };
+
 
 
 }
@@ -359,9 +570,10 @@ function loadVideo(container){
 
 
 
+
 /*
 =========================
-LOAD VIDEOS WHEN NEEDED
+VIDEO OBSERVER
 =========================
 */
 
@@ -391,11 +603,12 @@ new IntersectionObserver(
 },
 {
 
-    rootMargin:"800px 0px",
+    rootMargin:"150px 0px",
 
     threshold:0.01
 
 });
+
 
 
 
@@ -413,6 +626,9 @@ videos.forEach(video=>{
 
 
 
+
+
+
 /*
 =========================
 SCROLL PERFORMANCE
@@ -421,6 +637,7 @@ SCROLL PERFORMANCE
 
 
 let ticking = false;
+
 
 
 
@@ -444,23 +661,29 @@ function scrollUpdate(){
         });
 
 
+
         ticking = true;
 
 
     }
 
 
+
 }
 
 
 
+
 window.addEventListener(
-    "scroll",
-    scrollUpdate,
-    {
-        passive:true
-    }
+"scroll",
+scrollUpdate,
+{
+    passive:true
+}
 );
+
+
+
 
 
 
@@ -493,6 +716,9 @@ window.addEventListener(
 
 
 
+
+
+
 /*
 =========================
 INITIAL POSITION
@@ -513,7 +739,8 @@ requestAnimationFrame(()=>{
         );
 
 
-    }else{
+    }
+    else{
 
 
         window.scrollTo(
@@ -525,12 +752,15 @@ requestAnimationFrame(()=>{
     }
 
 
+
     updatePanels();
 
     updateImageParallax();
 
 
+
 });
+
 
 
 });

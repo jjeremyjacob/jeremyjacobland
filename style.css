@@ -58,15 +58,11 @@ body {
 
     left:0;
 
-
     width:100%;
-
 
     height:100dvh;
 
-
     overflow:hidden;
-
 
     background-size:cover;
 
@@ -74,24 +70,25 @@ body {
 
     background-repeat:no-repeat;
 
+    background-image:none;
 
 
     border-bottom:
     12px solid rgba(69,41,28,1);
 
 
-
     box-shadow:
     0 20px 60px rgba(0,0,0,.8);
 
 
-
     will-change:transform;
-
 
     backface-visibility:hidden;
 
     -webkit-backface-visibility:hidden;
+
+
+    content-visibility:auto;
 
 }
 
@@ -128,99 +125,60 @@ body {
 
 
 /* =========================
-   DESKTOP BACKGROUNDS
+   PANEL LAYERS
 ========================= */
 
 
 .panel-01 {
-
-    background-image:
-    url("images/section1.webp");
-
     z-index:1;
-
 }
 
 
 .panel-02 {
-
     z-index:2;
-
 }
 
 
 .panel-03 {
-
-    background-image:
-    url("images/section3.webp");
-
     z-index:3;
-
 }
 
 
 .panel-04 {
-
     z-index:4;
-
 }
 
 
 .panel-05 {
-
-    background-image:
-    url("images/section5.webp");
-
     z-index:5;
-
 }
 
 
 .panel-06 {
-
-    background-image:
-    url("images/section6.webp");
-
     z-index:6;
-
 }
 
 
 .panel-07 {
-
-    background-image:
-    url("images/section7.webp");
-
     z-index:7;
-
 }
 
 
 .panel-08 {
-
-    background-image:
-    url("images/section8.webp");
-
     z-index:8;
-
 }
 
 
 .panel-09 {
-
-    background-image:
-    url("images/section9.webp");
-
     z-index:9;
-
 }
 
 
 .panel-10 {
-
     z-index:10;
-
 }
+
+
 
 
 
@@ -230,6 +188,7 @@ body {
    CONTENT
 ========================= */
 
+
 .panel-content {
 
     position:absolute;
@@ -238,6 +197,7 @@ body {
 
     z-index:20;
 
+
     display:flex;
 
     justify-content:center;
@@ -245,6 +205,8 @@ body {
     align-items:center;
 
 }
+
+
 
 .panel-contentright {
 
@@ -254,15 +216,16 @@ body {
 
     z-index:20;
 
+
     display:flex;
 
     justify-content:flex-end;
 
     align-items:center;
 
-    padding-right:0;
-
 }
+
+
 
 .panel-contentleft {
 
@@ -272,6 +235,7 @@ body {
 
     z-index:20;
 
+
     display:flex;
 
     justify-content:flex-start;
@@ -280,30 +244,42 @@ body {
 
 }
 
+
+
+
+
+
+/* =========================
+   SOCIAL LINKS
+========================= */
+
+
 .social-links {
-    position:absolute;
-    inset:0;
 
     display:flex;
+
     flex-direction:column;
 
     justify-content:center;
+
     align-items:center;
 
     gap:20px;
 
-    z-index:20;
-}
-
-.social-links .panel-image {
-
-    width:200px;
-
-    height:auto;
-
-    display:block;
+    padding-right:100px;
 
 }
+
+
+
+
+
+
+
+/* =========================
+   IMAGES
+========================= */
+
 
 .panel-image {
 
@@ -311,9 +287,13 @@ body {
 
     height:auto;
 
+    display:block;
+
     will-change:transform;
 
 }
+
+
 
 .bottom-image {
 
@@ -324,6 +304,11 @@ body {
     left:0;
 
 }
+
+
+
+
+
 
 
 /* =========================
@@ -344,7 +329,7 @@ body {
 
     background-size:cover;
 
-   background-position:center bottom;
+    background-position:center bottom;
 
     background-repeat:no-repeat;
 
@@ -385,9 +370,8 @@ body {
 
 
 
-
 /* =========================
-   VIMEO NO FADE
+   VIMEO
 ========================= */
 
 
@@ -415,15 +399,17 @@ body {
     border:0;
 
 
+    opacity:0;
 
-    opacity:1;
+
+    transition:
+    opacity .5s ease;
+
 
     visibility:visible;
 
 
-
     z-index:2;
-
 
 
     pointer-events:auto;
@@ -436,6 +422,13 @@ body {
 
 }
 
+
+
+.video-ready iframe {
+
+    opacity:1;
+
+}
 
 
 
@@ -455,12 +448,12 @@ body {
 }
 
 
+
 .mobile-frame {
 
     display:none;
 
 }
-
 
 
 
@@ -477,6 +470,7 @@ body {
 
 
 
+    
 .panel {
 
     height:100dvh;
@@ -486,107 +480,6 @@ body {
     8px solid rgba(69,41,28,1);
 
 }
-
-
-
-
-
-
-/* MOBILE IMAGES */
-
-
-.panel-01 {
-
-    background-image:
-    url("images/section1-mobile.webp");
-
-}
-
-
-.panel-03 {
-
-    background-image:
-    url("images/section3-mobile.webp");
-
-}
-
-
-.panel-05 {
-
-    background-image:
-    url("images/section5-mobile.webp");
-
-}
-
-
-.panel-06 {
-
-    background-image:
-    url("images/section6-mobile.webp");
-
-}
-
-
-.panel-07 {
-
-    background-image:
-    url("images/section7-mobile.webp");
-
-}
-
-
-.panel-08 {
-
-    background-image:
-    url("images/section8-mobile.webp");
-
-}
-
-
-.panel-09 {
-
-    background-image:
-    url("images/section9-mobile.webp");
-
-}
-
-
-
-
-
-
-
-
-/* MOBILE VIDEO POSTERS */
-
-
-.panel-02 .video-frame {
-
-    background-image:
-    url("images/section2-mobile.webp");
-
-}
-
-
-
-.panel-04 .video-frame {
-
-    background-image:
-    url("images/section4-mobile.webp");
-
-}
-
-
-
-.panel-10 .video-frame {
-
-    background-image:
-    url("images/section10-mobile.webp");
-
-}
-
-
-
 
 
 
@@ -610,13 +503,14 @@ body {
 
 
 
-
 .video-frame iframe {
 
 
     width:177.78vh;
 
     height:100vh;
+
+    max-width:none;
 
 
     top:50%;
@@ -634,7 +528,6 @@ body {
 
 
 
-
 .panel-image {
 
     width:100px;
@@ -643,8 +536,15 @@ body {
 
 
 
+.social-links {
+
+    padding-right:0;
+
 }
 
+
+
+}
 
 
 
