@@ -247,29 +247,11 @@ body {
     justify-content:center;
 
     align-items:center;
+    padding-right:100px;
 
 }
 
 
-
-
-
-.panel-contentleft {
-
-    position:absolute;
-
-    inset:0;
-
-    z-index:20;
-
-
-    display:flex;
-
-    justify-content:flex-start;
-
-    align-items:center;
-
-}
 
 
 .panel-contentright {
@@ -290,6 +272,25 @@ body {
 
 }
 
+.panel-contentleft {
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:20;
+
+
+    display:flex;
+
+    justify-content:flex-start;
+
+    align-items:center;
+
+}
+
+
+
 
 
 
@@ -303,7 +304,22 @@ body {
 
 }
 
+.tiktok-image {
 
+    width:100px;
+
+    height:auto;
+
+    will-change:scroll-position;
+
+}
+
+
+.bottom-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
 
 
 
