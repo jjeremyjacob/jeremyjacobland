@@ -1,3 +1,7 @@
+/* =========================
+   RESET
+========================= */
+
 * {
     margin:0;
     padding:0;
@@ -22,6 +26,11 @@ body {
 
 }
 
+
+
+/* =========================
+   GLOBAL
+========================= */
 
 body {
 
@@ -48,14 +57,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    PANELS
 ========================= */
-
 
 .panel {
 
@@ -71,6 +75,7 @@ a {
     overflow:hidden;
 
     contain:paint;
+
 
     background-size:cover;
 
@@ -91,14 +96,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    PANEL STACK
 ========================= */
-
 
 .panel-01 { z-index:1; }
 .panel-02 { z-index:2; }
@@ -113,14 +113,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    CONTENT ALIGNMENT
 ========================= */
-
 
 .panel-content,
 .panel-contentleft,
@@ -170,14 +165,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    SOCIAL LINKS
 ========================= */
-
 
 .social-links {
 
@@ -189,7 +179,9 @@ a {
 
     align-items:center;
 
+
     gap:20px;
+
 
     padding-right:100px;
 
@@ -197,14 +189,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    IMAGES
 ========================= */
-
 
 .panel-image {
 
@@ -262,14 +249,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    VIDEO PANELS
 ========================= */
-
 
 .video-frame {
 
@@ -277,9 +259,12 @@ a {
 
     inset:0;
 
+
     overflow:hidden;
 
+
     z-index:1;
+
 
     background-size:cover;
 
@@ -291,8 +276,6 @@ a {
 
 
 
-
-
 .panel-02 .video-frame {
 
     background-image:
@@ -301,12 +284,14 @@ a {
 }
 
 
+
 .panel-04 .video-frame {
 
     background-image:
     url("images/section4.webp");
 
 }
+
 
 
 .panel-10 .video-frame {
@@ -318,14 +303,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    VIMEO FULL BLEED
 ========================= */
-
 
 .video-frame iframe {
 
@@ -378,14 +358,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    DESKTOP / MOBILE VIDEO
 ========================= */
-
 
 .desktop-frame {
 
@@ -401,10 +376,11 @@ a {
 
 }
 
+
+
 /* =========================
    HERO IMAGE
 ========================= */
-
 
 .panel-01 {
 
@@ -421,9 +397,11 @@ a {
 
     inset:0;
 
+
     width:100%;
 
     height:100%;
+
 
     display:block;
 
@@ -435,6 +413,7 @@ a {
 
     object-fit:cover;
 
+
     object-position:
     center calc(50% - 15px);
 
@@ -442,14 +421,9 @@ a {
 
 
 
-
-
-
-
 /* =========================
    TICKER
 ========================= */
-
 
 .ticker-wrap {
 
@@ -461,6 +435,7 @@ a {
 
 
     width:100%;
+
 
     height:var(--ticker-height);
 
@@ -474,7 +449,6 @@ a {
 
     z-index:50;
 
-
 }
 
 
@@ -483,9 +457,12 @@ a {
 
     display:flex;
 
+
     width:max-content;
 
+
     height:100%;
+
 
     align-items:center;
 
@@ -530,12 +507,7 @@ a {
 
 
 
-
-
-
-
 @keyframes tickerMove {
-
 
     from {
 
@@ -555,8 +527,9 @@ a {
 }
 
 
+
 /* =========================
-   EMAIL SCROLL ARRIVAL
+   EMAIL ARRIVAL
 ========================= */
 
 .email-arrival {
@@ -565,16 +538,21 @@ a {
 
     left:0;
 
+
     bottom:var(--ticker-height);
 
+
     z-index:20;
+
 
     transform:
     translateY(-180px);
 
+
     will-change:transform;
 
 }
+
 
 
 .email-image {
@@ -585,12 +563,9 @@ a {
 
 }
 
-
-
 /* =========================
    MOBILE
 ========================= */
-
 
 @media(max-width:768px){
 
@@ -700,8 +675,6 @@ a {
 
 
 
-
-
     .panel-02 .video-frame {
 
         background-image:
@@ -734,12 +707,9 @@ a {
 
 
 
-
-
 /* =========================
    SEO HIDDEN CONTENT
 ========================= */
-
 
 .seo-title,
 .seo-content {
@@ -750,19 +720,26 @@ a {
 
     height:1px;
 
+
     padding:0;
 
     margin:-1px;
 
+
     overflow:hidden;
+
 
     clip-path:inset(50%);
 
+
     white-space:nowrap;
+
 
     border:0;
 
 }
+
+
 
 
 
@@ -777,9 +754,9 @@ a {
 
     inset:0;
 
-    background:#000;
 
     z-index:9999;
+
 
     display:flex;
 
@@ -787,27 +764,107 @@ a {
 
     justify-content:center;
 
+
     color:#ae8d7f;
+
 
     font-family:
     "Courier Prime",
     "Courier New",
     monospace;
 
-    font-size:12px;
+
+    font-size:14px;
+ 
+    font-weight:700;
 
     letter-spacing:.12em;
 
 
-    animation:
-    transmissionCut .1s steps(1) forwards;
+    overflow:hidden;
 
-    animation-delay:1.8s;
+
+    animation:
+    transmissionCut .8s ease forwards;
+
+
+    animation-delay:3.2s;
 
 }
 
 
 
+/* =========================
+   LOADING BACKGROUND
+========================= */
+
+
+.loading-screen::before {
+
+    content:"";
+
+
+    position:absolute;
+
+    inset:0;
+
+
+    background:
+
+    linear-gradient(
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.55)
+    ),
+
+    url("images/background.webp");
+
+
+    background-size:cover;
+
+
+    background-position:center;
+
+
+    background-repeat:no-repeat;
+
+
+    animation:
+
+    backgroundPulse 8s ease-in-out infinite;
+
+
+    z-index:-1;
+
+}
+
+
+
+@keyframes backgroundPulse {
+
+
+    0%,
+    100% {
+
+        transform:scale(1);
+
+    }
+
+
+    50% {
+
+        transform:scale(1.03);
+
+    }
+
+}
+
+
+
+
+
+/* =========================
+   LOADING TEXT
+========================= */
 
 
 .loading-text {
@@ -820,34 +877,30 @@ a {
 
 
 
-
-
 .loading-text div {
 
     opacity:0;
 
+
     animation:
-    transmissionText .4s steps(2,end) forwards;
+
+    transmissionText .5s steps(2,end) forwards;
 
 }
-
-
 
 
 
 .loading-text div:nth-child(1){
 
-    animation-delay:0s;
+    animation-delay:.2s;
 
 }
 
 
 
-
-
 .loading-text div:nth-child(2){
 
-    animation-delay:.5s;
+    animation-delay:1s;
 
 }
 
@@ -862,21 +915,23 @@ a {
 
         opacity:0;
 
+
         transform:
-        translateY(6px);
+        translateY(8px);
 
     }
+
 
 
     to {
 
         opacity:.8;
 
+
         transform:
         translateY(0);
 
     }
-
 
 }
 
@@ -884,6 +939,9 @@ a {
 
 
 
+/* =========================
+   SCREEN EXIT
+========================= */
 
 
 @keyframes transmissionCut {
@@ -891,18 +949,346 @@ a {
 
     from {
 
-        visibility:visible;
+        opacity:1;
 
     }
 
 
+
     to {
 
+        opacity:0;
+
+
         visibility:hidden;
+
 
         pointer-events:none;
 
     }
 
+}
+
+
+
+
+
+/* =========================
+   VHS COLOR DRIFT
+========================= */
+
+
+body::after {
+
+    content:"";
+
+
+    position:fixed;
+
+
+    inset:0;
+
+
+    pointer-events:none;
+
+
+    z-index:997;
+
+
+    opacity:0;
+
+
+    animation:
+
+    colorDrift 18s infinite;
+
+}
+
+
+
+
+
+@keyframes colorDrift {
+
+
+    0%,
+    97%,
+    100% {
+
+
+        opacity:0;
+
+
+        transform:none;
+
+    }
+
+
+
+    98% {
+
+
+        opacity:.35;
+
+
+        transform:
+
+        translateX(2px);
+
+
+
+        background:
+
+        linear-gradient(
+
+            90deg,
+
+            rgba(255,0,0,.18),
+
+            transparent 20%,
+
+            transparent 80%,
+
+            rgba(0,255,255,.18)
+
+        );
+
+    }
+
+
+
+    99% {
+
+
+        opacity:0;
+
+
+        transform:none;
+
+    }
+
+}
+
+
+
+
+
+/* =========================
+   VHS SCANLINES
+========================= */
+
+
+body::before {
+
+    content:"";
+
+
+    position:fixed;
+
+
+    inset:0;
+
+
+    pointer-events:none;
+
+
+    z-index:998;
+
+
+
+    background:
+
+    repeating-linear-gradient(
+
+        to bottom,
+
+        rgba(20,10,5,.35) 0px,
+
+        rgba(20,10,5,.35) 1px,
+
+        transparent 2px,
+
+        transparent 4px
+
+    );
+
+
+
+    mix-blend-mode:multiply;
+
+
+
+    opacity:0;
+
+
+
+    animation:
+
+    signalInterference 12s infinite;
+
+}
+
+
+
+
+
+@keyframes signalInterference {
+
+
+    0%,
+    88%,
+    100% {
+
+
+        opacity:.2;
+
+    }
+
+
+
+    89%,
+    96% {
+
+
+        opacity:.4;
+
+    }
+
+}
+
+/* =========================
+   LOADING VHS DISTORTION
+========================= */
+
+.loading-screen::after {
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+
+    background:
+
+    repeating-linear-gradient(
+        to bottom,
+        rgba(20,10,5,.35) 0px,
+        rgba(20,10,5,.35) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+
+
+    mix-blend-mode:multiply;
+
+
+    opacity:.25;
+
+
+    animation:
+    loadingSignal 6s infinite;
+
+}
+
+
+
+@keyframes loadingSignal {
+
+
+    0%,
+    70%,
+    100% {
+
+        opacity:.15;
+
+        transform:none;
+
+    }
+
+
+
+    75% {
+
+        opacity:.45;
+
+        transform:
+        translateY(2px);
+
+    }
+
+
+
+    80% {
+
+        opacity:.25;
+
+        transform:
+        translateY(-2px);
+
+    }
+
+
+
+    85% {
+
+        opacity:.5;
+
+        transform:none;
+
+    }
+
+}
+
+.loading-screen {
+
+    animation:
+    transmissionCut .8s ease forwards,
+    loadingJitter 5s infinite;
+
+    animation-delay:
+    3.2s,
+    0s;
+
+}
+
+
+
+@keyframes loadingJitter {
+
+
+    0%,
+    90%,
+    100% {
+
+        transform:none;
+
+    }
+
+
+    92% {
+
+        transform:
+        translateX(2px);
+
+
+    }
+
+
+    94% {
+
+        transform:
+        translateX(-2px);
+
+    }
+
+
+    96% {
+
+        transform:none;
+
+    }
 
 }
