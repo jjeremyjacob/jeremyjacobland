@@ -564,6 +564,7 @@ a {
 }
 
 
+.panel-01 picture,
 .panel-01 img {
 
     position:absolute;
@@ -575,6 +576,10 @@ a {
     height:100%;
 
     display:block;
+
+}
+
+.panel-01 img {
 
     object-fit:cover;
 
