@@ -8,10 +8,13 @@ RESET SCROLL
 */
 
 if ("scrollRestoration" in history){
+
     history.scrollRestoration = "manual";
+
 }
 
 window.scrollTo(0,0);
+
 
 
 
@@ -27,6 +30,8 @@ document.querySelectorAll(".panel");
 
 
 const SCROLL_FACTOR = 1.5;
+
+
 
 
 
@@ -47,6 +52,8 @@ setPageHeight();
 
 
 
+
+
 /*
 =========================
 LAZY LOAD BACKGROUNDS
@@ -56,17 +63,23 @@ LAZY LOAD BACKGROUNDS
 const imageObserver =
 new IntersectionObserver(entries => {
 
+
     entries.forEach(entry => {
+
 
         if(!entry.isIntersecting)
         return;
 
 
-        const panel = entry.target;
+
+        const panel =
+        entry.target;
+
 
 
         let image =
         panel.dataset.image;
+
 
 
         if(!image)
@@ -86,18 +99,24 @@ new IntersectionObserver(entries => {
 
 
 
-        const img = new Image();
+        const img =
+        new Image();
 
 
-        img.onload = () => {
+
+        img.onload = ()=>{
+
 
             panel.style.backgroundImage =
             `url("${image}")`;
 
+
         };
 
 
+
         img.src = image;
+
 
 
         imageObserver.unobserve(panel);
@@ -113,7 +132,7 @@ new IntersectionObserver(entries => {
 
 
 
-panels.forEach(panel => {
+panels.forEach(panel=>{
 
     imageObserver.observe(panel);
 
@@ -140,8 +159,10 @@ function updatePanels(){
     window.innerHeight;
 
 
+
     const mobile =
     window.innerWidth <= 768;
+
 
 
     let scrollY;
@@ -150,21 +171,28 @@ function updatePanels(){
 
     if(mobile){
 
+
         const maxScroll =
         document.documentElement.scrollHeight -
         window.innerHeight;
 
 
+
         scrollY =
         maxScroll - window.scrollY;
+
 
     }
     else{
 
+
         scrollY =
         window.scrollY;
 
+
     }
+
+
 
 
 
@@ -174,12 +202,18 @@ function updatePanels(){
 
         if(index === 0){
 
+
             panel.style.transform =
             "translateY(0)";
 
+
             return;
 
+
         }
+
+
+
 
 
 
@@ -190,9 +224,13 @@ function updatePanels(){
 
 
 
+
+
         const progress =
         (scrollY - start) /
         (height * SCROLL_FACTOR);
+
+
 
 
 
@@ -207,8 +245,61 @@ function updatePanels(){
 
 
 
+
+
         panel.style.transform =
         `translateY(${position}%)`;
+
+
+
+
+/*
+=========================
+EMAIL SCROLL ARRIVAL
+=========================
+*/
+
+if(index === 9){
+
+
+    const email =
+    panel.querySelector(".email-arrival");
+
+
+    if(email){
+
+
+        const emailProgress =
+        Math.min(
+            1,
+            Math.max(
+                0,
+                (position + 100) / 100
+            )
+        );
+
+
+
+        const move =
+        -180 + (emailProgress * 180);
+
+
+
+        email.style.transform =
+        `translateY(${move}px)`;
+
+
+        email.style.opacity =
+        emailProgress;
+
+
+    }
+
+
+}
+
+
+
 
 
     });
@@ -248,8 +339,10 @@ function updateImageParallax(){
 
 
 
+
         const images =
         panel.querySelectorAll(".panel-image");
+
 
 
 
@@ -264,12 +357,16 @@ function updateImageParallax(){
             speed = -0.9;
 
 
+
             if(index === 1)
             speed = -0.6;
 
 
+
             if(index === 2)
             speed = -0.3;
+
+
 
 
 
@@ -305,6 +402,7 @@ document.querySelectorAll(".video-frame");
 
 
 
+
 function loadVideo(container){
 
 
@@ -313,8 +411,11 @@ function loadVideo(container){
 
 
 
+
     const mobile =
     window.innerWidth <= 768;
+
+
 
 
 
@@ -327,8 +428,13 @@ function loadVideo(container){
 
 
 
+
+
     if(!iframe)
     return;
+
+
+
 
 
 
@@ -341,11 +447,14 @@ function loadVideo(container){
 
 
 
+
     if(unused){
 
         unused.remove();
 
     }
+
+
 
 
 
@@ -355,15 +464,23 @@ function loadVideo(container){
 
 
 
-    container.dataset.loaded = "true";
+
+
+    container.dataset.loaded =
+    "true";
+
+
 
 
 
     iframe.onload = ()=>{
 
 
+
         if(typeof Vimeo === "undefined")
         return;
+
+
 
 
 
@@ -372,30 +489,38 @@ function loadVideo(container){
 
 
 
+
+
         player.setVolume(0);
+
+
+
 
 
         player.play()
 
         .then(()=>{
 
+
             container.classList.add(
                 "video-ready"
             );
+
 
         })
 
         .catch(()=>{
 
-            // autoplay blocked
 
         });
+
 
 
     };
 
 
 }
+
 
 
 
@@ -411,7 +536,9 @@ new IntersectionObserver(entries=>{
 
         if(entry.isIntersecting){
 
+
             loadVideo(entry.target);
+
 
         }
 
@@ -430,7 +557,9 @@ new IntersectionObserver(entries=>{
 
 videos.forEach(video=>{
 
+
     videoObserver.observe(video);
+
 
 });
 
@@ -452,6 +581,7 @@ let ticking = false;
 
 
 
+
 function scrollUpdate(){
 
 
@@ -468,15 +598,19 @@ function scrollUpdate(){
         updateImageParallax();
 
 
-        ticking=false;
+
+        ticking = false;
 
 
     });
 
 
-    ticking=true;
+
+    ticking = true;
+
 
 }
+
 
 
 
@@ -562,10 +696,18 @@ requestAnimationFrame(()=>{
     updateImageParallax();
 
 
+
 });
 
 
 });
+
+
+
+
+
+
+
 
 
 /*
@@ -574,88 +716,117 @@ VARIABLE FONTS
 =========================
 */
 
-document.querySelectorAll(".ticker-item").forEach(item => {
+
+document.querySelectorAll(".ticker-item")
+.forEach(item=>{
+
 
     const fonts = [
 
-        // serif / typewriter (weighted)
-        '"Courier Prime", monospace',
+
         '"Courier Prime", monospace',
         '"Courier New", monospace',
-        '"Courier New", monospace',
-        '"Baskerville", serif',
+
         '"Baskerville", serif',
         '"Georgia", serif',
-        '"Georgia", serif',
-        '"Times New Roman", serif',
+
         '"Times New Roman", serif',
 
-        // sans serif
         'Helvetica, Arial, sans-serif',
+
         '"Helvetica Neue", sans-serif',
+
         'Arial, sans-serif',
+
         '"Gill Sans", sans-serif'
+
 
     ];
 
 
-    const text = item.textContent.trim();
+
+    const text =
+    item.textContent.trim();
+
+
 
     item.innerHTML = "";
 
 
+
     let currentFont =
-        fonts[Math.floor(Math.random() * fonts.length)];
+    fonts[
+        Math.floor(
+            Math.random()*fonts.length
+        )
+    ];
 
 
-    [...text].forEach(letter => {
-
-        const span = document.createElement("span");
-
-        span.textContent = letter;
 
 
-        /*
-        =========================
-        KEEP PUNCTUATION STABLE
-        =========================
-        */
+    [...text].forEach(letter=>{
 
-        if (/[.,;:'"!?]/.test(letter)) {
+
+        const span =
+        document.createElement("span");
+
+
+
+        span.textContent =
+        letter;
+
+
+
+
+
+        if(/[.,;:'"!?]/.test(letter)){
+
 
             span.style.fontFamily =
             '"Courier Prime", monospace';
 
+
         }
 
+        else{
 
-        /*
-        =========================
-        CREATE FONT CLUSTERS
-        =========================
-        */
 
-        else {
+            if(Math.random() > .85){
 
-            // occasionally change font
-            if (Math.random() > 0.85) {
 
                 currentFont =
-                fonts[Math.floor(Math.random() * fonts.length)];
+                fonts[
+                    Math.floor(
+                        Math.random()*fonts.length
+                    )
+                ];
+
 
             }
+
+
 
             span.style.fontFamily =
             currentFont;
 
+
         }
 
 
-        span.style.fontWeight = "400";
+
+
+
+        span.style.fontWeight =
+        "400";
+
 
 
         item.appendChild(span);
 
+
+
     });
+
+
 
 });

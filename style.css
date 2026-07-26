@@ -94,6 +94,7 @@ a {
 
 
 
+
 /* =========================
    PANEL STACK
 ========================= */
@@ -224,6 +225,7 @@ a {
 }
 
 
+
 .social-image {
 
     width:200px;
@@ -231,11 +233,13 @@ a {
 }
 
 
+
 .find-image {
 
     width:200px;
 
 }
+
 
 
 .email-image {
@@ -397,12 +401,6 @@ a {
 
 }
 
-
-
-
-
-
-
 /* =========================
    HERO IMAGE
 ========================= */
@@ -437,7 +435,8 @@ a {
 
     object-fit:cover;
 
-    object-position:center calc(50% - 15px);
+    object-position:
+    center calc(50% - 15px);
 
 }
 
@@ -556,8 +555,35 @@ a {
 }
 
 
+/* =========================
+   EMAIL SCROLL ARRIVAL
+========================= */
+
+.email-arrival {
+
+    position:absolute;
+
+    left:0;
+
+    bottom:var(--ticker-height);
+
+    z-index:20;
+
+    transform:
+    translateY(-180px);
+
+    will-change:transform;
+
+}
 
 
+.email-image {
+
+    display:block;
+
+    width:350px;
+
+}
 
 
 
@@ -711,7 +737,7 @@ a {
 
 
 /* =========================
-   SEO HIDDEN
+   SEO HIDDEN CONTENT
 ========================= */
 
 
