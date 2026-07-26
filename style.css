@@ -273,9 +273,6 @@ body {
 
 
 
-
-
-
 /* =========================
    IMAGES
 ========================= */
@@ -294,6 +291,34 @@ body {
 }
 
 
+.logo-image {
+
+    width:130px;
+
+}
+
+
+.social-image {
+
+    width:200px;
+
+}
+
+
+.find-image {
+
+    width:200px;
+
+}
+
+
+.email-image {
+
+    width:350px;
+
+}
+
+
 
 .bottom-image {
 
@@ -304,10 +329,6 @@ body {
     left:0;
 
 }
-
-
-
-
 
 
 
@@ -459,8 +480,6 @@ body {
 
 
 
-
-
 /* =========================
    MOBILE
 ========================= */
@@ -470,11 +489,11 @@ body {
 
 
 
-    
+/* PANEL */
+
 .panel {
 
     height:100dvh;
-
 
     border-bottom:
     8px solid rgba(69,41,28,1);
@@ -484,6 +503,54 @@ body {
 
 
 
+
+/* IMAGE SIZES */
+
+.panel-image {
+
+    width:100px;
+
+}
+
+
+
+.logo-image {
+
+    width:110px;
+
+}
+
+
+
+.social-image {
+
+    width:240px;
+
+}
+
+
+
+.find-image {
+
+    width:180px;
+
+}
+
+
+
+.email-image {
+
+    width:280px;
+
+}
+
+
+
+
+
+
+
+/* VIDEO SWITCHING */
 
 .desktop-frame {
 
@@ -503,8 +570,9 @@ body {
 
 
 
-.video-frame iframe {
+/* MOBILE VIDEO SCALE */
 
+.video-frame iframe {
 
     width:177.78vh;
 
@@ -521,24 +589,13 @@ body {
     transform:
     translate(-50%,-50%);
 
-
 }
 
 
-.social-image {
-
-    width:200px;
-
-}
 
 
-.panel-image {
 
-    width:100px;
-
-}
-
-
+/* SOCIAL POSITION */
 
 .social-links {
 
@@ -549,13 +606,6 @@ body {
 
 
 }
-
-
-
-
-
-
-
 /* =========================
    EMAIL TEXT
 ========================= */
