@@ -174,24 +174,18 @@ IMAGE PARALLAX
 =========================
 */
 
-
 function updateImageParallax(){
-
 
     panels.forEach(panel=>{
 
+        const images =
+        panel.querySelectorAll(".panel-image");
 
-        const image =
-        panel.querySelector(".panel-image");
-
-
-        if(!image)
+        if(!images.length)
         return;
-
 
         const rect =
         panel.getBoundingClientRect();
-
 
         const offset =
         rect.top +
@@ -199,16 +193,39 @@ function updateImageParallax(){
         window.innerHeight / 2;
 
 
+        images.forEach((image,index)=>{
 
-        image.style.transform =
-        `translateY(${offset * -0.82}px)`;
+            let speed;
+
+
+            if(index === 0){
+
+                speed = -0.9; // X
+
+            } 
+            else if(index === 1){
+
+                speed = -0.6; // Instagram
+
+            } 
+            else if(index === 2){
+
+                speed = 0.3; // TikTok
+
+            }
+
+
+            image.style.transform =
+            `translateY(${offset * speed}px)`;
+
+
+        });
 
 
     });
 
 
 }
-
 
 
 
