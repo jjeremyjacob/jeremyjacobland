@@ -15,7 +15,11 @@ body {
 
 }
 
+:root {
 
+    --ticker-height:30px;
+
+}
 
 body {
 
@@ -72,8 +76,7 @@ a {
 
     background-repeat:no-repeat;
 
-    border-bottom:
-    12px solid rgba(69,41,28,1);
+  
 
     box-shadow:
     0 20px 20px rgba(0,0,0,.8);
@@ -251,7 +254,8 @@ a {
     position:absolute;
 
 
-    bottom:0;
+    bottom:var(--ticker-height);
+
 
     left:0;
 
@@ -425,9 +429,7 @@ a {
 
         height:100dvh;
 
-        border-bottom:
-        8px solid rgba(69,41,28,1);
-
+     
     }
 
     .panel-image {
@@ -581,5 +583,90 @@ a {
     object-fit:cover;
 
     object-position:center bottom;
+
+}
+
+/* =========================
+   PANEL 1 TICKER
+========================= */
+
+.ticker-wrap {
+
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+
+    height:var(--ticker-height);
+
+    overflow:hidden;
+
+    background:rgba(69,41,28,1);
+
+    z-index:50;
+
+}
+
+
+
+.ticker-track {
+
+    display:flex;
+
+    width:max-content;
+
+    height:100%;
+
+    align-items:center;
+
+    animation:
+    tickerMove 120s linear infinite;
+
+    will-change:transform;
+
+}
+
+
+
+.ticker-item {
+
+    white-space:nowrap;
+
+    font-size:12px;
+
+    letter-spacing:.03em;
+
+    line-height:30px;
+
+    font-weight:100;
+    color:#ae8d7f;
+        font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    monospace;
+
+
+}
+
+
+
+/* seamless half-width loop */
+
+@keyframes tickerMove {
+
+    from {
+
+        transform:translateX(0);
+
+    }
+
+    to {
+
+        transform:translateX(-50%);
+
+    }
 
 }

@@ -566,3 +566,96 @@ requestAnimationFrame(()=>{
 
 
 });
+
+
+/*
+=========================
+VARIABLE FONTS
+=========================
+*/
+
+document.querySelectorAll(".ticker-item").forEach(item => {
+
+    const fonts = [
+
+        // serif / typewriter (weighted)
+        '"Courier Prime", monospace',
+        '"Courier Prime", monospace',
+        '"Courier New", monospace',
+        '"Courier New", monospace',
+        '"Baskerville", serif',
+        '"Baskerville", serif',
+        '"Georgia", serif',
+        '"Georgia", serif',
+        '"Times New Roman", serif',
+        '"Times New Roman", serif',
+
+        // sans serif
+        'Helvetica, Arial, sans-serif',
+        '"Helvetica Neue", sans-serif',
+        'Arial, sans-serif',
+        '"Gill Sans", sans-serif'
+
+    ];
+
+
+    const text = item.textContent.trim();
+
+    item.innerHTML = "";
+
+
+    let currentFont =
+        fonts[Math.floor(Math.random() * fonts.length)];
+
+
+    [...text].forEach(letter => {
+
+        const span = document.createElement("span");
+
+        span.textContent = letter;
+
+
+        /*
+        =========================
+        KEEP PUNCTUATION STABLE
+        =========================
+        */
+
+        if (/[.,;:'"!?]/.test(letter)) {
+
+            span.style.fontFamily =
+            '"Courier Prime", monospace';
+
+        }
+
+
+        /*
+        =========================
+        CREATE FONT CLUSTERS
+        =========================
+        */
+
+        else {
+
+            // occasionally change font
+            if (Math.random() > 0.85) {
+
+                currentFont =
+                fonts[Math.floor(Math.random() * fonts.length)];
+
+            }
+
+            span.style.fontFamily =
+            currentFont;
+
+        }
+
+
+        span.style.fontWeight = "400";
+
+
+        item.appendChild(span);
+
+    });
+
+});
