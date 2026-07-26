@@ -1,35 +1,26 @@
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
 
 /*
 =========================
-RESET SCROLL POSITION
+RESET SCROLL
 =========================
 */
-
 
 if ("scrollRestoration" in history){
-
     history.scrollRestoration = "manual";
-
 }
 
-
-window.scrollTo(
-    0,
-    0
-);
-
+window.scrollTo(0,0);
 
 
 
 
 /*
 =========================
-PANELS
+SETUP
 =========================
 */
-
 
 const panels =
 document.querySelectorAll(".panel");
@@ -39,25 +30,12 @@ const SCROLL_FACTOR = 1.5;
 
 
 
-
-
-/*
-=========================
-PAGE HEIGHT
-=========================
-*/
-
-
 function setPageHeight(){
 
-
-    const totalPanels =
-    panels.length;
-
+    const totalPanels = panels.length;
 
     document.body.style.height =
     `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
-
 
 }
 
@@ -65,139 +43,88 @@ function setPageHeight(){
 setPageHeight();
 
 
+
+
+
+
 /*
 =========================
-LAZY LOAD PANEL IMAGES
-DESKTOP + MOBILE
+LAZY LOAD BACKGROUNDS
 =========================
 */
 
+const imageObserver =
+new IntersectionObserver(entries => {
 
-function loadPanelImages(){
+    entries.forEach(entry => {
 
-
-    const isMobile =
-    window.innerWidth <= 768;
-
-
-
-    const imageObserver =
-    new IntersectionObserver(
-    (entries)=>{
+        if(!entry.isIntersecting)
+        return;
 
 
-        entries.forEach(entry=>{
+        const panel = entry.target;
 
 
-            if(entry.isIntersecting){
+        let image =
+        panel.dataset.image;
 
 
-                const panel =
-                entry.target;
+        if(!image)
+        return;
 
 
 
-                let image =
-                panel.dataset.image;
+        if(window.innerWidth <= 768){
+
+            image =
+            image.replace(
+                ".webp",
+                "-mobile.webp"
+            );
+
+        }
 
 
 
-                if(!image)
-                return;
+        const img = new Image();
 
 
+        img.onload = () => {
+
+            panel.style.backgroundImage =
+            `url("${image}")`;
+
+        };
 
 
-                /*
-                MOBILE IMAGE SWAP
-                */
+        img.src = image;
 
 
-                if(isMobile){
-
-
-                    image =
-                    image.replace(
-                        ".webp",
-                        "-mobile.webp"
-                    );
-
-
-                }
-
-
-
-
-                /*
-                PRELOAD IMAGE
-                */
-
-
-                const img =
-                new Image();
-
-
-
-                img.onload = ()=>{
-
-
-                    panel.style.backgroundImage =
-                    `url("${image}")`;
-
-
-                };
-
-
-
-                img.src =
-                image;
-
-
-
-
-                imageObserver.unobserve(panel);
-
-
-
-            }
-
-
-        });
-
-
-
-    },
-    {
-
-
-        /*
-        LOAD BEFORE ARRIVAL
-        */
-
-
-        rootMargin:"500px 0px"
+        imageObserver.unobserve(panel);
 
 
     });
 
 
+},
+{
+    rootMargin:"500px 0px"
+});
 
 
 
-    panels.forEach(panel=>{
+panels.forEach(panel => {
+
+    imageObserver.observe(panel);
+
+});
 
 
-        imageObserver.observe(panel);
-
-
-    });
 
 
 
-}
 
 
-loadPanelImages();
 
 
 /*
@@ -206,25 +133,22 @@ PANEL MOVEMENT
 =========================
 */
 
-
 function updatePanels(){
 
 
-    const panelHeight =
+    const height =
     window.innerHeight;
 
 
-    const isMobile =
+    const mobile =
     window.innerWidth <= 768;
-
 
 
     let scrollY;
 
 
 
-    if(isMobile){
-
+    if(mobile){
 
         const maxScroll =
         document.documentElement.scrollHeight -
@@ -234,14 +158,11 @@ function updatePanels(){
         scrollY =
         maxScroll - window.scrollY;
 
-
     }
     else{
 
-
         scrollY =
         window.scrollY;
-
 
     }
 
@@ -251,15 +172,12 @@ function updatePanels(){
     panels.forEach((panel,index)=>{
 
 
-        if(index===0){
-
+        if(index === 0){
 
             panel.style.transform =
             "translateY(0)";
 
-
             return;
-
 
         }
 
@@ -267,15 +185,14 @@ function updatePanels(){
 
         const start =
         (index - 1) *
-        panelHeight *
+        height *
         SCROLL_FACTOR;
-
 
 
 
         const progress =
         (scrollY - start) /
-        (panelHeight * SCROLL_FACTOR);
+        (height * SCROLL_FACTOR);
 
 
 
@@ -294,9 +211,7 @@ function updatePanels(){
         `translateY(${position}%)`;
 
 
-
     });
-
 
 
 }
@@ -307,27 +222,18 @@ function updatePanels(){
 
 
 
+
+
 /*
 =========================
-INDEPENDENT IMAGE PARALLAX
+IMAGE PARALLAX
 =========================
 */
-
 
 function updateImageParallax(){
 
 
     panels.forEach(panel=>{
-
-
-        const images =
-        panel.querySelectorAll(".panel-image");
-
-
-
-        if(!images.length)
-        return;
-
 
 
         const rect =
@@ -342,44 +248,28 @@ function updateImageParallax(){
 
 
 
+        const images =
+        panel.querySelectorAll(".panel-image");
+
+
 
         images.forEach((image,index)=>{
 
 
-
-            let speed;
-
+            let speed = -0.82;
 
 
-            if(index === 0){
+
+            if(index === 0)
+            speed = -0.9;
 
 
-                speed = -0.9; // first image
+            if(index === 1)
+            speed = -0.6;
 
 
-            }
-            else if(index === 1){
-
-
-                speed = -0.6; // second image
-
-
-            }
-            else if(index === 2){
-
-
-                speed = -0.3; // third image
-
-
-            }
-            else{
-
-
-                speed = -0.82;
-
-
-            }
-
+            if(index === 2)
+            speed = -0.3;
 
 
 
@@ -406,20 +296,12 @@ function updateImageParallax(){
 
 /*
 =========================
-VIMEO LOADING
+VIMEO
 =========================
 */
 
-
-const isMobile =
-window.innerWidth <= 768;
-
-
-
 const videos =
 document.querySelectorAll(".video-frame");
-
-
 
 
 
@@ -431,9 +313,13 @@ function loadVideo(container){
 
 
 
+    const mobile =
+    window.innerWidth <= 768;
+
+
 
     const iframe =
-    isMobile
+    mobile
     ?
     container.querySelector(".mobile-frame")
     :
@@ -444,66 +330,40 @@ function loadVideo(container){
     if(!iframe)
     return;
 
-/*
-=========================
-REMOVE UNUSED VIDEO
-=========================
-*/
 
 
-const unusedFrame =
-isMobile
-?
-container.querySelector(".desktop-frame")
-:
-container.querySelector(".mobile-frame");
+    const unused =
+    mobile
+    ?
+    container.querySelector(".desktop-frame")
+    :
+    container.querySelector(".mobile-frame");
 
 
 
-if(unusedFrame){
+    if(unused){
 
-    unusedFrame.remove();
-
-}
-
-
-    let src =
-    iframe.dataset.src;
-
-
-
-
-    if(!src.includes("autoplay")){
-
-
-        src +=
-        "&autoplay=1&autopause=0&playsinline=1";
-
+        unused.remove();
 
     }
 
 
 
-
     iframe.src =
-    src;
+    iframe.dataset.src +
+    "&autoplay=1&autopause=0&playsinline=1";
 
 
 
-    container.dataset.loaded =
-    "true";
-
-
+    container.dataset.loaded = "true";
 
 
 
     iframe.onload = ()=>{
 
 
-
         if(typeof Vimeo === "undefined")
         return;
-
 
 
 
@@ -512,55 +372,27 @@ if(unusedFrame){
 
 
 
-
         player.setVolume(0);
-
-
 
 
         player.play()
 
         .then(()=>{
 
-
             container.classList.add(
                 "video-ready"
             );
-
 
         })
 
         .catch(()=>{
 
-
-
-            setTimeout(()=>{
-
-
-                player.play()
-
-                .then(()=>{
-
-
-                    container.classList.add(
-                        "video-ready"
-                    );
-
-
-                });
-
-
-
-            },1000);
-
-
+            // autoplay blocked
 
         });
 
 
-
     };
-
 
 
 }
@@ -570,17 +402,8 @@ if(unusedFrame){
 
 
 
-
-/*
-=========================
-VIDEO OBSERVER
-=========================
-*/
-
-
 const videoObserver =
-new IntersectionObserver(
-(entries)=>{
+new IntersectionObserver(entries=>{
 
 
     entries.forEach(entry=>{
@@ -588,11 +411,7 @@ new IntersectionObserver(
 
         if(entry.isIntersecting){
 
-
-            loadVideo(
-                entry.target
-            );
-
+            loadVideo(entry.target);
 
         }
 
@@ -602,22 +421,16 @@ new IntersectionObserver(
 
 },
 {
-
     rootMargin:"150px 0px",
-
-    threshold:0.01
-
+    threshold:.01
 });
-
 
 
 
 
 videos.forEach(video=>{
 
-
     videoObserver.observe(video);
-
 
 });
 
@@ -631,43 +444,37 @@ videos.forEach(video=>{
 
 /*
 =========================
-SCROLL PERFORMANCE
+SCROLL LOOP
 =========================
 */
 
-
 let ticking = false;
-
 
 
 
 function scrollUpdate(){
 
 
-    if(!ticking){
-
-
-        requestAnimationFrame(()=>{
-
-
-            updatePanels();
-
-            updateImageParallax();
-
-
-            ticking = false;
-
-
-        });
+    if(ticking)
+    return;
 
 
 
-        ticking = true;
+    requestAnimationFrame(()=>{
 
 
-    }
+        updatePanels();
+
+        updateImageParallax();
 
 
+        ticking=false;
+
+
+    });
+
+
+    ticking=true;
 
 }
 
@@ -679,8 +486,7 @@ window.addEventListener(
 scrollUpdate,
 {
     passive:true
-}
-);
+});
 
 
 
@@ -695,7 +501,6 @@ scrollUpdate,
 RESIZE
 =========================
 */
-
 
 window.addEventListener(
 "resize",
@@ -721,10 +526,9 @@ window.addEventListener(
 
 /*
 =========================
-INITIAL POSITION
+START POSITION
 =========================
 */
-
 
 requestAnimationFrame(()=>{
 
@@ -758,9 +562,7 @@ requestAnimationFrame(()=>{
     updateImageParallax();
 
 
-
 });
-
 
 
 });
