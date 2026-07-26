@@ -380,12 +380,16 @@ href="https://i.vimeocdn.com">
 <link rel="preload"
 as="image"
 href="images/section1.webp"
+media="(min-width:769px)"
 fetchpriority="high">
 
 
 <link rel="preload"
 as="image"
-href="images/section1-mobile.webp">
+href="images/section1-mobile.webp"
+media="(max-width:768px)"
+fetchpriority="high">
+
 
 
 
@@ -431,12 +435,16 @@ Moving images, performances, films, and visual fragments emerge from an imagined
 
 <section 
 class="panel panel-01"
-data-image="images/section1.webp"
-style="background-image:url('images/section1.webp');"
 aria-label="Jeremy Jacob — Transmissions From Another World">
 
-</section>
+<img
+src="images/section1.webp"
+alt="Jeremy Jacob — Transmissions From Another World"
+fetchpriority="high"
+loading="eager"
+decoding="async">
 
+</section>
 
 
 
