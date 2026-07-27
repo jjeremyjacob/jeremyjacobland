@@ -256,48 +256,80 @@ new IntersectionObserver(
         "";
 
 
-
-        img.decoding =
-        "async";
-
+img.decoding =
+"async";
 
 
-        panel.appendChild(img);
+// Reserve dimensions immediately
+img.setAttribute(
+    "width",
+    "1920"
+);
 
 
-
-        img.src =
-        image;
-
-
-
-        img.onload =
-        async ()=>{
+img.setAttribute(
+    "height",
+    "1080"
+);
 
 
-            try{
-
-                await img.decode();
-
-            }
-
-            catch(e){
-
-                console.warn(
-                    "IMAGE DECODE FAILED:",
-                    image
-                );
-
-            }
+panel.appendChild(img);
 
 
 
-            img.classList.add(
-                "loaded"
-            );
+img.src =
+image;
 
 
-        };
+
+img.onload =
+async ()=>{
+
+
+    /*
+    =========================
+    UPDATE TRUE DIMENSIONS
+    =========================
+    */
+
+
+    img.setAttribute(
+        "width",
+        img.naturalWidth
+    );
+
+
+    img.setAttribute(
+        "height",
+        img.naturalHeight
+    );
+
+
+
+    try{
+
+        await img.decode();
+
+    }
+
+    catch(e){
+
+        console.warn(
+            "IMAGE DECODE FAILED:",
+            image
+        );
+
+    }
+
+
+
+    img.classList.add(
+        "loaded"
+    );
+
+
+};
+
 
 
 
