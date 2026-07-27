@@ -453,17 +453,14 @@ function updatePanels(){
     (panel,index)=>{
 
 
-        if(index === 0){
+if(index === 0){
 
+    panel.style.transform =
+    "translate3d(0,0,0)";
 
-            panel.style.transform =
-            "translateY(0)";
+    return;
 
-
-            return;
-
-
-        }
+}
 
 
 
@@ -640,11 +637,8 @@ function updatePanels(){
 
 
 
-        panel.style.transform =
-
-
-        `translateY(${y}px)`;
-
+panel.style.transform =
+`translate3d(0, ${y}px, 0)`;
 
 
 
@@ -716,31 +710,7 @@ IMAGE PARALLAX
 
 function updateImageParallax(){
 
-
-    panels.forEach(panel=>{
-
-
-        const images =
-
-        panel.querySelectorAll(
-            ".panel-image"
-        );
-
-
-
-        images.forEach(image=>{
-
-
-            image.style.transform =
-
-            "translateY(0)";
-
-
-        });
-
-
-    });
-
+    return;
 
 }
 
@@ -1001,85 +971,29 @@ videos.forEach(video=>{
 
 });
 
+
+
+
+
 /*
 =========================
-SCROLL PERFORMANCE LOOP
+SCROLL UPDATE
 =========================
 */
 
-
-let ticking =
-false;
-
-
-
-
-
-
-function scrollUpdate(){
-
-
-    if(ticking)
-    return;
-
-
-
-
-
-    requestAnimationFrame(()=>{
-
-
-        updatePanels();
-
-
-        updateImageParallax();
-
-
-        ticking =
-        false;
-
-
-    });
-
-
-
-
-
-    ticking =
-    true;
-
-
-}
-
-
-
-
-
-
-
-
-
 window.addEventListener(
+    "scroll",
+    () => {
 
-"scroll",
+        requestAnimationFrame(
+            updatePanels
+        );
 
-scrollUpdate,
-
-{
-
-passive:true
-
-}
-
+    },
+    {
+        passive:true
+    }
 );
-
-
-
-
-
-
-
-
 
 /*
 =========================
