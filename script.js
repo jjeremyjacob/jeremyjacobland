@@ -13,7 +13,10 @@ if ("scrollRestoration" in history){
 
 }
 
+
 window.scrollTo(0,0);
+
+
 
 
 
@@ -25,6 +28,7 @@ SETUP
 =========================
 */
 
+
 const panels =
 document.querySelectorAll(".panel");
 
@@ -33,16 +37,17 @@ const SCROLL_FACTOR = 1.5;
 
 
 
-
-
 function setPageHeight(){
 
-    const totalPanels = panels.length;
+    const totalPanels =
+    panels.length;
+
 
     document.body.style.height =
     `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
 
 }
+
 
 
 setPageHeight();
@@ -56,15 +61,22 @@ setPageHeight();
 
 /*
 =========================
-LAZY LOAD BACKGROUNDS
+IMAGE LOADING
 =========================
 */
 
+
+const loadedPanels =
+new WeakSet();
+
+
+
 const imageObserver =
-new IntersectionObserver(entries => {
+new IntersectionObserver(
+(entries)=>{
 
 
-    entries.forEach(entry => {
+    entries.forEach(entry=>{
 
 
         if(!entry.isIntersecting)
@@ -74,6 +86,11 @@ new IntersectionObserver(entries => {
 
         const panel =
         entry.target;
+
+
+
+        if(loadedPanels.has(panel))
+        return;
 
 
 
@@ -87,7 +104,16 @@ new IntersectionObserver(entries => {
 
 
 
-        if(window.innerWidth <= 768){
+
+
+        /*
+        MOBILE IMAGE SWITCH
+        */
+
+        if(
+        window.innerWidth <= 768 &&
+        image.includes(".webp")
+        ){
 
             image =
             image.replace(
@@ -99,27 +125,78 @@ new IntersectionObserver(entries => {
 
 
 
+
+
         const img =
-        new Image();
+        document.createElement("img");
 
 
 
-        img.onload = ()=>{
+        img.className =
+        "panel-image";
 
 
-            panel.style.backgroundImage =
-            `url("${image}")`;
+
+        img.alt =
+        "";
+
+
+
+        img.decoding =
+        "async";
+
+
+
+        /*
+        APPEND FIRST
+        */
+
+        panel.appendChild(img);
+
+
+
+        /*
+        LOAD AFTER INSERT
+        */
+
+        img.src =
+        image;
+
+
+
+        img.onload =
+        ()=>{
+
+
+            img.classList.add(
+                "loaded"
+            );
 
 
         };
 
 
 
-        img.src = image;
+        img.onerror =
+        ()=>{
+
+
+            console.warn(
+                "IMAGE FAILED:",
+                image
+            );
+
+
+        };
+
+
+
+        loadedPanels.add(panel);
 
 
 
         imageObserver.unobserve(panel);
+
 
 
     });
@@ -127,20 +204,20 @@ new IntersectionObserver(entries => {
 
 },
 {
-    rootMargin:"500px 0px"
+    rootMargin:"1500px 0px"
 });
+
+
 
 
 
 panels.forEach(panel=>{
 
+
     imageObserver.observe(panel);
 
+
 });
-
-
-
-
 
 
 
@@ -151,6 +228,7 @@ panels.forEach(panel=>{
 PANEL MOVEMENT
 =========================
 */
+
 
 function updatePanels(){
 
@@ -169,6 +247,13 @@ function updatePanels(){
 
 
 
+
+
+    /*
+    MOBILE REVERSED SCROLL
+    */
+
+
     if(mobile){
 
 
@@ -179,7 +264,8 @@ function updatePanels(){
 
 
         scrollY =
-        maxScroll - window.scrollY;
+        maxScroll -
+        window.scrollY;
 
 
     }
@@ -200,6 +286,11 @@ function updatePanels(){
     panels.forEach((panel,index)=>{
 
 
+        /*
+        FIRST PANEL FIXED
+        */
+
+
         if(index === 0){
 
 
@@ -211,7 +302,6 @@ function updatePanels(){
 
 
         }
-
 
 
 
@@ -253,52 +343,54 @@ function updatePanels(){
 
 
 
-/*
-=========================
-EMAIL SCROLL ARRIVAL
-=========================
-*/
 
-if(index === 9){
+        /*
+        EMAIL ARRIVAL
+        */
 
 
-    const email =
-    panel.querySelector(".email-arrival");
+        if(index === 9){
 
 
-    if(email){
-
-
-        const emailProgress =
-        Math.min(
-            1,
-            Math.max(
-                0,
-                (position + 100) / 100
-            )
-        );
+            const email =
+            panel.querySelector(
+                ".email-arrival"
+            );
 
 
 
-        const move =
-        -180 + (emailProgress * 180);
+            if(email){
+
+
+                const emailProgress =
+                Math.min(
+                    1,
+                    Math.max(
+                        0,
+                        (position + 100) / 100
+                    )
+                );
 
 
 
-        email.style.transform =
-        `translateY(${move}px)`;
+                const move =
+                -180 +
+                (emailProgress * 180);
 
 
-        email.style.opacity =
-        emailProgress;
+
+                email.style.transform =
+                `translateY(${move}px)`;
 
 
-    }
+                email.style.opacity =
+                emailProgress;
 
 
-}
+            }
 
 
+        }
 
 
 
@@ -321,6 +413,7 @@ IMAGE PARALLAX
 =========================
 */
 
+
 function updateImageParallax(){
 
 
@@ -340,38 +433,56 @@ function updateImageParallax(){
 
 
 
+
         const images =
-        panel.querySelectorAll(".panel-image");
+        panel.querySelectorAll(
+            ".panel-image"
+        );
 
 
 
 
-        images.forEach((image,index)=>{
+
+        images.forEach(image=>{
 
 
-            let speed = -0.82;
+            /*
+            ONLY BACKGROUND PANEL IMAGES
+            MOVE
+
+            LOGOS / SOCIAL STAY FIXED
+            */
 
 
+            if(
+            image.classList.contains(
+                "logo-image"
+            ) ||
+            image.classList.contains(
+                "social-image"
+            ) ||
+            image.classList.contains(
+                "find-image"
+            ) ||
+            image.classList.contains(
+                "email-image"
+            )
+            ){
 
-            if(index === 0)
-            speed = -0.9;
+                image.style.transform =
+                "translateY(0)";
 
 
+                return;
 
-            if(index === 1)
-            speed = -0.6;
-
-
-
-            if(index === 2)
-            speed = -0.3;
+            }
 
 
 
 
 
             image.style.transform =
-            `translateY(${offset * speed}px)`;
+            `translateY(${offset * -0.35}px)`;
 
 
         });
@@ -389,13 +500,12 @@ function updateImageParallax(){
 
 
 
-
-
 /*
 =========================
-VIMEO
+VIMEO LAZY LOADING
 =========================
 */
+
 
 const videos =
 document.querySelectorAll(".video-frame");
@@ -458,6 +568,8 @@ function loadVideo(container){
 
 
 
+
+
     iframe.src =
     iframe.dataset.src +
     "&autoplay=1&autopause=0&playsinline=1";
@@ -473,13 +585,12 @@ function loadVideo(container){
 
 
 
-    iframe.onload = ()=>{
 
+    iframe.onload = ()=>{
 
 
         if(typeof Vimeo === "undefined")
         return;
-
 
 
 
@@ -528,7 +639,8 @@ function loadVideo(container){
 
 
 const videoObserver =
-new IntersectionObserver(entries=>{
+new IntersectionObserver(
+(entries)=>{
 
 
     entries.forEach(entry=>{
@@ -537,7 +649,9 @@ new IntersectionObserver(entries=>{
         if(entry.isIntersecting){
 
 
-            loadVideo(entry.target);
+            loadVideo(
+                entry.target
+            );
 
 
         }
@@ -548,9 +662,11 @@ new IntersectionObserver(entries=>{
 
 },
 {
-    rootMargin:"150px 0px",
+    rootMargin:"200px 0px",
     threshold:.01
 });
+
+
 
 
 
@@ -573,11 +689,13 @@ videos.forEach(video=>{
 
 /*
 =========================
-SCROLL LOOP
+SCROLL PERFORMANCE LOOP
 =========================
 */
 
-let ticking = false;
+
+let ticking =
+false;
 
 
 
@@ -590,6 +708,7 @@ function scrollUpdate(){
 
 
 
+
     requestAnimationFrame(()=>{
 
 
@@ -599,17 +718,20 @@ function scrollUpdate(){
 
 
 
-        ticking = false;
+        ticking =
+        false;
 
 
     });
 
 
 
-    ticking = true;
+    ticking =
+    true;
 
 
 }
+
 
 
 
@@ -636,6 +758,7 @@ RESIZE
 =========================
 */
 
+
 window.addEventListener(
 "resize",
 ()=>{
@@ -643,7 +766,9 @@ window.addEventListener(
 
     setPageHeight();
 
+
     updatePanels();
+
 
     updateImageParallax();
 
@@ -660,9 +785,10 @@ window.addEventListener(
 
 /*
 =========================
-START POSITION
+INITIAL POSITION
 =========================
 */
+
 
 requestAnimationFrame(()=>{
 
@@ -691,13 +817,11 @@ requestAnimationFrame(()=>{
 
 
 
+
     updatePanels();
 
     updateImageParallax();
 
-
-
-});
 
 
 });
@@ -712,22 +836,79 @@ requestAnimationFrame(()=>{
 
 /*
 =========================
-VARIABLE FONTS
+LOADING SCREEN EXIT SYNC
 =========================
 */
 
 
-document.querySelectorAll(".ticker-item")
+const loadingScreen =
+document.querySelector(
+".loading-screen"
+);
+
+
+
+const loadingBar =
+document.querySelector(
+".loading-progress-bar"
+);
+
+
+
+if(
+loadingScreen &&
+loadingBar
+){
+
+
+    /*
+    Match CSS timing:
+    progress = 1.5s
+    exit = 1.5s
+    */
+
+
+    setTimeout(()=>{
+
+
+        loadingScreen.style.pointerEvents =
+        "none";
+
+
+    },1500);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+=========================
+VARIABLE TICKER FONTS
+=========================
+*/
+
+
+document
+.querySelectorAll(".ticker-item")
 .forEach(item=>{
 
 
     const fonts = [
 
-
         '"Courier Prime", monospace',
+
         '"Courier New", monospace',
 
         '"Baskerville", serif',
+
         '"Georgia", serif',
 
         '"Times New Roman", serif',
@@ -745,21 +926,31 @@ document.querySelectorAll(".ticker-item")
 
 
 
+
+
     const text =
     item.textContent.trim();
 
 
 
-    item.innerHTML = "";
+
+
+    item.innerHTML =
+    "";
+
+
 
 
 
     let currentFont =
     fonts[
         Math.floor(
-            Math.random()*fonts.length
+            Math.random() *
+            fonts.length
         )
     ];
+
+
 
 
 
@@ -768,7 +959,9 @@ document.querySelectorAll(".ticker-item")
 
 
         const span =
-        document.createElement("span");
+        document.createElement(
+            "span"
+        );
 
 
 
@@ -779,7 +972,9 @@ document.querySelectorAll(".ticker-item")
 
 
 
-        if(/[.,;:'"!?]/.test(letter)){
+        if(
+        /[.,;:'"!?]/.test(letter)
+        ){
 
 
             span.style.fontFamily =
@@ -791,18 +986,23 @@ document.querySelectorAll(".ticker-item")
         else{
 
 
-            if(Math.random() > .85){
+            if(
+            Math.random() > .85
+            ){
 
 
                 currentFont =
                 fonts[
                     Math.floor(
-                        Math.random()*fonts.length
+                        Math.random() *
+                        fonts.length
                     )
                 ];
 
 
             }
+
+
 
 
 
@@ -816,16 +1016,28 @@ document.querySelectorAll(".ticker-item")
 
 
 
+
         span.style.fontWeight =
         "400";
 
 
 
-        item.appendChild(span);
+
+
+        item.appendChild(
+            span
+        );
 
 
 
     });
+
+
+
+});
+
+
+
 
 
 
