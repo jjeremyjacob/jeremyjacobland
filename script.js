@@ -401,15 +401,28 @@ SCROLL POSITION
 =========================
 */
 
-
 function getScrollPosition(){
 
+    const maxScroll =
+    document.body.scrollHeight - window.innerHeight;
 
-    return window.scrollY;
 
+    let scrollY =
+    window.scrollY;
+
+
+    // Reverse scroll direction on mobile only
+    if(window.innerWidth <= 768){
+
+        scrollY =
+        maxScroll - scrollY;
+
+    }
+
+
+    return scrollY;
 
 }
-
 
 
 
