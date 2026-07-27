@@ -251,7 +251,7 @@ async ()=>{
 
 },
 {
-    rootMargin:"1500px 0px"
+    rootMargin:"500px 0px"
 });
 
 
@@ -528,8 +528,8 @@ function updateImageParallax(){
 
 
 
-            image.style.transform =
-            `translateY(${offset * -0.35}px)`;
+image.style.transform =
+"translateY(0)";
 
 
         });

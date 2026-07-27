@@ -80,8 +80,6 @@ a {
     overflow:hidden;
 
 
-    contain:paint;
-
 
 
     background-size:cover;
@@ -100,7 +98,7 @@ a {
 
 
 
-    backface-visibility:hidden;
+    backface-visibility:visible;
 
     -webkit-backface-visibility:hidden;
 
@@ -249,8 +247,6 @@ a {
     opacity:0;
 
     transition:opacity .3s ease;
-
-    will-change:transform;
 
 }
 
