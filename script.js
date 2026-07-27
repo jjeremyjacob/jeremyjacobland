@@ -29,21 +29,25 @@ document.body.scrollTop = 0;
 
 
 
-
-
 /*
 =========================
 LOADING SCREEN CONTROL
 =========================
 */
 
-
 const loadingScreen =
 document.querySelector(".loading-screen");
 
 
+const firstLoad =
+!sessionStorage.getItem("siteLoaded");
 
-if(loadingScreen){
+
+
+if(
+    loadingScreen &&
+    firstLoad
+){
 
 
     document.documentElement.classList.add(
@@ -56,9 +60,6 @@ if(loadingScreen){
     );
 
 
-
-    // lock page at top while loading
-
     window.scrollTo(
         0,
         0
@@ -69,59 +70,57 @@ if(loadingScreen){
     setTimeout(()=>{
 
 
-        loadingScreen.classList.add(
-            "loaded"
+        loadingScreen.remove();
+
+
+        sessionStorage.setItem(
+            "siteLoaded",
+            "true"
         );
 
 
 
-        setTimeout(()=>{
+        document.documentElement.classList.remove(
+            "loading-active"
+        );
 
 
-            loadingScreen.remove();
-
-
-
-            document.documentElement.classList.remove(
-                "loading-active"
-            );
-
-
-            document.body.classList.remove(
-                "loading-active"
-            );
+        document.body.classList.remove(
+            "loading-active"
+        );
 
 
 
-            startInitialVideos();
+        startInitialVideos();
 
 
 
-            // force first frame after loading
-
-            window.scrollTo(
-                0,
-                0
-            );
+        window.scrollTo(
+            0,
+            0
+        );
 
 
-            updatePanels();
+        updatePanels();
 
 
 
-        },1000);
-
-
-
-    },2000);
+    },3000);
 
 
 
 }
+else{
 
 
+    if(loadingScreen){
+
+        loadingScreen.remove();
+
+    }
 
 
+}
 
 
 
