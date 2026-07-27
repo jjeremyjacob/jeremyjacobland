@@ -148,84 +148,69 @@ const STACK_REVEAL =
 
 /*
 =========================
-MOBILE SWIPE DIRECTION
+MOBILE SWIPE INVERSION
+=========================
+ONLY reverses finger gesture.
+SCROLL TIMELINE REMAINS NORMAL.
+DESKTOP UNCHANGED.
 =========================
 */
-
 
 if(window.innerWidth <= 768){
 
     let lastTouchY = null;
 
 
-
     window.addEventListener(
         "touchstart",
         (e)=>{
 
-
             lastTouchY =
             e.touches[0].clientY;
-
 
         },
         {
             passive:true
         }
     );
-
-
-
 
 
     window.addEventListener(
         "touchmove",
         (e)=>{
 
-
             if(lastTouchY === null)
             return;
-
 
 
             const currentY =
             e.touches[0].clientY;
 
 
-
             const delta =
-            lastTouchY - currentY;
-
+            currentY - lastTouchY;
 
 
             /*
-            =========================
-            REVERSE ONLY THE FINGER INPUT
-            =========================
+            Finger DOWN:
+            delta positive
 
-            Finger swipe DOWN:
-            delta becomes negative
-            normal scroll would go backward
+            Normal browser:
+            scrolls backward
 
-            We invert it:
-            page moves forward
-
-            Desktop remains untouched.
-            =========================
+            We force:
+            scroll forward
             */
-
 
 
             window.scrollBy(
                 0,
-                -delta
+                delta
             );
-
 
 
             lastTouchY =
             currentY;
-
 
 
         },
@@ -234,14 +219,7 @@ if(window.innerWidth <= 768){
         }
     );
 
-
 }
-
-
-
-
-
-
 
 
 
