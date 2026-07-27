@@ -11,7 +11,38 @@ const loadingScreen =
 document.querySelector(".loading-screen");
 
 
+
 if(loadingScreen){
+
+
+    // Prevent scrolling during loading
+
+    const originalOverflow =
+    document.body.style.overflow;
+
+
+
+    const originalTouchAction =
+    document.body.style.touchAction;
+
+
+
+    document.body.style.overflow =
+    "hidden";
+
+
+
+    document.body.style.touchAction =
+    "none";
+
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+
 
 
     setTimeout(()=>{
@@ -22,34 +53,44 @@ if(loadingScreen){
         );
 
 
+
+
         setTimeout(()=>{
 
 
             loadingScreen.remove();
 
 
-      loadVideo(
-    document.querySelector(".panel-02 .video-frame")
-);
 
 
-setTimeout(() => {
+            // Restore scrolling
 
-    loadVideo(
-        document.querySelector(".panel-04 .video-frame")
-    );
+            document.body.style.overflow =
+            originalOverflow;
 
-},1000);
+
+
+            document.body.style.touchAction =
+            originalTouchAction;
+
+
+
+
+            startInitialVideos();
+
 
 
 
         },1000);
 
 
+
     },2000);
 
 
+
 }
+
 
 
 
@@ -99,6 +140,7 @@ const panels =
 document.querySelectorAll(".panel");
 
 
+
 const videos =
 document.querySelectorAll(".video-frame");
 
@@ -146,14 +188,6 @@ function setPageHeight(){
 
 
 setPageHeight();
-
-
-
-
-
-
-
-
 
 /*
 =========================
@@ -259,16 +293,21 @@ new IntersectionObserver(
 
             try{
 
+
                 await img.decode();
+
 
             }
 
+
             catch(e){
+
 
                 console.warn(
                     "IMAGE DECODE FAILED:",
                     image
                 );
+
 
             }
 
@@ -302,6 +341,7 @@ new IntersectionObserver(
         );
 
 
+
         imageObserver.unobserve(
             panel
         );
@@ -312,6 +352,7 @@ new IntersectionObserver(
 
 },
 
+
 {
 
 
@@ -321,8 +362,8 @@ new IntersectionObserver(
 
 }
 
-);
 
+);
 
 
 
@@ -468,6 +509,7 @@ function updatePanels(){
                     start
                 )
                 /
+
                 (
                     height *
                     SCROLL_FACTOR
@@ -563,6 +605,14 @@ function updatePanels(){
 
 }
 
+
+
+
+
+
+
+
+
 /*
 =========================
 IMAGE PARALLAX
@@ -600,14 +650,6 @@ function updateImageParallax(){
 
 }
 
-
-
-
-
-
-
-
-
 /*
 =========================
 VIMEO LAZY LOADING
@@ -620,6 +662,7 @@ function loadVideo(container){
 
     if(!container)
     return;
+
 
 
     if(container.dataset.loaded)
@@ -691,7 +734,9 @@ function loadVideo(container){
 
     if(unused){
 
+
         unused.remove();
+
 
     }
 
@@ -749,6 +794,47 @@ function loadVideo(container){
 
 /*
 =========================
+START INITIAL VIDEOS
+=========================
+*/
+
+
+function startInitialVideos(){
+
+
+    loadVideo(
+        document.querySelector(
+            ".panel-02 .video-frame"
+        )
+    );
+
+
+
+    setTimeout(()=>{
+
+
+        loadVideo(
+            document.querySelector(
+                ".panel-04 .video-frame"
+            )
+        );
+
+
+    },1000);
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+=========================
 VIDEO OBSERVER
 =========================
 */
@@ -766,20 +852,20 @@ new IntersectionObserver(
     entries.forEach(entry=>{
 
 
-if(entry.isIntersecting){
+        if(entry.isIntersecting){
 
 
-    loadVideo(
-        entry.target
-    );
+            loadVideo(
+                entry.target
+            );
 
 
-    videoObserver.unobserve(
-        entry.target
-    );
+            videoObserver.unobserve(
+                entry.target
+            );
 
 
-}
+        }
 
 
     });
@@ -904,14 +990,6 @@ passive:true
 
 );
 
-
-
-
-
-
-
-
-
 /*
 =========================
 RESIZE
@@ -955,6 +1033,17 @@ INITIAL POSITION
 
 
 requestAnimationFrame(()=>{
+
+
+    if(document.querySelector(".loading-screen")){
+
+
+        return;
+
+
+    }
+
+
 
 
     if(window.innerWidth <= 768){
