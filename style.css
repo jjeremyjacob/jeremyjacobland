@@ -590,19 +590,22 @@ a {
 
     display:flex;
 
-
     width:max-content;
 
-
     height:100%;
-
 
     align-items:center;
 
 
     animation:
-
     tickerMove 120s linear infinite;
+
+
+    transform:
+    translateX(50vw);
+
+
+    will-change:transform;
 
 }
 
@@ -646,14 +649,14 @@ a {
 
     from {
 
-        transform:translateX(0);
+        transform:translateX(50vw);
 
     }
 
 
     to {
 
-        transform:translateX(-50%);
+        transform:translateX(-100%);
 
     }
 
