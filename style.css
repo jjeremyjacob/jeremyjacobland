@@ -947,13 +947,11 @@ a {
 .loading-screen {
 
 
-    background-image:
+.loading-screen {
 
-    url("images/section1-mobile.webp");
-
+    background-image:none;
 
 }
-
 
 }
 
