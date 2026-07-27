@@ -67,7 +67,7 @@ document.querySelectorAll(".panel");
 
 
 const SCROLL_FACTOR = 1.5;
-
+const STACK_REVEAL = 28;
 
 
 function setPageHeight(){
@@ -276,7 +276,6 @@ PANEL MOVEMENT
 =========================
 */
 
-
 function updatePanels(){
 
 
@@ -284,22 +283,16 @@ function updatePanels(){
     window.innerHeight;
 
 
-
     const mobile =
     window.innerWidth <= 768;
-
 
 
     let scrollY;
 
 
-
-
-
     /*
     MOBILE REVERSED SCROLL
     */
-
 
     if(mobile){
 
@@ -307,7 +300,6 @@ function updatePanels(){
         const maxScroll =
         document.documentElement.scrollHeight -
         window.innerHeight;
-
 
 
         scrollY =
@@ -329,14 +321,12 @@ function updatePanels(){
 
 
 
-
     panels.forEach((panel,index)=>{
 
 
         /*
-        FIRST PANEL FIXED
+        FIRST PANEL
         */
-
 
         if(index === 0){
 
@@ -346,7 +336,6 @@ function updatePanels(){
 
 
             return;
-
 
         }
 
@@ -361,22 +350,13 @@ function updatePanels(){
 
 
 
-
-
         const progress =
-        (scrollY - start) /
-        (height * SCROLL_FACTOR);
-
-
-
-
-
-        const position =
         Math.min(
-            0,
+            1,
             Math.max(
-                -100,
-                -100 + progress * 100
+                0,
+                (scrollY - start) /
+                (height * SCROLL_FACTOR)
             )
         );
 
@@ -384,8 +364,26 @@ function updatePanels(){
 
 
 
+        /*
+        NEW PANEL DESCENDS
+        AND STOPS 40PX ABOVE BOTTOM
+        */
+
+const stackOffset =
+index * STACK_REVEAL;
+
+
+const y =
+-height +
+(progress *
+(height - stackOffset));
+
+
+
+
+
         panel.style.transform =
-        `translateY(${position}%)`;
+        `translateY(${y}px)`;
 
 
 
@@ -394,7 +392,6 @@ function updatePanels(){
         /*
         EMAIL ARRIVAL
         */
-
 
         if(index === 9){
 
@@ -409,29 +406,12 @@ function updatePanels(){
             if(email){
 
 
-                const emailProgress =
-                Math.min(
-                    1,
-                    Math.max(
-                        0,
-                        (position + 100) / 100
-                    )
-                );
-
-
-
-                const move =
-                -180 +
-                (emailProgress * 180);
-
-
-
                 email.style.transform =
-                `translateY(${move}px)`;
+                `translateY(${-180 + progress * 180}px)`;
 
 
                 email.style.opacity =
-                emailProgress;
+                progress;
 
 
             }
@@ -441,18 +421,11 @@ function updatePanels(){
 
 
 
+
     });
 
 
 }
-
-
-
-
-
-
-
-
 
 /*
 =========================
