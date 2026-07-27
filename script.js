@@ -34,22 +34,17 @@ SHOW AUDIO CONTROL
 =========================
 */
 
-setTimeout(()=>{
-
-    const audioControl =
-    document.querySelector(".audio-control");
+const audioControl =
+document.querySelector(".audio-control");
 
 
-    if(audioControl){
+if(audioControl){
 
-        audioControl.classList.add(
-            "visible"
-        );
+    audioControl.classList.add(
+        "visible"
+    );
 
-    }
-
-
-},2400);
+}
 
 
 /*

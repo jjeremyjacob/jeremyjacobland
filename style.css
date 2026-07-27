@@ -639,7 +639,6 @@ a {
 
 
 
-
 /* =========================
    AUDIO CONTROL
 ========================= */
@@ -647,55 +646,38 @@ a {
 
 .audio-control {
 
-
     position:fixed;
-
-
 
     right:20px;
 
-
-    bottom:50px;
-
-
+    bottom:45px;
 
     z-index:5000;
 
 
-
     display:flex;
-
 
     align-items:center;
 
-
-
-    gap:10px;
-
+    gap:14px;
 
 
     opacity:0;
 
-
-
     transition:
-
-    opacity .6s ease;
+    opacity .8s ease;
 
 
 }
-
-
 
 
 
 .audio-control.visible {
 
-
     opacity:1;
 
-
 }
+
 
 
 
@@ -704,26 +686,102 @@ a {
 #audio-toggle {
 
 
-    background:none;
+    background:
+
+    rgba(69,41,28,.35);
 
 
-    border:1px solid rgba(174,141,127,.7);
+    border:
+
+    1px solid rgba(174,141,127,.65);
 
 
     color:#ae8d7f;
 
 
+    padding:
 
-    padding:8px 12px;
-
-
-
-    font-size:11px;
+    8px 14px;
 
 
+    font-family:
 
-    letter-spacing:.08em;
+    "Courier Prime",
+    "Courier New",
+    monospace;
 
+
+    font-size:10px;
+
+
+    letter-spacing:.15em;
+
+
+    text-transform:uppercase;
+
+
+    cursor:pointer;
+
+
+    backdrop-filter:blur(4px);
+
+
+    transition:
+
+    background .3s ease,
+    border-color .3s ease;
+
+
+}
+
+
+
+
+
+#audio-toggle:hover {
+
+
+    background:
+
+    rgba(174,141,127,.15);
+
+
+    border-color:
+
+    rgba(174,141,127,1);
+
+
+}
+
+
+
+
+
+
+
+/* VOLUME SLIDER */
+
+
+#audio-level {
+
+
+    width:120px;
+
+
+    height:3px;
+
+
+    appearance:none;
+
+    -webkit-appearance:none;
+
+
+    background:
+
+    rgba(174,141,127,.35);
+
+
+    border-radius:0;
 
 
     cursor:pointer;
@@ -735,10 +793,104 @@ a {
 
 
 
-#audio-level {
+/* TRACK */
 
 
-    width:100px;
+#audio-level::-webkit-slider-runnable-track {
+
+
+    height:3px;
+
+
+    background:
+
+    rgba(174,141,127,.35);
+
+
+}
+
+
+
+
+
+
+
+/* THUMB */
+
+
+#audio-level::-webkit-slider-thumb {
+
+
+    appearance:none;
+
+    -webkit-appearance:none;
+
+
+    width:10px;
+
+
+    height:10px;
+
+
+    margin-top:-3.5px;
+
+
+    background:#ae8d7f;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    box-shadow:
+
+    0 0 8px rgba(174,141,127,.6);
+
+
+}
+
+
+
+
+
+
+
+#audio-level::-moz-range-track {
+
+
+    height:3px;
+
+
+    background:
+
+    rgba(174,141,127,.35);
+
+
+}
+
+
+
+
+
+
+#audio-level::-moz-range-thumb {
+
+
+    width:10px;
+
+
+    height:10px;
+
+
+    background:#ae8d7f;
+
+
+    border:none;
+
+
+    border-radius:50%;
 
 
 }
@@ -757,15 +909,22 @@ a {
 
     right:10px;
 
+    bottom:40px;
 
-    bottom:45px;
+
+}
+
+
+#audio-level {
+
+
+    width:90px;
 
 
 }
 
 
 }
-
 
 
 
