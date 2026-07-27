@@ -241,52 +241,26 @@ a {
    LAZY LOADED PANEL IMAGES
 ========================= */
 
-
 .panel-image {
-
 
     position:absolute;
 
-
     inset:0;
-
-
 
     width:100%;
 
-
     height:100%;
-
-
 
     object-fit:cover;
 
-
     object-position:center bottom;
-
-
-
-    opacity:0;
-
-
-
-    z-index:0;
-
-
-
-    transition:
-
-    opacity .3s ease;
-
-}
-
-
-
-.panel-image.loaded {
 
     opacity:1;
 
+    z-index:0;
+
 }
+
 
 
 
@@ -513,7 +487,7 @@ a {
 
 
 
-    opacity:0;
+    opacity:1;
 
 
 
@@ -531,9 +505,7 @@ a {
        to overlap smoothly
     */
 
-    transition:
 
-    opacity 2.5s ease;
 
 
 
@@ -546,14 +518,6 @@ a {
 
 
 
-
-
-.video-ready iframe {
-
-
-    opacity:1;
-
-}
 
 
 
@@ -898,7 +862,9 @@ a {
 
 
 
-
+.loading-text {
+    display:none;
+}
 
 
 
@@ -1386,3 +1352,4 @@ body.loading-active {
     touch-action:none;
 
 }
+
