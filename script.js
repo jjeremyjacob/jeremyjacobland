@@ -12,27 +12,45 @@ document.querySelector(".loading-screen");
 
 if(loadingScreen){
 
-
     if(sessionStorage.getItem("visited")){
-
 
         loadingScreen.remove();
 
-
     }
     else{
-
 
         sessionStorage.setItem(
             "visited",
             "true"
         );
 
+    }
+
+}
+
+/*
+=========================
+SHOW AUDIO CONTROL
+=========================
+*/
+
+setTimeout(()=>{
+
+    const audioControl =
+    document.querySelector(".audio-control");
+
+
+    if(audioControl){
+
+        audioControl.classList.add(
+            "visible"
+        );
 
     }
 
 
-}
+},2400);
+
 
 /*
 =========================
@@ -40,14 +58,18 @@ RESET SCROLL
 =========================
 */
 
-if ("scrollRestoration" in history){
+if("scrollRestoration" in history){
 
-    history.scrollRestoration = "manual";
+    history.scrollRestoration =
+    "manual";
 
 }
 
 
-window.scrollTo(0,0);
+window.scrollTo(
+    0,
+    0
+);
 
 
 
@@ -66,31 +88,429 @@ const panels =
 document.querySelectorAll(".panel");
 
 
-const SCROLL_FACTOR = 1.5;
-const STACK_REVEAL = 28;
+const videos =
+document.querySelectorAll(".video-frame");
+
+
+
+const SCROLL_FACTOR =
+1.5;
+
+
+const STACK_REVEAL =
+28;
+
+
+
+
+
+
+
+
+/*
+=========================
+AUDIO SYSTEM
+=========================
+*/
+
+
+const audioState = {
+
+    volume:0.5,
+
+    enabled:false,
+
+    players:new Map()
+
+};
+
+
+
+
+
+const audioButton =
+document.getElementById(
+    "audio-toggle"
+);
+
+
+
+const audioSlider =
+document.getElementById(
+    "audio-level"
+);
+
+
+
+
+
+
+
+
+function updateAudioButton(){
+
+
+    if(!audioButton)
+    return;
+
+
+
+    audioButton.textContent =
+    audioState.enabled
+    ?
+    "AUDIO ON"
+    :
+    "AUDIO OFF";
+
+
+}
+
+
+
+
+
+
+
+
+function setPlayerVolume(
+    player,
+    volume
+){
+
+    player.setVolume(
+
+        Math.max(
+            0,
+            Math.min(
+                1,
+                volume
+            )
+        )
+
+    );
+
+}
+
+
+
+
+
+
+
+
+function fadePlayer(
+    player,
+    target,
+    duration = 800
+){
+
+    player.getVolume()
+
+    .then(current=>{
+
+
+        const start =
+        current;
+
+
+
+        const startTime =
+        performance.now();
+
+
+
+
+
+        function animate(time){
+
+
+            const elapsed =
+            time - startTime;
+
+
+
+            const progress =
+            Math.min(
+                elapsed / duration,
+                1
+            );
+
+
+
+            const volume =
+            start +
+            (
+                target -
+                start
+            )
+            *
+            progress;
+
+
+
+            setPlayerVolume(
+                player,
+                volume
+            );
+
+
+
+
+            if(progress < 1){
+
+
+                requestAnimationFrame(
+                    animate
+                );
+
+
+            }
+
+
+        }
+
+
+
+
+        requestAnimationFrame(
+            animate
+        );
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+
+
+function fadeAllAudio(){
+
+
+    audioState.players.forEach(
+        player=>{
+
+
+            fadePlayer(
+
+                player,
+
+                audioState.enabled
+                ?
+                audioState.volume
+                :
+                0
+
+            );
+
+
+        }
+    );
+
+
+}
+
+
+
+
+
+
+
+
+function updateAllAudio(){
+
+
+    audioState.players.forEach(
+        player=>{
+
+
+            setPlayerVolume(
+
+                player,
+
+                audioState.enabled
+                ?
+                audioState.volume
+                :
+                0
+
+            );
+
+
+        }
+    );
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+=========================
+AUDIO BUTTON
+=========================
+*/
+
+
+if(audioButton){
+
+
+    audioButton.addEventListener(
+        "click",
+        ()=>{
+
+
+            audioState.enabled =
+            !audioState.enabled;
+
+
+
+
+            if(
+            audioState.enabled &&
+            audioState.volume === 0
+            ){
+
+
+                audioState.volume =
+                .5;
+
+
+
+                if(audioSlider){
+
+                    audioSlider.value =
+                    50;
+
+                }
+
+
+            }
+
+
+
+
+            updateAudioButton();
+
+
+
+            fadeAllAudio();
+
+
+
+        }
+    );
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+=========================
+AUDIO SLIDER
+=========================
+*/
+
+
+if(audioSlider){
+
+
+    audioSlider.addEventListener(
+        "input",
+        ()=>{
+
+
+            audioState.volume =
+            Number(
+                audioSlider.value
+            )
+            /
+            100;
+
+
+
+
+            if(audioState.volume > 0){
+
+
+                audioState.enabled =
+                true;
+
+
+            }
+
+
+
+
+            updateAudioButton();
+
+
+
+            fadeAllAudio();
+
+
+
+        }
+    );
+
+
+}
+
+
+
+
+
+updateAudioButton();
+
+
+
+
+
+
+/*
+=========================
+PAGE HEIGHT
+=========================
+*/
 
 
 function setPageHeight(){
+
 
     const totalPanels =
     panels.length;
 
 
+
     document.body.style.height =
+
     `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
+
 
 }
 
 
 
 setPageHeight();
-
-
-
-
-
-
-
 
 /*
 =========================
@@ -148,11 +568,13 @@ new IntersectionObserver(
         image.includes(".webp")
         ){
 
+
             image =
             image.replace(
                 ".webp",
                 "-mobile.webp"
             );
+
 
         }
 
@@ -160,8 +582,12 @@ new IntersectionObserver(
 
 
 
+
+
         const img =
-        document.createElement("img");
+        document.createElement(
+            "img"
+        );
 
 
 
@@ -180,47 +606,58 @@ new IntersectionObserver(
 
 
 
+
+
         /*
         APPEND FIRST
         */
 
-        panel.appendChild(img);
+        panel.appendChild(
+            img
+        );
 
 
 
-        /*
-        LOAD AFTER INSERT
-        */
+
 
         img.src =
         image;
 
 
 
-img.onload =
-async ()=>{
-
-    try {
-
-        await img.decode();
-
-    }
-    catch(e){
-
-        console.warn(
-            "IMAGE DECODE FAILED:",
-            image
-        );
-
-    }
 
 
-    img.classList.add(
-        "loaded"
-    );
+
+        img.onload =
+        async ()=>{
 
 
-};
+            try{
+
+                await img.decode();
+
+            }
+            catch(e){
+
+                console.warn(
+                    "IMAGE DECODE FAILED:",
+                    image
+                );
+
+            }
+
+
+
+            img.classList.add(
+                "loaded"
+            );
+
+
+        };
+
+
+
+
 
 
 
@@ -238,11 +675,18 @@ async ()=>{
 
 
 
-        loadedPanels.add(panel);
 
 
 
-        imageObserver.unobserve(panel);
+        loadedPanels.add(
+            panel
+        );
+
+
+
+        imageObserver.unobserve(
+            panel
+        );
 
 
 
@@ -251,20 +695,30 @@ async ()=>{
 
 },
 {
-    rootMargin:"200px 0px"
+    rootMargin:
+    "200px 0px"
 });
 
 
 
 
 
-panels.forEach(panel=>{
 
 
-    imageObserver.observe(panel);
+panels.forEach(
+panel=>{
+
+
+    imageObserver.observe(
+        panel
+    );
 
 
 });
+
+
+
+
 
 
 
@@ -276,23 +730,14 @@ PANEL MOVEMENT
 =========================
 */
 
-function updatePanels(){
 
-
-    const height =
-    window.innerHeight;
+function getScrollPosition(){
 
 
     const mobile =
     window.innerWidth <= 768;
 
 
-    let scrollY;
-
-
-    /*
-    MOBILE REVERSED SCROLL
-    */
 
     if(mobile){
 
@@ -302,31 +747,53 @@ function updatePanels(){
         window.innerHeight;
 
 
-        scrollY =
-        maxScroll -
-        window.scrollY;
 
-
-    }
-    else{
-
-
-        scrollY =
-        window.scrollY;
+        return (
+            maxScroll -
+            window.scrollY
+        );
 
 
     }
 
 
+    return window.scrollY;
+
+
+}
 
 
 
-    panels.forEach((panel,index)=>{
+
+
+
+
+
+
+function updatePanels(){
+
+
+    const height =
+    window.innerHeight;
+
+
+
+    const scrollY =
+    getScrollPosition();
+
+
+
+
+
+
+    panels.forEach(
+    (panel,index)=>{
 
 
         /*
-        FIRST PANEL
+        FIRST PANEL FIXED
         */
+
 
         if(index === 0){
 
@@ -337,16 +804,24 @@ function updatePanels(){
 
             return;
 
+
         }
 
 
 
 
 
+
         const start =
-        (index - 1) *
-        height *
+        (index - 1)
+        *
+        height
+        *
         SCROLL_FACTOR;
+
+
+
+
 
 
 
@@ -355,8 +830,15 @@ function updatePanels(){
             1,
             Math.max(
                 0,
-                (scrollY - start) /
-                (height * SCROLL_FACTOR)
+                (
+                    scrollY -
+                    start
+                )
+                /
+                (
+                    height *
+                    SCROLL_FACTOR
+                )
             )
         );
 
@@ -364,19 +846,30 @@ function updatePanels(){
 
 
 
+
         /*
         NEW PANEL DESCENDS
-        AND STOPS 40PX ABOVE BOTTOM
         */
 
-const stackOffset =
-index * STACK_REVEAL;
+
+        const stackOffset =
+        index *
+        STACK_REVEAL;
 
 
-const y =
--height +
-(progress *
-(height - stackOffset));
+
+
+
+        const y =
+        -height +
+        (
+            progress *
+            (
+                height -
+                stackOffset
+            )
+        );
+
 
 
 
@@ -389,9 +882,13 @@ const y =
 
 
 
+
+
+
         /*
         EMAIL ARRIVAL
         */
+
 
         if(index === 9){
 
@@ -407,7 +904,10 @@ const y =
 
 
                 email.style.transform =
-                `translateY(${-180 + progress * 180}px)`;
+                `translateY(${
+                    -180 +
+                    progress * 180
+                }px)`;
 
 
                 email.style.opacity =
@@ -425,7 +925,16 @@ const y =
     });
 
 
+
 }
+
+
+
+
+
+
+
+
 
 /*
 =========================
@@ -437,21 +946,8 @@ IMAGE PARALLAX
 function updateImageParallax(){
 
 
-    panels.forEach(panel=>{
-
-
-        const rect =
-        panel.getBoundingClientRect();
-
-
-
-        const offset =
-        rect.top +
-        rect.height / 2 -
-        window.innerHeight / 2;
-
-
-
+    panels.forEach(
+    panel=>{
 
 
         const images =
@@ -462,15 +958,12 @@ function updateImageParallax(){
 
 
 
-
-        images.forEach(image=>{
+        images.forEach(
+        image=>{
 
 
             /*
-            ONLY BACKGROUND PANEL IMAGES
-            MOVE
-
-            LOGOS / SOCIAL STAY FIXED
+            KEEP UI ELEMENTS FIXED
             */
 
 
@@ -489,11 +982,13 @@ function updateImageParallax(){
             )
             ){
 
+
                 image.style.transform =
                 "translateY(0)";
 
 
                 return;
+
 
             }
 
@@ -501,8 +996,15 @@ function updateImageParallax(){
 
 
 
-image.style.transform =
-"translateY(0)";
+
+            /*
+            BACKGROUND MOTION
+            */
+
+
+            image.style.transform =
+            "translateY(0)";
+
 
 
         });
@@ -512,7 +1014,10 @@ image.style.transform =
     });
 
 
+
 }
+
+
 
 
 
@@ -527,17 +1032,13 @@ VIMEO LAZY LOADING
 */
 
 
-const videos =
-document.querySelectorAll(".video-frame");
-
-
-
-
 function loadVideo(container){
 
 
     if(container.dataset.loaded)
     return;
+
+
 
 
 
@@ -549,12 +1050,18 @@ function loadVideo(container){
 
 
 
+
     const iframe =
     mobile
     ?
-    container.querySelector(".mobile-frame")
+    container.querySelector(
+        ".mobile-frame"
+    )
     :
-    container.querySelector(".desktop-frame");
+    container.querySelector(
+        ".desktop-frame"
+    );
+
 
 
 
@@ -568,12 +1075,19 @@ function loadVideo(container){
 
 
 
+
     const unused =
     mobile
     ?
-    container.querySelector(".desktop-frame")
+    container.querySelector(
+        ".desktop-frame"
+    )
     :
-    container.querySelector(".mobile-frame");
+    container.querySelector(
+        ".mobile-frame"
+    );
+
+
 
 
 
@@ -590,9 +1104,14 @@ function loadVideo(container){
 
 
 
+
     iframe.src =
+
     iframe.dataset.src +
+
     "&autoplay=1&autopause=0&playsinline=1";
+
+
 
 
 
@@ -605,57 +1124,63 @@ function loadVideo(container){
 
 
 
+iframe.onload = ()=>{
 
-    iframe.onload = ()=>{
 
-
-        if(typeof Vimeo === "undefined")
-        return;
-
+    if(typeof Vimeo === "undefined")
+    return;
 
 
 
-        const player =
-        new Vimeo.Player(iframe);
+    const player =
+    new Vimeo.Player(
+        iframe
+    );
 
 
 
+    /*
+    REGISTER PLAYER
+    */
 
-
-        player.setVolume(0);
-
-
-
-
-
-        player.play()
-
-        .then(()=>{
-
-
-            container.classList.add(
-                "video-ready"
-            );
-
-
-        })
-
-        .catch(()=>{
-
-
-        });
+    audioState.players.set(
+        container,
+        player
+    );
 
 
 
-    };
+    /*
+    START MUTED
+    */
 
+    player.setVolume(0);
+
+
+
+    player.play()
+
+    .then(()=>{
+
+
+        container.classList.add(
+            "video-ready"
+        );
+
+
+    })
+
+    .catch(()=>{});
+
+
+};
 
 }
-
-
-
-
-
+/*
+=========================
+VIDEO OBSERVER
+=========================
+*/
 
 
 const videoObserver =
@@ -663,7 +1188,9 @@ new IntersectionObserver(
 (entries)=>{
 
 
-    entries.forEach(entry=>{
+
+    entries.forEach(
+    entry=>{
 
 
         if(entry.isIntersecting){
@@ -682,7 +1209,7 @@ new IntersectionObserver(
 
 },
 {
-    rootMargin:"0px",
+    rootMargin:"100px 0px",
     threshold:.25
 });
 
@@ -691,10 +1218,13 @@ new IntersectionObserver(
 
 
 
-videos.forEach(video=>{
+videos.forEach(
+video=>{
 
 
-    videoObserver.observe(video);
+    videoObserver.observe(
+        video
+    );
 
 
 });
@@ -703,6 +1233,143 @@ videos.forEach(video=>{
 
 
 
+
+
+/*
+=========================
+AUDIO PANEL SYNC
+=========================
+*/
+
+function updateAudioFade(){
+
+    const height =
+    window.innerHeight;
+
+
+    const scrollY =
+    getScrollPosition();
+
+
+
+    let activeIndex = 0;
+
+
+
+    panels.forEach(
+    (panel,index)=>{
+
+
+        if(index === 0)
+        return;
+
+
+
+        const start =
+        (index - 1)
+        *
+        height
+        *
+        SCROLL_FACTOR;
+
+
+
+        const progress =
+        Math.min(
+            1,
+            Math.max(
+                0,
+                (
+                    scrollY -
+                    start
+                )
+                /
+                (
+                    height *
+                    SCROLL_FACTOR
+                )
+            )
+        );
+
+
+
+        if(progress > .05){
+
+            activeIndex = index;
+
+        }
+
+
+
+    });
+
+
+
+
+
+
+
+    videos.forEach(
+    video=>{
+
+
+        const panel =
+        video.closest(".panel");
+
+
+        if(!panel)
+        return;
+
+
+
+        const index =
+        [...panels].indexOf(panel);
+
+
+
+        const player =
+        audioState.players.get(
+            video
+        );
+
+
+
+        if(!player)
+        return;
+
+
+
+
+
+        let volume = 0;
+
+
+
+        if(
+        index === activeIndex &&
+        audioState.enabled
+        ){
+
+            volume =
+            audioState.volume;
+
+        }
+
+
+
+        fadePlayer(
+            player,
+            volume,
+            500
+        );
+
+
+
+    });
+
+
+
+}
 
 
 
@@ -720,6 +1387,7 @@ false;
 
 
 
+
 function scrollUpdate(){
 
 
@@ -729,12 +1397,19 @@ function scrollUpdate(){
 
 
 
-    requestAnimationFrame(()=>{
+
+    requestAnimationFrame(
+    ()=>{
 
 
         updatePanels();
 
+
         updateImageParallax();
+
+
+        updateAudioFade();
+
 
 
 
@@ -742,7 +1417,10 @@ function scrollUpdate(){
         false;
 
 
+
     });
+
+
 
 
 
@@ -751,6 +1429,7 @@ function scrollUpdate(){
 
 
 }
+
 
 
 
@@ -793,6 +1472,10 @@ window.addEventListener(
     updateImageParallax();
 
 
+    updateAudioFade();
+
+
+
 });
 
 
@@ -810,16 +1493,20 @@ INITIAL POSITION
 */
 
 
-requestAnimationFrame(()=>{
+requestAnimationFrame(
+()=>{
 
 
     if(window.innerWidth <= 768){
 
 
         window.scrollTo(
+
             0,
+
             document.documentElement.scrollHeight -
             window.innerHeight
+
         );
 
 
@@ -838,15 +1525,18 @@ requestAnimationFrame(()=>{
 
 
 
+
     updatePanels();
+
 
     updateImageParallax();
 
 
+    updateAudioFade();
+
+
 
 });
-
-
 
 
 
@@ -865,10 +1555,12 @@ VARIABLE TICKER FONTS
 
 document
 .querySelectorAll(".ticker-item")
-.forEach(item=>{
+.forEach(
+item=>{
 
 
     const fonts = [
+
 
         '"Courier Prime", monospace',
 
@@ -890,6 +1582,7 @@ document
 
 
     ];
+
 
 
 
@@ -922,7 +1615,10 @@ document
 
 
 
-    [...text].forEach(letter=>{
+
+
+    [...text].forEach(
+    letter=>{
 
 
         const span =
@@ -939,6 +1635,8 @@ document
 
 
 
+
+
         if(
         /[.,;:'"!?]/.test(letter)
         ){
@@ -949,8 +1647,8 @@ document
 
 
         }
-
         else{
+
 
 
             if(
@@ -973,11 +1671,13 @@ document
 
 
 
+
             span.style.fontFamily =
             currentFont;
 
 
         }
+
 
 
 

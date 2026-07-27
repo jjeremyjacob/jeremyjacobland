@@ -20,7 +20,6 @@ Transmissions from another world. A living archive created by artist and filmmak
 
 <meta name="author" content="Jeremy Jacob">
 
-
 <meta name="robots" content="index, follow">
 
 
@@ -48,11 +47,15 @@ transmissions from another world
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 
+<meta name="apple-touch-fullscreen" content="yes">
+
 <meta name="apple-mobile-web-app-title"
 content="Jeremy Jacob">
 
 <meta name="apple-mobile-web-app-status-bar-style"
 content="black">
+
+
 
 
 
@@ -124,10 +127,6 @@ content="en_US">
 content="https://jeremyjacob.com/images/social-preview.jpg">
 
 
-<meta property="og:image:secure_url"
-content="https://jeremyjacob.com/images/social-preview.jpg">
-
-
 <meta property="og:image:type"
 content="image/jpeg">
 
@@ -176,7 +175,7 @@ content="1080">
 
 
 <!-- =========================
-     TWITTER / X
+     TWITTER
 ========================= -->
 
 
@@ -243,18 +242,21 @@ content="@jeremyjacobland">
 
 
 
-<link 
-rel="preload"
-href="style.css"
-as="style"
-onload="this.onload=null;this.rel='stylesheet'">
+<!-- =========================
+     CSS
+========================= -->
+
+
+<link
+rel="stylesheet"
+href="style.css">
 
 
 
 
 
 <!-- =========================
-     VIMEO OPTIMIZATION
+     VIMEO
 ========================= -->
 
 
@@ -270,7 +272,9 @@ href="https://f.vimeocdn.com">
 href="https://i.vimeocdn.com">
 
 
-<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="referrer"
+content="strict-origin-when-cross-origin">
+
 
 <script src="https://player.vimeo.com/api/player.js"></script>
 
@@ -279,14 +283,16 @@ href="https://i.vimeocdn.com">
 
 
 <!-- =========================
-     FIRST FRAME PRELOAD
+     FIRST FRAME
 ========================= -->
 
 
-<link rel="preload"
+<link
+rel="preload"
 as="image"
 href="images/background.webp"
 fetchpriority="high">
+
 
 
 </head>
@@ -296,6 +302,12 @@ fetchpriority="high">
 
 
 <body>
+
+
+
+<!-- =========================
+     LOADING SCREEN
+========================= -->
 
 
 <div class="loading-screen" id="loading-screen">
@@ -313,9 +325,13 @@ aria-hidden="true">
 
 <div class="loading-text">
 
-<div>TRANSMITTING...</div>
+<div>
+TRANSMITTING...
+</div>
 
-<div>SIGNAL FOUND...</div>
+<div>
+SIGNAL FOUND...
+</div>
 
 </div>
 
@@ -332,14 +348,42 @@ aria-hidden="true">
 
 
 
-<main>
 
+
+<!-- =========================
+     AUDIO CONTROL
+========================= -->
+
+
+<div class="audio-control">
+
+
+<button id="audio-toggle">
+AUDIO OFF
+</button>
+
+
+<input
+id="audio-level"
+type="range"
+min="0"
+max="100"
+value="50"
+>
+
+
+</div>
+
+
+
+
+
+<main>
 
 
 <h1 class="seo-title">
 Jeremy Jacob — Transmissions From Another World
 </h1>
-
 
 
 <div class="seo-content">
@@ -379,7 +423,9 @@ Upon awakening, they couldn’t seem to remember anything. Not as if life was bl
 </div>
 
 
+
 <picture>
+
 
 <source
 media="(max-width:768px)"
@@ -395,11 +441,11 @@ fetchpriority="high"
 loading="eager"
 decoding="async">
 
+
 </picture>
 
 
 </section>
-
 
 
 
@@ -421,7 +467,7 @@ data-image="images/section2.webp">
 
 <div class="ticker-item">
 
-Little did I know when, years ago, I arrived here.I know even less now. But I discovered many things. Much has been left behind. And for that I am grateful.
+Little did I know when, years ago, I arrived here. I know even less now. But I discovered many things. Much has been left behind. And for that I am grateful.
 
 </div>
 
@@ -436,7 +482,7 @@ Little did I know when, years ago, I arrived here.I know even less now. But I di
 
 <iframe
 class="desktop-frame"
-title="Jeremy Jacob — Transmissions From Another World — Moving Image Work"
+title="Jeremy Jacob Moving Image Work"
 data-src="https://player.vimeo.com/video/1212723719?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
@@ -448,7 +494,7 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 <iframe
 class="mobile-frame"
-title="Jeremy Jacob — Transmissions From Another World — Mobile Moving Image Work"
+title="Jeremy Jacob Mobile Moving Image Work"
 data-src="https://player.vimeo.com/video/1212004521?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
@@ -461,11 +507,6 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 
 </section>
-
-
-
-
-
 <!-- =========================
      PANEL 3
 ========================= -->
@@ -492,6 +533,7 @@ The witch was terrorized by the beauty of the princess. So terrorized that The W
 
 
 
+
 <div class="panel-content-left">
 
 
@@ -499,15 +541,13 @@ The witch was terrorized by the beauty of the princess. So terrorized that The W
 src="images/jeremyjacob.webp"
 class="logo-image logo-left"
 loading="lazy"
-decoding="async"
-alt="Jeremy Jacob artist portrait">
+alt="Jeremy Jacob">
 
 
 <img
 src="images/jeremyjacob.webp"
 class="logo-image logo-right"
 loading="lazy"
-decoding="async"
 alt="">
 
 
@@ -515,6 +555,10 @@ alt="">
 
 
 </section>
+
+
+
+
 
 
 
@@ -546,12 +590,13 @@ Until one day, as night began to descend upon The Kingdom, a stranger arrived wi
 
 
 
+
 <div class="video-frame">
 
 
 <iframe
 class="desktop-frame"
-title="Jeremy Jacob — Transmissions From Another World — Performance Film"
+title="Performance Film"
 data-src="https://player.vimeo.com/video/1085343551?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
@@ -563,7 +608,7 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 <iframe
 class="mobile-frame"
-title="Jeremy Jacob — Transmissions From Another World — Mobile Performance Film"
+title="Mobile Performance Film"
 data-src="https://player.vimeo.com/video/1212130397?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
@@ -576,6 +621,14 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 
 </section>
+
+
+
+
+
+
+
+
 
 <!-- =========================
      PANEL 5
@@ -593,7 +646,7 @@ data-image="images/section5.webp">
 
 <div class="ticker-item">
 
-And it is in the forest that The King, carrying The Wooden Figure and The Music Box, is slowly drained of all strength until on the darkest, longest night of the year The King lays down to die. It does not take long for the creatures of the forest to descend upon The King and make quick work of all that The King has left behind. Save, of course, The Wooden Figure and The Music Box.
+And it is in the forest that The King, carrying The Wooden Figure and The Music Box, is slowly drained of all strength until on the darkest, longest night of the year The King lays down to die.
 
 </div>
 
@@ -610,8 +663,11 @@ And it is in the forest that The King, carrying The Wooden Figure and The Music 
 
 
 
+
+
 <!-- =========================
      PANEL 6
+     INSERT YOUR CONTENT HERE
 ========================= -->
 
 
@@ -625,35 +681,11 @@ data-image="images/section6.webp">
 <div class="ticker-track">
 
 <div class="ticker-item">
-
 After years of this dream slowly overtaking night and day, The Princess decides to follow the path of The White Horse and head out into the forest as in the dream. When The Princess came to that all too familiar place in The Woods, The Princess laid down and fell fast asleep.
 
 </div>
 
 </div>
-
-</div>
-
-
-
-<div class="panel-content-left">
-
-
-<img
-src="images/jeremyjacob.webp"
-class="logo-image logo-left"
-loading="lazy"
-decoding="async"
-alt="Jeremy Jacob artist portrait">
-
-
-<img
-src="images/jeremyjacob.webp"
-class="logo-image logo-right"
-loading="lazy"
-decoding="async"
-alt="">
-
 
 </div>
 
@@ -666,8 +698,11 @@ alt="">
 
 
 
+
+
 <!-- =========================
      PANEL 7
+     INSERT YOUR CONTENT HERE
 ========================= -->
 
 
@@ -681,7 +716,6 @@ data-image="images/section7.webp">
 <div class="ticker-track">
 
 <div class="ticker-item">
-
 The Princess knew nothing of The World, The King, and either of their Problems and so The Princess worked day in and out, laboring in the work assigned to The Princess.
 
 </div>
@@ -699,8 +733,11 @@ The Princess knew nothing of The World, The King, and either of their Problems a
 
 
 
+
+
 <!-- =========================
      PANEL 8
+     INSERT YOUR CONTENT HERE
 ========================= -->
 
 
@@ -714,28 +751,11 @@ data-image="images/section8.webp">
 <div class="ticker-track">
 
 <div class="ticker-item">
-
 Soon, The Princess began to be visited by The White Horse, all aglow, in the depths of nightly dreams. Most nights, The Princess instinctively knew to follow the White Horse deep into the forest as if under a spell.
 
 </div>
 
 </div>
-
-</div>
-
-
-
-
-<div class="panel-content-left">
-
-
-<img
-src="images/jeremyjacob.webp"
-class="logo-image logo-right"
-loading="lazy"
-decoding="async"
-alt="">
-
 
 </div>
 
@@ -752,6 +772,7 @@ alt="">
 
 <!-- =========================
      PANEL 9
+     INSERT YOUR CONTENT HERE
 ========================= -->
 
 
@@ -765,7 +786,6 @@ data-image="images/section9.webp">
 <div class="ticker-track">
 
 <div class="ticker-item">
-
 After years of this dream slowly overtaking night and day, The Princess decides to follow the path of The White Horse and head out into the forest as in the dream.
 
 </div>
@@ -775,90 +795,13 @@ After years of this dream slowly overtaking night and day, The Princess decides 
 </div>
 
 
-
-
-
-<div class="panel-content social-links">
-
-
-
-<a 
-href="https://www.x.com/jeremyjacobland"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="Jeremy Jacob on X">
-
-
-<img
-src="images/x.webp"
-class="social-image"
-loading="lazy"
-decoding="async"
-alt="Jeremy Jacob on X">
-
-
-</a>
-
-
-
-
-
-<a 
-href="https://www.instagram.com/jeremyjacobland"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="Jeremy Jacob on Instagram">
-
-
-<img
-src="images/instagram.webp"
-class="social-image"
-loading="lazy"
-decoding="async"
-alt="Jeremy Jacob on Instagram">
-
-
-</a>
-
-
-
-
-
-<a 
-href="https://www.tiktok.com/@jeremyjacobland"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="Jeremy Jacob on TikTok">
-
-
-<img
-src="images/tiktok.webp"
-class="social-image"
-loading="lazy"
-decoding="async"
-alt="Jeremy Jacob on TikTok">
-
-
-</a>
-
-
-
-</div>
-
-
-
 </section>
 
 
 
 
-
-
-
-
-
 <!-- =========================
-     PANEL 10 VIDEO
+     PANEL 10 
 ========================= -->
 
 
@@ -882,13 +825,6 @@ However, let me tell you here and now the full story of the King’s collection.
 </div>
 
 
-
-
-
-
-<div class="panel-content-left">
-
-
 <div class="email-arrival">
 
 
@@ -902,12 +838,6 @@ alt="Contact Jeremy Jacob">
 
 
 </div>
-
-
-</div>
-
-
-
 
 
 
@@ -959,8 +889,13 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 
 
+
+
+
+
+
 <!-- =========================
-     SITE SCRIPT
+     JAVASCRIPT
 ========================= -->
 
 
@@ -970,6 +905,8 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 
 
+
 </body>
+
 
 </html>
