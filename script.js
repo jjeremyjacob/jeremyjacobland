@@ -146,7 +146,7 @@ const SCROLL_FACTOR =
 const STACK_REVEAL =
 28;
 
-
+let mobileScrollOffset = 0;
 
 /*
 =========================
@@ -163,9 +163,9 @@ function setPageHeight(){
 
 
 
-    document.body.style.height =
+document.body.style.height =
 
-    `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
+`${window.innerHeight * ((totalPanels - 1) * SCROLL_FACTOR + 1)}px`;
 
 
 }
@@ -413,13 +413,16 @@ SCROLL POSITION
 
 function getScrollPosition(){
 
+    if(window.innerWidth <= 768){
+
+        return mobileScrollOffset;
+
+    }
+
 
     return window.scrollY;
 
-
 }
-
-
 
 
 
@@ -981,13 +984,64 @@ SCROLL UPDATE
 =========================
 */
 
+/*
+=========================
+SCROLL UPDATE
+=========================
+*/
+
+let ticking = false;
+
+
 window.addEventListener(
     "scroll",
     () => {
 
-        requestAnimationFrame(
-            updatePanels
-        );
+
+        if(window.innerWidth <= 768){
+
+
+            const maxScroll =
+            document.body.scrollHeight - window.innerHeight;
+
+
+            mobileScrollOffset =
+            maxScroll - window.scrollY;
+
+
+        }
+        else{
+
+
+            mobileScrollOffset =
+            window.scrollY;
+
+
+        }
+
+
+
+
+        if(ticking)
+        return;
+
+
+
+        ticking = true;
+
+
+
+        requestAnimationFrame(()=>{
+
+
+            updatePanels();
+
+
+            ticking = false;
+
+
+        });
+
 
     },
     {
