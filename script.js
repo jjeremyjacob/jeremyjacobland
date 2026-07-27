@@ -7,7 +7,6 @@ LOADING SCREEN CONTROL
 =========================
 */
 
-
 const loadingScreen =
 document.querySelector(".loading-screen");
 
@@ -15,26 +14,29 @@ document.querySelector(".loading-screen");
 if(loadingScreen){
 
 
-    if(sessionStorage.getItem("visited")){
+    setTimeout(()=>{
 
 
-        loadingScreen.remove();
-
-
-    }
-    else{
-
-
-        sessionStorage.setItem(
-            "visited",
-            "true"
+        loadingScreen.classList.add(
+            "loaded"
         );
 
 
-    }
+        setTimeout(()=>{
+
+
+            loadingScreen.remove();
+
+
+        },1000);
+
+
+    },2000);
 
 
 }
+
+
 
 
 
@@ -56,7 +58,6 @@ if("scrollRestoration" in history){
 
 
 }
-
 
 
 window.scrollTo(
@@ -83,10 +84,8 @@ const panels =
 document.querySelectorAll(".panel");
 
 
-
 const videos =
 document.querySelectorAll(".video-frame");
-
 
 
 
@@ -127,7 +126,6 @@ function setPageHeight(){
     `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
 
 
-
 }
 
 
@@ -154,8 +152,6 @@ new WeakSet();
 
 
 
-
-
 const imageObserver =
 
 new IntersectionObserver(
@@ -163,120 +159,46 @@ new IntersectionObserver(
 (entries)=>{
 
 
-entries.forEach(entry=>{
+    entries.forEach(entry=>{
 
 
-    if(!entry.isIntersecting)
-    return;
+        if(!entry.isIntersecting)
+        return;
 
 
 
-    const panel =
-    entry.target;
+        const panel =
+        entry.target;
 
 
 
-    if(loadedPanels.has(panel))
-    return;
+        if(loadedPanels.has(panel))
+        return;
 
 
 
-    let image =
-    panel.dataset.image;
+        let image =
+        panel.dataset.image;
 
 
 
-    if(!image)
-    return;
+        if(!image)
+        return;
 
 
 
 
 
-    /*
-    MOBILE IMAGE SWITCH
-    */
+        if(
+            window.innerWidth <= 768 &&
+            image.includes(".webp")
+        ){
 
 
-    if(
-    window.innerWidth <= 768 &&
-    image.includes(".webp")
-    ){
-
-
-        image =
-        image.replace(
-            ".webp",
-            "-mobile.webp"
-        );
-
-
-    }
-
-
-
-
-
-
-    const img =
-    document.createElement(
-        "img"
-    );
-
-
-
-
-    img.className =
-    "panel-image";
-
-
-
-    img.alt =
-    "";
-
-
-
-    img.decoding =
-    "async";
-
-
-
-
-
-
-    panel.appendChild(
-        img
-    );
-
-
-
-
-
-
-    img.src =
-    image;
-
-
-
-
-
-    img.onload =
-    async ()=>{
-
-
-        try{
-
-
-            await img.decode();
-
-
-        }
-        catch(e){
-
-
-            console.warn(
-                "IMAGE DECODE FAILED:",
-                image
+            image =
+            image.replace(
+                ".webp",
+                "-mobile.webp"
             );
 
 
@@ -285,65 +207,106 @@ entries.forEach(entry=>{
 
 
 
-        img.classList.add(
-            "loaded"
+
+
+        const img =
+        document.createElement("img");
+
+
+
+        img.className =
+        "panel-image";
+
+
+
+        img.alt =
+        "";
+
+
+
+        img.decoding =
+        "async";
+
+
+
+        panel.appendChild(img);
+
+
+
+        img.src =
+        image;
+
+
+
+        img.onload =
+        async ()=>{
+
+
+            try{
+
+                await img.decode();
+
+            }
+
+            catch(e){
+
+                console.warn(
+                    "IMAGE DECODE FAILED:",
+                    image
+                );
+
+            }
+
+
+
+            img.classList.add(
+                "loaded"
+            );
+
+
+        };
+
+
+
+        img.onerror =
+        ()=>{
+
+
+            console.warn(
+                "IMAGE FAILED:",
+                image
+            );
+
+
+        };
+
+
+
+        loadedPanels.add(
+            panel
         );
 
 
-
-    };
-
-
-
-
-
-
-    img.onerror =
-    ()=>{
-
-
-        console.warn(
-            "IMAGE FAILED:",
-            image
+        imageObserver.unobserve(
+            panel
         );
 
 
-    };
-
-
-
-
-
-
-
-    loadedPanels.add(
-        panel
-    );
-
-
-
-
-    imageObserver.unobserve(
-        panel
-    );
-
-
-
-});
-
+    });
 
 
 },
 
 {
 
-rootMargin:
-"200px 0px"
+
+    rootMargin:
+    "200px 0px"
+
 
 }
 
 );
-
 
 
 
@@ -384,7 +347,6 @@ function getScrollPosition(){
 
 
 
-
     if(mobile){
 
 
@@ -407,9 +369,7 @@ function getScrollPosition(){
 
 
 
-
     return window.scrollY;
-
 
 
 }
@@ -444,22 +404,14 @@ function updatePanels(){
 
 
 
-
     panels.forEach(
     (panel,index)=>{
-
-
-
-        /*
-        FIRST PANEL ALWAYS FIXED
-        */
 
 
         if(index === 0){
 
 
             panel.style.transform =
-
             "translateY(0)";
 
 
@@ -467,7 +419,6 @@ function updatePanels(){
 
 
         }
-
 
 
 
@@ -481,7 +432,6 @@ function updatePanels(){
         height
         *
         SCROLL_FACTOR;
-
 
 
 
@@ -517,17 +467,10 @@ function updatePanels(){
 
 
 
-
-        /*
-        DESCENDING PANEL
-        */
-
-
         const stackOffset =
 
         index *
         STACK_REVEAL;
-
 
 
 
@@ -555,7 +498,6 @@ function updatePanels(){
 
 
 
-
         panel.style.transform =
 
 
@@ -564,11 +506,6 @@ function updatePanels(){
 
 
 
-
-
-        /*
-        EMAIL ARRIVAL
-        */
 
 
         if(index === 9){
@@ -585,7 +522,6 @@ function updatePanels(){
             if(email){
 
 
-
                 email.style.transform =
 
 
@@ -595,15 +531,11 @@ function updatePanels(){
                 }px)`;
 
 
-
                 email.style.opacity =
-
                 progress;
 
 
-
             }
-
 
 
         }
@@ -611,21 +543,12 @@ function updatePanels(){
 
 
 
-
     });
-
 
 
 }
 
-
-
-
-
-
-
-
-
+ 
 /*
 =========================
 IMAGE PARALLAX
@@ -647,7 +570,6 @@ function updateImageParallax(){
 
 
 
-
         images.forEach(image=>{
 
 
@@ -656,16 +578,21 @@ function updateImageParallax(){
             "translateY(0)";
 
 
-
         });
-
 
 
     });
 
 
-
 }
+
+
+
+
+
+
+
+
 
 /*
 =========================
@@ -715,6 +642,7 @@ function loadVideo(container){
 
     if(!iframe)
     return;
+
 
 
 
@@ -791,7 +719,6 @@ function loadVideo(container){
     };
 
 
-
 }
 
 
@@ -835,7 +762,6 @@ new IntersectionObserver(
     });
 
 
-
 },
 
 
@@ -843,11 +769,11 @@ new IntersectionObserver(
 
 
     rootMargin:
-    "200px 0px",
+    "0px",
 
 
     threshold:
-    .25
+    .5
 
 
 }
@@ -911,21 +837,18 @@ function scrollUpdate(){
     requestAnimationFrame(()=>{
 
 
-
         updatePanels();
 
 
         updateImageParallax();
 
 
-
-
         ticking =
         false;
 
 
-
     });
+
 
 
 
@@ -934,8 +857,8 @@ function scrollUpdate(){
     true;
 
 
-
 }
+
 
 
 
@@ -952,7 +875,7 @@ scrollUpdate,
 
 {
 
-    passive:true
+passive:true
 
 }
 
@@ -987,7 +910,6 @@ window.addEventListener(
 
 
     updateImageParallax();
-
 
 
 }
@@ -1026,7 +948,6 @@ requestAnimationFrame(()=>{
         );
 
 
-
     }
 
     else{
@@ -1051,7 +972,6 @@ requestAnimationFrame(()=>{
 
 
     updateImageParallax();
-
 
 
 });
@@ -1158,7 +1078,7 @@ document
 
 
         if(
-        /[.,;:'"!?]/.test(letter)
+            /[.,;:'"!?]/.test(letter)
         ){
 
 
@@ -1167,14 +1087,13 @@ document
             '"Courier Prime", monospace';
 
 
-
         }
 
         else{
 
 
             if(
-            Math.random() > .85
+                Math.random() > .85
             ){
 
 
@@ -1197,8 +1116,8 @@ document
 
 
             span.style.fontFamily =
-            currentFont;
 
+            currentFont;
 
 
         }
@@ -1208,6 +1127,7 @@ document
 
 
         span.style.fontWeight =
+
         "400";
 
 
