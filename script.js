@@ -1,5 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+/*
+=========================
+LOADING SCREEN CONTROL
+=========================
+*/
+
+const loadingScreen =
+document.querySelector(".loading-screen");
+
+
+if(loadingScreen){
+
+
+    if(sessionStorage.getItem("visited")){
+
+
+        loadingScreen.remove();
+
+
+    }
+    else{
+
+
+        sessionStorage.setItem(
+            "visited",
+            "true"
+        );
+
+
+    }
+
+
+}
 
 /*
 =========================
@@ -827,59 +860,6 @@ requestAnimationFrame(()=>{
 });
 
 
-
-
-
-
-
-
-
-/*
-=========================
-LOADING SCREEN EXIT SYNC
-=========================
-*/
-
-
-const loadingScreen =
-document.querySelector(
-".loading-screen"
-);
-
-
-
-const loadingBar =
-document.querySelector(
-".loading-progress-bar"
-);
-
-
-
-if(
-loadingScreen &&
-loadingBar
-){
-
-
-    /*
-    Match CSS timing:
-    progress = 1.5s
-    exit = 1.5s
-    */
-
-
-    setTimeout(()=>{
-
-
-        loadingScreen.style.pointerEvents =
-        "none";
-
-
-    },1500);
-
-
-
-}
 
 
 
