@@ -197,16 +197,30 @@ new IntersectionObserver(
 
 
 
-        img.onload =
-        ()=>{
+img.onload =
+async ()=>{
+
+    try {
+
+        await img.decode();
+
+    }
+    catch(e){
+
+        console.warn(
+            "IMAGE DECODE FAILED:",
+            image
+        );
+
+    }
 
 
-            img.classList.add(
-                "loaded"
-            );
+    img.classList.add(
+        "loaded"
+    );
 
 
-        };
+};
 
 
 

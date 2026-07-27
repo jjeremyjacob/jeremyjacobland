@@ -266,14 +266,32 @@ a {
 
 .logo-image {
 
-    width:130px;
-
-    height:auto;
+    
+    width:70px;
 
     position:relative;
 
 }
 
+.logo-left {
+
+    position:absolute;
+
+    left:0;
+
+}
+
+
+
+.logo-right {
+
+    position:absolute;
+
+    right:0;
+
+    transform:rotate(180deg);
+
+}
 
 
 .social-image {
@@ -1457,7 +1475,7 @@ a {
 .logo-image {
 
 
-    width:110px;
+    width:60px;
 
 }
 
@@ -1725,3 +1743,4 @@ a {
     }
 
 }
+
