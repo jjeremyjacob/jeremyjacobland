@@ -523,14 +523,13 @@ if(totalProgress > 0.4){
 
         200,
 
-        ((totalProgress - 0.4) / 0.7)
+      ((totalProgress - 0.35) / 0.65)
         *
         200
 
     );
 
 }
-
 
 const stackOffset =
 
@@ -545,10 +544,26 @@ SMOOTH STACK SINK
 */
 
 
+const driftLock =
+
+Math.min(
+
+    1,
+
+    Math.max(
+
+        0,
+
+        (progress - 0.85) / 0.15
+
+    )
+
+);
+
+
 const activeDrift =
 
-stackDrift;
-
+stackDrift * driftLock;
 
 
 const y =
@@ -572,7 +587,6 @@ const y =
 +
 
 activeDrift;
-
 
 
 
