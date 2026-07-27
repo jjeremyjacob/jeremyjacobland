@@ -3,9 +3,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /*
 =========================
+RESET SCROLL IMMEDIATELY
+=========================
+*/
+
+
+if("scrollRestoration" in history){
+
+    history.scrollRestoration = "manual";
+
+}
+
+
+window.scrollTo(
+    0,
+    0
+);
+
+
+document.documentElement.scrollTop = 0;
+document.body.scrollTop = 0;
+
+
+
+
+
+
+
+
+/*
+=========================
 LOADING SCREEN CONTROL
 =========================
 */
+
 
 const loadingScreen =
 document.querySelector(".loading-screen");
@@ -15,33 +46,23 @@ document.querySelector(".loading-screen");
 if(loadingScreen){
 
 
-    // Prevent scrolling during loading
-
-    const originalOverflow =
-    document.body.style.overflow;
-
+    document.documentElement.classList.add(
+        "loading-active"
+    );
 
 
-    const originalTouchAction =
-    document.body.style.touchAction;
-
-
-
-    document.body.style.overflow =
-    "hidden";
+    document.body.classList.add(
+        "loading-active"
+    );
 
 
 
-    document.body.style.touchAction =
-    "none";
-
-
+    // lock page at top while loading
 
     window.scrollTo(
         0,
         0
     );
-
 
 
 
@@ -54,7 +75,6 @@ if(loadingScreen){
 
 
 
-
         setTimeout(()=>{
 
 
@@ -62,22 +82,30 @@ if(loadingScreen){
 
 
 
-
-            // Restore scrolling
-
-            document.body.style.overflow =
-            originalOverflow;
+            document.documentElement.classList.remove(
+                "loading-active"
+            );
 
 
-
-            document.body.style.touchAction =
-            originalTouchAction;
-
+            document.body.classList.remove(
+                "loading-active"
+            );
 
 
 
             startInitialVideos();
 
+
+
+            // force first frame after loading
+
+            window.scrollTo(
+                0,
+                0
+            );
+
+
+            updatePanels();
 
 
 
@@ -90,36 +118,6 @@ if(loadingScreen){
 
 
 }
-
-
-
-
-
-
-
-
-
-/*
-=========================
-RESET SCROLL
-=========================
-*/
-
-
-if("scrollRestoration" in history){
-
-
-    history.scrollRestoration =
-    "manual";
-
-
-}
-
-
-window.scrollTo(
-    0,
-    0
-);
 
 
 
@@ -154,14 +152,6 @@ const SCROLL_FACTOR =
 const STACK_REVEAL =
 28;
 
-
-
-
-
-
-
-
-
 /*
 =========================
 PAGE HEIGHT
@@ -179,7 +169,6 @@ function setPageHeight(){
 
     document.body.style.height =
 
-
     `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
 
 
@@ -188,6 +177,14 @@ function setPageHeight(){
 
 
 setPageHeight();
+
+
+
+
+
+
+
+
 
 /*
 =========================
@@ -293,21 +290,16 @@ new IntersectionObserver(
 
             try{
 
-
                 await img.decode();
-
 
             }
 
-
             catch(e){
-
 
                 console.warn(
                     "IMAGE DECODE FAILED:",
                     image
                 );
-
 
             }
 
@@ -352,16 +344,12 @@ new IntersectionObserver(
 
 },
 
-
 {
-
 
     rootMargin:
     "200px 0px"
 
-
 }
-
 
 );
 
@@ -396,33 +384,6 @@ SCROLL POSITION
 
 
 function getScrollPosition(){
-
-
-    const mobile =
-    window.innerWidth <= 768;
-
-
-
-    if(mobile){
-
-
-        const maxScroll =
-
-        document.documentElement.scrollHeight -
-        window.innerHeight;
-
-
-
-        return (
-
-            maxScroll -
-            window.scrollY
-
-        );
-
-
-    }
-
 
 
     return window.scrollY;
@@ -482,7 +443,6 @@ function updatePanels(){
 
         const start =
 
-
         (index - 1)
         *
         height
@@ -524,10 +484,12 @@ function updatePanels(){
 
 
 
+
         const stackOffset =
 
         index *
         STACK_REVEAL;
+
 
 
 
@@ -555,10 +517,12 @@ function updatePanels(){
 
 
 
+
         panel.style.transform =
 
 
         `translateY(${y}px)`;
+
 
 
 
@@ -734,9 +698,7 @@ function loadVideo(container){
 
     if(unused){
 
-
         unused.remove();
-
 
     }
 
@@ -935,7 +897,6 @@ false;
 function scrollUpdate(){
 
 
-
     if(ticking)
     return;
 
@@ -1035,49 +996,12 @@ INITIAL POSITION
 requestAnimationFrame(()=>{
 
 
-    if(document.querySelector(".loading-screen")){
+    // Always begin at panel 1
 
-
-        return;
-
-
-    }
-
-
-
-
-    if(window.innerWidth <= 768){
-
-
-
-        window.scrollTo(
-
-            0,
-
-            document.documentElement.scrollHeight -
-            window.innerHeight
-
-        );
-
-
-    }
-
-    else{
-
-
-        window.scrollTo(
-
-            0,
-
-            0
-
-        );
-
-
-    }
-
-
-
+    window.scrollTo(
+        0,
+        0
+    );
 
 
     updatePanels();

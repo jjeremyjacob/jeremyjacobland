@@ -1366,3 +1366,23 @@ a {
 
 
 }
+
+/* =========================
+   LOCK SCROLL DURING LOADING
+========================= */
+
+html.loading-active,
+body.loading-active {
+
+    overflow:hidden !important;
+
+    height:100%;
+
+}
+
+html.loading-active,
+body.loading-active {
+
+    touch-action:none;
+
+}
