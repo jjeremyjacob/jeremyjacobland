@@ -262,22 +262,19 @@ href="style.css">
      VIMEO CONNECTIONS
 ========================= -->
 
+<link rel="preconnect"
+href="https://player.vimeo.com"
+crossorigin>
 
 <link rel="preconnect"
-href="https://player.vimeo.com">
-
-
-<link rel="preconnect"
-href="https://f.vimeocdn.com">
-
+href="https://f.vimeocdn.com"
+crossorigin>
 
 <link rel="dns-prefetch"
 href="https://i.vimeocdn.com">
 
-
 <meta name="referrer"
 content="strict-origin-when-cross-origin">
-
 
 
 
@@ -289,7 +286,6 @@ content="strict-origin-when-cross-origin">
 
 <link rel="preload" as="image" href="images/background.webp">
 <link rel="preload" as="image" href="images/section1.webp">
-
 
 
 </head>
@@ -312,17 +308,17 @@ content="strict-origin-when-cross-origin">
 <div class="loading-screen"
 id="loading-screen">
 
-
 <img
 class="loading-background"
-data-src="images/background.webp"
+src="images/background.webp"
 alt=""
-aria-hidden="true">
+aria-hidden="true"
+fetchpriority="high"
+decoding="async">
 
 
 
 <div class="loading-overlay"></div>
-
 
 
 <div class="loading-text">
@@ -335,13 +331,13 @@ TRANSMITTING...
 SIGNAL FOUND...
 </div>
 
-</div>
-
-
 
 <div class="loading-progress">
 
 <div class="loading-progress-bar"></div>
+
+</div>
+
 
 </div>
 

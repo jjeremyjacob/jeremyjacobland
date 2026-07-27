@@ -28,18 +28,18 @@ if(loadingScreen){
             loadingScreen.remove();
 
 
-            loadVideo(
-                document.querySelector("#panel2 .video-frame")
-            );
+      loadVideo(
+    document.querySelector(".panel-02 .video-frame")
+);
 
 
-            setTimeout(() => {
+setTimeout(() => {
 
-                loadVideo(
-                    document.querySelector("#panel4 .video-frame")
-                );
+    loadVideo(
+        document.querySelector(".panel-04 .video-frame")
+    );
 
-            },1000);
+},1000);
 
 
 
@@ -766,15 +766,20 @@ new IntersectionObserver(
     entries.forEach(entry=>{
 
 
-        if(entry.isIntersecting){
+if(entry.isIntersecting){
 
 
-            loadVideo(
-                entry.target
-            );
+    loadVideo(
+        entry.target
+    );
 
 
-        }
+    videoObserver.unobserve(
+        entry.target
+    );
+
+
+}
 
 
     });
