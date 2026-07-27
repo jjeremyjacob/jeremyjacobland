@@ -243,7 +243,11 @@ content="@jeremyjacobland">
 
 
 
-<link rel="stylesheet" href="style.css">
+<link 
+rel="preload"
+href="style.css"
+as="style"
+onload="this.onload=null;this.rel='stylesheet'">
 
 
 
@@ -266,6 +270,7 @@ href="https://f.vimeocdn.com">
 href="https://i.vimeocdn.com">
 
 
+<meta name="referrer" content="strict-origin-when-cross-origin">
 
 <script src="https://player.vimeo.com/api/player.js"></script>
 
