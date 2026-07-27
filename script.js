@@ -28,6 +28,21 @@ if(loadingScreen){
             loadingScreen.remove();
 
 
+            loadVideo(
+                document.querySelector("#panel2 .video-frame")
+            );
+
+
+            setTimeout(() => {
+
+                loadVideo(
+                    document.querySelector("#panel4 .video-frame")
+                );
+
+            },1000);
+
+
+
         },1000);
 
 
@@ -548,7 +563,6 @@ function updatePanels(){
 
 }
 
- 
 /*
 =========================
 IMAGE PARALLAX
@@ -602,6 +616,10 @@ VIMEO LAZY LOADING
 
 
 function loadVideo(container){
+
+
+    if(!container)
+    return;
 
 
     if(container.dataset.loaded)
@@ -689,7 +707,7 @@ function loadVideo(container){
 
     iframe.dataset.src +
 
-    "&autoplay=1&muted=1&loop=1&background=1";
+    "&autoplay=1&muted=1&loop=1&background=1&quality=720p";
 
 
 
@@ -769,7 +787,7 @@ new IntersectionObserver(
 
 
     rootMargin:
-    "0px",
+    "1500px",
 
 
     threshold:
@@ -1045,7 +1063,8 @@ document
     fonts[
 
         Math.floor(
-            Math.random() *
+            Math.random()
+            *
             fonts.length
         )
 
@@ -1102,7 +1121,8 @@ document
                 fonts[
 
                     Math.floor(
-                        Math.random() *
+                        Math.random()
+                        *
                         fonts.length
                     )
 
@@ -1145,13 +1165,6 @@ document
 
 
 });
-
-
-
-
-
-
-
 
 
 });
