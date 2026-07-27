@@ -146,6 +146,103 @@ const SCROLL_FACTOR =
 const STACK_REVEAL =
 28;
 
+/*
+=========================
+MOBILE SWIPE DIRECTION
+=========================
+*/
+
+
+if(window.innerWidth <= 768){
+
+    let lastTouchY = null;
+
+
+
+    window.addEventListener(
+        "touchstart",
+        (e)=>{
+
+
+            lastTouchY =
+            e.touches[0].clientY;
+
+
+        },
+        {
+            passive:true
+        }
+    );
+
+
+
+
+
+    window.addEventListener(
+        "touchmove",
+        (e)=>{
+
+
+            if(lastTouchY === null)
+            return;
+
+
+
+            const currentY =
+            e.touches[0].clientY;
+
+
+
+            const delta =
+            lastTouchY - currentY;
+
+
+
+            /*
+            =========================
+            REVERSE ONLY THE FINGER INPUT
+            =========================
+
+            Finger swipe DOWN:
+            delta becomes negative
+            normal scroll would go backward
+
+            We invert it:
+            page moves forward
+
+            Desktop remains untouched.
+            =========================
+            */
+
+
+
+            window.scrollBy(
+                0,
+                -delta
+            );
+
+
+
+            lastTouchY =
+            currentY;
+
+
+
+        },
+        {
+            passive:true
+        }
+    );
+
+
+}
+
+
+
+
+
+
+
 
 
 /*
@@ -273,11 +370,6 @@ new IntersectionObserver(
 
 
 
-        /*
-        Reserve dimensions immediately
-        */
-
-
         img.setAttribute(
             "width",
             "1920"
@@ -306,7 +398,6 @@ new IntersectionObserver(
         async ()=>{
 
 
-
             img.setAttribute(
                 "width",
                 img.naturalWidth
@@ -322,20 +413,16 @@ new IntersectionObserver(
 
             try{
 
-
                 await img.decode();
-
 
             }
 
             catch(e){
 
-
                 console.warn(
                     "IMAGE DECODE FAILED:",
                     image
                 );
-
 
             }
 
@@ -344,7 +431,6 @@ new IntersectionObserver(
             img.classList.add(
                 "loaded"
             );
-
 
 
         };
@@ -381,7 +467,6 @@ new IntersectionObserver(
         );
 
 
-
     });
 
 
@@ -416,14 +501,6 @@ panels.forEach(panel=>{
 
 });
 
-
-
-
-
-
-
-
-
 /*
 =========================
 SCROLL POSITION
@@ -433,34 +510,18 @@ SCROLL POSITION
 
 function getScrollPosition(){
 
-    let scrollY = window.scrollY;
 
+    return window.scrollY;
 
-    if(window.innerWidth <= 768){
-
-        const maxScroll =
-        document.body.scrollHeight - window.innerHeight;
-
-
-        scrollY =
-        maxScroll - scrollY;
-
-
-        scrollY =
-        Math.max(
-            0,
-            Math.min(
-                maxScroll,
-                scrollY
-            )
-        );
-
-    }
-
-
-    return scrollY;
 
 }
+
+
+
+
+
+
+
 
 
 /*
@@ -779,14 +840,6 @@ function updateImageParallax(){
 
 
 }
-
-
-
-
-
-
-
-
 
 /*
 =========================
@@ -1166,6 +1219,7 @@ INITIAL POSITION
 =========================
 */
 
+
 requestAnimationFrame(()=>{
 
 
@@ -1182,6 +1236,9 @@ requestAnimationFrame(()=>{
 
 
 });
+
+
+
 
 
 
@@ -1351,7 +1408,6 @@ document
 
 
 });
-
 
 
 });
