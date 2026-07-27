@@ -34,6 +34,8 @@ body {
 
 
 
+
+
 /* =========================
    GLOBAL
 ========================= */
@@ -66,6 +68,8 @@ a {
 
 
 
+
+
 /* =========================
    PANELS
 ========================= */
@@ -76,10 +80,12 @@ a {
     position:fixed;
 
     top:0;
+
     left:0;
 
 
     width:100%;
+
 
     height:100dvh;
 
@@ -87,12 +93,16 @@ a {
     overflow:hidden;
 
 
+
     isolation:isolate;
+
 
 
     background-size:cover;
 
+
     background-position:center bottom;
+
 
     background-repeat:no-repeat;
 
@@ -106,9 +116,14 @@ a {
 
     backface-visibility:hidden;
 
+
     -webkit-backface-visibility:hidden;
 
+
 }
+
+
+
 
 
 
@@ -138,6 +153,7 @@ a {
 .panel-09 { z-index:9; }
 
 .panel-10 { z-index:10; }
+
 
 
 
@@ -209,6 +225,9 @@ a {
 
 
 
+
+
+
 /* =========================
    BACKGROUND IMAGES
 ========================= */
@@ -225,6 +244,7 @@ a {
 
 
     width:100%;
+
 
     height:100%;
 
@@ -250,6 +270,7 @@ a {
     opacity .3s ease;
 
 
+
 }
 
 
@@ -259,6 +280,10 @@ a {
     opacity:1;
 
 }
+
+
+
+
 
 
 
@@ -313,6 +338,7 @@ a {
     right:0;
 
 
+
     transform:
 
     rotate(180deg);
@@ -325,8 +351,11 @@ a {
 
 
 
+
+
+
 /* =========================
-   SOCIAL IMAGES
+   SOCIAL / CONTACT IMAGES
 ========================= */
 
 
@@ -348,12 +377,7 @@ a {
     object-fit:contain;
 
 
-    position:relative;
-
-
 }
-
-
 
 
 
@@ -375,12 +399,7 @@ a {
     object-fit:contain;
 
 
-    position:relative;
-
-
 }
-
-
 
 
 
@@ -402,10 +421,15 @@ a {
     object-fit:contain;
 
 
-    position:relative;
-
-
 }
+
+
+
+
+
+
+
+
 
 /* =========================
    VIDEO PANELS
@@ -443,6 +467,8 @@ a {
 
 
 
+
+
 .video-frame iframe {
 
 
@@ -474,9 +500,11 @@ a {
 
 
 
+
     transform:
 
     translate(-50%,-50%);
+
 
 
 
@@ -489,13 +517,11 @@ a {
 
 
 
-
-    z-index:1;
+    z-index:2;
 
 
 
     pointer-events:none;
-
 
 
 
@@ -529,6 +555,273 @@ a {
 
 
 
+
+
+
+
+/* =========================
+   EMAIL ARRIVAL
+========================= */
+
+
+.email-arrival {
+
+
+    position:absolute;
+
+
+    left:0;
+
+
+    bottom:var(--ticker-height);
+
+
+
+    z-index:20;
+
+
+
+    opacity:0;
+
+
+
+    transform:
+
+    translateY(-180px);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   HERO IMAGE
+========================= */
+
+
+.panel-01 {
+
+
+    background:none;
+
+
+}
+
+
+
+
+
+.panel-01 picture,
+.panel-01 picture img {
+
+
+    position:absolute;
+
+
+    inset:0;
+
+
+
+    width:100%;
+
+
+    height:100%;
+
+
+
+    display:block;
+
+
+}
+
+
+
+
+
+
+.panel-01 img {
+
+
+    object-fit:cover;
+
+
+
+    object-position:
+
+    center calc(50% - 15px);
+
+
+}
+
+/* =========================
+   VIDEO PANELS
+========================= */
+
+
+.video-frame {
+
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+    z-index:1;
+
+    background-size:cover;
+
+    background-position:center bottom;
+
+    background-repeat:no-repeat;
+
+}
+
+
+
+
+
+.video-frame iframe {
+
+
+    position:absolute;
+
+
+    top:50%;
+
+
+    left:50%;
+
+
+    width:100vw;
+
+
+    height:56.25vw;
+
+
+    min-width:177.78vh;
+
+
+    min-height:100vh;
+
+
+
+    transform:
+    translate(-50%,-50%);
+
+
+
+    border:0;
+
+
+
+    opacity:0;
+
+
+
+    z-index:2;
+
+
+
+    pointer-events:none;
+
+
+
+    /*
+       LONGER VIDEO FADE
+       Allows image/video transition
+       to overlap panel movement
+    */
+
+    transition:
+
+    opacity 2.5s ease;
+
+
+
+    backface-visibility:hidden;
+
+    -webkit-backface-visibility:hidden;
+
+
+}
+
+
+
+
+
+.video-ready iframe {
+
+
+    opacity:1;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   VIDEO POSTER FALLBACKS
+========================= */
+
+
+.panel-02 .video-frame {
+
+
+    background-image:
+
+    url("images/section2.webp");
+
+
+}
+
+
+
+
+
+.panel-04 .video-frame {
+
+
+    background-image:
+
+    url("images/section4.webp");
+
+
+}
+
+
+
+
+
+.panel-10 .video-frame {
+
+
+    background-image:
+
+    url("images/section10.webp");
+
+
+}
+
+
+
+
+
+
+
+
+
 /* =========================
    PANEL CONTENT ABOVE VIDEO
 ========================= */
@@ -542,7 +835,10 @@ a {
 
     z-index:10;
 
+
 }
+
+
 
 
 
@@ -565,13 +861,17 @@ a {
 
 
 
-
     transform:
 
     translateY(-180px);
 
 
+
 }
+
+
+
+
 
 
 
@@ -635,296 +935,6 @@ a {
 }
 
 
-
-
-
-
-/* =========================
-   AUDIO CONTROL
-========================= */
-
-
-.audio-control {
-
-    position:fixed;
-
-    right:20px;
-
-    bottom:45px;
-
-    z-index:5000;
-
-
-    display:flex;
-
-    align-items:center;
-
-    gap:14px;
-
-
-    opacity:0;
-
-    transition:
-    opacity .8s ease;
-
-
-}
-
-
-
-.audio-control.visible {
-
-    opacity:1;
-
-}
-
-
-
-
-
-
-#audio-toggle {
-
-
-    background:
-
-    rgba(69,41,28,.35);
-
-
-    border:
-
-    1px solid rgba(174,141,127,.65);
-
-
-    color:#ae8d7f;
-
-
-    padding:
-
-    8px 14px;
-
-
-    font-family:
-
-    "Courier Prime",
-    "Courier New",
-    monospace;
-
-
-    font-size:10px;
-
-
-    letter-spacing:.15em;
-
-
-    text-transform:uppercase;
-
-
-    cursor:pointer;
-
-
-    backdrop-filter:blur(4px);
-
-
-    transition:
-
-    background .3s ease,
-    border-color .3s ease;
-
-
-}
-
-
-
-
-
-#audio-toggle:hover {
-
-
-    background:
-
-    rgba(174,141,127,.15);
-
-
-    border-color:
-
-    rgba(174,141,127,1);
-
-
-}
-
-
-
-
-
-
-
-/* VOLUME SLIDER */
-
-
-#audio-level {
-
-
-    width:120px;
-
-
-    height:3px;
-
-
-    appearance:none;
-
-    -webkit-appearance:none;
-
-
-    background:
-
-    rgba(174,141,127,.35);
-
-
-    border-radius:0;
-
-
-    cursor:pointer;
-
-
-}
-
-
-
-
-
-/* TRACK */
-
-
-#audio-level::-webkit-slider-runnable-track {
-
-
-    height:3px;
-
-
-    background:
-
-    rgba(174,141,127,.35);
-
-
-}
-
-
-
-
-
-
-
-/* THUMB */
-
-
-#audio-level::-webkit-slider-thumb {
-
-
-    appearance:none;
-
-    -webkit-appearance:none;
-
-
-    width:10px;
-
-
-    height:10px;
-
-
-    margin-top:-3.5px;
-
-
-    background:#ae8d7f;
-
-
-    border-radius:50%;
-
-
-    border:none;
-
-
-    box-shadow:
-
-    0 0 8px rgba(174,141,127,.6);
-
-
-}
-
-
-
-
-
-
-
-#audio-level::-moz-range-track {
-
-
-    height:3px;
-
-
-    background:
-
-    rgba(174,141,127,.35);
-
-
-}
-
-
-
-
-
-
-#audio-level::-moz-range-thumb {
-
-
-    width:10px;
-
-
-    height:10px;
-
-
-    background:#ae8d7f;
-
-
-    border:none;
-
-
-    border-radius:50%;
-
-
-}
-
-
-
-
-
-
-
-@media(max-width:768px){
-
-
-.audio-control {
-
-
-    right:10px;
-
-    bottom:40px;
-
-
-}
-
-
-#audio-level {
-
-
-    width:90px;
-
-
-}
-
-
-}
 
 
 
@@ -1096,6 +1106,15 @@ a {
 
 
 }
+
+
+
+
+
+
+
+
+
 /* =========================
    LOADING SCREEN
 ========================= */
@@ -1152,9 +1171,7 @@ a {
 
 
 
-/* =========================
-   LOADING BACKGROUND IMAGE
-========================= */
+
 
 
 .loading-background {
@@ -1209,6 +1226,9 @@ a {
 
 
 
+
+
+
 .loading-overlay {
 
 
@@ -1235,6 +1255,9 @@ a {
 
 
 
+
+
+
 .loading-text,
 .loading-progress {
 
@@ -1247,6 +1270,8 @@ a {
 
 
 }
+
+
 
 
 
@@ -1288,6 +1313,7 @@ a {
 
 
 }
+
 
 
 
@@ -1403,120 +1429,6 @@ a {
 
 }
 
-
-
-
-
-
-
-
-/* =========================
-   LOADING COLOR DRIFT
-========================= */
-
-
-.loading-screen::after {
-
-
-
-    content:"";
-
-
-
-    position:absolute;
-
-
-
-    inset:0;
-
-
-
-    z-index:1;
-
-
-
-    pointer-events:none;
-
-
-
-
-    background:
-
-
-    linear-gradient(
-
-
-        90deg,
-
-
-
-        rgba(255,0,0,.18),
-
-
-
-        transparent 25%,
-
-
-
-        transparent 75%,
-
-
-
-        rgba(0,255,255,.18)
-
-
-    );
-
-
-
-
-
-    opacity:0;
-
-
-
-
-    animation:
-
-
-    loadingColorDrift 1.5s linear forwards;
-
-
-}
-
-
-
-
-
-
-
-@keyframes loadingColorDrift {
-
-
-
-    0%,
-    60%,
-    100% {
-
-
-        opacity:0;
-
-
-    }
-
-
-
-
-    75% {
-
-
-        opacity:.35;
-
-
-    }
-
-
-}
 
 
 
@@ -1643,781 +1555,6 @@ a {
 
 
     }
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-   LOADING TEXT
-========================= */
-
-
-.loading-text {
-
-
-
-    text-align:center;
-
-
-
-    line-height:2.5;
-
-
-}
-
-
-
-
-
-
-
-.loading-text div {
-
-
-
-    opacity:0;
-
-
-
-    animation:
-
-
-    transmissionText .95s steps(2,end) forwards;
-
-
-}
-
-
-
-
-
-
-
-.loading-text div:nth-child(1){
-
-
-    animation-delay:.1s;
-
-
-}
-
-
-
-
-
-
-
-.loading-text div:nth-child(2){
-
-
-    animation-delay:.45s;
-
-
-}
-
-
-
-
-
-
-
-@keyframes transmissionText {
-
-
-
-    from {
-
-
-        opacity:0;
-
-
-
-        transform:
-
-
-        translateY(8px);
-
-
-    }
-
-
-
-
-    to {
-
-
-        opacity:.8;
-
-
-
-        transform:
-
-
-        translateY(0);
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-   TRANSMISSION EXIT
-========================= */
-
-
-@keyframes transmissionCut {
-
-
-
-    0% {
-
-
-        opacity:1;
-
-
-
-        filter:
-
-
-        brightness(1)
-
-
-        blur(0);
-
-
-    }
-
-
-
-
-
-    60% {
-
-
-        opacity:1;
-
-
-    }
-
-
-
-
-
-    90% {
-
-
-        opacity:1;
-
-
-
-        filter:
-
-
-        brightness(2.2)
-
-
-        blur(1px);
-
-
-    }
-
-
-
-
-
-    100% {
-
-
-
-        opacity:0;
-
-
-
-
-        filter:
-
-
-        blur(2px)
-
-
-        brightness(2);
-
-
-
-
-        visibility:hidden;
-
-
-
-
-        pointer-events:none;
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-   SCANNER BEAM
-========================= */
-
-
-.panel.scanning::after {
-
-
-
-    content:"";
-
-
-
-    position:absolute;
-
-
-
-    top:0;
-
-
-
-    bottom:0;
-
-
-
-    width:3px;
-
-
-
-    left:0;
-
-
-
-    background:
-
-
-    rgba(174,141,127,.45);
-
-
-
-
-
-    box-shadow:
-
-
-
-    0 0 12px rgba(174,141,127,.55),
-
-
-
-    0 0 30px rgba(174,141,127,.25);
-
-
-
-
-
-    pointer-events:none;
-
-
-
-    z-index:30;
-
-
-
-
-    animation:
-
-
-    scanBeam 6s linear forwards;
-
-
-}
-
-
-
-
-
-
-
-@keyframes scanBeam {
-
-
-
-    from {
-
-
-        left:0;
-
-
-    }
-
-
-
-
-
-    to {
-
-
-        left:100%;
-
-
-    }
-
-
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-
-@media(max-width:768px){
-
-
-
-.panel {
-
-
-    height:100dvh;
-
-
-}
-
-
-
-
-
-
-.logo-image {
-
-
-    width:30px;
-
-
-}
-
-
-
-
-
-
-.social-image {
-
-
-    width:240px;
-
-
-    max-width:75vw;
-
-
-
-}
-
-
-
-
-
-
-.find-image {
-
-
-    width:180px;
-
-
-    max-width:70vw;
-
-
-}
-
-
-
-
-
-
-.email-image {
-
-
-    width:280px;
-
-
-    max-width:85vw;
-
-
-}
-
-
-
-
-
-
-
-.desktop-frame {
-
-
-    display:none;
-
-
-}
-
-
-
-
-
-
-.mobile-frame {
-
-
-    display:block;
-
-
-}
-
-
-
-
-
-
-.video-frame iframe {
-
-
-    width:100vw;
-
-
-
-    height:56.25vw;
-
-
-
-    min-width:177.78vh;
-
-
-
-    min-height:100vh;
-
-
-
-
-    top:50%;
-
-
-
-    left:50%;
-
-
-
-
-    transform:
-
-
-    translate(-50%,-50%);
-
-
-}
-
-
-
-
-
-
-
-.social-links {
-
-
-    padding-right:0;
-
-
-}
-
-
-
-
-
-
-/* MOBILE VIDEO POSTERS */
-
-
-.panel-02 .video-frame {
-
-
-    background-image:
-
-
-    url("images/section2-mobile.webp");
-
-
-}
-
-
-
-
-
-.panel-04 .video-frame {
-
-
-    background-image:
-
-
-    url("images/section4-mobile.webp");
-
-
-}
-
-
-
-
-
-.panel-10 .video-frame {
-
-
-    background-image:
-
-
-    url("images/section10-mobile.webp");
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-   SEO HIDDEN CONTENT
-========================= */
-
-
-.seo-title,
-.seo-content {
-
-
-    position:absolute;
-
-
-
-    width:1px;
-
-
-
-    height:1px;
-
-
-
-    padding:0;
-
-
-
-    margin:-1px;
-
-
-
-    overflow:hidden;
-
-
-
-    clip-path:
-
-    inset(50%);
-
-
-
-    white-space:nowrap;
-
-
-
-    border:0;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-   REDUCED MOTION
-========================= */
-
-
-@media(prefers-reduced-motion:reduce){
-
-
-
-*, *::before, *::after {
-
-
-    animation-duration:.001ms !important;
-
-
-
-    animation-iteration-count:1 !important;
-
-
-
-    transition-duration:.001ms !important;
-
-
-}
-
-
-
-
-
-
-.ticker-track,
-.loading-screen,
-.loading-text {
-
-
-    animation:none;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-   FINAL STACK ORDER
-========================= */
-
-
-/*
-
-FINAL LAYER ORDER:
-
-0  background image
-1  video frame
-2  video iframe
-10 panel content
-20 email
-50 ticker
-5000 audio
-9999 loading
-
-*/
-
-
-
-
-
-.panel-image {
-
-
-    z-index:0;
-
-
-}
-
-
-
-
-
-.video-frame {
-
-
-    z-index:1;
-
-
-}
-
-
-
-
-
-.video-frame iframe {
-
-
-    z-index:2;
-
-
-}
-
-
-
-
-
-.panel-content,
-.panel-content-left,
-.panel-contentleft,
-.panel-content-right {
-
-
-    z-index:10;
-
-
-}
-
-
-
-
-
-.email-arrival {
-
-
-    z-index:20;
-
-
-}
-
-
-
-
-
-.ticker-wrap {
-
-
-    z-index:50;
-
-
-}
-
-
-
-
-
-.audio-control {
-
-
-    z-index:5000;
 
 
 }
