@@ -28,7 +28,6 @@ document.body.scrollTop = 0;
 
 
 
-
 /*
 =========================
 LOADING SCREEN CONTROL
@@ -39,31 +38,21 @@ const loadingScreen =
 document.querySelector(".loading-screen");
 
 
-const firstLoad =
-!sessionStorage.getItem("siteLoaded");
-
-
-
 if(
     loadingScreen &&
-    firstLoad
+    !sessionStorage.getItem("siteLoaded")
 ){
-
 
     document.documentElement.classList.add(
         "loading-active"
     );
-
 
     document.body.classList.add(
         "loading-active"
     );
 
 
-    window.scrollTo(
-        0,
-        0
-    );
+    window.scrollTo(0,0);
 
 
 
@@ -79,7 +68,6 @@ if(
         );
 
 
-
         document.documentElement.classList.remove(
             "loading-active"
         );
@@ -90,9 +78,7 @@ if(
         );
 
 
-
         startInitialVideos();
-
 
 
         window.scrollTo(
@@ -104,8 +90,7 @@ if(
         updatePanels();
 
 
-
-    },3000);
+    },2000);
 
 
 
@@ -118,6 +103,9 @@ else{
         loadingScreen.remove();
 
     }
+
+
+    startInitialVideos();
 
 
 }
