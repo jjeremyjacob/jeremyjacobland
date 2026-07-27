@@ -34,6 +34,7 @@ LOADING SCREEN CONTROL
 =========================
 */
 
+
 const loadingScreen =
 document.querySelector(".loading-screen");
 
@@ -52,7 +53,10 @@ if(
     );
 
 
-    window.scrollTo(0,0);
+    window.scrollTo(
+        0,
+        0
+    );
 
 
 
@@ -114,6 +118,9 @@ else{
 
 
 
+
+
+
 /*
 =========================
 SETUP
@@ -138,6 +145,8 @@ const SCROLL_FACTOR =
 
 const STACK_REVEAL =
 28;
+
+
 
 /*
 =========================
@@ -256,79 +265,91 @@ new IntersectionObserver(
         "";
 
 
-img.decoding =
-"async";
 
-
-// Reserve dimensions immediately
-img.setAttribute(
-    "width",
-    "1920"
-);
-
-
-img.setAttribute(
-    "height",
-    "1080"
-);
-
-
-panel.appendChild(img);
+        img.decoding =
+        "async";
 
 
 
-img.src =
-image;
 
 
-
-img.onload =
-async ()=>{
-
-
-    /*
-    =========================
-    UPDATE TRUE DIMENSIONS
-    =========================
-    */
+        /*
+        Reserve dimensions immediately
+        */
 
 
-    img.setAttribute(
-        "width",
-        img.naturalWidth
-    );
-
-
-    img.setAttribute(
-        "height",
-        img.naturalHeight
-    );
-
-
-
-    try{
-
-        await img.decode();
-
-    }
-
-    catch(e){
-
-        console.warn(
-            "IMAGE DECODE FAILED:",
-            image
+        img.setAttribute(
+            "width",
+            "1920"
         );
 
-    }
+
+        img.setAttribute(
+            "height",
+            "1080"
+        );
 
 
 
-    img.classList.add(
-        "loaded"
-    );
+        panel.appendChild(img);
 
 
-};
+
+        img.src =
+        image;
+
+
+
+
+
+        img.onload =
+        async ()=>{
+
+
+
+            img.setAttribute(
+                "width",
+                img.naturalWidth
+            );
+
+
+            img.setAttribute(
+                "height",
+                img.naturalHeight
+            );
+
+
+
+            try{
+
+
+                await img.decode();
+
+
+            }
+
+            catch(e){
+
+
+                console.warn(
+                    "IMAGE DECODE FAILED:",
+                    image
+                );
+
+
+            }
+
+
+
+            img.classList.add(
+                "loaded"
+            );
+
+
+
+        };
+
+
 
 
 
@@ -347,6 +368,8 @@ async ()=>{
 
 
 
+
+
         loadedPanels.add(
             panel
         );
@@ -358,19 +381,25 @@ async ()=>{
         );
 
 
+
     });
 
 
 },
 
+
 {
+
 
     rootMargin:
     "200px 0px"
 
+
 }
 
+
 );
+
 
 
 
@@ -401,21 +430,30 @@ SCROLL POSITION
 =========================
 */
 
+
 function getScrollPosition(){
 
-    const maxScroll =
-    document.body.scrollHeight - window.innerHeight;
+    let scrollY = window.scrollY;
 
 
-    let scrollY =
-    window.scrollY;
-
-
-    // Reverse scroll direction on mobile only
     if(window.innerWidth <= 768){
+
+        const maxScroll =
+        document.body.scrollHeight - window.innerHeight;
+
 
         scrollY =
         maxScroll - scrollY;
+
+
+        scrollY =
+        Math.max(
+            0,
+            Math.min(
+                maxScroll,
+                scrollY
+            )
+        );
 
     }
 
@@ -423,12 +461,6 @@ function getScrollPosition(){
     return scrollY;
 
 }
-
-
-
-
-
-
 
 
 /*
@@ -511,122 +543,154 @@ function updatePanels(){
 
         );
 
-        
+
+
+
 
         /*
-=========================
-DYNAMIC STACK SINK
-=========================
-*/
+        =========================
+        DYNAMIC STACK SINK
+        =========================
+        */
 
 
-const panelProgress =
+        const panelProgress =
 
-scrollY /
-(height * SCROLL_FACTOR);
-
-
-
-let stackDrift = 0;
+        scrollY /
+        (height * SCROLL_FACTOR);
 
 
 
-/*
-Begin slowly lowering entire stack
-around the middle of the page
-*/
+        let stackDrift = 0;
 
 
 
 
 
-const totalProgress =
+        const totalProgress =
 
-panelProgress /
-(panels.length - 1);
-
-
-
-if(totalProgress > 0.4){
-
-    stackDrift =
-
-    Math.min(
-
-        200,
-
-      ((totalProgress - 0.35) / 0.65)
-        *
-        200
-
-    );
-
-}
-
-const stackOffset =
-
-index *
-STACK_REVEAL;
-
-
-/*
-=========================
-SMOOTH STACK SINK
-=========================
-*/
-
-
-const driftLock =
-
-Math.min(
-
-    1,
-
-    Math.max(
-
-        0,
-
-        (progress - 0.85) / 0.15
-
-    )
-
-);
-
-
-const activeDrift =
-
-stackDrift * driftLock;
-
-
-const y =
-
-
--height +
-
-(
-
-    progress *
-
-    (
-
-        height -
-        stackOffset
-
-    )
-
-)
-
-+
-
-activeDrift;
+        panelProgress /
+        (panels.length - 1);
 
 
 
 
-panel.style.transform =
+
+        if(totalProgress > 0.4){
 
 
-`translateY(${y}px)`;
+            stackDrift =
+
+            Math.min(
+
+                200,
+
+                ((totalProgress - 0.35) / 0.65)
+                *
+                200
+
+            );
+
+
+        }
+
+
+
+
+
+
+        const stackOffset =
+
+        index *
+        STACK_REVEAL;
+
+
+
+
+
+
+
+        /*
+        =========================
+        SMOOTH STACK SINK
+        =========================
+        */
+
+
+        const driftLock =
+
+        Math.min(
+
+            1,
+
+            Math.max(
+
+                0,
+
+                (progress - 0.85) / 0.15
+
+            )
+
+        );
+
+
+
+
+
+        const activeDrift =
+
+        stackDrift *
+        driftLock;
+
+
+
+
+
+
+
+        const y =
+
+
+        -height +
+
+        (
+
+            progress *
+
+            (
+
+                height -
+                stackOffset
+
+            )
+
+        )
+
+        +
+
+        activeDrift;
+
+
+
+
+
+
+
+        panel.style.transform =
+
+
+        `translateY(${y}px)`;
+
+
+
+
+
+
+        /*
+        =========================
+        PANEL 10 EMAIL
+        =========================
+        */
 
 
         if(index === 9){
@@ -652,8 +716,10 @@ panel.style.transform =
                 }px)`;
 
 
+
                 email.style.opacity =
                 progress;
+
 
 
             }
@@ -713,6 +779,14 @@ function updateImageParallax(){
 
 
 }
+
+
+
+
+
+
+
+
 
 /*
 =========================
@@ -971,14 +1045,6 @@ videos.forEach(video=>{
 
 });
 
-
-
-
-
-
-
-
-
 /*
 =========================
 SCROLL PERFORMANCE LOOP
@@ -1051,6 +1117,14 @@ passive:true
 
 );
 
+
+
+
+
+
+
+
+
 /*
 =========================
 RESIZE
@@ -1092,11 +1166,8 @@ INITIAL POSITION
 =========================
 */
 
-
 requestAnimationFrame(()=>{
 
-
-    // Always begin at panel 1
 
     window.scrollTo(
         0,
@@ -1111,9 +1182,6 @@ requestAnimationFrame(()=>{
 
 
 });
-
-
-
 
 
 
@@ -1283,6 +1351,7 @@ document
 
 
 });
+
 
 
 });
