@@ -479,54 +479,108 @@ function updatePanels(){
 
         );
 
+        
+
+        /*
+=========================
+DYNAMIC STACK SINK
+=========================
+*/
+
+
+const panelProgress =
+
+scrollY /
+(height * SCROLL_FACTOR);
+
+
+
+let stackDrift = 0;
+
+
+
+/*
+Begin slowly lowering entire stack
+around the middle of the page
+*/
 
 
 
 
 
+const totalProgress =
 
-        const stackOffset =
-
-        index *
-        STACK_REVEAL;
-
+panelProgress /
+(panels.length - 1);
 
 
 
+if(totalProgress > 0.4){
+
+    stackDrift =
+
+    Math.min(
+
+        200,
+
+        ((totalProgress - 0.4) / 0.7)
+        *
+        200
+
+    );
+
+}
 
 
-        const y =
+const stackOffset =
+
+index *
+STACK_REVEAL;
 
 
-        -height +
-
-        (
-
-            progress *
-
-            (
-
-                height -
-                stackOffset
-
-            )
-
-        );
+/*
+=========================
+SMOOTH STACK SINK
+=========================
+*/
 
 
+const activeDrift =
+
+stackDrift;
 
 
 
-
-        panel.style.transform =
-
-
-        `translateY(${y}px)`;
+const y =
 
 
+-height +
+
+(
+
+    progress *
+
+    (
+
+        height -
+        stackOffset
+
+    )
+
+)
+
++
+
+activeDrift;
 
 
 
+
+
+panel.style.transform =
+
+
+`translateY(${y}px)`;
 
 
         if(index === 9){
