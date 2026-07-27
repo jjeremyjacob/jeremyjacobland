@@ -56,8 +56,6 @@ content="black">
 
 
 
-
-
 <!-- =========================
      FAVICONS
 ========================= -->
@@ -86,8 +84,6 @@ href="/images/icons/icon-192.png">
 
 <link rel="manifest"
 href="/manifest.json">
-
-
 
 
 
@@ -151,8 +147,6 @@ content="Jeremy Jacob — Transmissions From Another World">
 
 
 
-
-
 <!-- =========================
      OPEN GRAPH VIDEO
 ========================= -->
@@ -176,8 +170,6 @@ content="1920">
 
 <meta property="og:video:height"
 content="1080">
-
-
 
 
 
@@ -213,8 +205,6 @@ content="@jeremyjacobland">
 
 
 
-
-
 <!-- =========================
      STRUCTURED DATA
 ========================= -->
@@ -229,100 +219,17 @@ content="@jeremyjacobland">
 
  {
   "@type":"Person",
-
   "@id":"https://jeremyjacob.com/#person",
-
   "name":"Jeremy Jacob",
-
   "url":"https://jeremyjacob.com/",
-
-  "image":
-  "https://jeremyjacob.com/images/social-preview.jpg",
-
-  "jobTitle":
-  "Artist and filmmaker",
+  "image":"https://jeremyjacob.com/images/social-preview.jpg",
+  "jobTitle":"Artist and filmmaker",
 
   "sameAs":[
    "https://www.instagram.com/jeremyjacobland",
    "https://www.x.com/jeremyjacobland",
    "https://www.tiktok.com/@jeremyjacobland"
   ]
-
- },
-
-
- {
-
-  "@type":"WebSite",
-
-  "@id":"https://jeremyjacob.com/#website",
-
-  "url":"https://jeremyjacob.com/",
-
-  "name":"Jeremy Jacob — Transmissions From Another World",
-
-  "description":
-  "A living archive created by artist and filmmaker Jeremy Jacob.",
-
-  "creator":
-  {
-    "@id":"https://jeremyjacob.com/#person"
-  }
-
- },
-
-
- {
-
-  "@type":"CreativeWork",
-
-  "@id":"https://jeremyjacob.com/#work",
-
-  "name":
-  "Transmissions From Another World",
-
-  "description":
-  "Signals, fragments, and transmissions from a world built between memory, movement, cinema, and imagination.",
-
-  "creator":
-  {
-    "@id":"https://jeremyjacob.com/#person"
-  },
-
-  "image":
-  "https://jeremyjacob.com/images/social-preview.jpg",
-
-  "url":
-  "https://jeremyjacob.com/"
-
- },
-
-
- {
-
-  "@type":"VideoObject",
-
-  "@id":"https://jeremyjacob.com/#video",
-
-  "name":
-  "Jeremy Jacob — Transmissions From Another World",
-
-  "description":
-  "A moving image transmission from Jeremy Jacob's living archive of films, performances, and visual fragments.",
-
-  "thumbnailUrl":
-  "https://jeremyjacob.com/images/social-preview.jpg",
-
-  "contentUrl":
-  "https://player.vimeo.com/video/1059894305",
-
-  "embedUrl":
-  "https://player.vimeo.com/video/1059894305",
-
-  "creator":
-  {
-    "@id":"https://jeremyjacob.com/#person"
-  }
 
  }
 
@@ -336,9 +243,7 @@ content="@jeremyjacobland">
 
 
 
-
 <link rel="stylesheet" href="style.css">
-
 
 
 
@@ -362,11 +267,7 @@ href="https://i.vimeocdn.com">
 
 
 
-
-
-
 <script src="https://player.vimeo.com/api/player.js"></script>
-
 
 
 
@@ -380,17 +281,7 @@ href="https://i.vimeocdn.com">
 <link rel="preload"
 as="image"
 href="images/background.webp"
-media="(min-width:769px)"
 fetchpriority="high">
-
-
-<link rel="preload"
-as="image"
-href="images/background.webp"
-media="(max-width:768px)"
-fetchpriority="high">
-
-
 
 
 </head>
@@ -399,37 +290,43 @@ fetchpriority="high">
 
 
 
-
 <body>
+
+
 <div class="loading-screen" id="loading-screen">
 
-    <img
-    class="loading-background"
-    src="images/background.webp"
-    alt=""
-    aria-hidden="true">
+
+<img
+class="loading-background"
+src="images/background.webp"
+alt=""
+aria-hidden="true">
+
+
+<div class="loading-overlay"></div>
+
+
+<div class="loading-text">
+
+<div>TRANSMITTING...</div>
+
+<div>SIGNAL FOUND...</div>
+
+</div>
 
 
 
-    <div class="loading-overlay"></div>
+<div class="loading-progress">
 
+<div class="loading-progress-bar"></div>
 
-
-    <div class="loading-text">
-        <div>TRANSMITTING...</div>
-        <div>SIGNAL FOUND...</div>
-    </div>
-
-
-
-    <div class="loading-progress">
-
-        <div class="loading-progress-bar"></div>
-
-    </div>
+</div>
 
 
 </div>
+
+
+
 <main>
 
 
@@ -452,8 +349,6 @@ Moving images, performances, films, and visual fragments emerge from an imagined
 
 
 
-
-
 <!-- =========================
      PANEL 1
 ========================= -->
@@ -463,33 +358,40 @@ Moving images, performances, films, and visual fragments emerge from an imagined
 class="panel panel-01"
 aria-label="Jeremy Jacob — Transmissions From Another World">
 
+
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">Upon awakening, they couldn’t seem to remember anything. Not as if life was blank, fully concealed or imperceptible, but as if everything in the world was a toy picked up and tossed into a bin with no specific relationship to any other object outside of its being jumbled together amongst other things. The mind had not, however, become a wasteland composed of miscellaneous things, but a kind of garden to be played with by the imagination. There was no reality here, only fantasy; at least nothing that could be pointed to and claimed to be any more or less real than any other thing and all was free to be placed here or there in any way most pleasing to the imaginative senses. It was not altogether clear where or when time was, if this thing came before or after that or when exactly it got thrown here and that there but things did seem to happen, first this and then that but the sequence could never be pinned down.
-        </div>
+<div class="ticker-item">
 
-    </div>
+Upon awakening, they couldn’t seem to remember anything. Not as if life was blank, fully concealed or imperceptible, but as if everything in the world was a toy picked up and tossed into a bin with no specific relationship to any other object outside of its being jumbled together amongst other things.
 
 </div>
 
+</div>
+
+</div>
+
+
 <picture>
 
-    <source
-        media="(max-width:768px)"
-        srcset="images/section1-mobile.webp">
+<source
+media="(max-width:768px)"
+srcset="images/section1-mobile.webp">
 
-    <img
-        src="images/section1.webp"
-        alt="Jeremy Jacob — Transmissions From Another World"
-        width="1920"
-        height="1080"
-        fetchpriority="high"
-        loading="eager"
-        decoding="async">
+
+<img
+src="images/section1.webp"
+alt="Jeremy Jacob — Transmissions From Another World"
+width="1920"
+height="1080"
+fetchpriority="high"
+loading="eager"
+decoding="async">
 
 </picture>
+
 
 </section>
 
@@ -503,44 +405,28 @@ aria-label="Jeremy Jacob — Transmissions From Another World">
 ========================= -->
 
 
-<section class="panel panel-02" data-image="images/section2.webp">
+<section
+class="panel panel-02"
+data-image="images/section2.webp">
+
 
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          I could while away the hours
-Conferrin' with the flowers,
-Consulting with the rain;
-And my head I'd be a scratchin'
-While my thoughts are busy hatchin'
-If I only had a brain.
-I'd unravel ev'ry riddle for my
-Individdle
-In trouble or in pain
-With the thoughts that you'll be thinkin'
-You could be another Lincoln
-If you only had a brain.
-Oh, I, could tell you why
-The oceans near the shore
-I could think of things I'd never
-Thunk before,
-And then I'd sit down and think some more.
-I would not be just a muffin',
-My head all full of stuffin',
-My heart all full of pain;
-And perhaps I'd deserve you and be
-Even worthy even you
-If I only had a brain.
-           </div>
-        
-    </div>
+<div class="ticker-item">
+
+I could while away the hours Conferrin' with the flowers, Consulting with the rain; And my head I'd be a scratchin' While my thoughts are busy hatchin' If I only had a brain.
 
 </div>
 
-<div class="video-frame">
+</div>
 
+</div>
+
+
+
+<div class="video-frame">
 
 
 <iframe
@@ -555,8 +441,6 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 
 
-
-
 <iframe
 class="mobile-frame"
 title="Jeremy Jacob — Transmissions From Another World — Mobile Moving Image Work"
@@ -567,18 +451,11 @@ frameborder="0"
 referrerpolicy="strict-origin-when-cross-origin">
 </iframe>
 
+
 </div>
 
 
-
-
-
-
-
 </section>
-
-
-
 
 
 
@@ -593,20 +470,22 @@ referrerpolicy="strict-origin-when-cross-origin">
 class="panel panel-03"
 data-image="images/section3.webp">
 
+
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          The witch was terrorized by the beauty of the princess. So terrorized that The Witch froze in place long enough for the guards to place The Witch’s feet into red-hot metal shoes. The red-hot shoes forced The Witch into a panicked dance before the wedding guests. A torture and humiliation. Suddenly The Witch’s double appeared in a puff of green smoke. With eyes full of vengeance they stalked about the scene, casting eyes at all of those assembled. They all knew of the power of this other Witch and their hearts were drained of blood at the thought of The Witch’s taking note of their presence at the torture and humiliation of The Witch’s kin.
-        </div>
-        
-    </div>
+<div class="ticker-item">
+
+The witch was terrorized by the beauty of the princess. So terrorized that The Witch froze in place long enough for the guards to place The Witch’s feet into red-hot metal shoes.
 
 </div>
 
-<div class="video-frame">
 </div>
+
+</div>
+
+
 
 <div class="panel-content-left">
 
@@ -636,30 +515,33 @@ alt="">
 
 
 
-
-
-
 <!-- =========================
      PANEL 4 VIDEO
 ========================= -->
 
 
-<section class="panel panel-04" data-image="images/section4.webp">
+<section
+class="panel panel-04"
+data-image="images/section4.webp">
+
 
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          Until one day, as night began to descend upon The Kingdom, a stranger, never before seen by The King or anyone else in the Kingdom, arrived with a gift for The King. It is a very small, and very old book in which a story was told in an indecipherable language. The King, unable to make heads or tails of the thing, asked The Stranger to kindly tell the story to The King. The Stranger, with eyes closed, begins to tell The King the story. 
-        </div>
-        
-    </div>
+<div class="ticker-item">
+
+Until one day, as night began to descend upon The Kingdom, a stranger arrived with a gift for The King.
 
 </div>
 
-<div class="video-frame">
+</div>
 
+</div>
+
+
+
+<div class="video-frame">
 
 
 <iframe
@@ -674,8 +556,6 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 
 
-
-
 <iframe
 class="mobile-frame"
 title="Jeremy Jacob — Transmissions From Another World — Mobile Performance Film"
@@ -687,18 +567,10 @@ referrerpolicy="strict-origin-when-cross-origin">
 </iframe>
 
 
-
 </div>
 
 
 </section>
-
-
-
-
-
-
-
 
 <!-- =========================
      PANEL 5
@@ -709,15 +581,18 @@ referrerpolicy="strict-origin-when-cross-origin">
 class="panel panel-05"
 data-image="images/section5.webp">
 
+
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          And it is in the forest that The King, carrying The Wooden Figure and The Music Box, is slowly drained of all strength until on the darkest, longest night of the year The King lays down to die. It does not take long for the creatures of the forest to descend upon The King and make quick work of all that The King has left behind. Save, of course, The Wooden Figure and The Music Box. Suddenly, an unknown number of years flew by like nothing at all.
-        </div>
-        
-    </div>
+<div class="ticker-item">
+
+And it is in the forest that The King, carrying The Wooden Figure and The Music Box, is slowly drained of all strength until on the darkest, longest night of the year The King lays down to die. It does not take long for the creatures of the forest to descend upon The King and make quick work of all that The King has left behind. Save, of course, The Wooden Figure and The Music Box.
+
+</div>
+
+</div>
 
 </div>
 
@@ -735,23 +610,26 @@ data-image="images/section5.webp">
 ========================= -->
 
 
-
 <section
 class="panel panel-06"
 data-image="images/section6.webp">
 
+
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          After years of this dream slowly overtaking night and day, The Princess decides to follow the path of The White Horse and head out into the forest as in the dream. When The Princess came to that all too familiar place in The Woods, The Princess laid down and fell fast asleep. Upon waking from a dreamless sleep, The Princess began to frantically dig through the leaves, into the dirt, and soon enough found a pair of arms and legs and the whole of the The Wooden Puppet. The Princess pulled The Wooden Puppet up out of the ground, held it close, and fell fast asleep once again. Upon waking in the light of the morning star, The Princess returned to the small house in the woods carrying The Wooden Puppet.
+<div class="ticker-item">
 
-        </div>
-        
-    </div>
+After years of this dream slowly overtaking night and day, The Princess decides to follow the path of The White Horse and head out into the forest as in the dream. When The Princess came to that all too familiar place in The Woods, The Princess laid down and fell fast asleep.
 
 </div>
+
+</div>
+
+</div>
+
+
 
 <div class="panel-content-left">
 
@@ -774,9 +652,8 @@ alt="">
 
 </div>
 
+
 </section>
-
-
 
 
 
@@ -789,25 +666,27 @@ alt="">
 ========================= -->
 
 
-
 <section
 class="panel panel-07"
 data-image="images/section7.webp">
 
+
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          The Princess knew nothing of The World, The King, and either of their Problems and so The Princess worked day in and out, laboring in the work assigned to The Princess. At first, as The Princess learned the craft, The Princess was very confused as to the purpose of the work, but over time those thoughts drained from her mind and were replaced with a dedication the likes of which few have ever felt. Soon The Princess had surpassed the craft as The Princess continued to live out each day among the rivers and trees and woodland creatures there next to the mountains at the edge of the forest. But little did The Princess know, that at the same time, around the small cottage in the forest in which The Princess now lived, did begin to grow the deepest and darkest of energies. 
-        </div>
-        
-    </div>
+<div class="ticker-item">
+
+The Princess knew nothing of The World, The King, and either of their Problems and so The Princess worked day in and out, laboring in the work assigned to The Princess.
+
+</div>
+
+</div>
+
+</div>
 
 
 </section>
-
-
 
 
 
@@ -824,17 +703,22 @@ data-image="images/section7.webp">
 class="panel panel-08"
 data-image="images/section8.webp">
 
+
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          Soon, The Princess began to be visited by The White Horse, all aglow, in the depths of nightly dreams. Most nights, The Princess instinctively knew to follow the White Horse deep into the forest as if under a spell until the ground would sink down around them leaving them on a kind of table of land whereupon the white horse would lay down and wait until The Princess would eventually open up the horse and crawl inside. Once inside, the walls of The White Horse’s interior became a map of The Kingdom at which point the dream would end and begin again and again and again and again until The Princess eventually awoke into the morning light. Over the years, the dream began to spread on into The Princess’s days, at first like a haze until, after some time, the dream repeated in The Princess’s mind both day and night with more reality than reality. Eventually, completely overcome by The White Horse the world began to lose clarity and slide into blurry confusion. 
-        </div>
-        
-    </div>
+<div class="ticker-item">
+
+Soon, The Princess began to be visited by The White Horse, all aglow, in the depths of nightly dreams. Most nights, The Princess instinctively knew to follow the White Horse deep into the forest as if under a spell.
 
 </div>
+
+</div>
+
+</div>
+
+
 
 <div class="panel-content-left">
 
@@ -858,6 +742,9 @@ alt="Find Jeremy Jacob online">
 
 
 </div>
+
+
+
 <div class="panel-content-left">
 
 
@@ -889,19 +776,26 @@ alt="">
 
 <section
 class="panel panel-09"
-data-image="images/section9.webp" data-image="images/section9.webp">
+data-image="images/section9.webp">
+
 
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          After years of this dream slowly overtaking night and day, The Princess decides to follow the path of The White Horse and head out into the forest as in the dream. When The Princess came to that all too familiar place in The Woods, The Princess laid down and fell fast asleep. Upon waking from a dreamless sleep, The Princess began to frantically dig through the leaves, into the dirt, and soon enough found a pair of arms and legs and the whole of the The Wooden Puppet. The Princess pulled The Wooden Puppet up out of the ground, held it close, and fell fast asleep once again. Upon waking in the light of the morning star, The Princess returned to the small house in the woods carrying The Wooden Puppet.
-        </div>
-        
-    </div>
+<div class="ticker-item">
+
+After years of this dream slowly overtaking night and day, The Princess decides to follow the path of The White Horse and head out into the forest as in the dream.
 
 </div>
+
+</div>
+
+</div>
+
+
+
+
 
 <div class="panel-content social-links">
 
@@ -917,8 +811,6 @@ aria-label="Jeremy Jacob on X">
 <img
 src="images/x.webp"
 class="social-image"
-width="200"
-height="200"
 loading="lazy"
 decoding="async"
 alt="Jeremy Jacob on X">
@@ -940,8 +832,6 @@ aria-label="Jeremy Jacob on Instagram">
 <img
 src="images/instagram.webp"
 class="social-image"
-width="200"
-height="200"
 loading="lazy"
 decoding="async"
 alt="Jeremy Jacob on Instagram">
@@ -963,8 +853,6 @@ aria-label="Jeremy Jacob on TikTok">
 <img
 src="images/tiktok.webp"
 class="social-image"
-width="200"
-height="200"
 loading="lazy"
 decoding="async"
 alt="Jeremy Jacob on TikTok">
@@ -980,47 +868,69 @@ alt="Jeremy Jacob on TikTok">
 
 </section>
 
+
+
+
+
+
+
+
+
 <!-- =========================
      PANEL 10 VIDEO
 ========================= -->
 
 
-<section class="panel panel-10" data-image="images/section10.webp">
+<section
+class="panel panel-10"
+data-image="images/section10.webp">
+
 
 <div class="ticker-wrap">
 
-    <div class="ticker-track">
+<div class="ticker-track">
 
-        <div class="ticker-item">
-          However, let me tell you here and now the full story of the King’s collection. Once upon a time in a Kingdom not far from here, there lived The King with The Queen and soon arrived The Princess. The Princess was undeniably beautiful and perfect. Her sensational beauty and grace were not otherwise known outside of the fairy tales. But this very fact began to weigh heavily upon The King until The King just couldn’t take it any longer and The King banished The Princess to the forest that runs along the far side of The Kingdom. The King had to!  Out of fear that The Princess might inadvertently be the death of The King. The Princess lived alone there in service to The Kingdom. And was soon forgotten by all.
+<div class="ticker-item">
 
-        </div>
-        
-    </div>
+However, let me tell you here and now the full story of the King’s collection. Once upon a time in a Kingdom not far from here, there lived The King with The Queen and soon arrived The Princess.
 
 </div>
 
+</div>
+
+</div>
+
+
+
+
+
+
 <div class="panel-content-left">
 
+
 <div class="email-arrival">
+
 
 <img
 src="images/email.webp"
 class="email-image"
+width="350"
 loading="lazy"
 decoding="async"
 alt="Contact Jeremy Jacob">
 
-</div>
 
 </div>
+
+
+</div>
+
 
 
 
 
 
 <div class="video-frame">
-
 
 
 <iframe
@@ -1054,7 +964,6 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 
 </section>
-
 
 
 

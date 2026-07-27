@@ -709,8 +709,8 @@ new IntersectionObserver(
 
 },
 {
-    rootMargin:"200px 0px",
-    threshold:.01
+    rootMargin:"0px",
+    threshold:.25
 });
 
 
