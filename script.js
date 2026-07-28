@@ -12,6 +12,7 @@ document.querySelector(".loading-screen");
 const audioControls =
 document.getElementById("audioControls");
 
+
 if(loadingScreen){
 
 
@@ -21,13 +22,13 @@ if(loadingScreen){
         loadingScreen.remove();
 
 
-if(audioControls){
+        if(audioControls){
 
-    audioControls.classList.add(
-        "visible"
-    );
+            audioControls.classList.add(
+                "visible"
+            );
 
-}
+        }
 
 
     }
@@ -42,13 +43,15 @@ if(audioControls){
 
         setTimeout(()=>{
 
-if(audioControls){
 
-    audioControls.classList.add(
-        "visible"
-    );
+            if(audioControls){
 
-}
+                audioControls.classList.add(
+                    "visible"
+                );
+
+            }
+
 
         },2600);
 
@@ -57,6 +60,8 @@ if(audioControls){
 
 
 }
+
+
 
 /*
 =========================
@@ -77,8 +82,6 @@ window.scrollTo(0,0);
 
 
 
-
-
 /*
 =========================
 SETUP
@@ -93,11 +96,120 @@ document.querySelectorAll(".panel");
 const SCROLL_FACTOR = 1.5;
 
 
+
+
+
+/*
+=========================
+VARIABLE RANDOM FONTS
+=========================
+*/
+
+const randomFontText = (element)=>{
+
+
+    if(!element)
+    return;
+
+
+
+    const fonts = [
+
+        '"Courier Prime", monospace',
+        '"Courier New", monospace',
+        '"Baskerville", serif',
+        '"Georgia", serif',
+        '"Times New Roman", serif',
+        'Helvetica, Arial, sans-serif',
+        '"Helvetica Neue", sans-serif',
+        'Arial, sans-serif',
+        '"Gill Sans", sans-serif'
+
+    ];
+
+
+
+    const text =
+    element.textContent.trim();
+
+
+
+    element.innerHTML = "";
+
+
+
+    let currentFont =
+    fonts[
+        Math.floor(
+            Math.random() *
+            fonts.length
+        )
+    ];
+
+
+
+    [...text].forEach(letter=>{
+
+
+        const span =
+        document.createElement("span");
+
+
+
+   span.textContent =
+letter === " " ? "\u00A0" : letter;
+
+
+
+        if(Math.random() > .75){
+
+            currentFont =
+            fonts[
+                Math.floor(
+                    Math.random() *
+                    fonts.length
+                )
+            ];
+
+        }
+
+
+
+        span.style.fontFamily =
+        currentFont;
+
+
+
+        span.style.fontWeight =
+        "400";
+
+
+
+        span.style.display =
+        "inline-block";
+
+
+
+        element.appendChild(span);
+
+
+
+    });
+
+
+};
+
+
+
+
+
+
 /*
 =========================
 AUDIO PLAYLIST
 =========================
 */
+
 
 const playlist = [
 
@@ -117,66 +229,93 @@ document.getElementById("bgAudio");
 const trackName =
 document.getElementById("trackName");
 
+
 const audioToggle =
 document.getElementById("audioToggle");
+
 
 const prevTrack =
 document.getElementById("prevTrack");
 
+
 const nextTrack =
 document.getElementById("nextTrack");
+
 
 let currentTrack = 0;
 
 
+
 function updateAudioButton(){
+
 
     if(!audioToggle) return;
 
+
+
     if(audio.paused){
 
-        audioToggle.classList.remove("pause");
+
+        audioToggle.classList.remove(
+            "pause"
+        );
+
 
         audioToggle.setAttribute(
             "aria-label",
             "Play audio"
         );
 
+
     }
     else{
 
-        audioToggle.classList.add("pause");
+
+        audioToggle.classList.add(
+            "pause"
+        );
+
 
         audioToggle.setAttribute(
             "aria-label",
             "Pause audio"
         );
 
+
     }
+
 
 }
 
+
+
 function loadTrack(index){
 
+
     if(!audio) return;
+
 
 
     audio.src =
     playlist[index];
 
 
-    if(trackName){
 
-        trackName.textContent =
-        playlist[index]
-        .split("/")
-        .pop()
-        .replace(".mp3","");
+   if(trackName){
 
-    }
+    trackName.textContent =
+    playlist[index]
+    .split("/")
+    .pop();
+
+    randomFontText(trackName);
+
+}
+
 
 
     updateAudioButton();
+
 
 }
 
@@ -188,98 +327,192 @@ if(audio && audioToggle){
 
     loadTrack(currentTrack);
 
-audioToggle.addEventListener("click", ()=>{
-
-    if(audio.paused){
-
-        audio.play();
-
-    }
-    else{
-
-        audio.pause();
-
-    }
-
-});
-
-audio.addEventListener("play", updateAudioButton);
-
-audio.addEventListener("pause", updateAudioButton);
 
 
-if(nextTrack){
+    audioToggle.addEventListener("click", ()=>{
 
-    nextTrack.addEventListener("click", ()=>{
 
-        currentTrack++;
+        if(audio.paused){
 
-        if(currentTrack >= playlist.length){
 
-            currentTrack = 0;
+            audio.play();
+
+
+        }
+        else{
+
+
+            audio.pause();
+
 
         }
 
 
-        loadTrack(currentTrack);
-
-
-        audio.play().then(()=>{
-
-            updateAudioButton();
-
-        });
-
-
     });
 
-}
-
-if(prevTrack){
-
-    prevTrack.addEventListener("click", ()=>{
-
-        currentTrack--;
-
-        if(currentTrack < 0){
-
-            currentTrack = playlist.length - 1;
-
-        }
-
-        loadTrack(currentTrack);
-
-        audio.play();
-
-    });
-
-}
 
 
-audio.addEventListener("ended", ()=>{
 
-    currentTrack++;
+    audio.addEventListener(
+        "play",
+        updateAudioButton
+    );
 
-    if(currentTrack >= playlist.length){
 
-        currentTrack = 0;
+    audio.addEventListener(
+        "pause",
+        updateAudioButton
+    );
+
+
+
+
+
+    if(nextTrack){
+
+
+        nextTrack.addEventListener(
+            "click",
+            ()=>{
+
+
+                currentTrack++;
+
+
+
+                if(currentTrack >= playlist.length){
+
+
+                    currentTrack = 0;
+
+
+                }
+
+
+
+
+
+                loadTrack(currentTrack);
+
+
+
+
+
+                audio.play()
+                .then(()=>{
+
+
+                    updateAudioButton();
+
+
+                });
+
+
+
+            }
+        );
+
 
     }
 
-    loadTrack(currentTrack);
 
-    audio.play();
 
-});
+
+
+
+
+    if(prevTrack){
+
+
+        prevTrack.addEventListener(
+            "click",
+            ()=>{
+
+
+                currentTrack--;
+
+
+
+                if(currentTrack < 0){
+
+
+                    currentTrack =
+                    playlist.length - 1;
+
+
+                }
+
+
+
+
+
+                loadTrack(currentTrack);
+
+
+
+                audio.play();
+
+
+
+            }
+        );
+
+
+    }
+
+
+
+
+
+
+
+    audio.addEventListener(
+        "ended",
+        ()=>{
+
+
+            currentTrack++;
+
+
+
+            if(currentTrack >= playlist.length){
+
+
+                currentTrack = 0;
+
+
+            }
+
+
+
+
+
+            loadTrack(currentTrack);
+
+
+
+            audio.play();
+
+
+
+        }
+    );
+
 
 
 } // CLOSE AUDIO INITIALIZATION
 
 
+
+
+
+
 function setPageHeight(){
+
 
     const totalPanels =
     panels.length;
+
 
 
     document.body.style.height =
@@ -307,6 +540,7 @@ IMAGE LOADING
 
 const loadedPanels =
 new WeakSet();
+
 
 
 
@@ -349,16 +583,19 @@ new IntersectionObserver(
         MOBILE IMAGE SWITCH
         */
 
+
         if(
         window.innerWidth <= 768 &&
         image.includes(".webp")
         ){
+
 
             image =
             image.replace(
                 ".webp",
                 "-mobile.webp"
             );
+
 
         }
 
@@ -386,11 +623,16 @@ new IntersectionObserver(
 
 
 
+
+
         /*
         APPEND FIRST
         */
 
+
         panel.appendChild(img);
+
+
 
 
 
@@ -398,35 +640,49 @@ new IntersectionObserver(
         LOAD AFTER INSERT
         */
 
+
         img.src =
         image;
 
 
 
-img.onload =
-async ()=>{
-
-    try {
-
-        await img.decode();
-
-    }
-    catch(e){
-
-        console.warn(
-            "IMAGE DECODE FAILED:",
-            image
-        );
-
-    }
 
 
-    img.classList.add(
-        "loaded"
-    );
+        img.onload =
+        async ()=>{
 
 
-};
+            try {
+
+
+                await img.decode();
+
+
+            }
+            catch(e){
+
+
+                console.warn(
+                    "IMAGE DECODE FAILED:",
+                    image
+                );
+
+
+            }
+
+
+
+
+
+            img.classList.add(
+                "loaded"
+            );
+
+
+        };
+
+
+
 
 
 
@@ -441,6 +697,8 @@ async ()=>{
 
 
         };
+
+
 
 
 
@@ -471,10 +729,6 @@ panels.forEach(panel=>{
 
 
 });
-
-
-
-
 
 /*
 =========================
@@ -597,6 +851,7 @@ function updatePanels(){
 
 
 
+
         /*
         EMAIL ARRIVAL
         */
@@ -632,11 +887,15 @@ function updatePanels(){
 
 
 
-email.style.transform =
-`translateY(${move}px)`;
 
 
-email.style.opacity = 1;
+                email.style.transform =
+                `translateY(${move}px)`;
+
+
+
+                email.style.opacity = 1;
+
 
 
             }
@@ -721,11 +980,13 @@ function updateImageParallax(){
             )
             ){
 
+
                 image.style.transform =
                 "translateY(0)";
 
 
                 return;
+
 
             }
 
@@ -733,8 +994,9 @@ function updateImageParallax(){
 
 
 
-image.style.transform =
-"translateY(0)";
+            image.style.transform =
+            "translateY(0)";
+
 
 
         });
@@ -765,11 +1027,13 @@ document.querySelectorAll(".video-frame");
 
 
 
+
 function loadVideo(container){
 
 
     if(container.dataset.loaded)
     return;
+
 
 
 
@@ -812,7 +1076,9 @@ function loadVideo(container){
 
     if(unused){
 
+
         unused.remove();
+
 
     }
 
@@ -830,8 +1096,10 @@ function loadVideo(container){
 
 
 
+
     container.dataset.loaded =
     "true";
+
 
 
 
@@ -843,6 +1111,7 @@ function loadVideo(container){
 
         if(typeof Vimeo === "undefined")
         return;
+
 
 
 
@@ -889,7 +1158,6 @@ function loadVideo(container){
 
 
 
-
 const videoObserver =
 new IntersectionObserver(
 (entries)=>{
@@ -923,6 +1191,7 @@ new IntersectionObserver(
 
 
 
+
 videos.forEach(video=>{
 
 
@@ -930,14 +1199,6 @@ videos.forEach(video=>{
 
 
 });
-
-
-
-
-
-
-
-
 
 /*
 =========================
@@ -1086,11 +1347,9 @@ requestAnimationFrame(()=>{
 
 
 
-
-
 /*
 =========================
-VARIABLE TICKER FONTS
+APPLY RANDOM FONT TO TICKER
 =========================
 */
 
@@ -1100,140 +1359,15 @@ document
 .forEach(item=>{
 
 
-    const fonts = [
-
-        '"Courier Prime", monospace',
-
-        '"Courier New", monospace',
-
-        '"Baskerville", serif',
-
-        '"Georgia", serif',
-
-        '"Times New Roman", serif',
-
-        'Helvetica, Arial, sans-serif',
-
-        '"Helvetica Neue", sans-serif',
-
-        'Arial, sans-serif',
-
-        '"Gill Sans", sans-serif'
-
-
-    ];
-
-
-
-
-
-    const text =
-    item.textContent.trim();
-
-
-
-
-
-    item.innerHTML =
-    "";
-
-
-
-
-
-    let currentFont =
-    fonts[
-        Math.floor(
-            Math.random() *
-            fonts.length
-        )
-    ];
-
-
-
-
-
-
-    [...text].forEach(letter=>{
-
-
-        const span =
-        document.createElement(
-            "span"
-        );
-
-
-
-        span.textContent =
-        letter;
-
-
-
-
-
-        if(
-        /[.,;:'"!?]/.test(letter)
-        ){
-
-
-            span.style.fontFamily =
-            '"Courier Prime", monospace';
-
-
-        }
-
-        else{
-
-
-            if(
-            Math.random() > .85
-            ){
-
-
-                currentFont =
-                fonts[
-                    Math.floor(
-                        Math.random() *
-                        fonts.length
-                    )
-                ];
-
-
-            }
-
-
-
-
-
-            span.style.fontFamily =
-            currentFont;
-
-
-        }
-
-
-
-
-
-
-        span.style.fontWeight =
-        "400";
-
-
-
-
-
-        item.appendChild(
-            span
-        );
-
-
-
-    });
-
+    randomFontText(item);
 
 
 });
+
+
+
+
+
 
 
 
