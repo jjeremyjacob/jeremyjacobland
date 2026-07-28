@@ -129,9 +129,37 @@ document.getElementById("nextTrack");
 let currentTrack = 0;
 
 
+function updateAudioButton(){
+
+    if(!audioToggle) return;
+
+    if(audio.paused){
+
+        audioToggle.classList.remove("pause");
+
+        audioToggle.setAttribute(
+            "aria-label",
+            "Play audio"
+        );
+
+    }
+    else{
+
+        audioToggle.classList.add("pause");
+
+        audioToggle.setAttribute(
+            "aria-label",
+            "Pause audio"
+        );
+
+    }
+
+}
+
 function loadTrack(index){
 
     if(!audio) return;
+
 
     audio.src =
     playlist[index];
@@ -140,12 +168,15 @@ function loadTrack(index){
     if(trackName){
 
         trackName.textContent =
-playlist[index]
-.split("/")
-.pop()
-.replace(".mp3", "");
-        
+        playlist[index]
+        .split("/")
+        .pop()
+        .replace(".mp3","");
+
     }
+
+
+    updateAudioButton();
 
 }
 
@@ -157,35 +188,25 @@ if(audio && audioToggle){
 
     loadTrack(currentTrack);
 
+audioToggle.addEventListener("click", ()=>{
 
-    audioToggle.addEventListener("click", ()=>{
+    if(audio.paused){
 
+        audio.play();
 
-        if(audio.paused){
+    }
+    else{
 
+        audio.pause();
 
-            audio.play();
+    }
 
+});
 
-            audioToggle.textContent =
-            "Ⅱ";
+audio.addEventListener("play", updateAudioButton);
 
+audio.addEventListener("pause", updateAudioButton);
 
-        }
-        else{
-
-
-            audio.pause();
-
-
-            audioToggle.textContent =
-            "▶";
-
-
-        }
-
-
-    });
 
 if(nextTrack){
 
@@ -199,12 +220,20 @@ if(nextTrack){
 
         }
 
+
         loadTrack(currentTrack);
+
+
+        audio.play().then(()=>{
+
+            updateAudioButton();
+
+        });
+
 
     });
 
 }
-
 
 if(prevTrack){
 
@@ -220,33 +249,31 @@ if(prevTrack){
 
         loadTrack(currentTrack);
 
-    });
-
-}
-
-    audio.addEventListener("ended", ()=>{
-
-
-        currentTrack++;
-
-
-        if(currentTrack >= playlist.length){
-
-            currentTrack = 0;
-
-        }
-
-
-        loadTrack(currentTrack);
-
-
         audio.play();
 
-
     });
 
-
 }
+
+
+audio.addEventListener("ended", ()=>{
+
+    currentTrack++;
+
+    if(currentTrack >= playlist.length){
+
+        currentTrack = 0;
+
+    }
+
+    loadTrack(currentTrack);
+
+    audio.play();
+
+});
+
+
+} // CLOSE AUDIO INITIALIZATION
 
 
 function setPageHeight(){
