@@ -53,13 +53,6 @@ if(
     );
 
 
-    window.scrollTo(
-        0,
-        0
-    );
-
-
-
     setTimeout(()=>{
 
 
@@ -132,7 +125,6 @@ const panels =
 document.querySelectorAll(".panel");
 
 
-
 const videos =
 document.querySelectorAll(".video-frame");
 
@@ -146,7 +138,9 @@ const SCROLL_FACTOR =
 const STACK_REVEAL =
 28;
 
-let mobileScrollOffset = 0;
+
+
+
 
 /*
 =========================
@@ -163,9 +157,9 @@ function setPageHeight(){
 
 
 
-document.body.style.height =
+    document.body.style.height =
 
-`${window.innerHeight * ((totalPanels - 1) * SCROLL_FACTOR + 1)}px`;
+    `${window.innerHeight * ((totalPanels - 1) * SCROLL_FACTOR + 1)}px`;
 
 
 }
@@ -271,8 +265,6 @@ new IntersectionObserver(
 
 
 
-
-
         img.setAttribute(
             "width",
             "1920"
@@ -342,7 +334,6 @@ new IntersectionObserver(
 
 
 
-
         img.onerror =
         ()=>{
 
@@ -378,10 +369,8 @@ new IntersectionObserver(
 
 {
 
-
     rootMargin:
     "200px 0px"
-
 
 }
 
@@ -404,6 +393,13 @@ panels.forEach(panel=>{
 
 });
 
+
+
+
+
+
+
+
 /*
 =========================
 SCROLL POSITION
@@ -413,23 +409,9 @@ SCROLL POSITION
 
 function getScrollPosition(){
 
-    if(window.innerWidth <= 768){
-
-        return mobileScrollOffset;
-
-    }
-
-
     return window.scrollY;
 
 }
-
-
-
-
-
-
-
 /*
 =========================
 PANEL MOVEMENT
@@ -456,14 +438,17 @@ function updatePanels(){
     (panel,index)=>{
 
 
-if(index === 0){
+        if(index === 0){
 
-    panel.style.transform =
-    "translate3d(0,0,0)";
 
-    return;
+            panel.style.transform =
+            "translate3d(0,0,0)";
 
-}
+
+            return;
+
+        }
+
 
 
 
@@ -476,6 +461,7 @@ if(index === 0){
         height
         *
         SCROLL_FACTOR;
+
 
 
 
@@ -511,6 +497,8 @@ if(index === 0){
 
 
 
+
+
         /*
         =========================
         DYNAMIC STACK SINK
@@ -525,7 +513,9 @@ if(index === 0){
 
 
 
+
         let stackDrift = 0;
+
 
 
 
@@ -535,6 +525,7 @@ if(index === 0){
 
         panelProgress /
         (panels.length - 1);
+
 
 
 
@@ -563,6 +554,7 @@ if(index === 0){
 
 
 
+
         const stackOffset =
 
         index *
@@ -583,6 +575,7 @@ if(index === 0){
 
         const driftLock =
 
+
         Math.min(
 
             1,
@@ -601,6 +594,8 @@ if(index === 0){
 
 
 
+
+
         const activeDrift =
 
         stackDrift *
@@ -612,36 +607,63 @@ if(index === 0){
 
 
 
-        const y =
+
+        /*
+=========================
+MOBILE REVERSE PANEL MOTION
+=========================
+*/
 
 
-        -height +
+let revealProgress = progress;
 
-        (
 
-            progress *
 
-            (
+if(window.innerWidth <= 768){
 
-                height -
-                stackOffset
+    revealProgress =
+    1 - progress;
 
-            )
-
-        )
-
-        +
-
-        activeDrift;
+}
 
 
 
 
 
+const y =
 
 
-panel.style.transform =
-`translate3d(0, ${y}px, 0)`;
+-height +
+
+(
+
+    revealProgress *
+
+    (
+
+        height -
+        stackOffset
+
+    )
+
+)
+
++
+
+activeDrift;
+
+
+
+
+
+
+
+
+        panel.style.transform =
+
+        `translate3d(0, ${y}px, 0)`;
+
+
 
 
 
@@ -682,7 +704,6 @@ panel.style.transform =
                 progress;
 
 
-
             }
 
 
@@ -717,6 +738,13 @@ function updateImageParallax(){
 
 }
 
+
+
+
+
+
+
+
 /*
 =========================
 VIMEO LAZY LOADING
@@ -739,7 +767,10 @@ function loadVideo(container){
 
 
 
+
+
     const mobile =
+
     window.innerWidth <= 768;
 
 
@@ -747,7 +778,10 @@ function loadVideo(container){
 
 
 
+
+
     const iframe =
+
 
     mobile
 
@@ -762,6 +796,7 @@ function loadVideo(container){
     container.querySelector(
         ".desktop-frame"
     );
+
 
 
 
@@ -778,7 +813,9 @@ function loadVideo(container){
 
 
 
+
     const unused =
+
 
     mobile
 
@@ -793,6 +830,7 @@ function loadVideo(container){
     container.querySelector(
         ".mobile-frame"
     );
+
 
 
 
@@ -868,10 +906,13 @@ function startInitialVideos(){
 
 
     loadVideo(
+
         document.querySelector(
             ".panel-02 .video-frame"
         )
+
     );
+
 
 
 
@@ -879,9 +920,11 @@ function startInitialVideos(){
 
 
         loadVideo(
+
             document.querySelector(
                 ".panel-04 .video-frame"
             )
+
         );
 
 
@@ -923,6 +966,7 @@ new IntersectionObserver(
             loadVideo(
                 entry.target
             );
+
 
 
             videoObserver.unobserve(
@@ -974,52 +1018,20 @@ videos.forEach(video=>{
 
 });
 
-
-
-
-
 /*
 =========================
 SCROLL UPDATE
 =========================
 */
 
-/*
-=========================
-SCROLL UPDATE
-=========================
-*/
 
 let ticking = false;
 
 
+
 window.addEventListener(
     "scroll",
-    () => {
-
-
-        if(window.innerWidth <= 768){
-
-
-            const maxScroll =
-            document.body.scrollHeight - window.innerHeight;
-
-
-            mobileScrollOffset =
-            maxScroll - window.scrollY;
-
-
-        }
-        else{
-
-
-            mobileScrollOffset =
-            window.scrollY;
-
-
-        }
-
-
+    ()=>{
 
 
         if(ticking)
@@ -1037,17 +1049,28 @@ window.addEventListener(
             updatePanels();
 
 
+
             ticking = false;
 
 
         });
 
 
+
     },
     {
         passive:true
     }
+
 );
+
+
+
+
+
+
+
+
 
 /*
 =========================
