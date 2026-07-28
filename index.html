@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <title>
 Jeremy Jacob — Transmissions From Another World
@@ -18,6 +19,7 @@ Transmissions from another world. A living archive created by artist and filmmak
 
 
 <meta name="author" content="Jeremy Jacob">
+
 
 <meta name="robots" content="index, follow">
 
@@ -41,21 +43,16 @@ transmissions from another world
 
 <meta name="theme-color" content="#45291c">
 
+
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<meta name="apple-touch-fullscreen" content="yes">
-
 <meta name="apple-mobile-web-app-title"
 content="Jeremy Jacob">
 
-<meta name="apple-touch-fullscreen" content="yes">
-
 <meta name="apple-mobile-web-app-status-bar-style"
 content="black">
-
-
 
 
 
@@ -127,6 +124,10 @@ content="en_US">
 content="https://jeremyjacob.com/images/social-preview.jpg">
 
 
+<meta property="og:image:secure_url"
+content="https://jeremyjacob.com/images/social-preview.jpg">
+
+
 <meta property="og:image:type"
 content="image/jpeg">
 
@@ -175,7 +176,7 @@ content="1080">
 
 
 <!-- =========================
-     TWITTER
+     TWITTER / X
 ========================= -->
 
 
@@ -225,11 +226,9 @@ content="@jeremyjacobland">
   "jobTitle":"Artist and filmmaker",
 
   "sameAs":[
-
    "https://www.instagram.com/jeremyjacobland",
    "https://www.x.com/jeremyjacobland",
    "https://www.tiktok.com/@jeremyjacobland"
-
   ]
 
  }
@@ -244,36 +243,37 @@ content="@jeremyjacobland">
 
 
 
-<!-- =========================
-     CSS
-========================= -->
-
-
-<link
-rel="stylesheet"
-href="style.css">
+<link 
+rel="preload"
+href="style.css"
+as="style"
+onload="this.onload=null;this.rel='stylesheet'">
 
 
 
 
 
 <!-- =========================
-     VIMEO CONNECTIONS
+     VIMEO OPTIMIZATION
 ========================= -->
 
-<link rel="preconnect"
-href="https://player.vimeo.com"
-crossorigin>
 
 <link rel="preconnect"
-href="https://f.vimeocdn.com"
-crossorigin>
+href="https://player.vimeo.com">
+
+
+<link rel="preconnect"
+href="https://f.vimeocdn.com">
+
 
 <link rel="dns-prefetch"
 href="https://i.vimeocdn.com">
 
-<meta name="referrer"
-content="strict-origin-when-cross-origin">
+
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
 
 
 
@@ -283,8 +283,10 @@ content="strict-origin-when-cross-origin">
 ========================= -->
 
 
-<link rel="preload" as="image" href="images/background.webp">
-<link rel="preload" as="image" href="images/section1.webp">
+<link rel="preload"
+as="image"
+href="images/background.webp"
+fetchpriority="high">
 
 
 </head>
@@ -296,25 +298,14 @@ content="strict-origin-when-cross-origin">
 <body>
 
 
+<div class="loading-screen" id="loading-screen">
 
-
-
-<!-- =========================
-     LOADING SCREEN
-========================= -->
-
-
-<div class="loading-screen"
-id="loading-screen">
 
 <img
 class="loading-background"
 src="images/background.webp"
 alt=""
-aria-hidden="true"
-fetchpriority="high"
-decoding="async">
-
+aria-hidden="true">
 
 
 <div class="loading-overlay"></div>
@@ -322,13 +313,12 @@ decoding="async">
 
 <div class="loading-text">
 
-<div>
-TRANSMITTING...
+<div>TRANSMITTING...</div>
+
+<div>SIGNAL FOUND...</div>
+
 </div>
 
-<div>
-SIGNAL FOUND...
-</div>
 
 
 <div class="loading-progress">
@@ -341,20 +331,15 @@ SIGNAL FOUND...
 </div>
 
 
-</div>
-
-
-
-
-
-
 
 <main>
+
 
 
 <h1 class="seo-title">
 Jeremy Jacob — Transmissions From Another World
 </h1>
+
 
 
 <div class="seo-content">
@@ -369,7 +354,6 @@ Moving images, performances, films, and visual fragments emerge from an imagined
 
 
 
-
 <!-- =========================
      PANEL 1
 ========================= -->
@@ -378,7 +362,6 @@ Moving images, performances, films, and visual fragments emerge from an imagined
 <section
 class="panel panel-01"
 aria-label="Jeremy Jacob — Transmissions From Another World">
-
 
 
 <div class="ticker-wrap">
@@ -396,16 +379,11 @@ Upon awakening, they couldn’t seem to remember anything. Not as if life was bl
 </div>
 
 
-
-
-
 <picture>
-
 
 <source
 media="(max-width:768px)"
 srcset="images/section1-mobile.webp">
-
 
 
 <img
@@ -417,12 +395,15 @@ fetchpriority="high"
 loading="eager"
 decoding="async">
 
-
 </picture>
 
 
-
 </section>
+
+
+
+
+
 
 <!-- =========================
      PANEL 2 VIDEO
@@ -440,14 +421,13 @@ data-image="images/section2.webp">
 
 <div class="ticker-item">
 
-Little did I know when, years ago, I arrived here. I know even less now. But I discovered many things. Much has been left behind. And for that I am grateful.
+Little did I know when, years ago, I arrived here.I know even less now. But I discovered many things. Much has been left behind. And for that I am grateful.
 
 </div>
 
 </div>
 
 </div>
-
 
 
 
@@ -456,22 +436,24 @@ Little did I know when, years ago, I arrived here. I know even less now. But I d
 
 <iframe
 class="desktop-frame"
-title="Jeremy Jacob Moving Image Work"
-data-src="https://player.vimeo.com/video/1213384079?background=1&muted=1&loop=1"
+title="Jeremy Jacob — Transmissions From Another World — Moving Image Work"
+data-src="https://player.vimeo.com/video/1212723719?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
-frameborder="0">
+frameborder="0"
+referrerpolicy="strict-origin-when-cross-origin">
 </iframe>
 
 
 
 <iframe
 class="mobile-frame"
-title="Jeremy Jacob Mobile Moving Image Work"
-data-src="https://player.vimeo.com/video/1213384021?background=1&muted=1&loop=1"
+title="Jeremy Jacob — Transmissions From Another World — Mobile Moving Image Work"
+data-src="https://player.vimeo.com/video/1212004521?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
-frameborder="0">
+frameborder="0"
+referrerpolicy="strict-origin-when-cross-origin">
 </iframe>
 
 
@@ -479,9 +461,6 @@ frameborder="0">
 
 
 </section>
-
-
-
 
 
 
@@ -495,7 +474,6 @@ frameborder="0">
 <section
 class="panel panel-03"
 data-image="images/section3.webp">
-
 
 
 <div class="ticker-wrap">
@@ -514,7 +492,6 @@ The witch was terrorized by the beauty of the princess. So terrorized that The W
 
 
 
-
 <div class="panel-content-left">
 
 
@@ -522,14 +499,15 @@ The witch was terrorized by the beauty of the princess. So terrorized that The W
 src="images/jeremyjacob.webp"
 class="logo-image logo-left"
 loading="lazy"
-alt="Jeremy Jacob">
-
+decoding="async"
+alt="Jeremy Jacob artist portrait">
 
 
 <img
 src="images/jeremyjacob.webp"
 class="logo-image logo-right"
 loading="lazy"
+decoding="async"
 alt="">
 
 
@@ -537,10 +515,6 @@ alt="">
 
 
 </section>
-
-
-
-
 
 
 
@@ -572,28 +546,29 @@ Until one day, as night began to descend upon The Kingdom, a stranger arrived wi
 
 
 
-
 <div class="video-frame">
 
 
 <iframe
 class="desktop-frame"
-title="Performance Film"
-data-src="https://player.vimeo.com/video/1213384018?background=1&muted=1&loop=1"
+title="Jeremy Jacob — Transmissions From Another World — Performance Film"
+data-src="https://player.vimeo.com/video/1085343551?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
-frameborder="0">
+frameborder="0"
+referrerpolicy="strict-origin-when-cross-origin">
 </iframe>
 
 
 
 <iframe
 class="mobile-frame"
-title="Mobile Performance Film"
-data-src="https://player.vimeo.com/video/1213384019?background=1&muted=1&loop=1"
+title="Jeremy Jacob — Transmissions From Another World — Mobile Performance Film"
+data-src="https://player.vimeo.com/video/1212130397?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
-frameborder="0">
+frameborder="0"
+referrerpolicy="strict-origin-when-cross-origin">
 </iframe>
 
 
@@ -601,14 +576,6 @@ frameborder="0">
 
 
 </section>
-
-
-
-
-
-
-
-
 
 <!-- =========================
      PANEL 5
@@ -626,7 +593,7 @@ data-image="images/section5.webp">
 
 <div class="ticker-item">
 
-And it is in the forest that The King, carrying The Wooden Figure and The Music Box, is slowly drained of all strength until on the darkest, longest night of the year The King lays down to die.
+And it is in the forest that The King, carrying The Wooden Figure and The Music Box, is slowly drained of all strength until on the darkest, longest night of the year The King lays down to die. It does not take long for the creatures of the forest to descend upon The King and make quick work of all that The King has left behind. Save, of course, The Wooden Figure and The Music Box.
 
 </div>
 
@@ -636,8 +603,6 @@ And it is in the forest that The King, carrying The Wooden Figure and The Music 
 
 
 </section>
-
-
 
 
 
@@ -670,9 +635,30 @@ After years of this dream slowly overtaking night and day, The Princess decides 
 </div>
 
 
+
+<div class="panel-content-left">
+
+
+<img
+src="images/jeremyjacob.webp"
+class="logo-image logo-left"
+loading="lazy"
+decoding="async"
+alt="Jeremy Jacob artist portrait">
+
+
+<img
+src="images/jeremyjacob.webp"
+class="logo-image logo-right"
+loading="lazy"
+decoding="async"
+alt="">
+
+
+</div>
+
+
 </section>
-
-
 
 
 
@@ -713,8 +699,6 @@ The Princess knew nothing of The World, The King, and either of their Problems a
 
 
 
-
-
 <!-- =========================
      PANEL 8
 ========================= -->
@@ -736,6 +720,46 @@ Soon, The Princess began to be visited by The White Horse, all aglow, in the dep
 </div>
 
 </div>
+
+</div>
+
+
+
+<div class="panel-content-left">
+
+
+<a 
+href="https://jjeremyjacob.github.io/jeremyjacob/"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Find Jeremy Jacob online">
+
+
+<img
+src="images/findme.webp"
+class="find-image"
+loading="lazy"
+decoding="async"
+alt="Find Jeremy Jacob online">
+
+
+</a>
+
+
+</div>
+
+
+
+<div class="panel-content-left">
+
+
+<img
+src="images/jeremyjacob.webp"
+class="logo-image logo-right"
+loading="lazy"
+decoding="async"
+alt="">
+
 
 </div>
 
@@ -775,6 +799,78 @@ After years of this dream slowly overtaking night and day, The Princess decides 
 </div>
 
 
+
+
+
+<div class="panel-content social-links">
+
+
+
+<a 
+href="https://www.x.com/jeremyjacobland"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Jeremy Jacob on X">
+
+
+<img
+src="images/x.webp"
+class="social-image"
+loading="lazy"
+decoding="async"
+alt="Jeremy Jacob on X">
+
+
+</a>
+
+
+
+
+
+<a 
+href="https://www.instagram.com/jeremyjacobland"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Jeremy Jacob on Instagram">
+
+
+<img
+src="images/instagram.webp"
+class="social-image"
+loading="lazy"
+decoding="async"
+alt="Jeremy Jacob on Instagram">
+
+
+</a>
+
+
+
+
+
+<a 
+href="https://www.tiktok.com/@jeremyjacobland"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Jeremy Jacob on TikTok">
+
+
+<img
+src="images/tiktok.webp"
+class="social-image"
+loading="lazy"
+decoding="async"
+alt="Jeremy Jacob on TikTok">
+
+
+</a>
+
+
+
+</div>
+
+
+
 </section>
 
 
@@ -786,7 +882,7 @@ After years of this dream slowly overtaking night and day, The Princess decides 
 
 
 <!-- =========================
-     PANEL 10 FINAL
+     PANEL 10 VIDEO
 ========================= -->
 
 
@@ -813,6 +909,10 @@ However, let me tell you here and now the full story of the King’s collection.
 
 
 
+
+<div class="panel-content-left">
+
+
 <div class="email-arrival">
 
 
@@ -828,6 +928,8 @@ alt="Contact Jeremy Jacob">
 </div>
 
 
+</div>
+
 
 
 
@@ -839,10 +941,11 @@ alt="Contact Jeremy Jacob">
 <iframe
 class="desktop-frame"
 title="Jeremy Jacob — Transmissions From Another World — Final Moving Image Work"
-data-src="https://player.vimeo.com/video/1213384107?background=1&muted=1&loop=1"
+data-src="https://player.vimeo.com/video/1059894305?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
-frameborder="0">
+frameborder="0"
+referrerpolicy="strict-origin-when-cross-origin">
 </iframe>
 
 
@@ -852,10 +955,11 @@ frameborder="0">
 <iframe
 class="mobile-frame"
 title="Jeremy Jacob — Transmissions From Another World — Final Mobile Moving Image Work"
-data-src="https://player.vimeo.com/video/1213384047?background=1&muted=1&loop=1"
+data-src="https://player.vimeo.com/video/1103767067?background=1&muted=1&loop=1"
 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 playsinline
-frameborder="0">
+frameborder="0"
+referrerpolicy="strict-origin-when-cross-origin">
 </iframe>
 
 
@@ -871,8 +975,6 @@ frameborder="0">
 
 
 
-
-
 </main>
 
 
@@ -881,14 +983,12 @@ frameborder="0">
 
 
 
-
 <!-- =========================
-     JAVASCRIPT
+     SITE SCRIPT
 ========================= -->
 
 
 <script src="script.js"></script>
-
 
 
 

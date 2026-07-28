@@ -1,112 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-
-/*
-=========================
-RESET SCROLL IMMEDIATELY
-=========================
-*/
-
-
-if("scrollRestoration" in history){
-
-    history.scrollRestoration = "manual";
-
-}
-
-
-window.scrollTo(
-    0,
-    0
-);
-
-
-document.documentElement.scrollTop = 0;
-document.body.scrollTop = 0;
-
-
-
-
-
 /*
 =========================
 LOADING SCREEN CONTROL
 =========================
 */
 
-
 const loadingScreen =
 document.querySelector(".loading-screen");
 
 
-if(
-    loadingScreen &&
-    !sessionStorage.getItem("siteLoaded")
-){
-
-    document.documentElement.classList.add(
-        "loading-active"
-    );
-
-    document.body.classList.add(
-        "loading-active"
-    );
+if(loadingScreen){
 
 
-    setTimeout(()=>{
+    if(sessionStorage.getItem("visited")){
 
 
         loadingScreen.remove();
 
 
+    }
+    else{
+
+
         sessionStorage.setItem(
-            "siteLoaded",
+            "visited",
             "true"
         );
 
 
-        document.documentElement.classList.remove(
-            "loading-active"
-        );
-
-
-        document.body.classList.remove(
-            "loading-active"
-        );
-
-
-        startInitialVideos();
-
-
-        window.scrollTo(
-            0,
-            0
-        );
-
-
-        updatePanels();
-
-
-    },2000);
-
-
-
-}
-else{
-
-
-    if(loadingScreen){
-
-        loadingScreen.remove();
-
     }
 
 
-    startInitialVideos();
+}
 
+/*
+=========================
+RESET SCROLL
+=========================
+*/
+
+if ("scrollRestoration" in history){
+
+    history.scrollRestoration = "manual";
 
 }
 
+
+window.scrollTo(0,0);
 
 
 
@@ -125,49 +66,24 @@ const panels =
 document.querySelectorAll(".panel");
 
 
-const videos =
-document.querySelectorAll(".video-frame");
+const SCROLL_FACTOR = 1.5;
 
-
-
-const SCROLL_FACTOR =
-1.5;
-
-
-
-const STACK_REVEAL =
-28;
-
-
-
-
-
-/*
-=========================
-PAGE HEIGHT
-=========================
-*/
 
 
 function setPageHeight(){
-
 
     const totalPanels =
     panels.length;
 
 
-
     document.body.style.height =
-
-    `${window.innerHeight * ((totalPanels - 1) * SCROLL_FACTOR + 1)}px`;
-
+    `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
 
 }
 
 
 
 setPageHeight();
-
 
 
 
@@ -189,9 +105,7 @@ new WeakSet();
 
 
 const imageObserver =
-
 new IntersectionObserver(
-
 (entries)=>{
 
 
@@ -225,11 +139,14 @@ new IntersectionObserver(
 
 
 
-        if(
-            window.innerWidth <= 768 &&
-            image.includes(".webp")
-        ){
+        /*
+        MOBILE IMAGE SWITCH
+        */
 
+        if(
+        window.innerWidth <= 768 &&
+        image.includes(".webp")
+        ){
 
             image =
             image.replace(
@@ -237,9 +154,7 @@ new IntersectionObserver(
                 "-mobile.webp"
             );
 
-
         }
-
 
 
 
@@ -265,72 +180,47 @@ new IntersectionObserver(
 
 
 
-        img.setAttribute(
-            "width",
-            "1920"
-        );
-
-
-        img.setAttribute(
-            "height",
-            "1080"
-        );
-
-
+        /*
+        APPEND FIRST
+        */
 
         panel.appendChild(img);
 
 
+
+        /*
+        LOAD AFTER INSERT
+        */
 
         img.src =
         image;
 
 
 
+img.onload =
+async ()=>{
+
+    try {
+
+        await img.decode();
+
+    }
+    catch(e){
+
+        console.warn(
+            "IMAGE DECODE FAILED:",
+            image
+        );
+
+    }
 
 
-        img.onload =
-        async ()=>{
+    img.classList.add(
+        "loaded"
+    );
 
 
-            img.setAttribute(
-                "width",
-                img.naturalWidth
-            );
-
-
-            img.setAttribute(
-                "height",
-                img.naturalHeight
-            );
-
-
-
-            try{
-
-                await img.decode();
-
-            }
-
-            catch(e){
-
-                console.warn(
-                    "IMAGE DECODE FAILED:",
-                    image
-                );
-
-            }
-
-
-
-            img.classList.add(
-                "loaded"
-            );
-
-
-        };
-
-
+};
 
 
 
@@ -348,36 +238,21 @@ new IntersectionObserver(
 
 
 
-
-
-        loadedPanels.add(
-            panel
-        );
+        loadedPanels.add(panel);
 
 
 
-        imageObserver.unobserve(
-            panel
-        );
+        imageObserver.unobserve(panel);
+
 
 
     });
 
 
 },
-
-
 {
-
-    rootMargin:
-    "200px 0px"
-
-}
-
-
-);
-
-
+    rootMargin:"200px 0px"
+});
 
 
 
@@ -386,9 +261,7 @@ new IntersectionObserver(
 panels.forEach(panel=>{
 
 
-    imageObserver.observe(
-        panel
-    );
+    imageObserver.observe(panel);
 
 
 });
@@ -397,21 +270,6 @@ panels.forEach(panel=>{
 
 
 
-
-
-
-/*
-=========================
-SCROLL POSITION
-=========================
-*/
-
-
-function getScrollPosition(){
-
-    return window.scrollY;
-
-}
 /*
 =========================
 PANEL MOVEMENT
@@ -427,252 +285,114 @@ function updatePanels(){
 
 
 
-    const scrollY =
-    getScrollPosition();
+    const mobile =
+    window.innerWidth <= 768;
+
+
+
+    let scrollY;
 
 
 
 
 
-    panels.forEach(
-    (panel,index)=>{
+    /*
+    MOBILE REVERSED SCROLL
+    */
+
+
+    if(mobile){
+
+
+        const maxScroll =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+
+
+        scrollY =
+        maxScroll -
+        window.scrollY;
+
+
+    }
+    else{
+
+
+        scrollY =
+        window.scrollY;
+
+
+    }
+
+
+
+
+
+
+    panels.forEach((panel,index)=>{
+
+
+        /*
+        FIRST PANEL FIXED
+        */
 
 
         if(index === 0){
 
 
             panel.style.transform =
-            "translate3d(0,0,0)";
+            "translateY(0)";
 
 
             return;
 
-        }
 
+        }
 
 
 
 
 
         const start =
-
-        (index - 1)
-        *
-        height
-        *
+        (index - 1) *
+        height *
         SCROLL_FACTOR;
 
 
 
 
 
-
         const progress =
-
-
-        Math.min(
-
-            1,
-
-            Math.max(
-
-                0,
-
-                (
-                    scrollY -
-                    start
-                )
-                /
-
-                (
-                    height *
-                    SCROLL_FACTOR
-                )
-
-            )
-
-        );
-
-
-
-
-
-
-
-        /*
-        =========================
-        DYNAMIC STACK SINK
-        =========================
-        */
-
-
-        const panelProgress =
-
-        scrollY /
+        (scrollY - start) /
         (height * SCROLL_FACTOR);
 
 
 
 
-        let stackDrift = 0;
 
-
-
-
-
-
-        const totalProgress =
-
-        panelProgress /
-        (panels.length - 1);
-
-
-
-
-
-
-        if(totalProgress > 0.4){
-
-
-            stackDrift =
-
-            Math.min(
-
-                200,
-
-                ((totalProgress - 0.35) / 0.65)
-                *
-                200
-
-            );
-
-
-        }
-
-
-
-
-
-
-
-        const stackOffset =
-
-        index *
-        STACK_REVEAL;
-
-
-
-
-
-
-
-        /*
-        =========================
-        SMOOTH STACK SINK
-        =========================
-        */
-
-
-        const driftLock =
-
-
+        const position =
         Math.min(
-
-            1,
-
+            0,
             Math.max(
-
-                0,
-
-                (progress - 0.85) / 0.15
-
+                -100,
+                -100 + progress * 100
             )
-
         );
-
-
-
-
-
-
-
-        const activeDrift =
-
-        stackDrift *
-        driftLock;
-
-
-
-
-
-
-
-
-        /*
-=========================
-MOBILE REVERSE PANEL MOTION
-=========================
-*/
-
-
-let revealProgress = progress;
-
-
-
-if(window.innerWidth <= 768){
-
-    revealProgress =
-    1 - progress;
-
-}
-
-
-
-
-
-const y =
-
-
--height +
-
-(
-
-    revealProgress *
-
-    (
-
-        height -
-        stackOffset
-
-    )
-
-)
-
-+
-
-activeDrift;
-
-
-
 
 
 
 
 
         panel.style.transform =
-
-        `translate3d(0, ${y}px, 0)`;
-
-
+        `translateY(${position}%)`;
 
 
 
 
 
         /*
-        =========================
-        PANEL 10 EMAIL
-        =========================
+        EMAIL ARRIVAL
         */
 
 
@@ -680,7 +400,6 @@ activeDrift;
 
 
             const email =
-
             panel.querySelector(
                 ".email-arrival"
             );
@@ -690,25 +409,35 @@ activeDrift;
             if(email){
 
 
+                const emailProgress =
+                Math.min(
+                    1,
+                    Math.max(
+                        0,
+                        (position + 100) / 100
+                    )
+                );
+
+
+
+                const move =
+                -180 +
+                (emailProgress * 180);
+
+
+
                 email.style.transform =
-
-
-                `translateY(${
-                    -180 +
-                    progress * 180
-                }px)`;
-
+                `translateY(${move}px)`;
 
 
                 email.style.opacity =
-                progress;
+                emailProgress;
 
 
             }
 
 
         }
-
 
 
 
@@ -734,10 +463,83 @@ IMAGE PARALLAX
 
 function updateImageParallax(){
 
-    return;
+
+    panels.forEach(panel=>{
+
+
+        const rect =
+        panel.getBoundingClientRect();
+
+
+
+        const offset =
+        rect.top +
+        rect.height / 2 -
+        window.innerHeight / 2;
+
+
+
+
+
+        const images =
+        panel.querySelectorAll(
+            ".panel-image"
+        );
+
+
+
+
+
+        images.forEach(image=>{
+
+
+            /*
+            ONLY BACKGROUND PANEL IMAGES
+            MOVE
+
+            LOGOS / SOCIAL STAY FIXED
+            */
+
+
+            if(
+            image.classList.contains(
+                "logo-image"
+            ) ||
+            image.classList.contains(
+                "social-image"
+            ) ||
+            image.classList.contains(
+                "find-image"
+            ) ||
+            image.classList.contains(
+                "email-image"
+            )
+            ){
+
+                image.style.transform =
+                "translateY(0)";
+
+
+                return;
+
+            }
+
+
+
+
+
+image.style.transform =
+"translateY(0)";
+
+
+        });
+
+
+
+    });
+
 
 }
-
 
 
 
@@ -752,12 +554,13 @@ VIMEO LAZY LOADING
 */
 
 
+const videos =
+document.querySelectorAll(".video-frame");
+
+
+
+
 function loadVideo(container){
-
-
-    if(!container)
-    return;
-
 
 
     if(container.dataset.loaded)
@@ -766,38 +569,19 @@ function loadVideo(container){
 
 
 
-
-
-
     const mobile =
-
     window.innerWidth <= 768;
 
 
 
 
 
-
-
-
     const iframe =
-
-
     mobile
-
     ?
-
-    container.querySelector(
-        ".mobile-frame"
-    )
-
+    container.querySelector(".mobile-frame")
     :
-
-    container.querySelector(
-        ".desktop-frame"
-    );
-
-
+    container.querySelector(".desktop-frame");
 
 
 
@@ -811,28 +595,12 @@ function loadVideo(container){
 
 
 
-
-
-
     const unused =
-
-
     mobile
-
     ?
-
-    container.querySelector(
-        ".desktop-frame"
-    )
-
+    container.querySelector(".desktop-frame")
     :
-
-    container.querySelector(
-        ".mobile-frame"
-    );
-
-
-
+    container.querySelector(".mobile-frame");
 
 
 
@@ -849,25 +617,16 @@ function loadVideo(container){
 
 
 
-
     iframe.src =
-
-
     iframe.dataset.src +
-
-    "&autoplay=1&muted=1&loop=1&background=1&quality=720p";
-
-
-
+    "&autoplay=1&autopause=0&playsinline=1";
 
 
 
 
 
     container.dataset.loaded =
-
     "true";
-
 
 
 
@@ -877,9 +636,42 @@ function loadVideo(container){
     iframe.onload = ()=>{
 
 
-        container.classList.add(
-            "video-ready"
-        );
+        if(typeof Vimeo === "undefined")
+        return;
+
+
+
+
+        const player =
+        new Vimeo.Player(iframe);
+
+
+
+
+
+        player.setVolume(0);
+
+
+
+
+
+        player.play()
+
+        .then(()=>{
+
+
+            container.classList.add(
+                "video-ready"
+            );
+
+
+        })
+
+        .catch(()=>{
+
+
+        });
+
 
 
     };
@@ -893,67 +685,8 @@ function loadVideo(container){
 
 
 
-
-
-/*
-=========================
-START INITIAL VIDEOS
-=========================
-*/
-
-
-function startInitialVideos(){
-
-
-    loadVideo(
-
-        document.querySelector(
-            ".panel-02 .video-frame"
-        )
-
-    );
-
-
-
-
-    setTimeout(()=>{
-
-
-        loadVideo(
-
-            document.querySelector(
-                ".panel-04 .video-frame"
-            )
-
-        );
-
-
-    },1000);
-
-
-}
-
-
-
-
-
-
-
-
-
-/*
-=========================
-VIDEO OBSERVER
-=========================
-*/
-
-
 const videoObserver =
-
-
 new IntersectionObserver(
-
-
 (entries)=>{
 
 
@@ -968,12 +701,6 @@ new IntersectionObserver(
             );
 
 
-
-            videoObserver.unobserve(
-                entry.target
-            );
-
-
         }
 
 
@@ -981,27 +708,10 @@ new IntersectionObserver(
 
 
 },
-
-
 {
-
-
-    rootMargin:
-    "1500px",
-
-
-    threshold:
-    .5
-
-
-}
-
-
-
-);
-
-
-
+    rootMargin:"0px",
+    threshold:.25
+});
 
 
 
@@ -1011,58 +721,75 @@ new IntersectionObserver(
 videos.forEach(video=>{
 
 
-    videoObserver.observe(
-        video
-    );
+    videoObserver.observe(video);
 
 
 });
 
+
+
+
+
+
+
+
+
 /*
 =========================
-SCROLL UPDATE
+SCROLL PERFORMANCE LOOP
 =========================
 */
 
 
-let ticking = false;
+let ticking =
+false;
+
+
+
+
+function scrollUpdate(){
+
+
+    if(ticking)
+    return;
+
+
+
+
+    requestAnimationFrame(()=>{
+
+
+        updatePanels();
+
+        updateImageParallax();
+
+
+
+        ticking =
+        false;
+
+
+    });
+
+
+
+    ticking =
+    true;
+
+
+}
+
+
+
 
 
 
 window.addEventListener(
-    "scroll",
-    ()=>{
-
-
-        if(ticking)
-        return;
-
-
-
-        ticking = true;
-
-
-
-        requestAnimationFrame(()=>{
-
-
-            updatePanels();
-
-
-
-            ticking = false;
-
-
-        });
-
-
-
-    },
-    {
-        passive:true
-    }
-
-);
+"scroll",
+scrollUpdate,
+{
+    passive:true
+});
 
 
 
@@ -1080,9 +807,7 @@ RESIZE
 
 
 window.addEventListener(
-
 "resize",
-
 ()=>{
 
 
@@ -1095,9 +820,7 @@ window.addEventListener(
     updateImageParallax();
 
 
-}
-
-);
+});
 
 
 
@@ -1117,19 +840,40 @@ INITIAL POSITION
 requestAnimationFrame(()=>{
 
 
-    window.scrollTo(
-        0,
-        0
-    );
+    if(window.innerWidth <= 768){
+
+
+        window.scrollTo(
+            0,
+            document.documentElement.scrollHeight -
+            window.innerHeight
+        );
+
+
+    }
+    else{
+
+
+        window.scrollTo(
+            0,
+            0
+        );
+
+
+    }
+
+
 
 
     updatePanels();
 
-
     updateImageParallax();
 
 
+
 });
+
+
 
 
 
@@ -1152,7 +896,6 @@ document
 
 
     const fonts = [
-
 
         '"Courier Prime", monospace',
 
@@ -1179,7 +922,6 @@ document
 
 
 
-
     const text =
     item.textContent.trim();
 
@@ -1195,18 +937,12 @@ document
 
 
     let currentFont =
-
-
     fonts[
-
         Math.floor(
-            Math.random()
-            *
+            Math.random() *
             fonts.length
         )
-
     ];
-
 
 
 
@@ -1217,7 +953,6 @@ document
 
 
         const span =
-
         document.createElement(
             "span"
         );
@@ -1231,15 +966,12 @@ document
 
 
 
-
-
         if(
-            /[.,;:'"!?]/.test(letter)
+        /[.,;:'"!?]/.test(letter)
         ){
 
 
             span.style.fontFamily =
-
             '"Courier Prime", monospace';
 
 
@@ -1249,20 +981,16 @@ document
 
 
             if(
-                Math.random() > .85
+            Math.random() > .85
             ){
 
 
                 currentFont =
-
                 fonts[
-
                     Math.floor(
-                        Math.random()
-                        *
+                        Math.random() *
                         fonts.length
                     )
-
                 ];
 
 
@@ -1273,7 +1001,6 @@ document
 
 
             span.style.fontFamily =
-
             currentFont;
 
 
@@ -1283,8 +1010,8 @@ document
 
 
 
-        span.style.fontWeight =
 
+        span.style.fontWeight =
         "400";
 
 
@@ -1302,6 +1029,10 @@ document
 
 
 });
+
+
+
+
 
 
 });

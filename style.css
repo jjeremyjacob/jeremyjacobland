@@ -16,24 +16,12 @@ html,
 body {
 
     width:100%;
-
-    min-height:100%;
+    height:100%;
 
     overflow-x:hidden;
 
-    overscroll-behavior:none;
-
-    -webkit-overflow-scrolling:touch;
-
 }
 
-
-
-
-
-/* =========================
-   VARIABLES
-========================= */
 
 
 :root {
@@ -44,20 +32,12 @@ body {
 
 
 
-
-
-
-
-
-
 /* =========================
    GLOBAL
 ========================= */
 
 
 body {
-
-    position:relative;
 
     background:#000;
 
@@ -82,12 +62,6 @@ a {
 
 
 
-
-
-
-
-
-
 /* =========================
    PANELS
 ========================= */
@@ -97,49 +71,21 @@ a {
 
     position:fixed;
 
-
     top:0;
-
     left:0;
-
-
 
     width:100%;
 
-
     height:100dvh;
-
 
     overflow:hidden;
 
 
-
-    transform:
-
-    translate3d(0,0,0);
-
-
-
-    will-change:transform;
-
-
-
-    isolation:isolate;
-
-
-
-    contain:paint;
-
-
-
     background-size:cover;
-
 
     background-position:center bottom;
 
-
     background-repeat:no-repeat;
-
 
 
     box-shadow:
@@ -148,8 +94,7 @@ a {
 
 
 
-    backface-visibility:hidden;
-
+    backface-visibility:visible;
 
     -webkit-backface-visibility:hidden;
 
@@ -157,96 +102,37 @@ a {
 
 
 
-
-
-
-
-
-
 /* =========================
-   PANEL STACK ORDER
+   PANEL STACK
 ========================= */
 
 
-.panel-01 {
+.panel-01 { z-index:1; }
 
-    z-index:1;
+.panel-02 { z-index:2; }
 
-}
+.panel-03 { z-index:3; }
 
+.panel-04 { z-index:4; }
 
-.panel-02 {
+.panel-05 { z-index:5; }
 
-    z-index:2;
+.panel-06 { z-index:6; }
 
-}
+.panel-07 { z-index:7; }
 
+.panel-08 { z-index:8; }
 
-.panel-03 {
+.panel-09 { z-index:9; }
 
-    z-index:3;
-
-}
-
-
-.panel-04 {
-
-    z-index:4;
-
-}
-
-
-.panel-05 {
-
-    z-index:5;
-
-}
-
-
-.panel-06 {
-
-    z-index:6;
-
-}
-
-
-.panel-07 {
-
-    z-index:7;
-
-}
-
-
-.panel-08 {
-
-    z-index:8;
-
-}
-
-
-.panel-09 {
-
-    z-index:9;
-
-}
-
-
-.panel-10 {
-
-    z-index:10;
-
-}
-
-
-
-
+.panel-10 { z-index:10; }
 
 
 
 
 
 /* =========================
-   PANEL CONTENT ALIGNMENT
+   CONTENT ALIGNMENT
 ========================= */
 
 
@@ -255,27 +141,21 @@ a {
 .panel-contentleft,
 .panel-content-right {
 
-
     position:absolute;
 
+    top:0;
 
-    inset:0;
+    left:0;
 
+    right:0;
 
     bottom:var(--ticker-height);
 
+    z-index:20;
 
     display:flex;
 
-
     align-items:center;
-
-
-    z-index:10;
-
-
-    pointer-events:none;
-
 
 }
 
@@ -308,17 +188,576 @@ a {
 
 
 
+/* =========================
+   SOCIAL LINKS
+========================= */
+
+
+.social-links {
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+
+    gap:20px;
+
+
+    padding-right:100px;
+
+}
+
 
 
 
 
 /* =========================
-   LAZY LOADED PANEL IMAGES
+   IMAGES
 ========================= */
 
 
 .panel-image {
 
+    position:absolute;
+
+    inset:0;
+
+
+    width:100%;
+
+    height:100%;
+
+
+    object-fit:cover;
+
+    object-position:center bottom;
+
+
+    opacity:0;
+
+
+    transition:opacity .3s ease;
+
+}
+
+
+
+.panel-image.loaded {
+
+    opacity:1;
+
+}
+
+
+
+
+
+.logo-image {
+
+    width:50px;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+    position:relative;
+
+}
+
+
+
+.logo-left {
+
+    position:absolute;
+
+    left:0;
+
+}
+
+
+
+.logo-right {
+
+    position:absolute;
+
+    right:0;
+
+    transform:rotate(180deg);
+
+}
+
+
+
+
+
+/* =========================
+   SOCIAL IMAGE FIX
+========================= */
+
+
+.social-image {
+
+    width:200px;
+
+    max-width:80vw;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+    position:relative;
+
+}
+
+
+
+.find-image {
+
+    width:200px;
+
+    max-width:80vw;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+    position:relative;
+
+}
+
+
+
+.email-image {
+
+    width:350px;
+
+    max-width:90vw;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+    position:relative;
+
+}
+
+
+
+
+
+/* =========================
+   VIDEO PANELS
+========================= */
+
+
+.video-frame {
+
+    position:absolute;
+
+    inset:0;
+
+
+    overflow:hidden;
+
+
+    z-index:1;
+
+
+    background-size:cover;
+
+    background-position:center bottom;
+
+    background-repeat:no-repeat;
+
+}
+
+
+
+.panel-02 .video-frame {
+
+    background-image:
+
+    url("images/section2.webp");
+
+}
+
+
+
+.panel-04 .video-frame {
+
+    background-image:
+
+    url("images/section4.webp");
+
+}
+
+
+
+.panel-10 .video-frame {
+
+    background-image:
+
+    url("images/section10.webp");
+
+}
+
+
+
+
+
+/* =========================
+   VIMEO FULL BLEED
+========================= */
+
+
+.video-frame iframe {
+
+    position:absolute;
+
+
+    top:50%;
+
+    left:50%;
+
+
+    width:100vw;
+
+    height:56.25vw;
+
+
+    min-width:177.78vh;
+
+    min-height:100vh;
+
+
+
+    transform:
+
+    translate(-50%,-50%);
+
+
+
+    border:0;
+
+
+    opacity:0;
+
+
+    z-index:2;
+
+
+    pointer-events:auto;
+
+
+    backface-visibility:hidden;
+
+    -webkit-backface-visibility:hidden;
+
+}
+
+
+
+.video-ready iframe {
+
+    opacity:1;
+
+}
+
+
+
+
+
+/* =========================
+   DESKTOP / MOBILE VIDEO
+========================= */
+
+
+.desktop-frame {
+
+    display:block;
+
+}
+
+
+
+.mobile-frame {
+
+    display:none;
+
+}
+
+
+
+
+
+/* =========================
+   HERO IMAGE
+========================= */
+
+
+.panel-01 {
+
+    background:none;
+
+}
+
+
+
+.panel-01 picture,
+.panel-01 img {
+
+    position:absolute;
+
+
+    inset:0;
+
+
+    width:100%;
+
+    height:100%;
+
+
+    display:block;
+
+}
+
+
+
+.panel-01 img {
+
+    object-fit:cover;
+
+
+    object-position:
+
+    center calc(50% - 15px);
+
+}
+
+
+
+
+
+/* =========================
+   TICKER
+========================= */
+
+
+.ticker-wrap {
+
+    position:absolute;
+
+
+    left:0;
+
+
+    bottom:0;
+
+
+    width:100%;
+
+
+    height:var(--ticker-height);
+
+
+    overflow:hidden;
+
+
+    background:
+
+    rgba(69,41,28,1);
+
+
+    z-index:50;
+
+}
+
+
+
+.ticker-track {
+
+    display:flex;
+
+    width:max-content;
+
+    height:100%;
+
+    align-items:center;
+
+
+    animation:
+    tickerMove 120s linear infinite;
+
+
+    transform:
+    translateX(50vw);
+
+
+    will-change:transform;
+
+}
+
+
+
+.ticker-item {
+
+    white-space:nowrap;
+
+
+    font-size:12px;
+
+
+    letter-spacing:.03em;
+
+
+    line-height:30px;
+
+
+    font-weight:400;
+
+
+    color:#ae8d7f;
+
+
+    font-family:
+
+    "Courier Prime",
+
+    "Courier New",
+
+    Courier,
+
+    monospace;
+
+}
+
+
+
+@keyframes tickerMove {
+
+    from {
+
+        transform:translateX(50vw);
+
+    }
+
+
+    to {
+
+        transform:translateX(-100%);
+
+    }
+
+}
+
+/* =========================
+   EMAIL ARRIVAL
+========================= */
+
+
+.email-arrival {
+
+    position:absolute;
+
+    left:0;
+
+    bottom:var(--ticker-height);
+
+    z-index:20;
+
+
+    transform:
+
+    translateY(-180px);
+
+}
+
+
+
+.email-image {
+
+    display:block;
+
+    width:350px;
+
+    max-width:90vw;
+
+    height:auto;
+
+    object-fit:contain;
+
+}
+
+
+
+
+
+/* =========================
+   LOADING SCREEN
+========================= */
+
+
+.loading-screen {
+
+    position:fixed;
+
+
+    inset:0;
+
+
+    z-index:9999;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+
+    background:#000;
+
+
+
+    overflow:hidden;
+
+
+
+    animation:
+
+    transmissionCut .35s cubic-bezier(.77,0,.18,1) forwards;
+
+
+
+    animation-delay:2.2s;
+
+}
+
+
+
+
+
+/* =========================
+   LOADING BACKGROUND IMAGE
+========================= */
+
+
+.loading-background {
 
     position:absolute;
 
@@ -337,8 +776,11 @@ a {
     object-fit:cover;
 
 
-
     object-position:center bottom;
+
+
+
+    z-index:0;
 
 
 
@@ -346,11 +788,84 @@ a {
 
 
 
-    z-index:0;
+    clip-path:
 
+    inset(0 0 100% 0);
+
+
+
+    animation:
+
+    loadingReveal 1.5s linear forwards;
 
 }
 
+
+
+
+
+.loading-overlay {
+
+    position:absolute;
+
+
+    inset:0;
+
+
+    background:
+
+    rgba(0,0,0,.35);
+
+
+
+    z-index:1;
+
+}
+
+
+
+
+
+.loading-text,
+.loading-progress {
+
+    position:relative;
+
+
+    z-index:2;
+
+}
+
+
+
+
+
+@keyframes loadingReveal {
+
+
+    from {
+
+
+        clip-path:
+
+        inset(0 0 100% 0);
+
+
+    }
+
+
+
+    to {
+
+
+        clip-path:
+
+        inset(0 0 0 0);
+
+
+    }
+
+}
 
 
 
@@ -359,61 +874,530 @@ a {
 
 
 /* =========================
-   LOGOS
+   LOADING SCANLINES
 ========================= */
 
 
-.logo-image {
+.loading-screen::before {
 
 
-    width:50px;
+    content:"";
 
 
-    height:auto;
+    position:absolute;
 
 
-    display:block;
+    inset:0;
 
 
-    object-fit:contain;
+    z-index:1;
 
 
-    position:relative;
+    pointer-events:none;
 
+
+
+    background:
+
+
+    repeating-linear-gradient(
+
+        to bottom,
+
+        rgba(20,10,5,.35) 0px,
+
+        rgba(20,10,5,.35) 1px,
+
+        transparent 2px,
+
+        transparent 4px
+
+    );
+
+
+
+    mix-blend-mode:multiply;
+
+
+    opacity:.35;
+
+
+
+    animation:
+
+    loadingSignal 1.5s linear forwards;
 
 }
 
 
 
-.logo-left {
+
+
+@keyframes loadingSignal {
+
+
+    from {
+
+        opacity:.35;
+
+    }
+
+
+    to {
+
+        opacity:0;
+
+    }
+
+}
+
+
+
+
+
+
+
+/* =========================
+   LOADING COLOR DRIFT
+========================= */
+
+
+.loading-screen::after {
+
+
+    content:"";
 
 
     position:absolute;
+
+
+    inset:0;
+
+
+    z-index:1;
+
+
+
+    pointer-events:none;
+
+
+
+    background:
+
+
+    linear-gradient(
+
+        90deg,
+
+        rgba(255,0,0,.18),
+
+        transparent 25%,
+
+        transparent 75%,
+
+        rgba(0,255,255,.18)
+
+    );
+
+
+
+    opacity:0;
+
+
+
+    animation:
+
+    loadingColorDrift 1.5s linear forwards;
+
+}
+
+
+
+
+
+@keyframes loadingColorDrift {
+
+
+    0%,
+    60%,
+    100% {
+
+        opacity:0;
+
+    }
+
+
+
+    75% {
+
+        opacity:.35;
+
+    }
+
+}
+
+
+
+
+
+
+
+/* =========================
+   LOADING BAR
+========================= */
+
+
+.loading-progress {
+
+
+    position:absolute;
+
+
+    top:
+
+    calc(50% + 45px);
+
+
+
+    left:50%;
+
+
+
+    transform:
+
+    translateX(-50%);
+
+
+
+    width:150px;
+
+
+
+    height:10px;
+
+
+
+    background:
+
+    rgba(174,141,127,.25);
+
+
+
+    overflow:hidden;
+
+}
+
+
+
+
+
+.loading-progress-bar {
+
+
+    width:0%;
+
+
+    height:100%;
+
+
+
+    background:#ae8d7f;
+
+
+
+    animation:
+
+    progressLoad 2s linear forwards;
+
+}
+
+
+
+
+
+@keyframes progressLoad {
+
+
+    0% {
+
+        width:0%;
+
+    }
+
+
+    80% {
+
+        width:90%;
+
+    }
+
+
+    100% {
+
+        width:100%;
+
+    }
+
+}
+
+
+
+
+
+
+
+/* =========================
+   LOADING TEXT
+========================= */
+
+
+.loading-text {
+
+
+    text-align:center;
+
+
+    line-height:2.5;
+
+}
+
+
+
+
+
+.loading-text div {
+
+
+    opacity:0;
+
+
+
+    animation:
+
+    transmissionText .95s steps(2,end) forwards;
+
+}
+
+
+
+
+
+.loading-text div:nth-child(1){
+
+    animation-delay:.1s;
+
+}
+
+
+
+
+
+.loading-text div:nth-child(2){
+
+    animation-delay:.45s;
+
+}
+
+
+
+
+
+@keyframes transmissionText {
+
+
+    from {
+
+        opacity:0;
+
+        transform:
+
+        translateY(8px);
+
+    }
+
+
+
+    to {
+
+        opacity:.8;
+
+        transform:
+
+        translateY(0);
+
+    }
+
+}
+
+
+
+
+
+
+
+/* =========================
+   TRANSMISSION EXIT
+========================= */
+
+
+@keyframes transmissionCut {
+
+
+    0% {
+
+
+        opacity:1;
+
+
+        filter:
+
+        brightness(1)
+
+        blur(0);
+
+    }
+
+
+
+    60% {
+
+
+        opacity:1;
+
+    }
+
+
+
+    90% {
+
+
+        opacity:1;
+
+
+        filter:
+
+        brightness(2.2)
+
+        blur(1px);
+
+    }
+
+
+
+    100% {
+
+
+        opacity:0;
+
+
+
+        filter:
+
+        blur(2px)
+
+        brightness(2);
+
+
+
+        visibility:hidden;
+
+
+
+        pointer-events:none;
+
+    }
+
+}
+
+
+
+
+
+
+
+/* =========================
+   SCANNER BEAM
+========================= */
+
+
+.panel.scanning::after {
+
+
+    content:"";
+
+
+
+    position:absolute;
+
+
+
+    top:0;
+
+
+    bottom:0;
+
+
+
+    width:3px;
+
 
 
     left:0;
 
 
+
+    background:
+
+    rgba(174,141,127,.45);
+
+
+
+    box-shadow:
+
+
+    0 0 12px rgba(174,141,127,.55),
+
+
+    0 0 30px rgba(174,141,127,.25);
+
+
+
+    pointer-events:none;
+
+
+
+    z-index:30;
+
+
+
+    animation:
+
+    scanBeam 6s linear forwards;
+
 }
 
 
 
-.logo-right {
 
 
-    position:absolute;
+@keyframes scanBeam {
 
 
-    right:0;
+    from {
+
+        left:0;
+
+    }
 
 
-    transform:
 
-    rotate(180deg);
+    to {
+
+        left:100%;
+
+    }
 
 }
-
-
 
 
 
@@ -422,149 +1406,108 @@ a {
 
 
 /* =========================
-   SOCIAL / CONTACT IMAGES
+   MOBILE
 ========================= */
+
+
+@media(max-width:768px){
+
+
+
+.panel {
+
+
+    height:100dvh;
+
+}
+
+
+
+
+
+.logo-image {
+
+
+    width:30px;
+
+}
+
+
+
 
 
 .social-image {
 
 
-    width:200px;
+    width:240px;
 
-
-    max-width:80vw;
-
+    max-width:75vw;
 
     height:auto;
 
-
-    display:block;
-
-
     object-fit:contain;
 
-
 }
+
+
 
 
 
 .find-image {
 
 
-    width:200px;
+    width:180px;
 
-
-    max-width:80vw;
-
+    max-width:70vw;
 
     height:auto;
 
-
-    display:block;
-
-
     object-fit:contain;
 
-
 }
+
+
 
 
 
 .email-image {
 
 
-    width:350px;
+    width:280px;
 
-
-    max-width:90vw;
-
+    max-width:85vw;
 
     height:auto;
 
+    object-fit:contain;
+
+}
+
+
+
+
+
+.desktop-frame {
+
+    display:none;
+
+}
+
+
+
+
+
+.mobile-frame {
 
     display:block;
 
-
-    object-fit:contain;
-
-
-}
-
-/* =========================
-   MOBILE SCROLL BEHAVIOR
-========================= */
-
-
-@media (max-width:768px){
-
-
-    html,
-    body {
-
-        overscroll-behavior:none;
-
-        overflow-x:hidden;
-
-    }
-
-
-
-    body {
-
-        position:relative;
-
-    }
-
-
 }
 
 
 
-
-
-/* =========================
-   PANEL PERFORMANCE
-========================= */
-
-
-.panel {
-
-
-    transform-style:preserve-3d;
-
-
-    backface-visibility:hidden;
-
-
-    -webkit-backface-visibility:hidden;
-
-
-    contain:layout paint;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-   VIDEO MOBILE STABILITY
-========================= */
-
-
-@media (max-width:768px){
 
 
 .video-frame iframe {
-
-
-    min-width:177.78vh;
-
-
-    min-height:100vh;
 
 
     width:100vw;
@@ -574,164 +1517,166 @@ a {
 
 
 
+    min-width:177.78vh;
+
+
+    min-height:100vh;
+
+
+
+    top:50%;
+
+
+    left:50%;
+
+
+
+    transform:
+
+    translate(-50%,-50%);
+
+}
+
+
+
+
+
+.social-links {
+
+
+    padding-right:0;
+
+}
+
+
+
+
+
+.panel-02 .video-frame {
+
+
+    background-image:
+
+    url("images/section2-mobile.webp");
+
+}
+
+
+
+
+
+.panel-04 .video-frame {
+
+
+    background-image:
+
+    url("images/section4-mobile.webp");
+
+}
+
+
+
+
+
+.panel-10 .video-frame {
+
+
+    background-image:
+
+    url("images/section10-mobile.webp");
+
 }
 
 
 
 }
+
+
+
+
+
+
 
 /* =========================
-   PANEL EDGE / STACK EFFECT
+   SEO HIDDEN CONTENT
 ========================= */
 
 
-.panel::after {
-
-
-    content:"";
+.seo-title,
+.seo-content {
 
 
     position:absolute;
 
 
-    left:0;
+    width:1px;
 
 
-    bottom:0;
+    height:1px;
 
 
-    width:100%;
 
+    padding:0;
 
-    height:28px;
 
+    margin:-1px;
 
-    pointer-events:none;
-
-
-    z-index:30;
-
-
-
-    background:
-
-
-    linear-gradient(
-
-        to bottom,
-
-        rgba(0,0,0,0),
-
-        rgba(0,0,0,.55)
-
-    );
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-   KEEP CONTENT ABOVE IMAGES
-========================= */
-
-
-.panel > img,
-.panel-image {
-
-
-    pointer-events:none;
-
-
-    user-select:none;
-
-
-}
-
-
-
-
-
-
-
-.panel-content,
-.panel-content-left,
-.panel-contentleft,
-.panel-content-right {
-
-
-    pointer-events:none;
-
-
-    transform:translateZ(0);
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-   MOBILE PANEL RENDERING
-========================= */
-
-
-@media (max-width:768px){
-
-
-
-.panel {
-
-
-    height:100dvh;
-
-
-    min-height:100dvh;
 
 
     overflow:hidden;
 
 
 
-    transform:
-
-    translate3d(0,0,0);
+    clip-path:inset(50%);
 
 
 
-}
+    white-space:nowrap;
 
 
 
-.panel-image {
-
-
-    width:100%;
-
-
-    height:100%;
-
-
-    object-fit:cover;
-
-
-    object-position:center bottom;
-
-
+    border:0;
 
 }
 
 
 
+
+
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+
+@media(prefers-reduced-motion:reduce){
+
+
+
+*, *::before, *::after {
+
+
+    animation-duration:.001ms !important;
+
+
+    animation-iteration-count:1 !important;
+
+
+    transition-duration:.001ms !important;
+
+}
+
+
+
+.ticker-track,
+.loading-screen,
+.loading-text {
+
+
+    animation:none;
+
+}
 
 
 
