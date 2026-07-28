@@ -993,15 +993,27 @@ referrerpolicy="strict-origin-when-cross-origin">
 
 
 
-<audio id="bgAudio" loop preload="none">
-    <source src="audio/audio1.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgAudio" loop preload="none"></audio>
 
-<button
-id="audioToggle"
-class="audio-toggle">
-    ◉ SOUND ON
-</button>
+<div id="audioControls" class="audio-controls">
+
+    <button id="audioToggle" class="audio-btn">
+        <span class="play-label">▶</span>
+    </button>
+
+    <button id="prevTrack" class="audio-arrow">
+        ▲
+    </button>
+
+    <button id="nextTrack" class="audio-arrow">
+        ▼
+    </button>
+
+    <div id="trackName" class="track-name">
+        —
+    </div>
+
+</div>
 
 
 

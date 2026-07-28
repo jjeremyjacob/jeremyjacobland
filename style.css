@@ -1639,6 +1639,77 @@ a {
 
 }
 
+.audio-controls {
+
+    position: fixed;
+
+    right: 20px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 14px;
+
+    z-index: 9999;
+
+    opacity: .65;
+
+    transition: opacity .3s ease;
+
+}
+
+.audio-controls:hover {
+
+    opacity: 1;
+
+}
+
+.audio-btn {
+
+    writing-mode: vertical-rl;
+
+    text-orientation: mixed;
+
+    background: none;
+    border: none;
+
+    color: #fff;
+
+    font: inherit;
+
+    letter-spacing: .08em;
+
+    cursor: pointer;
+
+}
+
+.audio-arrow {
+
+    background: none;
+    border: none;
+
+    color: #fff;
+
+    font: inherit;
+
+    cursor: pointer;
+
+    line-height: 1;
+
+    padding: 0;
+
+}
+
+.audio-btn {
+
+    writing-mode: vertical-lr;
+
+}
 
 .audio-toggle {
 
@@ -1724,5 +1795,40 @@ a {
 }
 
 
+
+}
+
+.track-name {
+
+    writing-mode: vertical-lr;
+
+    text-orientation: mixed;
+
+    font-size: 11px;
+
+    opacity: .7;
+
+    white-space: nowrap;
+
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+}
+
+.audio-controls {
+
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .8s ease;
+
+}
+
+
+.audio-controls.visible {
+
+    opacity:1;
+    pointer-events:auto;
 
 }

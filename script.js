@@ -9,8 +9,8 @@ LOADING SCREEN CONTROL
 const loadingScreen =
 document.querySelector(".loading-screen");
 
-const audioToggle =
-document.getElementById("audioToggle");
+const audioControls =
+document.getElementById("audioControls");
 
 if(loadingScreen){
 
@@ -21,13 +21,13 @@ if(loadingScreen){
         loadingScreen.remove();
 
 
-        if(audioToggle){
+if(audioControls){
 
-            audioToggle.classList.add(
-                "visible"
-            );
+    audioControls.classList.add(
+        "visible"
+    );
 
-        }
+}
 
 
     }
@@ -42,13 +42,13 @@ if(loadingScreen){
 
         setTimeout(()=>{
 
-            if(audioToggle){
+if(audioControls){
 
-                audioToggle.classList.add(
-                    "visible"
-                );
+    audioControls.classList.add(
+        "visible"
+    );
 
-            }
+}
 
         },2600);
 
@@ -93,21 +93,158 @@ document.querySelectorAll(".panel");
 const SCROLL_FACTOR = 1.5;
 
 
-
 /*
 =========================
-AUDIO
+AUDIO PLAYLIST
 =========================
 */
+
+const playlist = [
+
+    "audio/nwht.mp3",
+    "audio/lt.mp3",
+    "audio/nfrn.mp3",
+    "audio/tsfrdgs.mp3"
+
+];
+
+
 
 const audio =
 document.getElementById("bgAudio");
 
-let audioEnabled = false;
 
-if(audio){
+const trackName =
+document.getElementById("trackName");
+
+const audioToggle =
+document.getElementById("audioToggle");
+
+const prevTrack =
+document.getElementById("prevTrack");
+
+const nextTrack =
+document.getElementById("nextTrack");
+
+let currentTrack = 0;
+
+
+function loadTrack(index){
+
+    if(!audio) return;
+
+    audio.src =
+    playlist[index];
+
+
+    if(trackName){
+
+        trackName.textContent =
+playlist[index]
+.split("/")
+.pop()
+.replace(".mp3", "");
+        
+    }
+
+}
+
+
+if(audio && audioToggle){
 
     audio.volume = 1;
+
+
+    loadTrack(currentTrack);
+
+
+    audioToggle.addEventListener("click", ()=>{
+
+
+        if(audio.paused){
+
+
+            audio.play();
+
+
+            audioToggle.textContent =
+            "Ⅱ";
+
+
+        }
+        else{
+
+
+            audio.pause();
+
+
+            audioToggle.textContent =
+            "▶";
+
+
+        }
+
+
+    });
+
+if(nextTrack){
+
+    nextTrack.addEventListener("click", ()=>{
+
+        currentTrack++;
+
+        if(currentTrack >= playlist.length){
+
+            currentTrack = 0;
+
+        }
+
+        loadTrack(currentTrack);
+
+    });
+
+}
+
+
+if(prevTrack){
+
+    prevTrack.addEventListener("click", ()=>{
+
+        currentTrack--;
+
+        if(currentTrack < 0){
+
+            currentTrack = playlist.length - 1;
+
+        }
+
+        loadTrack(currentTrack);
+
+    });
+
+}
+
+    audio.addEventListener("ended", ()=>{
+
+
+        currentTrack++;
+
+
+        if(currentTrack >= playlist.length){
+
+            currentTrack = 0;
+
+        }
+
+
+        loadTrack(currentTrack);
+
+
+        audio.play();
+
+
+    });
+
 
 }
 
@@ -1073,59 +1210,5 @@ document
 
 
 
-
-/*
-=========================
-AUDIO TOGGLE
-=========================
-*/
-
-if(audio && audioToggle){
-
-    audioToggle.addEventListener(
-    "click",
-    async ()=>{
-
-        if(!audioEnabled){
-
-            try{
-
-                await audio.play();
-
-                audioEnabled = true;
-
-                audioToggle.textContent =
-                "◉ SOUND OFF";
-
-                audioToggle.classList.add(
-                "active"
-                );
-
-            }
-            catch(err){
-
-                console.log(err);
-
-            }
-
-        }
-        else{
-
-            audio.pause();
-
-            audioEnabled = false;
-
-            audioToggle.textContent =
-            "◉ SOUND ON";
-
-            audioToggle.classList.remove(
-            "active"
-            );
-
-        }
-
-    });
-
-}
 
 });
