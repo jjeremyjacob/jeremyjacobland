@@ -9,6 +9,8 @@ LOADING SCREEN CONTROL
 const loadingScreen =
 document.querySelector(".loading-screen");
 
+const audioToggle =
+document.getElementById("audioToggle");
 
 if(loadingScreen){
 
@@ -19,6 +21,15 @@ if(loadingScreen){
         loadingScreen.remove();
 
 
+        if(audioToggle){
+
+            audioToggle.classList.add(
+                "visible"
+            );
+
+        }
+
+
     }
     else{
 
@@ -27,6 +38,19 @@ if(loadingScreen){
             "visited",
             "true"
         );
+
+
+        setTimeout(()=>{
+
+            if(audioToggle){
+
+                audioToggle.classList.add(
+                    "visible"
+                );
+
+            }
+
+        },2600);
 
 
     }
@@ -68,6 +92,24 @@ document.querySelectorAll(".panel");
 
 const SCROLL_FACTOR = 1.5;
 
+
+
+/*
+=========================
+AUDIO
+=========================
+*/
+
+const audio =
+document.getElementById("bgAudio");
+
+let audioEnabled = false;
+
+if(audio){
+
+    audio.volume = 1;
+
+}
 
 
 function setPageHeight(){
@@ -1033,6 +1075,58 @@ document
 
 
 
+/*
+=========================
+AUDIO TOGGLE
+=========================
+*/
 
+if(audio && audioToggle){
+
+    audioToggle.addEventListener(
+    "click",
+    async ()=>{
+
+        if(!audioEnabled){
+
+            try{
+
+                await audio.play();
+
+                audioEnabled = true;
+
+                audioToggle.textContent =
+                "◉ SOUND OFF";
+
+                audioToggle.classList.add(
+                "active"
+                );
+
+            }
+            catch(err){
+
+                console.log(err);
+
+            }
+
+        }
+        else{
+
+            audio.pause();
+
+            audioEnabled = false;
+
+            audioToggle.textContent =
+            "◉ SOUND ON";
+
+            audioToggle.classList.remove(
+            "active"
+            );
+
+        }
+
+    });
+
+}
 
 });

@@ -1640,10 +1640,55 @@ a {
 }
 
 
+.audio-toggle {
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:50px;
+
+    z-index:99999;
+
+    padding:8px 18px;
+
+    background:rgba(69,41,28,1);
+
+    border:none;
+
+    color:#ae8d7f;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    letter-spacing:.08em;
+
+    font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    monospace;
+
+    cursor:pointer;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:
+    opacity .8s ease;
+
+}
 
 
+.audio-toggle.visible {
 
+    opacity:1;
 
+    pointer-events:auto;
+
+}
 
 /* =========================
    REDUCED MOTION
