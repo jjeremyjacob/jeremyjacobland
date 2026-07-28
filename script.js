@@ -468,12 +468,11 @@ function updatePanels(){
 
 
 
-                email.style.transform =
-                `translateY(${move}px)`;
+email.style.transform =
+`translateY(${move}px)`;
 
 
-                email.style.opacity =
-                emailProgress;
+email.style.opacity = 1;
 
 
             }
