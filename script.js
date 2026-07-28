@@ -214,7 +214,7 @@ AUDIO PLAYLIST
 const playlist = [
 
     "audio/nwht.mp3",
-    "audio/lt.mp3",
+    "audio/lght.mp3",
     "audio/nfrn.mp3",
     "audio/tsfrdgs.mp3"
 
