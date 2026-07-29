@@ -41,7 +41,7 @@ body {
 
     background:#000;
 
-    color:#9a796b;
+    color:#ae8574;
 
     font-family:
     Helvetica,
@@ -814,7 +814,7 @@ a {
 
     background:
 
-    rgba(0,0,0,.35);
+    rgba(0,0,0,.15);
 
 
 
@@ -919,7 +919,7 @@ a {
     mix-blend-mode:multiply;
 
 
-    opacity:.35;
+    opacity:.15;
 
 
 
@@ -1101,7 +1101,7 @@ a {
 
 
 
-    background:#ae8d7f;
+    background:#e2d9d3;
 
 
 
@@ -1156,6 +1156,7 @@ a {
 
     text-align:center;
 
+    color:#e2d9d3;
 
     line-height:2.5;
 
@@ -1673,7 +1674,18 @@ a {
 
 }
 
+.audio-controls,
+.audio-btn,
+.audio-arrow,
+.track-name {
 
+    text-shadow:
+        0 0 2px rgba(0,0,0,.3),
+        0 0 2px rgba(0,0,0,.3),
+        0 0 2px rgba(0,0,0,.3);
+
+        
+}
 
 .audio-controls:hover {
 
@@ -1688,7 +1700,7 @@ a {
     background: none;
     border: none;
 
-    color:#81695f;
+    color:#c4ada4;
 
     font: inherit;
 
@@ -1703,7 +1715,7 @@ a {
     background: none;
     border: none;
 
-    color:#84695d;
+    color:#92837d;
 
     font: inherit;
 
@@ -1733,11 +1745,11 @@ a {
 
     padding:8px 18px;
 
-    background:rgba(69,41,28,1);
+    background:rgb(120, 93, 81);
 
     border:none;
 
-    color:#ae8d7f;
+    color:#d8baad;
 
     font-size:12px;
 
@@ -1894,50 +1906,5 @@ a {
 .audio-btn.pause .play-icon::after {
 
     left:9px;
-
-}
-
-/* =========================
-   REFLECTION WORLD
-========================= */
-
-.reflection-panel {
-
-    z-index:1;
-
-    opacity:.18;
-
-    filter:
-    blur(3px)
-    brightness(.45);
-
-    pointer-events:none;
-
-}
-
-.reflection-panel .panel-image {
-
-    transform:none;
-
-}
-
-.reflection-panel::before {
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-    linear-gradient(
-        to top,
-        rgba(0,0,0,1),
-        transparent 50%
-    );
-
-    z-index:30;
-
-    pointer-events:none;
 
 }
