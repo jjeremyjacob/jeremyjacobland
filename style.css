@@ -1896,3 +1896,48 @@ a {
     left:9px;
 
 }
+
+/* =========================
+   REFLECTION WORLD
+========================= */
+
+.reflection-panel {
+
+    z-index:1;
+
+    opacity:.18;
+
+    filter:
+    blur(3px)
+    brightness(.45);
+
+    pointer-events:none;
+
+}
+
+.reflection-panel .panel-image {
+
+    transform:none;
+
+}
+
+.reflection-panel::before {
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(0,0,0,1),
+        transparent 50%
+    );
+
+    z-index:30;
+
+    pointer-events:none;
+
+}
