@@ -20,6 +20,7 @@ body {
 
 }
 
+
 /* =========================
    OUTER ATMOSPHERE
 ========================= */
@@ -124,35 +125,44 @@ body::after {
 
 
 /* =========================
-   STAGE (9:16)
+   STAGE
 ========================= */
 
 .scene {
-    position: relative;
 
-width: min(450px, 95vw);
-    aspect-ratio: 9 / 16;
+    position:relative;
 
-    max-height: 88vh;
+    width:min(450px,95vw);
 
-    background: #000;
+    aspect-ratio:9 / 16;
 
-    border: 6px solid #000000;
-    border-radius: 8px;
+    max-height:88vh;
 
-    overflow: hidden;
+    background:#000;
 
-    z-index: 3;
+    border:6px solid #000;
+
+    border-radius:8px;
+
+    overflow:hidden;
+
+    z-index:3;
+
 }
 
+ 
 /* =========================
    WORLD
 ========================= */
 
 .world {
-    position: absolute;
-    inset: 0;
+
+    position:absolute;
+
+    inset:0;
+
 }
+
 
 /* =========================
    LAYERS
@@ -164,9 +174,9 @@ width: min(450px, 95vw);
 
     inset:0;
 
-    background-size: contain;
+    background-size:contain;
 
-    background-position: center top;
+    background-position:center top;
 
     background-repeat:no-repeat;
 
@@ -178,57 +188,80 @@ width: min(450px, 95vw);
     will-change:transform;
 
 }
+
+
+
 /* =========================
    NAVIGATION (12 + LIFT)
-   4 columns x 3 rows
 ========================= */
 
 .sigils {
 
-    position: absolute;
+    position:absolute;
 
-    left: 50%;
-    bottom: 20px;
-    transform: translateX(-50%);
+    left:50%;
 
-    display: grid;
+    bottom:20px;
 
-    grid-template-columns: repeat(6, auto);
-    grid-template-rows: repeat(2, auto);
+    transform:translateX(-50%);
 
-    gap: 12px 18px;
+    display:grid;
 
-    z-index: 1000;
+    grid-template-columns:repeat(6, auto);
 
-    user-select: none;
+    grid-template-rows:repeat(2, auto);
 
-    align-items: center;
-    justify-items: center;
+    gap:12px 18px;
+
+    z-index:1000;
+
+    user-select:none;
+
+    align-items:center;
+
+    justify-items:center;
+
 }
+
+
 
 .sigils div {
 
-    color: #2a2216;
+    color:#2a2216;
 
-    font-size: 24px;
+    font-size:24px;
 
-    cursor: pointer;
+    cursor:pointer;
 
-    line-height: 1;
+    line-height:1;
 
     transition:
+
         color .25s ease,
+
         transform .25s ease;
+
 }
+
+
 
 .sigils div:hover {
-    color: #ad8a6e;
-    transform: scale(1.2);
+
+    color:#ad8a6e;
+
+    transform:scale(1.2);
+
 }
 
+
+
 .sigils div.active {
-    color: #5a4630;
+
+    color:#5a4630;
+
 }
+
+
 
 /* =========================
    MOBILE
@@ -236,233 +269,63 @@ width: min(450px, 95vw);
 
 @media (max-width:768px){
 
-    .scene{
+
+    .scene {
+
         width:94vw;
-        max-height: 85vh;
+
+        max-height:85vh;
+
     }
 
-    .sigils{
+
+    .sigils {
+
         gap:12px 16px;
+
         bottom:16px;
+
     }
 
-    .sigils div{
+
+    .sigils div {
+
         font-size:18px;
+
     }
+
 }
+
+
 
 /* =========================
    LIFT ALL CENTER FIX
 ========================= */
 
 .sigils .lift-all {
-    grid-column: 1 / -1;  /* span full width of grid */
-    justify-self: center; /* center it visually */
-    font-size: 32px;
-    margin-top: 4px;
+
+    grid-column:1 / -1;
+
+    justify-self:center;
+
+    font-size:32px;
+
+    margin-top:4px;
+
 }
+
+
 
 .lower-all {
-    cursor: pointer;
-}
-
-/* =========================
-   AUDIO CONTROLS
-========================= */
-
-.audio-controls {
-
-    position:fixed;
-
-    right:20px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:14px;
-
-    z-index:9999;
-
-    opacity:1;
-
-    pointer-events:auto;
-
-}
-
-
-.audio-controls,
-.audio-btn,
-.audio-arrow,
-.track-name {
-
-    text-shadow:
-        0 0 2px rgba(0,0,0,.3),
-        0 0 2px rgba(0,0,0,.3),
-        0 0 2px rgba(0,0,0,.3);
-
-}
-
-
-.audio-btn {
-
-    writing-mode:vertical-lr;
-
-    background:none;
-
-    border:none;
-
-    color:#c4ada4;
-
-    font:inherit;
-
-    letter-spacing:.08em;
 
     cursor:pointer;
 
 }
 
 
-.audio-arrow {
-
-    background:none;
-
-    border:none;
-
-    color:#92837d;
-
-    font:inherit;
-
-    cursor:pointer;
-
-    line-height:1;
-
-    padding:0;
-
-}
-
-
-.track-name {
-
-    writing-mode:vertical-lr;
-
-    text-orientation:mixed;
-
-    font-size:14px;
-
-    opacity:.7;
-
-    white-space:nowrap;
-
-}
-
-
-
-
-/* =========================
-   AUDIO TRACK NAME MATCH
-========================= */
-
-.track-name {
-
-    writing-mode: vertical-lr;
-
-    text-orientation: mixed;
-
-    font-size:14px;
-
-    opacity:.7;
-
-    white-space:nowrap;
-
-    color:#c4ada4;
-
-    font-family:
-    Helvetica,
-    Arial,
-    sans-serif;
-
-}
 
 .lift-all {
+
     cursor:pointer;
-}
-
-
-.play-icon {
-
-    display:block;
-
-    width:14px;
-
-    height:14px;
-
-    position:relative;
-
-}
-
-
-
-.play-icon::before {
-
-    content:"";
-
-    position:absolute;
-
-    top:1px;
-
-    left:3px;
-
-    width:0;
-
-    height:0;
-
-    border-top:6px solid transparent;
-
-    border-bottom:6px solid transparent;
-
-    border-left:10px solid currentColor;
-
-}
-
-
-
-.audio-btn.playing .play-icon::before,
-.audio-btn.playing .play-icon::after {
-
-    content:"";
-
-    position:absolute;
-
-    top:0;
-
-    width:4px;
-
-    height:14px;
-
-    background:currentColor;
-
-    border:none;
-
-}
-
-
-
-.audio-btn.playing .play-icon::before {
-
-    left:1px;
-
-}
-
-
-.audio-btn.playing .play-icon::after {
-
-    left:9px;
 
 }
