@@ -159,21 +159,25 @@ width: min(450px, 95vw);
 ========================= */
 
 .layer {
-  position: absolute;
-    inset: 0;
+
+    position:absolute;
+
+    inset:0;
 
     background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
 
-    transform: translateY(0);
+    background-position: center top;
+
+    background-repeat:no-repeat;
+
+    transform:translateY(0);
 
     transition:
         transform 6s cubic-bezier(.22,1,.36,1);
 
-    will-change: transform;
-}
+    will-change:transform;
 
+}
 /* =========================
    NAVIGATION (12 + LIFT)
    4 columns x 3 rows
@@ -454,4 +458,8 @@ width: min(450px, 95vw);
     Arial,
     sans-serif;
 
+}
+
+.lift-all {
+    cursor:pointer;
 }
