@@ -200,9 +200,6 @@ liftAll.addEventListener("click", () => {
 
 sigilsContainer.appendChild(liftAll);
 
-.lift-all {
-    cursor:pointer;
-}
 
 
     /* =========================
