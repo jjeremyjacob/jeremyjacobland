@@ -9,8 +9,10 @@ LOADING SCREEN CONTROL
 const loadingScreen =
 document.querySelector(".loading-screen");
 
+
 const audioControls =
 document.getElementById("audioControls");
+
 
 
 if(loadingScreen){
@@ -63,6 +65,8 @@ if(loadingScreen){
 
 
 
+
+
 /*
 =========================
 RESET SCROLL
@@ -94,6 +98,8 @@ document.querySelectorAll(".panel");
 
 
 const SCROLL_FACTOR = 1.5;
+
+
 
 
 
@@ -156,12 +162,15 @@ const randomFontText = (element)=>{
 
 
 
-   span.textContent =
-letter === " " ? "\u00A0" : letter;
+        span.textContent =
+        letter === " "
+        ? "\u00A0"
+        : letter;
 
 
 
         if(Math.random() > .75){
+
 
             currentFont =
             fonts[
@@ -170,6 +179,7 @@ letter === " " ? "\u00A0" : letter;
                     fonts.length
                 )
             ];
+
 
         }
 
@@ -199,301 +209,11 @@ letter === " " ? "\u00A0" : letter;
 
 };
 
-
-
-
-
-
 /*
 =========================
-AUDIO PLAYLIST
+PAGE HEIGHT
 =========================
 */
-
-
-const playlist = [
-
-    "audio/nwht.mp3",
-    "audio/lght.mp3",
-    "audio/nfrn.mp3",
-    "audio/tsfrdgs.mp3"
-
-];
-
-
-
-const audio =
-document.getElementById("bgAudio");
-
-
-const trackName =
-document.getElementById("trackName");
-
-
-const audioToggle =
-document.getElementById("audioToggle");
-
-
-const prevTrack =
-document.getElementById("prevTrack");
-
-
-const nextTrack =
-document.getElementById("nextTrack");
-
-
-for(let i = playlist.length - 1; i > 0; i--){
-
-    const j =
-    Math.floor(
-        Math.random() * (i + 1)
-    );
-
-    [playlist[i], playlist[j]] =
-    [playlist[j], playlist[i]];
-
-}
-
-
-let currentTrack = 0;
-
-
-
-function updateAudioButton(){
-
-
-    if(!audioToggle) return;
-
-
-
-    if(audio.paused){
-
-
-        audioToggle.classList.remove(
-            "pause"
-        );
-
-
-        audioToggle.setAttribute(
-            "aria-label",
-            "Play audio"
-        );
-
-
-    }
-    else{
-
-
-        audioToggle.classList.add(
-            "pause"
-        );
-
-
-        audioToggle.setAttribute(
-            "aria-label",
-            "Pause audio"
-        );
-
-
-    }
-
-
-}
-
-
-
-function loadTrack(index){
-
-
-    if(!audio) return;
-
-
-
-audio.src =
-playlist[index];
-
-
-
-   if(trackName){
-
-    trackName.textContent =
-    playlist[index]
-    .split("/")
-    .pop();
-
-    randomFontText(trackName);
-
-}
-
-
-
-    updateAudioButton();
-
-
-}
-
-
-if(audio && audioToggle){
-
-    audio.volume = 1;
-
-
-    loadTrack(currentTrack);
-
-
-
-    audioToggle.addEventListener("click", ()=>{
-
-
-        if(audio.paused){
-
-
-            audio.play();
-
-
-        }
-        else{
-
-
-            audio.pause();
-
-
-        }
-
-
-    });
-
-
-
-
-    audio.addEventListener(
-        "play",
-        updateAudioButton
-    );
-
-
-    audio.addEventListener(
-        "pause",
-        updateAudioButton
-    );
-
-
-
-
-
-    if(nextTrack){
-
-
-        nextTrack.addEventListener(
-    "click",
-    ()=>{
-
-        currentTrack++;
-
-        if(currentTrack >= playlist.length){
-            currentTrack = 0;
-        }
-
-        loadTrack(currentTrack);
-
-        audio.play();
-
-    }
-);
-
-
-    }
-
-
-
-
-
-
-
-    if(prevTrack){
-
-
-        prevTrack.addEventListener(
-            "click",
-            ()=>{
-
-
-                currentTrack--;
-
-
-
-                if(currentTrack < 0){
-
-
-                    currentTrack =
-                    playlist.length - 1;
-
-
-                }
-
-
-
-
-
-                loadTrack(currentTrack);
-
-
-
-                audio.play();
-
-
-
-            }
-        );
-
-
-    }
-
-
-
-
-
-
-
-    audio.addEventListener(
-        "ended",
-        ()=>{
-
-
-            currentTrack++;
-
-
-
-            if(currentTrack >= playlist.length){
-
-
-                currentTrack = 0;
-
-
-            }
-
-
-
-
-
-            loadTrack(currentTrack);
-
-
-
-            audio.play();
-
-
-
-        }
-    );
-
-
-
-} // CLOSE AUDIO INITIALIZATION
-
-
-
-
 
 
 function setPageHeight(){
@@ -507,14 +227,9 @@ function setPageHeight(){
     document.body.style.height =
     `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
 
+
+
 }
-
-
-
-setPageHeight();
-
-
-
 
 
 
@@ -1295,8 +1010,10 @@ INITIAL POSITION
 requestAnimationFrame(()=>{
 
 
-    if(window.innerWidth <= 768){
+    setPageHeight();
 
+
+    if(window.innerWidth <= 768){
 
         window.scrollTo(
             0,
