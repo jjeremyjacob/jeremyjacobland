@@ -1875,8 +1875,8 @@ a {
 
 
 
-.audio-btn.pause .play-icon::before,
-.audio-btn.pause .play-icon::after {
+.audio-btn.playing .play-icon::before,
+.audio-btn.playing .play-icon::after {
 
     content:"";
 
@@ -1896,15 +1896,15 @@ a {
 
 
 
-.audio-btn.pause .play-icon::before {
+.audio-btn.playing .play-icon::before {
 
     left:1px;
 
 }
 
 
-.audio-btn.pause .play-icon::after {
-
+.audio-btn.playing .play-icon::after {
     left:9px;
 
 }
+
