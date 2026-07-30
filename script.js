@@ -254,6 +254,7 @@ for(let i = playlist.length - 1; i > 0; i--){
 
 }
 
+
 let currentTrack = 0;
 
 
@@ -308,8 +309,8 @@ function loadTrack(index){
 
 
 
-    audio.src =
-    playlist[index];
+audio.src =
+playlist[index];
 
 
 
@@ -384,45 +385,21 @@ if(audio && audioToggle){
 
 
         nextTrack.addEventListener(
-            "click",
-            ()=>{
+    "click",
+    ()=>{
 
+        currentTrack++;
 
-                currentTrack++;
+        if(currentTrack >= playlist.length){
+            currentTrack = 0;
+        }
 
+        loadTrack(currentTrack);
 
+        audio.play();
 
-                if(currentTrack >= playlist.length){
-
-
-                    currentTrack = 0;
-
-
-                }
-
-
-
-
-
-                loadTrack(currentTrack);
-
-
-
-
-
-                audio.play()
-                .then(()=>{
-
-
-                    updateAudioButton();
-
-
-                });
-
-
-
-            }
-        );
+    }
+);
 
 
     }
