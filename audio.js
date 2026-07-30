@@ -148,10 +148,7 @@ audio.play().catch(()=>{});
 
 });
 
-
-
 audio.addEventListener("ended", () => {
-
 
     currentTrack++;
 
@@ -161,21 +158,12 @@ audio.addEventListener("ended", () => {
 
     }
 
-
     loadTrack(currentTrack);
 
-audio.play().catch(()=>{});
-
-
-});
-
-
-
-loadTrack(0);
-
-
+    audio.play().catch(()=>{});
 
 });
+
 
 audio.addEventListener("play", () => {
 
@@ -189,4 +177,7 @@ audio.addEventListener("pause", () => {
 
 });
 
+
 loadTrack(0);
+
+});
