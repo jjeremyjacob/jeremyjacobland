@@ -21,7 +21,7 @@ const trackName =
 document.getElementById("trackName");
 
 
-if(!audio){
+if(!audio || !toggle || !prev || !next){
     return;
 }
 
@@ -32,20 +32,20 @@ if(!audio){
 ========================= */
 
 
-const audioPath =
-window.location.pathname.includes("theater003")
-? "../audio/"
-: "audio/";
-
-
 const tracks = [
 
-    audioPath + "nwht.mp3",
-    audioPath + "lght.mp3",
-    audioPath + "nfrn.mp3",
-    audioPath + "tsfrdgs.mp3"
+    "audio/nwht.mp3",
+    "audio/lght.mp3",
+    "audio/nfrn.mp3",
+    "audio/tsfrdgs.mp3"
 
 ];
+
+
+
+/* =========================
+   SHUFFLE
+========================= */
 
 
 for(let i = tracks.length - 1; i > 0; i--){
@@ -60,6 +60,7 @@ for(let i = tracks.length - 1; i > 0; i--){
 
 }
 
+
 let currentTrack = 0;
 
 
@@ -70,6 +71,7 @@ function loadTrack(index){
 
     audio.src = tracks[currentTrack];
 
+
     if(trackName){
 
         trackName.textContent =
@@ -79,18 +81,18 @@ function loadTrack(index){
 
     }
 
-
 }
 
 
 
 
 /* =========================
-   CONTROLS
+   PLAY / PAUSE
 ========================= */
 
 
 toggle.addEventListener("click", () => {
+
 
     if(audio.paused){
 
@@ -98,20 +100,28 @@ toggle.addEventListener("click", () => {
 
     }
 
-    else{
+    else {
 
         audio.pause();
 
     }
 
+
 });
 
+
+
+
+/* =========================
+   NEXT
+========================= */
 
 
 next.addEventListener("click", () => {
 
 
     currentTrack++;
+
 
     if(currentTrack >= tracks.length){
 
@@ -122,17 +132,24 @@ next.addEventListener("click", () => {
 
     loadTrack(currentTrack);
 
-audio.play().catch(()=>{});
+    audio.play().catch(()=>{});
 
 
 });
 
 
 
+
+/* =========================
+   PREVIOUS
+========================= */
+
+
 prev.addEventListener("click", () => {
 
 
     currentTrack--;
+
 
     if(currentTrack < 0){
 
@@ -143,14 +160,24 @@ prev.addEventListener("click", () => {
 
     loadTrack(currentTrack);
 
-audio.play().catch(()=>{});
+    audio.play().catch(()=>{});
 
 
 });
 
+
+
+
+/* =========================
+   AUTO ADVANCE
+========================= */
+
+
 audio.addEventListener("ended", () => {
 
+
     currentTrack++;
+
 
     if(currentTrack >= tracks.length){
 
@@ -158,25 +185,39 @@ audio.addEventListener("ended", () => {
 
     }
 
+
     loadTrack(currentTrack);
 
     audio.play().catch(()=>{});
 
+
 });
+
+
+
+
+/* =========================
+   PLAY ICON STATE
+========================= */
 
 
 audio.addEventListener("play", () => {
 
-    toggle.textContent = "❚❚";
+    toggle.classList.add("playing");
 
 });
+
 
 audio.addEventListener("pause", () => {
 
-    toggle.textContent = "▶";
+    toggle.classList.remove("playing");
 
 });
 
+
+
+
 loadTrack(0);
+
 
 });
