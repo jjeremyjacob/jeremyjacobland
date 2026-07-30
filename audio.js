@@ -79,13 +79,10 @@ function loadTrack(index){
 
     }
 
-    if(toggle){
-
-        toggle.classList.remove("pause");
-
-    }
 
 }
+
+
 
 
 /* =========================
@@ -95,12 +92,9 @@ function loadTrack(index){
 
 toggle.addEventListener("click", () => {
 
-
     if(audio.paused){
 
-audio.play().catch(()=>{});
-
-        toggle.classList.add("playing");
+        audio.play().catch(()=>{});
 
     }
 
@@ -108,10 +102,7 @@ audio.play().catch(()=>{});
 
         audio.pause();
 
-        toggle.classList.remove("playing");
-
     }
-
 
 });
 
@@ -185,3 +176,17 @@ loadTrack(0);
 
 
 });
+
+audio.addEventListener("play", () => {
+
+    toggle.classList.add("playing");
+
+});
+
+audio.addEventListener("pause", () => {
+
+    toggle.classList.remove("playing");
+
+});
+
+loadTrack(0);
