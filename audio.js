@@ -167,16 +167,15 @@ audio.addEventListener("ended", () => {
 
 audio.addEventListener("play", () => {
 
-    toggle.classList.add("playing");
+    toggle.textContent = "❚❚";
 
 });
 
 audio.addEventListener("pause", () => {
 
-    toggle.classList.remove("playing");
+    toggle.textContent = "▶";
 
 });
-
 
 loadTrack(0);
 
