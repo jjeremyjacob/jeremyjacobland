@@ -138,13 +138,13 @@ const STAGGER_DELAY = 550;
 
     });
 
-
 /* =========================
-   LOWER ALL
+   LIFT ALL
 ========================= */
+
 const liftAll = document.createElement("div");
 
-liftAll.textContent = "-";
+liftAll.textContent = "−";
 
 liftAll.classList.add("lift-all");
 
@@ -158,42 +158,33 @@ liftAll.addEventListener("click", () => {
     allLifted = !allLifted;
 
 
+    liftAll.textContent =
+    allLifted ? "+" : "−";
+
+
+
     for (let i = 0; i < TOTAL_LAYERS; i++) {
 
 
         setTimeout(() => {
 
 
-            if (allLifted) {
-
-                layerState[i] = false;
-
-                layers[i].style.transform =
-                    "translateY(-140%)";
+            layerState[i] = !allLifted;
 
 
-                if (sigils[i]) {
-
-                    sigils[i].classList.remove("active");
-
-                }
-
-            }
+            layers[i].style.transform =
+            allLifted
+            ? "translateY(-140%)"
+            : "translateY(0)";
 
 
-            else {
 
-                layerState[i] = true;
+            if(sigils[i]){
 
-                layers[i].style.transform =
-                    "translateY(0)";
-
-
-                if (sigils[i]) {
-
-                    sigils[i].classList.add("active");
-
-                }
+                sigils[i].classList.toggle(
+                    "active",
+                    !allLifted
+                );
 
             }
 
@@ -206,8 +197,12 @@ liftAll.addEventListener("click", () => {
 
 });
 
+
 sigilsContainer.appendChild(liftAll);
 
+.lift-all {
+    cursor:pointer;
+}
 
 
     /* =========================
