@@ -142,39 +142,69 @@ const STAGGER_DELAY = 550;
 /* =========================
    LOWER ALL
 ========================= */
-
 const liftAll = document.createElement("div");
 
-liftAll.textContent = "+";
+liftAll.textContent = "-";
 
 liftAll.classList.add("lift-all");
 
 
+let allLifted = false;
+
+
 liftAll.addEventListener("click", () => {
 
-for (let i = 0; i < TOTAL_LAYERS; i++) {
 
-    setTimeout(() => {
-
-        layerState[i] = true;
-
-        layers[i].style.transform =
-            "translateY(0)";
+    allLifted = !allLifted;
 
 
-        if (sigils[i]) {
+    for (let i = 0; i < TOTAL_LAYERS; i++) {
 
-            sigils[i].classList.add("active");
 
-        }
+        setTimeout(() => {
 
-    }, i * STAGGER_DELAY);
 
-}
+            if (allLifted) {
+
+                layerState[i] = false;
+
+                layers[i].style.transform =
+                    "translateY(-140%)";
+
+
+                if (sigils[i]) {
+
+                    sigils[i].classList.remove("active");
+
+                }
+
+            }
+
+
+            else {
+
+                layerState[i] = true;
+
+                layers[i].style.transform =
+                    "translateY(0)";
+
+
+                if (sigils[i]) {
+
+                    sigils[i].classList.add("active");
+
+                }
+
+            }
+
+
+        }, i * STAGGER_DELAY);
+
+
+    }
 
 
 });
-
 
 sigilsContainer.appendChild(liftAll);
 

@@ -6,20 +6,122 @@
 
 html,
 body {
+
     width: 100%;
     height: 100%;
-    overflow: hidden;
-}
 
-body {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background: #0a0000;
+    background: transparent;
 
     font-family: Arial, Helvetica, sans-serif;
+
 }
+
+/* =========================
+   OUTER ATMOSPHERE
+========================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        url("images/waltzing.gif")
+        center top / auto 200%
+        repeat-y;
+
+    z-index: 0;
+
+    animation:
+        backgroundRoll 130s linear infinite;
+
+}
+
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(0,0,0,1) 0px,
+            rgba(0,0,0,.4) 8px,
+            transparent 8px,
+            transparent 16px
+        );
+
+    background-size:
+        100% 8px;
+
+    animation:
+        projectorRoll 14s linear infinite;
+
+}
+
+
+/* =========================
+   BACKGROUND ROLL
+========================= */
+
+@keyframes backgroundRoll {
+
+    from {
+
+        background-position:
+            center -100%;
+
+    }
+
+
+    to {
+
+        background-position:
+            center 0%;
+
+    }
+
+}
+
+
+/* =========================
+   PROJECTOR SCANLINE ROLL
+========================= */
+
+@keyframes projectorRoll {
+
+    from {
+
+        background-position:
+            0 0;
+
+    }
+
+
+    to {
+
+        background-position:
+            0 80px;
+
+    }
+
+}
+
 
 /* =========================
    STAGE (9:16)
@@ -28,17 +130,19 @@ body {
 .scene {
     position: relative;
 
-    width: min(520px, 90vw);
+width: min(450px, 95vw);
     aspect-ratio: 9 / 16;
 
     max-height: 88vh;
 
     background: #000;
 
-    border: 6px solid #1e1305;
+    border: 6px solid #000000;
     border-radius: 8px;
 
     overflow: hidden;
+
+    z-index: 3;
 }
 
 /* =========================
