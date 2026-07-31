@@ -80,8 +80,8 @@ body::after {
     background:
     repeating-linear-gradient(
         to bottom,
-        rgba(255,255,255,.015) 0px,
-        rgba(255,255,255,.015) 1px,
+        rgba(255,255,255,.04) 0px,
+        rgba(255,255,255,.08) 1px,
         transparent 1px,
         transparent 4px
     );
