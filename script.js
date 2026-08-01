@@ -818,6 +818,29 @@ document
 
 });
 
+/*
+=========================
+TRANSMIT DRAWER
+=========================
+*/
+
+
+const transmitButton =
+document.getElementById("transmitButton");
+
+const transmissionContainer =
+document.getElementById("transmissionContainer");
+
+
+if(transmitButton && transmissionContainer){
+
+    transmitButton.addEventListener("click",()=>{
+
+        transmissionContainer.classList.toggle("active");
+
+    });
+
+}
 
 
 /*
@@ -827,3 +850,4 @@ END
 */
 
 });
+
