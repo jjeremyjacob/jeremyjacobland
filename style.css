@@ -770,7 +770,7 @@ body::after {
 transform:translateY(0);
 
 animation:
-    transmissionLift 4.8s cubic-bezier(.2,.8,.15,1) forwards;
+    transmissionLift 2.8s cubic-bezier(.2,.8,.15,1) forwards;
 
 animation-delay:4.2s;
 
@@ -2049,5 +2049,149 @@ will-change:transform;
         transform:translateX(-100%);
 
     }
+
+}
+/* =========================
+   TRANSMISSION FORM
+========================= */
+
+.message-form {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    width:350px;
+
+    max-width:85vw;
+
+}
+
+.message-field,
+.message-form button {
+
+    width:100%;
+
+    height:38px;
+
+    background:rgba(69,41,28,1);
+
+    border:none;
+
+    padding:10px;
+
+    color:#ae8574;
+
+    font-size:12px;
+
+    letter-spacing:.08em;
+
+    font-family:inherit;
+
+    text-align:left;
+
+    outline:none;
+
+    box-sizing:border-box;
+
+}
+
+
+.message-field::placeholder {
+    color:#ae8574;
+    opacity:1;
+}
+
+
+.message-field:focus {
+
+    background:rgba(69,41,28,1);
+
+}
+
+
+
+/* MESSAGE BOX */
+
+textarea.message-field {
+
+    height:90px;
+
+    resize:none;
+
+}
+
+
+
+/* SEND FIELD */
+
+
+.message-form button:hover {
+
+    background:rgb(192, 157, 114);
+
+    color:#c4ada4;
+
+}
+
+/* =========================
+   TRANSMISSION TYPOGRAPHY
+========================= */
+
+
+.message-field,
+.message-form button {
+
+    -webkit-appearance:none;
+    appearance:none;
+
+}
+
+
+/* SEND MATCHES FIELDS */
+
+
+.message-form button {
+
+    width:100%;
+
+    height:38px;
+
+    background:rgba(69,41,28,1);
+
+    padding:10px;
+
+    color:#ae8574;
+
+    font-size:12px;
+
+    letter-spacing:.08em;
+
+    font-family:inherit;
+
+    text-align:right;
+
+    cursor:pointer;
+
+    opacity:1;
+
+    margin-top:0;
+
+}
+
+
+.message-form button:hover {
+
+    background:rgb(192, 157, 114);
+
+    color:#c4ada4;
+
+}
+
+.message-box {
+
+    position:relative;
 
 }

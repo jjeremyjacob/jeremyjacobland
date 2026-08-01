@@ -113,10 +113,8 @@ VARIABLE RANDOM FONTS
 
 const randomFontText = (element)=>{
 
-
     if(!element)
     return;
-
 
 
     const fonts = [
@@ -134,14 +132,16 @@ const randomFontText = (element)=>{
     ];
 
 
-
     const text =
+    element.placeholder ||
     element.textContent.trim();
 
 
+    if(!text)
+    return;
+
 
     element.innerHTML = "";
-
 
 
     let currentFont =
@@ -153,13 +153,11 @@ const randomFontText = (element)=>{
     ];
 
 
-
     [...text].forEach(letter=>{
 
 
         const span =
         document.createElement("span");
-
 
 
         span.textContent =
@@ -168,9 +166,7 @@ const randomFontText = (element)=>{
         : letter;
 
 
-
         if(Math.random() > .75){
-
 
             currentFont =
             fonts[
@@ -180,32 +176,25 @@ const randomFontText = (element)=>{
                 )
             ];
 
-
         }
-
 
 
         span.style.fontFamily =
         currentFont;
 
 
-
         span.style.fontWeight =
         "400";
-
 
 
         span.style.display =
         "inline-block";
 
 
-
         element.appendChild(span);
 
 
-
     });
-
 
 };
 
@@ -722,6 +711,24 @@ function updateImageParallax(){
 
 /*
 =========================
+SCROLL
+=========================
+*/
+
+window.addEventListener(
+"scroll",
+()=>{
+
+    updatePanels();
+    updateImageParallax();
+
+},
+{
+    passive:true
+});
+
+/*
+=========================
 RESIZE
 =========================
 */
@@ -778,13 +785,11 @@ requestAnimationFrame(()=>{
 
 
 
-
 /*
 =========================
 APPLY RANDOM FONT TO ALL TICKERS
 =========================
 */
-
 
 document
 .querySelectorAll(
@@ -797,6 +802,22 @@ document
 });
 
 
+/*
+=========================
+RANDOM FONT TRANSMISSION FIELDS
+=========================
+*/
+
+document
+.querySelectorAll(
+    ".message-field, .message-form button"
+)
+.forEach(field=>{
+
+    randomFontText(field);
+
+});
+
 
 
 /*
@@ -804,6 +825,5 @@ document
 END
 =========================
 */
-
 
 });
