@@ -430,6 +430,109 @@ panels.forEach(panel=>{
 
 });
 
+/*
+=========================
+VIDEO LOADING
+=========================
+*/
+
+
+const loadedVideos =
+new WeakSet();
+
+
+
+const videoObserver =
+new IntersectionObserver(
+(entries)=>{
+
+
+    entries.forEach(entry=>{
+
+
+        if(!entry.isIntersecting)
+        return;
+
+
+
+        const panel =
+        entry.target;
+
+
+
+        if(loadedVideos.has(panel))
+        return;
+
+
+
+        const frames =
+        panel.querySelectorAll(
+            "iframe[data-src]"
+        );
+
+
+
+    frames.forEach(frame=>{
+
+    frame.src =
+    frame.dataset.src;
+
+
+    frame.removeAttribute(
+        "data-src"
+    );
+
+
+    frame.onload = ()=>{
+
+frame.closest(".video-frame").classList.add("video-ready");
+
+    };
+
+
+});
+
+
+
+        loadedVideos.add(panel);
+
+
+
+        videoObserver.unobserve(panel);
+
+
+
+    });
+
+
+},
+{
+    rootMargin:"800px 0px"
+});
+
+
+
+
+
+document
+.querySelectorAll(".panel")
+.forEach(panel=>{
+
+
+    if(
+    panel.querySelector(
+        "iframe[data-src]"
+    )
+    ){
+
+
+        videoObserver.observe(panel);
+
+
+    }
+
+
+});
  
 /*
 =========================
