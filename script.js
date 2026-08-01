@@ -55,7 +55,7 @@ if(loadingScreen){
             }
 
 
-        },2600);
+        },5600);
 
 
     }
@@ -73,7 +73,7 @@ RESET SCROLL
 =========================
 */
 
-if ("scrollRestoration" in history){
+if("scrollRestoration" in history){
 
     history.scrollRestoration = "manual";
 
@@ -209,6 +209,9 @@ const randomFontText = (element)=>{
 
 };
 
+
+
+ 
 /*
 =========================
 PAGE HEIGHT
@@ -230,6 +233,10 @@ function setPageHeight(){
 
 
 }
+
+
+
+
 
 
 
@@ -434,6 +441,7 @@ panels.forEach(panel=>{
 
 });
 
+ 
 /*
 =========================
 PANEL MOVEMENT
@@ -712,292 +720,23 @@ function updateImageParallax(){
 
 }
 
-
-
-
-
-
-
-/*
-=========================
-VIMEO LAZY LOADING
-=========================
-*/
-
-
-const videos =
-document.querySelectorAll(".video-frame");
-
-
-
-
-
-function loadVideo(container){
-
-
-    if(container.dataset.loaded)
-    return;
-
-
-
-
-
-    const mobile =
-    window.innerWidth <= 768;
-
-
-
-
-
-    const iframe =
-    mobile
-    ?
-    container.querySelector(".mobile-frame")
-    :
-    container.querySelector(".desktop-frame");
-
-
-
-
-
-    if(!iframe)
-    return;
-
-
-
-
-
-
-    const unused =
-    mobile
-    ?
-    container.querySelector(".desktop-frame")
-    :
-    container.querySelector(".mobile-frame");
-
-
-
-
-    if(unused){
-
-
-        unused.remove();
-
-
-    }
-
-
-
-
-
-
-
-    iframe.src =
-    iframe.dataset.src +
-    "&autoplay=1&autopause=0&playsinline=1";
-
-
-
-
-
-
-    container.dataset.loaded =
-    "true";
-
-
-
-
-
-
-
-    iframe.onload = ()=>{
-
-
-        if(typeof Vimeo === "undefined")
-        return;
-
-
-
-
-
-        const player =
-        new Vimeo.Player(iframe);
-
-
-
-
-
-        player.setVolume(0);
-
-
-
-
-
-        player.play()
-
-        .then(()=>{
-
-
-            container.classList.add(
-                "video-ready"
-            );
-
-
-        })
-
-        .catch(()=>{
-
-
-        });
-
-
-
-    };
-
-
-}
-
-
-
-
-
-
-const videoObserver =
-new IntersectionObserver(
-(entries)=>{
-
-
-    entries.forEach(entry=>{
-
-
-        if(entry.isIntersecting){
-
-
-            loadVideo(
-                entry.target
-            );
-
-
-        }
-
-
-    });
-
-
-},
-{
-    rootMargin:"0px",
-    threshold:.25
-});
-
-
-
-
-
-
-
-videos.forEach(video=>{
-
-
-    videoObserver.observe(video);
-
-
-});
-
-/*
-=========================
-SCROLL PERFORMANCE LOOP
-=========================
-*/
-
-
-let ticking =
-false;
-
-
-
-
-function scrollUpdate(){
-
-
-    if(ticking)
-    return;
-
-
-
-
-    requestAnimationFrame(()=>{
-
-
-        updatePanels();
-
-        updateImageParallax();
-
-
-
-        ticking =
-        false;
-
-
-    });
-
-
-
-    ticking =
-    true;
-
-
-}
-
-
-
-
-
-
-window.addEventListener(
-"scroll",
-scrollUpdate,
-{
-    passive:true
-});
-
-
-
-
-
-
-
-
-
 /*
 =========================
 RESIZE
 =========================
 */
 
-
 window.addEventListener(
 "resize",
 ()=>{
 
-
     setPageHeight();
-
 
     updatePanels();
 
-
     updateImageParallax();
 
-
 });
-
-
-
-
-
-
-
 
 
 /*
@@ -1006,9 +745,7 @@ INITIAL POSITION
 =========================
 */
 
-
 requestAnimationFrame(()=>{
-
 
     setPageHeight();
 
@@ -1021,20 +758,15 @@ requestAnimationFrame(()=>{
             window.innerHeight
         );
 
-
     }
     else{
-
 
         window.scrollTo(
             0,
             0
         );
 
-
     }
-
-
 
 
     updatePanels();
@@ -1042,40 +774,36 @@ requestAnimationFrame(()=>{
     updateImageParallax();
 
 
-
 });
-
-
-
-
-
 
 
 
 
 /*
 =========================
-APPLY RANDOM FONT TO TICKER
+APPLY RANDOM FONT TO ALL TICKERS
 =========================
 */
 
 
 document
-.querySelectorAll(".ticker-item")
+.querySelectorAll(
+    ".ticker-wrap .ticker-item, .loading-ticker-track .ticker-item"
+)
 .forEach(item=>{
 
-
     randomFontText(item);
-
 
 });
 
 
 
 
-
-
-
+/*
+=========================
+END
+=========================
+*/
 
 
 });
