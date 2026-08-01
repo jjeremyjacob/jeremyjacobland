@@ -770,7 +770,7 @@ body::after {
 transform:translateY(0);
 
 animation:
-    transmissionLift 2.8s cubic-bezier(.2,.8,.15,1) forwards;
+    transmissionLift 4.8s cubic-bezier(.2,.8,.15,1) forwards;
 
 animation-delay:4.2s;
 
@@ -1954,5 +1954,100 @@ will-change:transform;
     
        box-shadow:
         0 20px 50px rgba(0,0,0,.8);
+
+}
+
+/* =========================
+   LOADING BORDER TICKER
+========================= */
+
+.loading-border {
+
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+
+    height:var(--ticker-height);
+
+    background:
+    rgba(69,41,28,1);
+
+    z-index:20;
+
+    overflow:hidden;
+
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.8);
+
+}
+
+
+
+.loading-ticker-track {
+
+    display:flex;
+
+    width:max-content;
+
+    height:100%;
+
+    align-items:center;
+
+
+    animation:
+    loadingTickerMove 120s linear infinite;
+
+
+    will-change:transform;
+
+}
+
+
+
+.loading-ticker-track .ticker-item {
+
+    white-space:nowrap;
+
+    padding-right:50px;
+
+
+    font-size:12px;
+
+    letter-spacing:.03em;
+
+    line-height:30px;
+
+    color:#ae8574;
+
+
+    font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    monospace;
+
+}
+
+
+
+@keyframes loadingTickerMove {
+
+
+    from {
+
+        transform:translateX(50vw);
+
+    }
+
+
+    to {
+
+        transform:translateX(-100%);
+
+    }
 
 }
