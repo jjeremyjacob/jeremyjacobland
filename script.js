@@ -948,6 +948,80 @@ if(transmitButton && transmissionContainer){
 
 /*
 =========================
+FORM SUBMISSION
+=========================
+*/
+
+const form =
+document.querySelector(".message-form");
+
+
+if(form){
+
+    form.addEventListener("submit", async (e)=>{
+
+        e.preventDefault();
+
+
+        const data =
+        new FormData(form);
+
+
+        try {
+
+            const response =
+            await fetch(
+                form.action,
+                {
+                    method:"POST",
+                    body:data,
+                    headers:{
+                        "Accept":"application/json"
+                    }
+                }
+            );
+
+
+            if(response.ok){
+
+                form.reset();
+
+                const button =
+                form.querySelector("button");
+
+                button.textContent =
+                "SENT";
+
+            }
+            else {
+
+                throw new Error(
+                    "Transmission failed"
+                );
+
+            }
+
+
+        }
+        catch(error){
+
+            console.log(error);
+
+            const button =
+            form.querySelector("button");
+
+            button.textContent =
+            "FAILED";
+
+        }
+
+
+    });
+
+}
+
+/*
+=========================
 END
 =========================
 */
