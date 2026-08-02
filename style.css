@@ -770,7 +770,7 @@ body::after {
 transform:translateY(0);
 
 animation:
-    transmissionLift 2.8s cubic-bezier(.2,.8,.15,1) forwards;
+    transmissionLift 6.8s cubic-bezier(.2,.8,.15,1) forwards;
 
 animation-delay:4.2s;
 
@@ -2035,7 +2035,7 @@ will-change:transform;
 
     from {
 
-        transform:translateX(42vw);
+        transform:translateX(35vw);
 
     }
 
