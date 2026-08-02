@@ -2230,7 +2230,7 @@ textarea.message-field,
 
     top:50%;
 
-    left:20px;
+    left:40px;
 
     transform:
     translate(-110%,-50%);
@@ -2304,7 +2304,7 @@ textarea.message-field,
 
 
 .transmission-container.active {
-    transform: translateX(330px) translateY(-50%);
+    transform: translateX(310px) translateY(-50%);
 }
 
 
