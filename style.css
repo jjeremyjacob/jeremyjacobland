@@ -1677,12 +1677,8 @@ will-change:transform;
 .audio-arrow,
 .track-name {
 
-    text-shadow:
-        0 0 2px rgba(0,0,0,.3),
-        0 0 2px rgba(0,0,0,.3),
-        0 0 2px rgba(0,0,0,.3);
+    text-shadow:none;
 
-        
 }
 
 .audio-controls:hover {
@@ -1713,7 +1709,7 @@ will-change:transform;
     background: none;
     border: none;
 
-    color:#92837d;
+    color:#c4ada4;
 
     font: inherit;
 
@@ -1747,7 +1743,7 @@ will-change:transform;
 
     border:none;
 
-    color:#d8baad;
+    color:#c4ada4;
 
     font-size:12px;
 
@@ -2021,7 +2017,7 @@ will-change:transform;
 
     line-height:30px;
 
-    color:#ae8574;
+    color:#c4ada4;
 
 
     font-family:
