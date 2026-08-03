@@ -724,93 +724,60 @@ function updatePanels(){
 
 /*
 =========================
-IMAGE PARALLAX
+FLOATING PANEL OBJECTS
 =========================
 */
 
+const floatingElements =
+document.querySelectorAll(
+    ".panel-07 .panel-content-left, .panel-09 .social-links"
+);
 
-function updateImageParallax(){
+function updateFloatingObjects(){
 
-
-    panels.forEach(panel=>{
-
-
-        const rect =
-        panel.getBoundingClientRect();
-
-
-
-        const offset =
-        rect.top +
-        rect.height / 2 -
-        window.innerHeight / 2;
+    const mobile =
+    window.innerWidth <= 768;
 
 
+    let scrollY;
 
 
+    if(mobile){
 
-        const images =
-        panel.querySelectorAll(
-            ".panel-image"
-        );
-
-
+        const maxScroll =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
 
 
+        scrollY =
+        maxScroll - window.scrollY;
 
-        images.forEach(image=>{
+    }
+    else{
 
+        scrollY =
+        window.scrollY;
 
-            /*
-            ONLY BACKGROUND PANEL IMAGES
-            MOVE
-
-            LOGOS / SOCIAL STAY FIXED
-            */
-
-
-            if(
-            image.classList.contains(
-                "logo-image"
-            ) ||
-            image.classList.contains(
-                "social-image"
-            ) ||
-            image.classList.contains(
-                "find-image"
-            ) ||
-            image.classList.contains(
-                "email-image"
-            )
-            ){
-
-
-                image.style.transform =
-                "translateY(0)";
-
-
-                return;
-
-
-            }
+    }
 
 
 
+    floatingElements.forEach(el=>{
 
 
-            image.style.transform =
-            "translateY(0)";
+        const speed =
+        0.08;
 
 
-
-        });
-
+        el.style.translate =
+        `0 ${scrollY * speed}px`;
 
 
     });
 
 
 }
+
 
 /*
 =========================
@@ -824,6 +791,7 @@ window.addEventListener(
 
     updatePanels();
     updateImageParallax();
+    updateFloatingObjects();
 
 },
 {
@@ -845,6 +813,8 @@ window.addEventListener(
     updatePanels();
 
     updateImageParallax();
+
+    updateFloatingObjects();
 
 });
 
@@ -883,6 +853,8 @@ requestAnimationFrame(()=>{
 
     updateImageParallax();
 
+    updateFloatingObjects();
+
 
 });
 
@@ -896,7 +868,7 @@ APPLY RANDOM FONT TO ALL TICKERS
 
 document
 .querySelectorAll(
-    ".ticker-wrap .ticker-item, .loading-ticker-track .ticker-item"
+    ".ticker-wrap .ticker-item, .loading-ticker-track .ticker-item "
 )
 .forEach(item=>{
 
@@ -920,6 +892,81 @@ document
     randomFontText(field);
 
 });
+
+
+/*
+=========================
+MACHINE CHATTER
+=========================
+*/
+
+const chatter =
+document.querySelector(".machine-chatter");
+
+
+if(chatter){
+
+    const messages = [
+
+        "SIGNAL TRANSMITTING..",
+        "DOOR IS AJAR",
+        "SOURCE UNKNOWN",
+        "IN PROGRESS",
+        "CURRENT",
+        "COLLECTION CONTINUES",
+        "RETURN PATH ACTIVE",
+        "NO RECORD FOUND",
+        "THE PRINCESS: LOST",
+        "DOORWAY REMAINS OPEN",
+        "AN OTHER SIGNAL DETECTED",
+        "EAR...",
+        "FOUND"
+
+    ];
+
+
+    setTimeout(()=>{
+
+
+        function updateChatter(){
+
+            const message =
+            messages[
+                Math.floor(
+                    Math.random() *
+                    messages.length
+                )
+            ];
+
+
+            chatter.style.opacity="0";
+
+
+            setTimeout(()=>{
+
+                chatter.textContent =
+                message;
+
+                chatter.style.opacity=".55";
+
+            },300);
+
+        }
+
+
+        updateChatter();
+
+
+        setInterval(
+            updateChatter,
+            8000 + Math.random()*7000
+        );
+
+
+    },5600);
+
+
+}
 
 /*
 =========================
@@ -1020,6 +1067,60 @@ if(form){
 
 }
 
+
+
+/* =========================
+   IMAGE ARCHIVE DRAWER
+========================= */
+
+
+const galleryButton =
+document.getElementById("galleryButton");
+
+
+const galleryDrawer =
+document.getElementById("galleryDrawer");
+
+
+const galleryClose =
+document.getElementById("galleryClose");
+
+
+
+if(galleryButton && galleryDrawer){
+
+
+    galleryButton.addEventListener("click",()=>{
+
+
+        galleryDrawer.classList.toggle("open");
+
+
+    });
+
+
+}
+
+
+
+if(galleryClose && galleryDrawer){
+
+
+    galleryClose.addEventListener("click",()=>{
+
+
+        galleryDrawer.classList.remove("open");
+
+
+    });
+
+
+}
+
+
+
+
+
 /*
 =========================
 END
@@ -1027,4 +1128,3 @@ END
 */
 
 });
-

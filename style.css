@@ -618,78 +618,57 @@ body::after {
 
     display:flex;
 
+    align-items:center;
+
     width:max-content;
 
     height:100%;
 
-    align-items:center;
-
-
-    animation:
-    tickerMove 120s linear infinite;
-
-
-    transform:
-    translateX(50vw);
-
+    animation:tickerMove 120s linear infinite;
 
     will-change:transform;
 
 }
 
 
-
 .ticker-item {
+
+    flex-shrink:0;
 
     white-space:nowrap;
 
+    padding-right:50px;
 
     font-size:12px;
 
-
     letter-spacing:.03em;
-
 
     line-height:30px;
 
-
     font-weight:400;
-
 
     color:#ae8574;
 
-
     font-family:
-
-    "Courier Prime",
-
-    "Courier New",
-
-    Courier,
-
-    monospace;
+        "Courier Prime",
+        "Courier New",
+        Courier,
+        monospace;
 
 }
-
 
 
 @keyframes tickerMove {
 
     from {
-
-        transform:translateX(50vw);
-
+        transform:translateX(0);
     }
 
-
     to {
-
-        transform:translateX(-100%);
-
+        transform:translateX(-50%);
     }
 
 }
-
 /* =========================
    EMAIL ARRIVAL
 ========================= */
@@ -2035,7 +2014,7 @@ will-change:transform;
 
     from {
 
-        transform:translateX(35vw);
+        transform:translateX(0vw);
 
     }
 
@@ -2310,3 +2289,212 @@ textarea.message-field,
 }
 
 
+/* =========================
+   MACHINE CHATTER OVERLAY
+========================= */
+.machine-chatter-overlay {
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:9999;
+
+}
+
+
+.machine-chatter {
+
+    position:absolute;
+
+    right:7%;
+
+    top:1.5%;
+
+
+    transform:
+    translateY(-50%)
+    rotate(-180deg);
+
+
+    transform-origin:center;
+
+
+    color:#ae8574;
+
+    letter-spacing:5px;
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    opacity:.55;
+
+    white-space:nowrap;
+
+
+    font-family:
+    Helvetica,
+    Arial,
+    sans-serif;
+
+
+    animation:
+    chatterPulse 4s ease-in-out infinite;
+
+}
+
+
+
+@keyframes chatterPulse {
+
+    0%,
+    100% {
+
+        opacity:.25;
+
+    }
+
+
+    50% {
+
+        opacity:.7;
+
+    }
+
+}
+
+.gallery-trigger {
+
+    position:fixed;
+
+    left:0;
+
+    bottom:12%;
+
+    z-index:9999;
+
+}
+
+
+#galleryButton {
+
+    background:#45291c;
+
+    border:none;
+
+    color:#ae8574;
+
+    width:34px;
+
+    height:220px;
+
+    padding:12px 8px;
+
+    font-size:11px;
+
+    letter-spacing:4px;
+
+    line-height:1.15;
+
+    text-orientation:mixed;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.gallery-drawer {
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100vw;
+
+    height:100vh;
+
+    transform:translateX(-100%);
+
+    transition:
+    transform .8s cubic-bezier(.77,0,.18,1);
+
+
+    z-index:9998;
+
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+
+.gallery-drawer.open {
+
+    transform:translateX(0);
+
+}
+
+
+
+.gallery-close {
+
+    position:absolute;
+
+    top:30px;
+
+    right:30px;
+
+    background:none;
+
+    border:0;
+
+    color:#ae8574;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+}
+
+
+
+.gallery-track {
+
+    display:flex;
+
+    gap:40px;
+
+    padding:30px;
+
+    overflow-x:auto;
+
+    scroll-snap-type:x mandatory;
+
+}
+
+
+.gallery-track img {
+
+    width:auto;
+
+    height:80vh;
+
+    object-fit:contain;
+
+    scroll-snap-align:center;
+
+}
