@@ -430,6 +430,7 @@ panels.forEach(panel=>{
 
 });
 
+
 /*
 =========================
 VIDEO LOADING
@@ -454,7 +455,6 @@ new IntersectionObserver(
         return;
 
 
-
         const panel =
         entry.target;
 
@@ -465,40 +465,53 @@ new IntersectionObserver(
 
 
 
-        const frames =
-        panel.querySelectorAll(
-            "iframe[data-src]"
+        const frame =
+        panel.querySelector(
+            window.innerWidth <= 768
+            ? ".mobile-frame"
+            : ".desktop-frame"
         );
 
 
 
-    frames.forEach(frame=>{
+        if(
+            frame &&
+            frame.dataset.src
+        ){
 
-    frame.src =
-    frame.dataset.src;
-
-
-    frame.removeAttribute(
-        "data-src"
-    );
+            frame.src =
+            frame.dataset.src;
 
 
-    frame.onload = ()=>{
-
-frame.closest(".video-frame").classList.add("video-ready");
-
-    };
+            frame.removeAttribute(
+                "data-src"
+            );
 
 
-});
+            frame.onload = ()=>{
+
+                frame
+                .closest(".video-frame")
+                .classList.add(
+                    "video-ready"
+                );
+
+            };
+
+
+            console.log(
+                "VIDEO LOADED:",
+                panel.className
+            );
+
+
+        }
 
 
 
-loadedVideos.add(panel);
+        loadedVideos.add(panel);
 
-console.log("VIDEO LOADED:", panel.className);
-
-videoObserver.unobserve(panel);
+        videoObserver.unobserve(panel);
 
 
 
@@ -507,7 +520,7 @@ videoObserver.unobserve(panel);
 
 },
 {
-    rootMargin:"3000px 0px"
+    rootMargin:"800px 0px"
 });
 
 
@@ -525,9 +538,7 @@ document
     )
     ){
 
-
         videoObserver.observe(panel);
-
 
     }
 
