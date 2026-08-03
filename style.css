@@ -2553,7 +2553,7 @@ textarea.message-field,
 
     width:auto;
 
-    height:95vh;
+    width:50vh;
 
     object-fit:contain;
 
