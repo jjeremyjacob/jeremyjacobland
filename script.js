@@ -494,11 +494,11 @@ frame.closest(".video-frame").classList.add("video-ready");
 
 
 
-        loadedVideos.add(panel);
+loadedVideos.add(panel);
 
+console.log("VIDEO LOADED:", panel.className);
 
-
-        videoObserver.unobserve(panel);
+videoObserver.unobserve(panel);
 
 
 
@@ -507,7 +507,7 @@ frame.closest(".video-frame").classList.add("video-ready");
 
 },
 {
-    rootMargin:"800px 0px"
+    rootMargin:"3000px 0px"
 });
 
 
