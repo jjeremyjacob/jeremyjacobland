@@ -986,7 +986,16 @@ if(transmitButton && transmissionContainer){
 
     transmitButton.addEventListener("click",()=>{
 
+        const isOpen =
         transmissionContainer.classList.toggle("active");
+
+
+        transmitButton.innerHTML =
+        isOpen
+        ?
+        "H<br>I<br>D<br>E<br><br>T<br>R<br>A<br>N<br>S<br>M<br>I<br>S<br>S<br>I<br>O<br>N<br>S"
+        :
+        "S<br>E<br>N<br>D<br><br>T<br>R<br>A<br>N<br>S<br>M<br>I<br>S<br>S<br>I<br>O<br>N<br>S";
 
     });
 
@@ -1068,10 +1077,11 @@ if(form){
 }
 
 
-
-/* =========================
-   IMAGE ARCHIVE DRAWER
-========================= */
+/*
+=========================
+IMAGE ARCHIVE DRAWER
+=========================
+*/
 
 
 const galleryButton =
@@ -1087,19 +1097,50 @@ document.getElementById("galleryClose");
 
 
 
+
+
 if(galleryButton && galleryDrawer){
 
 
     galleryButton.addEventListener("click",()=>{
 
 
+        const isOpen =
         galleryDrawer.classList.toggle("open");
+
+
+
+        /*
+        FOUNDINGS ATMOSPHERE
+        */
+
+
+        document.body.classList.toggle(
+            "foundings-mode",
+            isOpen
+        );
+
+
+
+        /*
+        BUTTON STATE
+        */
+
+
+        galleryButton.innerHTML =
+        isOpen
+        ?
+        "F<br>O<br>U<br>N<br>D<br>I<br>N<br>G<br>S"
+        :
+        "F<br>I<br>N<br>D<br>I<br>N<br>G<br>S";
 
 
     });
 
 
 }
+
+
 
 
 
@@ -1112,12 +1153,21 @@ if(galleryClose && galleryDrawer){
         galleryDrawer.classList.remove("open");
 
 
+
+        document.body.classList.remove(
+            "foundings-mode"
+        );
+
+
+
+        galleryButton.innerHTML =
+        "F<br>I<br>N<br>D<br>I<br>N<br>G<br>S";
+
+
     });
 
 
 }
-
-
 
 
 

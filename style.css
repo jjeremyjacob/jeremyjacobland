@@ -2193,6 +2193,18 @@ textarea.message-field,
 }
 
 
+/* =========================
+   SEND TRANSMISSION ACTIVE
+========================= */
+
+.transmission-container.active .transmit-button {
+
+    background:#ae8574;
+
+    color:#45291c;
+
+}
+
 
 /* =========================
    CONTACT DRAWER
@@ -2279,7 +2291,7 @@ textarea.message-field,
 
 
 .transmission-container.active {
-    transform: translateX(300px) translateY(-50%);
+    transform: translateX(310px) translateY(-50%);
 }
 
 
@@ -2410,6 +2422,18 @@ textarea.message-field,
     align-items:center;
 
     justify-content:center;
+
+}
+
+/* =========================
+   FINDINGS / FOUNDINGS STATE
+========================= */
+
+.foundings-mode #galleryButton {
+
+    background:#ae8574;
+
+    color:#45291c;
 
 }
 
