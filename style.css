@@ -2300,10 +2300,10 @@ textarea.message-field,
     width:min(300px, 85vw);
 }
 
-
 /* =========================
    MACHINE CHATTER OVERLAY
 ========================= */
+
 .machine-chatter-overlay {
 
     position:fixed;
@@ -2314,6 +2314,20 @@ textarea.message-field,
 
     z-index:9999;
 
+    opacity:0;
+
+    transition:
+    opacity 1.5s ease;
+
+}
+
+
+/* ONLY ACTIVE AFTER LOADING */
+
+.machine-chatter-overlay.active {
+
+    opacity:1;
+
 }
 
 
@@ -2323,11 +2337,10 @@ textarea.message-field,
 
     right:7%;
 
-    top:1.5%;
+    top:1.1%;
 
 
     transform:
-    translateY(-50%)
     rotate(-180deg);
 
 
@@ -2342,25 +2355,30 @@ textarea.message-field,
 
     text-transform:uppercase;
 
-    opacity:.55;
-
     white-space:nowrap;
 
 
+    opacity:.55;
+
+
     font-family:
+
     Helvetica,
     Arial,
     sans-serif;
 
 
     animation:
+
     chatterPulse 4s ease-in-out infinite;
 
 }
 
 
 
+
 @keyframes chatterPulse {
+
 
     0%,
     100% {
@@ -2378,6 +2396,27 @@ textarea.message-field,
 
 }
 
+
+
+
+/* MOBILE OFF */
+
+@media(max-width:768px){
+
+
+    .machine-chatter-overlay {
+
+        display:none;
+
+    }
+
+
+}
+
+/* =========================
+   FINDINGS BUTTON
+========================= */
+
 .gallery-trigger {
 
     position:fixed;
@@ -2389,6 +2428,7 @@ textarea.message-field,
     z-index:9999;
 
 }
+
 
 
 #galleryButton {
@@ -2410,8 +2450,6 @@ textarea.message-field,
     letter-spacing:4px;
 
     line-height:1.15;
-
-    text-orientation:mixed;
 
     cursor:pointer;
 

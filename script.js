@@ -904,7 +904,6 @@ document
 
 });
 
-
 /*
 =========================
 MACHINE CHATTER
@@ -915,7 +914,10 @@ const chatter =
 document.querySelector(".machine-chatter");
 
 
-if(chatter){
+if(
+    chatter &&
+    window.innerWidth > 768
+){
 
     const messages = [
 
@@ -936,10 +938,30 @@ if(chatter){
     ];
 
 
-    setTimeout(()=>{
+    /*
+    WAIT UNTIL LOADING SCREEN IS GONE
+    */
+
+    const startChatter = ()=>{
+
+
+        const chatterOverlay =
+        document.querySelector(
+            ".machine-chatter-overlay"
+        );
+
+
+        if(chatterOverlay){
+
+            chatterOverlay.classList.add(
+                "active"
+            );
+
+        }
 
 
         function updateChatter(){
+
 
             const message =
             messages[
@@ -955,12 +977,16 @@ if(chatter){
 
             setTimeout(()=>{
 
+
                 chatter.textContent =
                 message;
 
+
                 chatter.style.opacity=".55";
 
+
             },300);
+
 
         }
 
@@ -974,7 +1000,32 @@ if(chatter){
         );
 
 
-    },5600);
+    };
+
+
+
+    /*
+    MATCH LOADING EXIT
+    */
+
+    if(sessionStorage.getItem("visited")){
+
+        // returning visitor
+        setTimeout(
+            startChatter,
+            500
+        );
+
+    }
+    else{
+
+        // first visit
+        setTimeout(
+            startChatter,
+            7000
+        );
+
+    }
 
 
 }
