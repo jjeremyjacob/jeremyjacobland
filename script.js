@@ -24,14 +24,6 @@ if(loadingScreen){
         loadingScreen.remove();
 
 
-        if(audioControls){
-
-            audioControls.classList.add(
-                "visible"
-            );
-
-        }
-
 
     }
     else{
@@ -208,18 +200,27 @@ PAGE HEIGHT
 */
 
 
-function setPageHeight(){
+function getPanelHeight(){
 
+    if(!panels.length){
+        return window.innerHeight;
+    }
+
+    return panels[0].getBoundingClientRect().height;
+
+}
+
+
+function setPageHeight(){
 
     const totalPanels =
     panels.length;
 
-
+    const panelHeight =
+    getPanelHeight();
 
     document.body.style.height =
-    `${((totalPanels - 1) * SCROLL_FACTOR + 1) * 100}vh`;
-
-
+    `${((totalPanels - 1) * SCROLL_FACTOR + 1) * panelHeight}px`;
 
 }
 
@@ -551,13 +552,10 @@ PANEL MOVEMENT
 =========================
 */
 
-
 function updatePanels(){
 
-
     const height =
-    window.innerHeight;
-
+    getPanelHeight();
 
 
     const mobile =
@@ -1231,6 +1229,77 @@ if(galleryClose && galleryDrawer){
 
 }
 
+/* =========================
+   DRAWER PULL
+========================= */
+const drawerPullButton =
+document.getElementById("drawerPullButton");
+
+const drawerPullDrawer =
+document.getElementById("drawerPullDrawer");
+
+const drawerPullClose =
+document.getElementById("drawerPullClose");
+
+
+if(drawerPullButton && drawerPullDrawer){
+
+    drawerPullButton.addEventListener(
+        "click",
+        ()=>{
+
+            const isOpen =
+            drawerPullDrawer.classList.toggle("open");
+
+            drawerPullButton.classList.toggle(
+                "active",
+                isOpen
+            );
+
+        }
+    );
+
+}
+
+
+if(drawerPullClose && drawerPullDrawer){
+
+    drawerPullClose.addEventListener(
+        "click",
+        ()=>{
+
+            drawerPullDrawer.classList.remove("open");
+
+            drawerPullButton.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   WAVES AUDIO DRAWER
+========================= */
+
+
+const audioDrawerTab =
+    document.getElementById("audioDrawerTab");
+
+
+if(audioControls && audioDrawerTab){
+
+    audioDrawerTab.addEventListener("click", () => {
+
+        audioControls.classList.toggle("open");
+
+        audioDrawerTab.classList.toggle("active");
+
+    });
+
+}
 
 
 /*

@@ -654,7 +654,7 @@ And it is in the forest that The King, carrying The Wooden Figure and The Music 
 <div class="transmission-container" id="transmissionContainer">
 
 
-<button id="transmitButton" class="transmit-button random-font">
+<button id="transmitButton" class="transmit-button">
         S<br>
         E<br>
         N<br>
@@ -734,11 +734,9 @@ SEND
 
 
 
-
 <!-- =========================
      PANEL 6
 ========================= -->
-
 
 <section
 class="panel panel-06"
@@ -766,31 +764,56 @@ After years of this dream slowly overtaking night and day, The Princess decides 
 </div>
 
 
-
-
 <div class="panel-content-left">
 
 
-<img
-src="images/jeremyjacob.webp"
-class="logo-image logo-left"
-loading="lazy"
-decoding="async"
-alt="Jeremy Jacob artist portrait">
+<!-- =========================
+     AUDIO DRAWER
+========================= -->
+
+<div id="audioControls" class="audio-controls">
+
+    <button id="audioToggle" class="audio-btn">
+        <span class="play-icon"></span>
+    </button>
+
+    <button id="prevTrack" class="audio-arrow">
+        ▲
+    </button>
+
+    <button id="nextTrack" class="audio-arrow">
+        ▼
+    </button>
+
+    <div id="trackName" class="track-name">
+        —
+    </div>
+
+</div>
 
 
-<img
-src="images/jeremyjacob.webp"
-class="logo-image logo-right"
-loading="lazy"
-decoding="async"
-alt="">
+<!-- =========================
+     WAVES TAB
+========================= -->
+
+<button
+id="audioDrawerTab"
+class="audio-drawer-tab">
+
+    W<br>
+    A<br>
+    V<br>
+    E<br>
+    S
+
+</button>
 
 
 </div>
 
 
 </section>
+
 
 
 
@@ -865,6 +888,61 @@ aria-label="Find Jeremy Jacob online">
 <section
 class="panel panel-08"
 data-image="images/section8.webp">
+
+<!-- =========================
+     DRAWER PULL
+========================= -->
+
+<div class="drawer-pull-trigger">
+
+    <button 
+    id="drawerPullButton"
+    class="drawer-pull-button">
+
+        <span class="pull-state">
+            M<br>
+            A<br>
+            P
+        </span>
+
+        <span class="push-state">
+            F<br>
+            O<br>
+            L<br>
+            D
+        </span>
+
+    </button>
+
+</div>
+
+
+
+<div 
+id="drawerPullDrawer"
+class="drawer-pull-drawer">
+
+
+<button 
+id="drawerPullClose"
+class="drawer-pull-close">
+
+×
+
+</button>
+
+
+
+<div class="drawer-pull-track">
+
+
+<img src="images/mapofthekingdom.webp" alt="Drawing 1">
+
+
+</div>
+
+
+</div>
 
 
 <div class="ticker-wrap">
@@ -1107,36 +1185,11 @@ referrerpolicy="strict-origin-when-cross-origin">
 </main>
 
 
+
+
 <audio id="bgAudio" preload="none"></audio>
 
-<div id="audioControls" class="audio-controls">
-
-    <button id="audioToggle" class="audio-btn">
-        <span class="play-icon"></span>
-    </button>
-
-    <button id="prevTrack" class="audio-arrow">
-        ▲
-    </button>
-
-    <button id="nextTrack" class="audio-arrow">
-        ▼
-    </button>
-
-    <div id="trackName" class="track-name">
-        —
-    </div>
-
-</div>
-
-
-
-<!-- =========================
-     SITE SCRIPT
-========================= -->
-
-
-    <script src="audio.js"></script>
+<script src="audio.js"></script>
 <script src="script.js"></script>
 
 

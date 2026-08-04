@@ -16,9 +16,12 @@ html,
 body {
 
     width:100%;
-    height:100%;
+    min-height:100%;
 
     overflow-x:hidden;
+
+    overscroll-behavior-x:none;
+    overscroll-behavior-y:none;
 
 }
 
@@ -104,7 +107,7 @@ body::after {
 
     width:100%;
 
-    height:100dvh;
+    height:100svh;
 
     overflow:hidden;
 
@@ -122,9 +125,8 @@ body::after {
 
 
 
-    backface-visibility:visible;
-
-    -webkit-backface-visibility:hidden;
+backface-visibility:hidden;
+-webkit-backface-visibility:hidden;
 
 }
 
@@ -1389,7 +1391,7 @@ will-change:transform;
 .panel {
 
 
-    height:100dvh;
+    height:100svh;
 
 }
 
@@ -1618,19 +1620,23 @@ will-change:transform;
 }
 
 /* =========================
-   AUDIO CONTROLS
+   WAVES AUDIO DRAWER
 ========================= */
-
 
 .audio-controls {
 
-    position:fixed;
-
-    right:20px;
+    position:absolute;
 
     top:50%;
+    right:0;
 
-    transform:translateY(-50%);
+    transform:
+        translateY(-50%)
+        translateX(100%);
+
+    width:55px;
+
+    padding:22px 12px;
 
     display:flex;
 
@@ -1638,20 +1644,168 @@ will-change:transform;
 
     align-items:center;
 
+    justify-content:center;
+
     gap:14px;
 
     z-index:9999;
 
+    background:rgba(69,41,28,1);
 
-    opacity:0;
+    opacity:1;
 
     pointer-events:none;
 
-    transition:opacity .8s ease;
+    transition:
+        transform 1.8s cubic-bezier(.16,1,.3,1);
 
 }
 
-.audio-controls,
+
+/* OPEN */
+
+.audio-controls.open {
+
+    transform:
+        translateY(-50%)
+        translateX(0);
+
+    pointer-events:auto;
+
+}
+
+
+/* =========================
+   WAVES TAB
+========================= */
+
+.audio-drawer-tab {
+
+    position:fixed;
+
+    top:45%;
+
+    right:0;
+
+    transform:
+        translateY(-50%);
+
+    width:50px;
+
+    height:280px;
+
+    z-index:10000;
+
+    background:#45291c;
+
+    color:#ae8574;
+
+    border:none;
+
+    padding:10px 6px;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+
+    text-orientation:mixed;
+
+    cursor:pointer;
+
+    transition:
+        right 1.8s cubic-bezier(.16,1,.3,1),
+        background .4s ease,
+        color .4s ease;
+
+}
+
+
+/* TAB MOVES WITH DRAWER */
+
+.audio-controls.open
+~ .audio-drawer-tab {
+
+    right:55px;
+
+}
+
+
+/* ACTIVE */
+
+.audio-drawer-tab.active {
+
+    background:#ae8574;
+
+    color:#45291c;
+
+}
+
+
+/* =========================
+   EXISTING AUDIO ELEMENTS
+========================= */
+
+.audio-btn {
+
+    background:none;
+
+    border:none;
+
+    color:#c4ada4;
+
+    font:inherit;
+
+    letter-spacing:.08em;
+
+    cursor:pointer;
+
+}
+
+
+.audio-arrow {
+
+    background:none;
+
+    border:none;
+
+    color:#c4ada4;
+
+    font:inherit;
+
+    cursor:pointer;
+
+    line-height:1;
+
+    padding:0;
+
+}
+
+
+.audio-btn {
+
+    writing-mode:vertical-lr;
+
+}
+
+
+.track-name {
+
+    writing-mode:vertical-lr;
+
+    text-orientation:mixed;
+
+    font-size:14px;
+
+    opacity:.7;
+
+    white-space:nowrap;
+
+    color:#c4ada4;
+
+}
+
+
 .audio-btn,
 .audio-arrow,
 .track-name {
@@ -1660,99 +1814,116 @@ will-change:transform;
 
 }
 
-.audio-controls:hover {
 
-    opacity: 1;
+/* =========================
+   PLAY / PAUSE ICON
+========================= */
 
-}
+.play-icon {
 
-.audio-btn {
+    display:block;
 
-    text-orientation: mixed;
+    width:22px;
+    height:22px;
 
-    background: none;
-    border: none;
+    border:1px solid currentColor;
 
-    color:#c4ada4;
+    border-radius:50%;
 
-    font: inherit;
-
-    letter-spacing: .08em;
-
-    cursor: pointer;
+    position:relative;
 
 }
 
-.audio-arrow {
 
-    background: none;
-    border: none;
+.play-icon::before {
 
-    color:#c4ada4;
+    content:"";
 
-    font: inherit;
+    position:absolute;
 
-    cursor: pointer;
+    top:50%;
+    left:50%;
 
-    line-height: 1;
+    transform:
+        translate(-40%,-50%);
 
-    padding: 0;
+    width:0;
+    height:0;
+
+    border-top:5px solid transparent;
+
+    border-bottom:5px solid transparent;
+
+    border-left:8px solid currentColor;
 
 }
 
-.audio-btn {
 
-    writing-mode: vertical-lr;
+.audio-btn.playing .play-icon::before,
+.audio-btn.playing .play-icon::after {
 
-}
+    content:"";
 
-.audio-toggle {
+    position:absolute;
 
-    position:fixed;
+    top:50%;
 
-    right:20px;
+    width:3px;
 
-    bottom:50px;
+    height:10px;
 
-    z-index:99999;
-
-    padding:8px 18px;
-
-    background:rgb(120, 93, 81);
+    background:currentColor;
 
     border:none;
 
-    color:#c4ada4;
-
-    font-size:12px;
-
-    font-weight:600;
-
-    letter-spacing:.08em;
-
-    font-family:
-    "Courier Prime",
-    "Courier New",
-    Courier,
-    monospace;
-
-    cursor:pointer;
-
-    opacity:0;
-
-    pointer-events:none;
-
-    transition:
-    opacity .8s ease;
+    transform:
+        translateY(-50%);
 
 }
 
 
-.audio-toggle.visible {
+.audio-btn.playing .play-icon::before {
 
-    opacity:1;
+    left:7px;
 
-    pointer-events:auto;
+}
+
+
+.audio-btn.playing .play-icon::after {
+
+    left:12px;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .audio-controls {
+
+        width:50px;
+
+        padding:20px 10px;
+
+    }
+
+    .audio-controls.open
+    ~ .audio-drawer-tab {
+
+        right:50px;
+
+    }
+
+    .audio-drawer-tab {
+
+        width:30px;
+
+        height:160px;
+
+    }
 
 }
 
@@ -1925,6 +2096,8 @@ will-change:transform;
 
     background: rgba(69,41,28,1);
 
+    overflow:hidden;
+
     z-index: 10;
     
        box-shadow:
@@ -1932,33 +2105,6 @@ will-change:transform;
 
 }
 
-/* =========================
-   LOADING BORDER TICKER
-========================= */
-
-.loading-border {
-
-    position:absolute;
-
-    left:0;
-    bottom:0;
-
-    width:100%;
-
-    height:var(--ticker-height);
-
-    background:
-    rgba(69,41,28,1);
-
-    z-index:20;
-
-    overflow:hidden;
-
-
-    box-shadow:
-    0 20px 50px rgba(0,0,0,.8);
-
-}
 
 
 
@@ -2236,7 +2382,7 @@ textarea.message-field,
 
 
     transition:
-    transform 1s cubic-bezier(.16,1,.3,1);
+    transform 1.8s cubic-bezier(.16,1,.3,1);
 
 }
 
@@ -2285,7 +2431,7 @@ textarea.message-field,
     
 
     transition:
-    transform 1s cubic-bezier(.16,1,.3,1);
+    transform 1.8s cubic-bezier(.16,1,.3,1);
 
 }
 
@@ -2490,7 +2636,7 @@ textarea.message-field,
     transform:translateX(-100%);
 
     transition:
-    transform .8s cubic-bezier(.77,0,.18,1);
+    transform 1.8s cubic-bezier(.77,0,.18,1);
 
 
     z-index:9998;
@@ -2558,5 +2704,384 @@ textarea.message-field,
     object-fit:contain;
 
     scroll-snap-align:center;
+
+}
+
+
+/* =========================
+   DRAWER PULL
+========================= */
+
+
+/* TRIGGER POSITION */
+
+.drawer-pull-trigger {
+
+    position:fixed;
+
+    left:0;
+
+    top:0%;
+
+    bottom:auto;
+
+    z-index:9999;
+
+}
+
+
+
+
+.drawer-pull-button {
+
+    background:#45291c;
+
+    border:none;
+
+    color:#ae8574;
+
+    width:34px;
+
+    height:calc(100svh - var(--ticker-height));
+
+    padding:12px 8px;
+
+    font-size:11px;
+
+    letter-spacing:4px;
+
+    line-height:1.15;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:
+
+    background .4s ease,
+    color .4s ease;
+
+}
+
+
+
+.drawer-pull-button:hover {
+
+    background:#ae8574;
+
+    color:#45291c;
+
+}
+
+
+
+/* ACTIVE BUTTON */
+
+.drawer-pull-button.active {
+
+    background:#312a12;
+
+    color:#ee9169;
+
+}
+
+
+
+
+
+/* BUTTON STATES */
+
+.push-state {
+
+    display:none;
+
+}
+
+
+.drawer-pull-button.active .pull-state {
+
+    display:none;
+
+}
+
+
+.drawer-pull-button.active .push-state {
+
+    display:block;
+
+}
+
+
+
+/* =========================
+   DRAWER WINDOW
+========================= */
+
+.drawer-pull-drawer {
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100vw;
+
+    height:calc(100svh - var(--ticker-height));
+
+    /* NO DRAWER BACKGROUND */
+    background:transparent;
+
+    transform:translateX(-100%);
+
+    transition:
+        transform 1.8s cubic-bezier(.77,0,.18,1);
+
+    z-index:9998;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+.drawer-pull-drawer.open {
+
+    transform:translateX(0);
+
+}
+
+
+/* =========================
+   IMAGE TRACK
+========================= */
+.drawer-pull-track {
+
+    width:calc(100vw - 34px);
+
+    height:100%;
+
+    margin-left:34px;
+
+    display:flex;
+
+    gap:0;
+
+    padding:0;
+
+    overflow-x:auto;
+
+    overflow-y:hidden;
+
+    scroll-snap-type:x mandatory;
+
+    scroll-behavior:smooth;
+
+    align-items:center;
+
+    overscroll-behavior-x:contain;
+
+}
+
+/* =========================
+   EACH IMAGE
+========================= */
+
+.drawer-pull-track img {
+
+    flex:0 0 calc(100vw - 34px);
+
+    width:calc(100vw - 34px);
+
+    height:100%;
+
+    max-width:none;
+
+    max-height:none;
+
+    object-fit:contain;
+
+    object-position:left center;
+
+    scroll-snap-align:start;
+
+}
+
+
+
+
+/* =========================
+   CLOSE
+========================= */
+
+
+.drawer-pull-close {
+
+    position:absolute;
+
+
+    top:30px;
+
+
+    right:30px;
+
+
+    background:none;
+
+
+    border:0;
+
+
+    color:#ae8574;
+
+
+    font-size:30px;
+
+
+    cursor:pointer;
+
+
+    z-index:10;
+
+
+    font-family:inherit;
+
+}
+
+
+
+.drawer-pull-close:hover {
+
+    color:#fff;
+
+}
+
+
+
+
+
+/* =========================
+   PULL MODE COLOR SHIFT
+========================= */
+
+
+body.pull-mode .panel-image {
+
+    filter:
+
+    invert(1)
+    sepia(.15);
+
+}
+
+
+
+body.pull-mode .panel {
+
+    background-color:#ae8574;
+
+}
+
+
+
+body.pull-mode .drawer-pull-button {
+
+    background:#ae8574;
+
+    color:#45291c;
+
+}
+
+
+
+
+/* =========================
+   MOBILE DRAWER PULL
+========================= */
+
+@media(max-width:768px){
+
+    .drawer-pull-trigger {
+
+        bottom:15%;
+
+    }
+
+
+    .drawer-pull-button {
+
+        width:30px;
+
+        height:580px;
+
+        font-size:10px;
+
+        letter-spacing:3px;
+
+    }
+
+    .drawer-pull-track {
+
+        width:calc(100vw - 30px);
+
+        margin-left:30px;
+
+        padding:0;
+
+        gap:0;
+
+    }
+
+
+
+    .drawer-pull-track img {
+
+        flex:0 0 calc(100vw - 30px);
+
+        width:calc(100vw - 30px);
+
+        height:100%;
+
+        max-width:none;
+
+        max-height:none;
+
+        object-fit:contain;
+
+        object-position:left center;
+
+    }
+    
+
+
+    .drawer-pull-close {
+
+        top:20px;
+
+        right:20px;
+
+    }
+
+}
+
+button,
+a,
+input,
+textarea {
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+button,
+a {
+
+    touch-action:manipulation;
 
 }
