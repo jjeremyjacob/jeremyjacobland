@@ -3268,7 +3268,6 @@ a {
 /* =========================
    MOBILE
 ========================= */
-
 @media(max-width:768px){
 
     .panel-09 .social-links {
@@ -3278,52 +3277,48 @@ a {
 
         gap:5px;
 
-    }
-
-
-    .panel-09 .hover-text {
-
         width:80px;
 
         min-width:80px;
 
-        height:125px;
+        max-width:80px;
 
-        flex:0 0 80px;
+        flex:none;
 
-        /*
-        MOBILE:
-        STATIC BUTTON
-        */
-
-        transition:none;
+        align-items:flex-start;
 
     }
 
 
-    /*
-    DISABLE DESKTOP HOVER
-    */
-
+    .panel-09 .hover-text,
     .panel-09 .hover-text:hover {
 
         width:80px;
 
         min-width:80px;
 
-        flex-basis:80px;
+        max-width:80px;
 
         height:125px;
 
+        min-height:125px;
+
+        max-height:125px;
+
+        flex:0 0 80px;
+
+        box-sizing:border-box;
+
         background:#45291c;
+
+        transition:none;
 
     }
 
 
-    /*
-    KEEP ORIGINAL TEXT STATE
-    */
+    /* TEXT NEVER CHANGES ON MOBILE */
 
+    .panel-09 .hover-text-off,
     .panel-09 .hover-text:hover .hover-text-off {
 
         opacity:1;
@@ -3332,9 +3327,12 @@ a {
             translate(-50%,-50%)
             rotate(-90deg);
 
+        transition:none;
+
     }
 
 
+    .panel-09 .hover-text-on,
     .panel-09 .hover-text:hover .hover-text-on {
 
         opacity:0;
@@ -3344,18 +3342,21 @@ a {
             rotate(-90deg)
             translateX(15px);
 
+        transition:none;
+
     }
 
 
-    /*
-    KEEP SIGNAL LINE STATIC
-    */
+    /* SIGNAL LINE NEVER ANIMATES */
 
+    .panel-09 .hover-text::after,
     .panel-09 .hover-text:hover::after {
 
         transform:scaleY(.15);
 
         background:#ae8574;
+
+        transition:none;
 
     }
 
