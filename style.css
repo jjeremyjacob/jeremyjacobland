@@ -3056,7 +3056,6 @@ a {
 
 }
 
-
 /* =========================
    PANEL 9 — SIGNAL ARCHIVE
 ========================= */
@@ -3189,7 +3188,7 @@ a {
 
 
 /* =========================
-   HOVER
+   DESKTOP HOVER
 ========================= */
 
 .panel-09 .hover-text:hover {
@@ -3265,6 +3264,7 @@ a {
 
 }
 
+
 /* =========================
    MOBILE
 ========================= */
@@ -3284,34 +3284,78 @@ a {
     .panel-09 .hover-text {
 
         width:80px;
+
+        min-width:80px;
+
         height:125px;
 
-        /* NO HOVER EXPANSION ON MOBILE */
+        flex:0 0 80px;
+
+        /*
+        MOBILE:
+        STATIC BUTTON
+        */
 
         transition:none;
 
     }
 
 
+    /*
+    DISABLE DESKTOP HOVER
+    */
+
     .panel-09 .hover-text:hover {
 
         width:80px;
+
+        min-width:80px;
+
+        flex-basis:80px;
+
+        height:125px;
 
         background:#45291c;
 
     }
 
 
-    .panel-09 .hover-text-off {
+    /*
+    KEEP ORIGINAL TEXT STATE
+    */
+
+    .panel-09 .hover-text:hover .hover-text-off {
 
         opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            rotate(-90deg);
 
     }
 
 
-    .panel-09 .hover-text-on {
+    .panel-09 .hover-text:hover .hover-text-on {
 
         opacity:0;
+
+        transform:
+            translate(-50%,-50%)
+            rotate(-90deg)
+            translateX(15px);
+
+    }
+
+
+    /*
+    KEEP SIGNAL LINE STATIC
+    */
+
+    .panel-09 .hover-text:hover::after {
+
+        transform:scaleY(.15);
+
+        background:#ae8574;
 
     }
 
