@@ -2785,9 +2785,9 @@ textarea.message-field,
 
 .drawer-pull-button.active {
 
-    background:#312a12;
+    background:#ae8574;
 
-    color:#ee9169;
+    color:#45291c;
 
 }
 
@@ -3014,17 +3014,17 @@ body.pull-mode .drawer-pull-button {
     }
 
 
-    .drawer-pull-button {
+.drawer-pull-button {
 
-        width:30px;
+    width:30px;
 
-        height:580px;
+    height:calc(100svh - var(--ticker-height));
 
-        font-size:10px;
+    font-size:10px;
 
-        letter-spacing:3px;
+    letter-spacing:3px;
 
-    }
+}
 
     .drawer-pull-track {
 
