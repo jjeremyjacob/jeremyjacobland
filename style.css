@@ -159,7 +159,68 @@ backface-visibility:hidden;
 
 
 
+.panel-01 .scroll-arrow {
 
+    position:absolute;
+
+    top:50px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:32px;
+    line-height:1;
+
+    color:#ae8574;
+
+    opacity:.75;
+
+    z-index:40;
+
+    pointer-events:none;
+
+    animation:
+        arrowBounce 1.8s ease-in-out infinite;
+
+    transition:
+        opacity .6s ease;
+
+}
+
+
+.panel-01 .scroll-arrow.gone {
+
+    opacity:0;
+
+    animation:none;
+
+}
+
+
+@keyframes arrowBounce {
+
+    0%,
+    100% {
+
+        transform:
+            translateX(-50%)
+            translateY(0);
+
+        opacity:.4;
+
+    }
+
+    50% {
+
+        transform:
+            translateX(-50%)
+            translateY(9px);
+
+        opacity:.9;
+
+    }
+
+}
 
 /* =========================
    CONTENT ALIGNMENT
@@ -1618,6 +1679,7 @@ will-change:transform;
     border:0;
 
 }
+
 /* =========================
    GLOBAL AUDIO DRAWER
 ========================= */
@@ -1900,6 +1962,7 @@ will-change:transform;
     }
 
 }
+
 
 /* =========================
    REDUCED MOTION

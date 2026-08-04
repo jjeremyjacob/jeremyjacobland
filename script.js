@@ -641,7 +641,16 @@ function updatePanels(){
         (height * SCROLL_FACTOR);
 
 
+        /*
+        DISMISS PANEL 1 ARROW
+        WHEN PANEL 2 STARTS DESCENDING
+        */
 
+        if(index === 1 && progress > 0){
+
+            dismissScrollArrow();
+
+        }
 
 
         const position =
@@ -877,8 +886,9 @@ APPLY RANDOM FONT TO ALL TICKERS
 
 document
 .querySelectorAll(
-    ".ticker-wrap .ticker-item, .loading-ticker-track .ticker-item "
-)
+    ".ticker-wrap .ticker-item, " +
+    ".loading-ticker-track .ticker-item, " +
+    ".random-font")
 .forEach(item=>{
 
     randomFontText(item);
@@ -1301,6 +1311,32 @@ if(audioControls && audioDrawerTab){
 
 }
 
+const scrollArrow = document.querySelector(
+    ".panel-01 .scroll-arrow"
+);
+
+let arrowDismissed = false;
+
+
+function dismissScrollArrow() {
+
+    if (arrowDismissed) return;
+
+    arrowDismissed = true;
+
+    if (scrollArrow) {
+
+        scrollArrow.classList.add("gone");
+
+        setTimeout(() => {
+
+            scrollArrow.remove();
+
+        }, 700);
+
+    }
+
+}
 
 /*
 =========================
