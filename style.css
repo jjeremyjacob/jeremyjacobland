@@ -23,6 +23,9 @@ body {
     overscroll-behavior-x:none;
     overscroll-behavior-y:none;
 
+        touch-action: pan-y;
+
+
 }
 
 
