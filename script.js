@@ -277,7 +277,7 @@ const decodeText = (element) => {
 
                     cycles++;
 
-                }, 45);
+                }, 60);
 
         }, delay);
 
