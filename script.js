@@ -559,7 +559,7 @@ function updatePanels(){
 
 
     const mobile =
-    window.innerWidth <= 768;
+    window.innerWidth <= 1024;
 
 
 
@@ -754,7 +754,7 @@ document.querySelectorAll(
 function updateFloatingObjects(){
 
     const mobile =
-    window.innerWidth <= 768;
+    window.innerWidth <= 1024;
 
 
     let scrollY;
@@ -848,7 +848,7 @@ requestAnimationFrame(()=>{
     setPageHeight();
 
 
-    if(window.innerWidth <= 768){
+    if(window.innerWidth <= 1024){
 
         window.scrollTo(
             0,
