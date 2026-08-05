@@ -3183,9 +3183,9 @@ background:linear-gradient(
 
 }
 
-
+```css
 /* =========================
-   MOBILE
+   PANEL 9 — MOBILE SOCIAL CARDS
 ========================= */
 
 @media(max-width:768px){
@@ -3200,8 +3200,16 @@ background:linear-gradient(
 
         gap:5px;
 
+        margin:0;
+
+        padding:0;
+
     }
 
+
+    /* =========================
+       STATIC MOBILE CARD
+    ========================= */
 
     .panel-09 .hover-text,
     .panel-09 .hover-text:hover {
@@ -3216,8 +3224,16 @@ background:linear-gradient(
 
         transition:none;
 
+        animation:none;
+
+        cursor:pointer;
+
     }
 
+
+    /* =========================
+       MOBILE TEXT
+    ========================= */
 
     .panel-09 .hover-text-off {
 
@@ -3234,6 +3250,10 @@ background:linear-gradient(
     }
 
 
+    /* =========================
+       HIDE SECONDARY TEXT
+    ========================= */
+
     .panel-09 .hover-text-on {
 
         display:none;
@@ -3241,3 +3261,4 @@ background:linear-gradient(
     }
 
 }
+```
