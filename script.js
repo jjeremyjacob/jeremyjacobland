@@ -191,7 +191,99 @@ const randomFontText = (element)=>{
 };
 
 
+/*
+=========================
+ALPHABET DECODE TEXT
+=========================
+*/
 
+const decodeText = (element) => {
+
+    if(!element)
+    return;
+
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    const text =
+        element.textContent.trim();
+
+    if(!text)
+    return;
+
+    element.innerHTML = "";
+
+    [...text].forEach((character, index) => {
+
+        const span =
+            document.createElement("span");
+
+        span.style.display =
+            "inline-block";
+
+        if(character === " "){
+
+            span.textContent = "\u00A0";
+
+            element.appendChild(span);
+
+            return;
+
+        }
+
+        span.textContent =
+            characters[
+                Math.floor(
+                    Math.random() *
+                    characters.length
+                )
+            ];
+
+        element.appendChild(span);
+
+        let cycles = 0;
+
+        const maxCycles =
+            4 + Math.floor(
+                Math.random() * 7
+            );
+
+        const delay =
+            index * 35;
+
+        setTimeout(() => {
+
+            const interval =
+                setInterval(() => {
+
+                    if(cycles >= maxCycles){
+
+                        clearInterval(interval);
+
+                        span.textContent =
+                            character;
+
+                        return;
+
+                    }
+
+                    span.textContent =
+                        characters[
+                            Math.floor(
+                                Math.random() *
+                                characters.length
+                            )
+                        ];
+
+                    cycles++;
+
+                }, 45);
+
+        }, delay);
+
+    });
+
+};
  
 /*
 =========================
@@ -892,14 +984,21 @@ APPLY RANDOM FONT TO ALL TICKERS
 document
 .querySelectorAll(
     ".ticker-wrap .ticker-item, " +
-    ".loading-ticker-track .ticker-item, " +
-    ".random-font")
-.forEach(item=>{
+    ".loading-ticker-track .ticker-item"
+)
+.forEach(item => {
+
+    decodeText(item);
+
+});
+
+document
+.querySelectorAll(".random-font")
+.forEach(item => {
 
     randomFontText(item);
 
 });
-
 
 /*
 =========================
@@ -934,20 +1033,12 @@ if(
 
     const messages = [
 
-        "SIGNAL TRANSMITTING..",
-        "DOOR IS AJAR",
+        "SIGNAL: TRANSMITTING..",
         "SOURCE UNKNOWN",
-        "IN PROGRESS",
-        "CURRENT",
-        "COLLECTION CONTINUES",
-        "RETURN PATH ACTIVE",
+        "SEARCHING...",
         "NO RECORD FOUND",
-        "THE PRINCESS: LOST",
-        "DOORWAY REMAINS OPEN",
-        "AN OTHER SIGNAL DETECTED",
-        "EAR...",
-        "FOUND"
-
+        "THE PRINCESS /// STATUS: LOST",
+      
     ];
 
 
@@ -975,33 +1066,86 @@ if(
 
         function updateChatter(){
 
+    const message =
+    messages[
+        Math.floor(
+            Math.random() *
+            messages.length
+        )
+    ];
 
-            const message =
-            messages[
-                Math.floor(
-                    Math.random() *
-                    messages.length
-                )
-            ];
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    chatter.style.opacity = "0";
 
-            chatter.style.opacity="0";
+    setTimeout(() => {
 
+        chatter.innerHTML = "";
 
-            setTimeout(()=>{
+        [...message].forEach((character, index) => {
 
+            const span =
+                document.createElement("span");
 
-                chatter.textContent =
-                message;
+            if(character === " "){
 
+                span.textContent = "\u00A0";
 
-                chatter.style.opacity=".55";
+                chatter.appendChild(span);
 
+                return;
 
-            },300);
+            }
 
+            span.textContent =
+                characters[
+                    Math.floor(
+                        Math.random() *
+                        characters.length
+                    )
+                ];
 
-        }
+            chatter.appendChild(span);
+
+            let cycles = 0;
+
+            const maxCycles =
+                3 + Math.floor(Math.random() * 8);
+
+            const interval =
+                setInterval(() => {
+
+                    if(cycles >= maxCycles){
+
+                        clearInterval(interval);
+
+                        span.textContent =
+                            character;
+
+                        return;
+
+                    }
+
+                    span.textContent =
+                        characters[
+                            Math.floor(
+                                Math.random() *
+                                characters.length
+                            )
+                        ];
+
+                    cycles++;
+
+                }, 45 + index * 8);
+
+        });
+
+        chatter.style.opacity = ".55";
+
+    }, 300);
+
+}
 
 
         updateChatter();
@@ -1009,7 +1153,7 @@ if(
 
 setInterval(
     updateChatter,
-    60000
+    15000
 );
 
 
