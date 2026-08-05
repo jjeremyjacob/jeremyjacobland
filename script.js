@@ -578,9 +578,9 @@ const mobile =
     if(mobile){
 
 
-        const maxScroll =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+const maxScroll =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
 
 
 
@@ -764,9 +764,9 @@ const mobile =
 
     if(mobile){
 
-        const maxScroll =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+const maxScroll =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
 
 
         scrollY =
@@ -855,11 +855,11 @@ requestAnimationFrame(()=>{
     navigator.maxTouchPoints > 0
 ){
 
-        window.scrollTo(
-            0,
-            document.documentElement.scrollHeight -
-            window.innerHeight
-        );
+window.scrollTo(
+    0,
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight
+);
 
     }
     else{
