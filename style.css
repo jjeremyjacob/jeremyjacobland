@@ -1739,9 +1739,6 @@ will-change:transform;
     width:50px;
     height:280px;
 
-    transform:
-        translateY(-50%);
-
     z-index:10002;
 
     background:#45291c;
@@ -1760,8 +1757,12 @@ will-change:transform;
 
     cursor:pointer;
 
+    transform:
+        translateY(-50%)
+        translateX(0);
+
     transition:
-        right 1.8s cubic-bezier(.16,1,.3,1),
+        transform 1.8s cubic-bezier(.16,1,.3,1),
         background .4s ease,
         color .4s ease;
 
@@ -1773,7 +1774,9 @@ will-change:transform;
 .audio-controls.open
 ~ .audio-drawer-tab {
 
-    right:55px;
+    transform:
+        translateY(-50%)
+        translateX(-55px);
 
 }
 
@@ -1941,19 +1944,21 @@ will-change:transform;
 
     .audio-drawer-tab {
 
-        width:30px;
+        width:50px;
 
         height:160px;
 
     }
 
 
-    .audio-controls.open
-    ~ .audio-drawer-tab {
+.audio-controls.open
+~ .audio-drawer-tab {
 
-        right:50px;
+    transform:
+        translateY(-50%)
+        translateX(-50px);
 
-    }
+}
 
 }
 
