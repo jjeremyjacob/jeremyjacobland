@@ -558,8 +558,9 @@ function updatePanels(){
     getPanelHeight();
 
 
-    const mobile =
-    window.innerWidth <= 1024;
+const mobile =
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0;
 
 
 
@@ -753,8 +754,9 @@ document.querySelectorAll(
 
 function updateFloatingObjects(){
 
-    const mobile =
-    window.innerWidth <= 1024;
+const mobile =
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0;
 
 
     let scrollY;
@@ -848,7 +850,10 @@ requestAnimationFrame(()=>{
     setPageHeight();
 
 
-    if(window.innerWidth <= 1024){
+    if(
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0
+){
 
         window.scrollTo(
             0,
