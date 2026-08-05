@@ -1458,13 +1458,7 @@ will-change:transform;
 
 
 
-    .loading-border {
 
-        top:auto;
-
-        bottom:calc(-1 * var(--ticker-height));
-
-    }
 
 .logo-image {
 
