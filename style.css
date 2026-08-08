@@ -3104,13 +3104,7 @@ a {
 
     overflow:hidden;
 
-background:linear-gradient(
-    to right,
-    #625039 50%,
-    #625039 50%,
-    #45291c 50%,
-    #45291c 100%
-);
+background:   #45291c;
     transform:translateX(-200px);
 
     transition:
