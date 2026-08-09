@@ -1878,3 +1878,39 @@ REDUCED MOTION
         animation: none;
     }
 }
+
+/* =====================================================
+REDUCED MOTION
+===================================================== */
+
+.xtwitterx {
+    background: #45291c;
+
+    border: none;
+
+    color: #ae8574;
+
+    font-family:
+        "Courier Prime",
+        "Courier New",
+        Courier,
+        monospace;
+
+    width: 50px;
+    height: 250px;
+
+
+    font-size: 13px;
+    letter-spacing: 4px;
+    line-height: 1.15;
+
+    cursor: pointer;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+        writing-mode: vertical-lr;
+
+}
