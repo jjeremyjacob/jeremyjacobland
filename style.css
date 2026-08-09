@@ -3176,7 +3176,7 @@ background:   #45291c;
 
 }
 
-```css
+
 /* =========================
    PANEL 9 — MOBILE SOCIAL CARDS
 ========================= */
@@ -3254,4 +3254,120 @@ background:   #45291c;
     }
 
 }
-```
+
+/* =====================================================
+PANEL 07 — THEATER 003 ONLY
+===================================================== */
+
+.panel-07 {
+
+
+background:#000 !important;
+background-image:none !important;
+
+
+}
+
+/* Remove any panel-image/background behavior */
+
+.panel-07 .panel-image {
+
+
+display:none !important;
+
+
+}
+
+/* =====================================================
+THEATER 003
+===================================================== */
+
+.panel-07 .panel-07-theater {
+
+
+position:absolute;
+
+inset:0;
+
+width:100%;
+height:100%;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+overflow:hidden;
+
+background:#000;
+
+z-index:10;
+
+pointer-events:auto;
+
+
+}
+
+/* =====================================================
+THEATER 003 IFRAME
+===================================================== */
+
+.panel-07 .panel-07-theater iframe {
+
+
+display:block;
+
+width:min(450px,95vw);
+
+height:min(1000px,100vh);
+
+max-width:95vw;
+max-height:100vh;
+
+margin:0;
+
+padding:0;
+
+border:0;
+
+outline:none;
+
+background:#000;
+
+overflow:hidden;
+
+flex:none;
+
+
+}
+
+/* =====================================================
+MOBILE
+===================================================== */
+
+@media(max-width:768px){
+
+
+.panel-07 .panel-07-theater {
+
+    width:100%;
+    height:100%;
+
+    align-items:center;
+    justify-content:center;
+
+}
+
+.panel-07 .panel-07-theater iframe {
+
+    width:94vw;
+
+    height:100vh;
+
+    max-width:94vw;
+    max-height:100vh;
+
+}
+
+
+}

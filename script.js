@@ -638,6 +638,19 @@ document
 
 });
  
+/* =================================================
+   THEATER 003 — PANEL 07
+================================================= */
+
+const theater003 =
+    document.querySelector(".panel-07 .theater003");
+
+if (theater003) {
+
+    theater003.classList.add("theater-ready");
+
+}
+
 /*
 =========================
 PANEL MOVEMENT
