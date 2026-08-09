@@ -3325,11 +3325,9 @@ max-width:95vw;
 max-height:100vh;
 
 margin:0;
-
 padding:0;
 
 border:0;
-
 outline:none;
 
 background:#000;
@@ -3337,37 +3335,6 @@ background:#000;
 overflow:hidden;
 
 flex:none;
-
-
-}
-
-/* =====================================================
-MOBILE
-===================================================== */
-
-@media(max-width:768px){
-
-
-.panel-07 .panel-07-theater {
-
-    width:100%;
-    height:100%;
-
-    align-items:center;
-    justify-content:center;
-
-}
-
-.panel-07 .panel-07-theater iframe {
-
-    width:94vw;
-
-    height:100vh;
-
-    max-width:94vw;
-    max-height:100vh;
-
-}
 
 
 }
