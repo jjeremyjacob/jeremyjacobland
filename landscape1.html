@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+
+>
+
+<title>Landscape World</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+html,
+body {
+
+    width: 100%;
+    min-height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    background: #000;
+
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   SCROLL SPACE
+===================================================== */
+
+#scroll-space {
+
+    height: 5450vh;
+
+}
+
+
+/* =====================================================
+   CAMERA VIEWPORT
+===================================================== */
+
+#viewport {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: #000;
+
+    /*
+        Long lens.
+        Higher number = more compressed depth.
+    */
+
+    perspective: 3000px;
+
+    perspective-origin: 50% 50%;
+
+}
+
+
+/* =====================================================
+   WORLD
+===================================================== */
+
+#world {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 7680px;
+    height: 7680px;
+
+    transform-style: preserve-3d;
+
+}
+
+.landscape-layer {
+
+    position: absolute;
+
+    width: 7680px;
+    height: 7680px;
+
+    left: 3840px;
+    top: 3840px;
+
+    margin-left: -3840px;
+    margin-top: -3840px;
+
+    object-fit: fill;
+
+    object-position: center center;
+
+    transform-origin: center center;
+
+    transform-style: preserve-3d;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+}
+
+
+/* =====================================================
+   FOREGROUND
+===================================================== */
+
+.layer-foreground {
+
+    transform:
+        translateZ(0px)
+        scale(1.00);
+
+    z-index: 4;
+
+}
+
+
+/* =====================================================
+   MIDDLE GROUND — NEAR
+===================================================== */
+
+.layer-middle-near {
+
+    transform:
+             translateX(900px)
+
+             translateZ(-200px)
+        
+        scale(1.10);
+
+    z-index: 3;
+
+}
+
+
+/* =====================================================
+   MIDDLE GROUND — FAR
+===================================================== */
+
+.layer-middle-far {
+
+    transform:
+                 translateX(300px)
+
+        translateZ(-400px)
+        scale(1.1);
+
+    z-index: 2;
+
+}
+
+
+/* =====================================================
+   FAR DISTANCE
+===================================================== */
+
+.layer-far {
+
+    transform:
+        translateZ(-600px)
+        scale(1.36);
+
+    z-index: 1;
+
+}
+
+
+/* =====================================================
+   VIGNETTE
+===================================================== */
+
+#vignette {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 65%,
+            rgba(0, 0, 0, 0.25) 100%
+        );
+
+}
+
+
+/* =====================================================
+   SCROLL LABEL
+===================================================== */
+
+#scroll-label {
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 30px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 200;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: 0.3em;
+
+    text-transform: uppercase;
+
+    color:
+        rgba(255,255,255,0.7);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.8s ease;
+
+}
+
+
+
+/* =====================================================
+   DEVELOPMENT XYZ GRID
+   X = left/right   Y = up/down   Z = depth
+===================================================== */
+
+#debug-grid {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 7680px;
+    height: 4320px;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.72;
+}
+
+#debug-grid-xy,
+#debug-grid-xz,
+#debug-grid-yz {
+    position: absolute;
+    left: 3840px;
+    top: 2160px;
+    transform-style: preserve-3d;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+
+    background-size: 200px 200px;
+}
+
+#debug-grid-xy {
+    width: 7680px;
+    height: 4320px;
+    margin-left: -3840px;
+    margin-top: -2160px;
+}
+
+#debug-grid-xz {
+    width: 7680px;
+    height: 2400px;
+    margin-left: -3840px;
+    margin-top: -1200px;
+    opacity: 0.55;
+    transform: rotateX(90deg) translateZ(2160px);
+}
+
+#debug-grid-yz {
+    width: 4320px;
+    height: 2400px;
+    margin-left: -2160px;
+    margin-top: -1200px;
+    opacity: 0.55;
+    transform: rotateY(90deg) translateZ(3840px);
+}
+
+#debug-origin {
+    position: absolute;
+    left: 3840px;
+    top: 2160px;
+    width: 1px;
+    height: 1px;
+    transform-style: preserve-3d;
+}
+
+#debug-origin::before {
+    content: "";
+    position: absolute;
+    width: 7680px;
+    height: 3px;
+    left: -3840px;
+    top: -1px;
+    background: rgba(255,70,70,0.85);
+    transform: translateZ(2px);
+}
+
+#debug-origin::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 4320px;
+    left: -1px;
+    top: -2160px;
+    background: rgba(80,255,120,0.85);
+    transform: translateZ(2px);
+}
+
+.axis-label {
+    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+}
+
+.axis-x {
+    left: 3850px;
+    top: 2130px;
+    color: rgba(255,90,90,0.95);
+}
+
+.axis-y {
+    left: 3860px;
+    top: 2100px;
+    color: rgba(90,255,130,0.95);
+}
+
+.axis-z {
+    left: 3880px;
+    top: 2160px;
+    color: rgba(90,160,255,0.95);
+}
+
+#camera-markers {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+}
+
+.camera-marker {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    margin-left: -11px;
+    margin-top: -11px;
+    border: 2px solid rgba(255,255,255,0.95);
+    border-radius: 50%;
+    background: rgba(0,0,0,0.65);
+    box-shadow:
+        0 0 0 5px rgba(255,255,255,0.08),
+        0 0 18px rgba(255,255,255,0.25);
+    transform-style: preserve-3d;
+}
+
+.camera-marker::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    margin-top: -3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+}
+
+.camera-marker-label {
+    position: absolute;
+    left: 18px;
+    top: -10px;
+    min-width: 190px;
+    padding: 7px 9px;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.92);
+    background: rgba(0,0,0,0.72);
+    border: 1px solid rgba(255,255,255,0.2);
+    white-space: nowrap;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+}
+
+.camera-marker-label strong {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: rgba(255,255,255,1);
+}
+
+#debug-toggle {
+    position: fixed;
+    right: 18px;
+    top: 18px;
+    z-index: 500;
+    padding: 9px 12px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.72);
+    color: rgba(255,255,255,0.85);
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    user-select: none;
+}
+
+#debug-toggle:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+#debug-grid.is-hidden {
+    display: none;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    #scroll-label {
+
+        bottom: 20px;
+
+        font-size: 9px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     SCROLL SPACE
+===================================================== -->
+
+<div id="scroll-space"></div>
+
+<!-- =====================================================
+     CAMERA VIEWPORT
+===================================================== -->
+
+<div id="viewport">
+
+<button id="debug-toggle" type="button">GRID ON</button>
+
+
+<!-- =================================================
+     WORLD
+================================================= -->
+
+<div id="world">
+
+
+    <!-- =============================================
+         FAR DISTANCE
+    ============================================== -->
+
+    <img
+        class="landscape-layer layer-far"
+        src="landscapeimages/landscape4.webp"
+        alt=""
+        draggable="false"
+    >
+
+
+    <!-- =============================================
+         MIDDLE GROUND — FAR
+    ============================================== -->
+
+    <img
+        class="landscape-layer layer-middle-far"
+        src="landscapeimages/landscape3.webp"
+        alt=""
+        draggable="false"
+    >
+
+
+    <!-- =============================================
+         MIDDLE GROUND — NEAR
+    ============================================== -->
+
+    <img
+        class="landscape-layer layer-middle-near"
+        src="landscapeimages/landscape2.webp"
+        alt=""
+        draggable="false"
+    >
+
+
+    <!-- =============================================
+         FOREGROUND
+    ============================================== -->
+
+    <img
+        class="landscape-layer layer-foreground"
+        src="landscapeimages/landscape1.webp"
+        alt=""
+        draggable="false"
+    >
+
+    <!-- DEVELOPMENT XYZ GRID -->
+    <div id="debug-grid" aria-hidden="true">
+        <div id="debug-grid-xy"></div>
+        <div id="debug-grid-xz"></div>
+        <div id="debug-grid-yz"></div>
+        <div id="debug-origin">
+            <span class="axis-label axis-x">X</span>
+            <span class="axis-label axis-y">Y</span>
+            <span class="axis-label axis-z">Z</span>
+        </div>
+        <div id="camera-markers"></div>
+    </div>
+
+
+</div>
+
+
+</div>
+
+<!-- =====================================================
+     VIGNETTE
+===================================================== -->
+
+<div id="vignette"></div>
+
+<!-- =====================================================
+     SCROLL LABEL
+===================================================== -->
+
+<div id="scroll-label">
+    Scroll to travel
+</div>
+
+<script>
+
+/* =====================================================
+   IMMERSIVE LANDSCAPE CAMERA
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+
+        const world =
+            document.getElementById(
+                "world"
+            );
+
+
+        const scrollLabel =
+            document.getElementById(
+                "scroll-label"
+            );
+
+
+        if (!world) {
+            return;
+        }
+
+
+        /* =================================================
+           WORLD DIMENSIONS
+        ================================================= */
+
+        const WORLD_WIDTH =
+            7680;
+
+
+        const WORLD_HEIGHT =
+            4320;
+
+
+        /* =================================================
+           CAMERA STATE
+        ================================================= */
+
+        let current = {
+
+            x: WORLD_WIDTH / 2,
+
+            y: WORLD_HEIGHT / 2,
+
+            z: 4000,
+
+            rotateX: 8,
+
+            rotateY: 0
+
+        };
+
+
+        let target = {
+
+            x: WORLD_WIDTH / 2,
+
+            y: WORLD_HEIGHT / 2,
+
+            z: 4000,
+
+            rotateX: 8,
+
+            rotateY: 0
+
+        };
+
+
+        /* =================================================
+           CAMERA PATH
+        =================================================
+
+           scroll = position through the page
+
+           x      = horizontal world position
+
+           y      = vertical world position
+
+           z      = camera distance
+
+           rotateX / rotateY = camera orientation
+
+        ================================================= */
+
+        const cameraPath = [
+
+
+            /* =============================================
+               0%
+
+               OPENING
+            ============================================== */
+
+            {
+                scroll: 0.01,
+
+                x: 3840,
+
+                y: 2460,
+
+                z: 10800,
+
+                rotateX: 8,
+
+                rotateY: 0
+
+            },
+
+
+            /* =============================================
+               15%
+
+               LOCATION 01
+            ============================================== */
+
+            {
+                scroll: 0.15,
+
+                x: 3140,
+
+                y: 5060,
+
+                z: 10000,
+
+                rotateX: 8,
+
+                rotateY: 0
+
+            },
+
+
+
+            /* =============================================
+               22%
+
+               LOCATION 02.5
+            ============================================== */
+
+
+            {
+                scroll: 0.22,
+
+                x: 6200,
+
+                y: 5300,
+
+                z: 3000,
+
+                rotateX: 6,
+
+                rotateY: -2
+
+            },
+
+            /* =============================================
+               40%
+
+               LOCATION 02
+            ============================================== */
+
+
+            {
+                scroll: 0.40,
+
+                x: 7210,
+
+                y: 4250,
+
+                z: 1800,
+
+                rotateX: 6,
+
+                rotateY: -2
+
+            },
+
+            /* =============================================
+               55%
+
+               LOCATION 03
+            ============================================== */
+
+
+            {
+                scroll: 0.55,
+
+                x: 3600,
+
+                y: 3400,
+
+                z: 1500,
+
+                rotateX: 6,
+
+                rotateY: -2
+
+            },
+
+            
+
+
+            /* =============================================
+               70%
+
+               LOCATION 04
+            ============================================== */
+
+
+            {
+                scroll: 0.70,
+
+                x: 4300,
+
+                y: 2800,
+
+                z: 1500,
+
+                rotateX: 6,
+
+                rotateY: -2
+
+            },
+
+
+                    /* =============================================
+               90%
+
+               LOCATION 05
+            ============================================== */
+
+
+            {
+                scroll: 0.90,
+
+                x: 3840,
+
+                y: 2460,
+
+                z: 9800,
+
+                rotateX: 20,
+
+                rotateY: 0
+
+            },
+
+
+
+        ];
+
+
+
+        /* =================================================
+           DEVELOPMENT XYZ GRID
+        ================================================= */
+
+        const debugGrid =
+            document.getElementById("debug-grid");
+
+        const cameraMarkers =
+            document.getElementById("camera-markers");
+
+        const debugToggle =
+            document.getElementById("debug-toggle");
+
+
+        /*
+           Each grid square = 200 world pixels.
+
+           X = horizontal
+           Y = vertical
+           Z = depth
+
+           The marker coordinates below are the SAME
+           coordinates used by cameraPath.
+        */
+
+        if (cameraMarkers) {
+
+            cameraPath.forEach(
+                (point, index) => {
+
+                    const marker =
+                        document.createElement("div");
+
+                    marker.className =
+                        "camera-marker";
+
+                    marker.style.left =
+                        `${point.x}px`;
+
+                    marker.style.top =
+                        `${point.y}px`;
+
+                    /*
+                       The page moves the world by -camera.z.
+                       Therefore a point with z=1500 is placed
+                       at translateZ(-1500px), matching the
+                       existing camera coordinate convention.
+                    */
+
+                    marker.style.transform =
+                        `translateZ(${-point.z}px)`;
+
+
+                    const label =
+                        document.createElement("div");
+
+                    label.className =
+                        "camera-marker-label";
+
+                    label.innerHTML =
+                        `<strong>
+                            NODE ${String(index + 1).padStart(2, "0")}
+                            — ${Math.round(point.scroll * 100)}%
+                        </strong>
+                        X ${Math.round(point.x)}
+                        &nbsp;&nbsp;
+                        Y ${Math.round(point.y)}
+                        &nbsp;&nbsp;
+                        Z ${Math.round(point.z)}
+                        <br>
+                        ROT X ${point.rotateX}°
+                        &nbsp;&nbsp;
+                        ROT Y ${point.rotateY}°`;
+
+                    marker.appendChild(label);
+                    cameraMarkers.appendChild(marker);
+
+                }
+            );
+
+        }
+
+
+        /*
+           Grid ON / OFF
+        */
+
+        if (debugToggle && debugGrid) {
+
+            debugToggle.addEventListener(
+                "click",
+                () => {
+
+                    const hidden =
+                        debugGrid.classList.toggle(
+                            "is-hidden"
+                        );
+
+                    debugToggle.textContent =
+                        hidden
+                            ? "GRID OFF"
+                            : "GRID ON";
+
+                }
+            );
+
+        }
+
+        /* =================================================
+           LINEAR INTERPOLATION
+        ================================================= */
+
+        function lerp(
+            a,
+            b,
+            amount
+        ) {
+
+            return (
+                a +
+                (
+                    b - a
+                ) *
+                amount
+            );
+
+        }
+
+
+        /* =================================================
+           WIDE BEZIER EASE
+        =================================================
+
+           This creates an extremely broad cinematic
+           ease between camera locations.
+
+           p1 near 0
+           p2 near 1
+
+           means the camera changes very slowly at
+           the beginning and end of each segment.
+        ================================================= */
+
+        function bezierEase(
+            t
+        ) {
+
+            const p0 = 0.0;
+
+            const p1 = 0.0;
+
+            const p2 = 0.98;
+
+            const p3 = 1.0;
+
+
+            const oneMinusT =
+                1 - t;
+
+
+            return (
+
+                oneMinusT *
+                oneMinusT *
+                oneMinusT *
+                p0
+
+                +
+
+                3 *
+                oneMinusT *
+                oneMinusT *
+                t *
+                p1
+
+                +
+
+                3 *
+                oneMinusT *
+                t *
+                t *
+                p2
+
+                +
+
+                t *
+                t *
+                t *
+                p3
+
+            );
+
+        }
+
+
+
+        /* =================================================
+           FIND CAMERA POSITION
+        ================================================= */
+
+        function getCameraPosition(
+            progress
+        ) {
+
+
+            /*
+                Before beginning.
+            */
+
+            if (
+                progress <=
+                cameraPath[0].scroll
+            ) {
+
+                return {
+                    ...cameraPath[0]
+                };
+
+            }
+
+
+            /*
+                After end.
+            */
+
+            if (
+                progress >=
+                cameraPath[
+                    cameraPath.length - 1
+                ].scroll
+            ) {
+
+                return {
+                    ...cameraPath[
+                        cameraPath.length - 1
+                    ]
+                };
+
+            }
+
+
+            /*
+                Find current segment.
+            */
+
+            for (
+                let i = 0;
+                i <
+                cameraPath.length - 1;
+                i++
+            ) {
+
+
+                const a =
+                    cameraPath[i];
+
+
+                const b =
+                    cameraPath[
+                        i + 1
+                    ];
+
+
+                if (
+                    progress >= a.scroll &&
+                    progress <= b.scroll
+                ) {
+
+
+                    const range =
+                        b.scroll -
+                        a.scroll;
+
+
+                    const localProgress =
+                        (
+                            progress -
+                            a.scroll
+                        ) /
+                        range;
+
+
+                    /*
+                        Wide cinematic Bézier
+                        easing.
+                    */
+
+                    const eased =
+                        bezierEase(
+                            localProgress
+                        );
+
+
+                    return {
+
+
+                        x:
+                            lerp(
+                                a.x,
+                                b.x,
+                                eased
+                            ),
+
+
+                        y:
+                            lerp(
+                                a.y,
+                                b.y,
+                                eased
+                            ),
+
+
+                        z:
+                            lerp(
+                                a.z,
+                                b.z,
+                                eased
+                            ),
+
+
+                        rotateX:
+                            lerp(
+                                a.rotateX,
+                                b.rotateX,
+                                eased
+                            ),
+
+
+                        rotateY:
+                            lerp(
+                                a.rotateY,
+                                b.rotateY,
+                                eased
+                            )
+
+                    };
+
+                }
+
+            }
+
+        }
+
+
+        /* =================================================
+           UPDATE TARGET
+        ================================================= */
+
+        function updateTarget() {
+
+
+            const maxScroll =
+                document.documentElement
+                    .scrollHeight -
+                window.innerHeight;
+
+
+            if (
+                maxScroll <= 0
+            ) {
+
+                return;
+
+            }
+
+
+            const progress =
+                window.scrollY /
+                maxScroll;
+
+
+            target =
+                getCameraPosition(
+                    progress
+                );
+
+
+            if (
+                scrollLabel
+            ) {
+
+                scrollLabel.style.opacity =
+                    progress > 0.03
+                        ? "0"
+                        : "1";
+
+            }
+
+        }
+
+
+        /* =================================================
+           RENDER
+        ================================================= */
+
+        function render() {
+
+
+            /*
+                Smooth physical camera movement
+                on top of the Bézier path.
+
+                This gives the camera additional
+                inertia.
+            */
+
+            current.x =
+                lerp(
+                    current.x,
+                    target.x,
+                    0.075
+                );
+
+
+            current.y =
+                lerp(
+                    current.y,
+                    target.y,
+                    0.075
+                );
+
+
+            current.z =
+                lerp(
+                    current.z,
+                    target.z,
+                    0.075
+                );
+
+
+            current.rotateX =
+                lerp(
+                    current.rotateX,
+                    target.rotateX,
+                    0.075
+                );
+
+
+            current.rotateY =
+                lerp(
+                    current.rotateY,
+                    target.rotateY,
+                    0.075
+                );
+
+
+            /* =================================================
+               WORLD TRANSFORM
+            ================================================= */
+
+            world.style.transform =
+
+                `translate3d(
+                    calc(
+                        ${window.innerWidth / 2}px -
+                        ${current.x}px
+                    ),
+                    calc(
+                        ${window.innerHeight / 2}px -
+                        ${current.y}px
+                    ),
+                    ${-current.z}px
+                )
+                rotateX(
+                    ${current.rotateX}deg
+                )
+                rotateY(
+                    ${current.rotateY}deg
+                )`;
+
+
+            requestAnimationFrame(
+                render
+            );
+
+        }
+
+
+        /* =================================================
+           EVENTS
+        ================================================= */
+
+        window.addEventListener(
+            "scroll",
+            updateTarget,
+            {
+                passive: true
+            }
+        );
+
+
+        window.addEventListener(
+            "resize",
+            updateTarget,
+            {
+                passive: true
+            }
+        );
+
+
+        /* =================================================
+           START
+        ================================================= */
+
+        updateTarget();
+
+        render();
+
+
+    }
+
+    
+);
+
+</script>
+
+</body>
+
+</html>
