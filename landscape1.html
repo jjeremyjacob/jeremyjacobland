@@ -7,9 +7,8 @@
 <meta charset="UTF-8">
 
 <meta
-name="viewport"
-content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
 <title>Landscape World</title>
@@ -81,10 +80,10 @@ body {
 
     background: #000;
 
-    perspective: 1500px;
+    perspective: 6000px;
     perspective-origin: 50% 50%;
 
-    -webkit-perspective: 1500px;
+    -webkit-perspective: 6000px;
     -webkit-perspective-origin: 50% 50%;
 
 }
@@ -101,8 +100,8 @@ body {
     left: 0;
     top: 0;
 
-    width: 1920px;
-    height: 1920px;
+    width: 7680px;
+    height: 7680px;
 
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
@@ -120,14 +119,14 @@ body {
 
     position: absolute;
 
-    width: 1920px;
-    height: 1920px;
+    width: 7680px;
+    height: 7680px;
 
-    left: 960px;
-    top: 960px;
+    left: 3840px;
+    top: 3840px;
 
-    margin-left: -960px;
-    margin-top: -960px;
+    margin-left: -3840px;
+    margin-top: -3840px;
 
     object-fit: fill;
 
@@ -154,7 +153,7 @@ body {
 .layer-ultra-near {
 
     transform:
-        translateZ(250px)
+        translateZ(1000px)
         scale(1.00);
 
     z-index: 5;
@@ -184,8 +183,8 @@ body {
 .layer-middle-near {
 
     transform:
-        translateX(225px)
-        translateZ(-300px)
+        translateX(900px)
+        translateZ(-1200px)
         scale(1.40);
 
     z-index: 3;
@@ -200,8 +199,8 @@ body {
 .layer-middle-far {
 
     transform:
-        translateX(75px)
-        translateZ(-500px)
+        translateX(300px)
+        translateZ(-2000px)
         scale(1.90);
 
     z-index: 2;
@@ -216,7 +215,7 @@ body {
 .layer-far {
 
     transform:
-        translateZ(-750px)
+        translateZ(-3000px)
         scale(1.36);
 
     z-index: 1;
@@ -288,7 +287,6 @@ body {
 
 /* =====================================================
    DEVELOPMENT XYZ GRID
-   WORLD = 1920 × 1920
 ===================================================== */
 
 #debug-grid {
@@ -298,8 +296,8 @@ body {
     left: 0;
     top: 0;
 
-    width: 1920px;
-    height: 1920px;
+    width: 7680px;
+    height: 4320px;
 
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
@@ -319,8 +317,8 @@ body {
 
     position: absolute;
 
-    left: 960px;
-    top: 960px;
+    left: 3840px;
+    top: 2160px;
 
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
@@ -338,64 +336,52 @@ body {
             transparent 1px
         );
 
-    background-size: 50px 50px;
+    background-size: 200px 200px;
 
 }
 
-
-/* =====================================================
-   XY PLANE
-===================================================== */
 
 #debug-grid-xy {
 
-    width: 1920px;
-    height: 1920px;
+    width: 7680px;
+    height: 4320px;
 
-    margin-left: -960px;
-    margin-top: -960px;
+    margin-left: -3840px;
+    margin-top: -2160px;
 
 }
 
 
-/* =====================================================
-   XZ PLANE
-===================================================== */
-
 #debug-grid-xz {
 
-    width: 1920px;
-    height: 600px;
+    width: 7680px;
+    height: 2400px;
 
-    margin-left: -960px;
-    margin-top: -300px;
+    margin-left: -3840px;
+    margin-top: -1200px;
 
     opacity: 0.55;
 
     transform:
         rotateX(90deg)
-        translateZ(960px);
+        translateZ(2160px);
 
 }
 
 
-/* =====================================================
-   YZ PLANE
-===================================================== */
-
 #debug-grid-yz {
 
-    width: 600px;
-    height: 600px;
+    width: 4320px;
+    height: 2400px;
 
-    margin-left: -300px;
-    margin-top: -300px;
+    margin-left: -2160px;
+    margin-top: -1200px;
 
     opacity: 0.55;
 
     transform:
         rotateY(90deg)
-        translateZ(960px);
+        translateZ(3840px);
 
 }
 
@@ -408,8 +394,8 @@ body {
 
     position: absolute;
 
-    left: 960px;
-    top: 960px;
+    left: 3840px;
+    top: 2160px;
 
     width: 1px;
     height: 1px;
@@ -426,10 +412,10 @@ body {
 
     position: absolute;
 
-    width: 1920px;
-    height: 2px;
+    width: 7680px;
+    height: 3px;
 
-    left: -960px;
+    left: -3840px;
     top: -1px;
 
     background:
@@ -447,11 +433,11 @@ body {
 
     position: absolute;
 
-    width: 2px;
-    height: 1920px;
+    width: 3px;
+    height: 4320px;
 
     left: -1px;
-    top: -960px;
+    top: -2160px;
 
     background:
         rgba(80,255,120,0.85);
@@ -475,7 +461,7 @@ body {
         Helvetica,
         sans-serif;
 
-    font-size: 12px;
+    font-size: 16px;
 
     font-weight: bold;
 
@@ -487,8 +473,8 @@ body {
 
 .axis-x {
 
-    left: 970px;
-    top: 940px;
+    left: 3850px;
+    top: 2130px;
 
     color:
         rgba(255,90,90,0.95);
@@ -498,8 +484,8 @@ body {
 
 .axis-y {
 
-    left: 980px;
-    top: 920px;
+    left: 3860px;
+    top: 2100px;
 
     color:
         rgba(90,255,130,0.95);
@@ -509,8 +495,8 @@ body {
 
 .axis-z {
 
-    left: 990px;
-    top: 960px;
+    left: 3880px;
+    top: 2160px;
 
     color:
         rgba(90,160,255,0.95);
@@ -538,11 +524,11 @@ body {
 
     position: absolute;
 
-    width: 12px;
-    height: 12px;
+    width: 22px;
+    height: 22px;
 
-    margin-left: -6px;
-    margin-top: -6px;
+    margin-left: -11px;
+    margin-top: -11px;
 
     border:
         2px solid rgba(255,255,255,0.95);
@@ -554,10 +540,10 @@ body {
 
     box-shadow:
 
-        0 0 0 3px
+        0 0 0 5px
         rgba(255,255,255,0.08),
 
-        0 0 10px
+        0 0 18px
         rgba(255,255,255,0.25);
 
     transform-style: preserve-3d;
@@ -575,11 +561,11 @@ body {
     left: 50%;
     top: 50%;
 
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
 
-    margin-left: -2px;
-    margin-top: -2px;
+    margin-left: -3px;
+    margin-top: -3px;
 
     border-radius: 50%;
 
@@ -593,20 +579,20 @@ body {
 
     position: absolute;
 
-    left: 12px;
-    top: -8px;
+    left: 18px;
+    top: -10px;
 
-    min-width: 150px;
+    min-width: 190px;
 
-    padding: 5px 7px;
+    padding: 7px 9px;
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 9px;
+    font-size: 11px;
 
-    line-height: 1.4;
+    line-height: 1.45;
 
     color:
         rgba(255,255,255,0.92);
@@ -631,7 +617,7 @@ body {
 
     margin-bottom: 2px;
 
-    font-size: 10px;
+    font-size: 12px;
 
     color:
         rgba(255,255,255,1);
@@ -685,9 +671,9 @@ body {
 
         min-height: 100vh;
 
-        perspective: 1500px;
+        perspective: 6000px;
 
-        -webkit-perspective: 1500px;
+        -webkit-perspective: 6000px;
 
         perspective-origin: 50% 50%;
 
@@ -715,7 +701,7 @@ body {
 
 
 /* =====================================================
-   VERY SMALL MOBILE DEVICES
+   VERY SMALL MOBILE
 ===================================================== */
 
 @media (max-width: 400px) {
@@ -734,7 +720,9 @@ body {
 
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      SCROLL SPACE
@@ -742,81 +730,80 @@ body {
 
 <div id="scroll-space"></div>
 
+
 <!-- =====================================================
      CAMERA VIEWPORT
 ===================================================== -->
 
 <div id="viewport">
 
-<!-- =====================================================
-     WORLD
-===================================================== -->
 
 <div id="world">
 
-<!-- =============================================
+
+<!-- =================================================
      FAR DISTANCE
-============================================== -->
+================================================= -->
 
 <img
-class="landscape-layer layer-far"
-src="landscapeimages/landscape4.webp"
-alt=""
-draggable="false"
-
+    class="landscape-layer layer-far"
+    src="landscapeimages/landscape4.webp"
+    alt=""
+    draggable="false"
 >
 
-<!-- =============================================
+
+<!-- =================================================
      MIDDLE GROUND — FAR
-============================================== -->
+================================================= -->
 
 <img
-class="landscape-layer layer-middle-far"
-src="landscapeimages/landscape3.webp"
-alt=""
-draggable="false"
-
+    class="landscape-layer layer-middle-far"
+    src="landscapeimages/landscape3.webp"
+    alt=""
+    draggable="false"
 >
 
-<!-- =============================================
+
+<!-- =================================================
      MIDDLE GROUND — NEAR
-============================================== -->
+================================================= -->
 
 <img
-class="landscape-layer layer-middle-near"
-src="landscapeimages/landscape2.webp"
-alt=""
-draggable="false"
-
+    class="landscape-layer layer-middle-near"
+    src="landscapeimages/landscape2.webp"
+    alt=""
+    draggable="false"
 >
 
-<!-- =============================================
+
+<!-- =================================================
      FOREGROUND
-============================================== -->
+================================================= -->
 
 <img
-class="landscape-layer layer-foreground"
-src="landscapeimages/landscape1.webp"
-alt=""
-draggable="false"
-
+    class="landscape-layer layer-foreground"
+    src="landscapeimages/landscape1.webp"
+    alt=""
+    draggable="false"
 >
 
-<!-- =============================================
+
+<!-- =================================================
      ULTRA FOREGROUND — VERY CLOSE
-============================================== -->
+================================================= -->
 
 <img
-class="landscape-layer layer-ultra-near"
-src="landscapeimages/landscape5.webp"
-alt=""
-draggable="false"
-
+    class="landscape-layer layer-ultra-near"
+    src="landscapeimages/landscape5.webp"
+    alt=""
+    draggable="false"
 >
 
-<!-- =============================================
+
+<!-- =================================================
      DEVELOPMENT XYZ GRID
-============================================== -->
+================================================= -->
 
 <div
     id="debug-grid"
@@ -824,43 +811,44 @@ draggable="false"
     aria-hidden="true"
 >
 
-```
-<div id="debug-grid-xy"></div>
+    <div id="debug-grid-xy"></div>
 
-<div id="debug-grid-xz"></div>
+    <div id="debug-grid-xz"></div>
 
-<div id="debug-grid-yz"></div>
+    <div id="debug-grid-yz"></div>
 
-<div id="debug-origin">
+    <div id="debug-origin">
 
-    <span class="axis-label axis-x">
-        X
-    </span>
+        <span class="axis-label axis-x">
+            X
+        </span>
 
-    <span class="axis-label axis-y">
-        Y
-    </span>
+        <span class="axis-label axis-y">
+            Y
+        </span>
 
-    <span class="axis-label axis-z">
-        Z
-    </span>
+        <span class="axis-label axis-z">
+            Z
+        </span>
 
-</div>
+    </div>
 
-<div id="camera-markers"></div>
-```
+    <div id="camera-markers"></div>
 
 </div>
 
+
 </div>
 
 </div>
+
 
 <!-- =====================================================
      VIGNETTE
 ===================================================== -->
 
 <div id="vignette"></div>
+
 
 <!-- =====================================================
      SCROLL LABEL
@@ -870,7 +858,9 @@ draggable="false"
     Scroll to travel
 </div>
 
+
 <script>
+
 
 /* =====================================================
    IMMERSIVE LANDSCAPE CAMERA
@@ -879,6 +869,7 @@ draggable="false"
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+
 
         const world =
             document.getElementById(
@@ -893,26 +884,396 @@ document.addEventListener(
 
 
         if (!world) {
+
             return;
+
         }
 
 
         /* =================================================
            WORLD DIMENSIONS
-
-           IMPORTANT:
-           EVERYTHING NOW USES THE 1920 SYSTEM.
         ================================================= */
 
-        const WORLD_WIDTH = 1920;
+        const WORLD_WIDTH =
+            7680;
 
-        const WORLD_HEIGHT = 1920;
+        const WORLD_HEIGHT =
+            4320;
 
-        const WORLD_CENTER_X =
-            WORLD_WIDTH / 2;
 
-        const WORLD_CENTER_Y =
-            WORLD_HEIGHT / 2;
+        /* =================================================
+           DESKTOP CAMERA PATH
+           
+           THIS IS YOUR CURRENT DESKTOP PATH.
+           
+           DO NOT CHANGE THESE VALUES WHEN
+           ADJUSTING MOBILE.
+        ================================================= */
+
+        const desktopCameraPath = [
+
+            {
+                scroll: 0.01,
+
+                x: 3840,
+                y: 3000,
+                z: 20800,
+
+                rotateX: 20,
+                rotateY: 5
+            },
+
+
+            {
+                scroll: 0.10,
+
+                x: 2040,
+                y: 6060,
+                z: 12000,
+
+                rotateX: 8,
+                rotateY: 2
+            },
+
+
+            {
+                scroll: 0.25,
+
+                x: 6400,
+                y: 6000,
+                z: 3500,
+
+                rotateX: 6,
+                rotateY: -2
+            },
+
+
+            {
+                scroll: 0.40,
+
+                x: 8160,
+                y: 4460,
+                z: -1000,
+
+                rotateX: 6,
+                rotateY: -2
+            },
+
+
+            {
+                scroll: 0.55,
+
+                x: 3750,
+                y: 4050,
+                z: -1500,
+
+                rotateX: 23,
+                rotateY: -2
+            },
+
+
+            {
+                scroll: 0.70,
+
+                x: 4550,
+                y: 2900,
+                z: -1000,
+
+                rotateX: 21,
+                rotateY: 0
+            },
+
+
+            {
+                scroll: 1.00,
+
+                x: 4040,
+                y: 4800,
+                z: 25000,
+
+                rotateX: 25,
+                rotateY: 0
+            }
+
+        ];
+
+
+        /* =================================================
+           TABLET CAMERA PATH
+           
+           701px — 1024px
+           
+           STARTING VALUES ARE BASED ON DESKTOP,
+           BUT WITH MORE CENTERED COMPOSITIONS.
+           
+           TUNE THIS INDEPENDENTLY.
+        ================================================= */
+
+        const tabletCameraPath = [
+
+            {
+                scroll: 0.01,
+
+                x: 3840,
+                y: 3000,
+                z: 2000,
+
+                rotateX: 18,
+                rotateY: 3
+            },
+
+
+            {
+                scroll: 0.10,
+
+                x: 2600,
+                y: 5400,
+                z: 10500,
+
+                rotateX: 8,
+                rotateY: 1
+            },
+
+
+            {
+                scroll: 0.25,
+
+                x: 6000,
+                y: 5700,
+                z: 3200,
+
+                rotateX: 6,
+                rotateY: -2
+            },
+
+
+            {
+                scroll: 0.40,
+
+                x: 7600,
+                y: 4400,
+                z: -800,
+
+                rotateX: 6,
+                rotateY: -2
+            },
+
+
+            {
+                scroll: 0.55,
+
+                x: 3750,
+                y: 3950,
+                z: -1300,
+
+                rotateX: 20,
+                rotateY: -2
+            },
+
+
+            {
+                scroll: 0.70,
+
+                x: 4450,
+                y: 3000,
+                z: -800,
+
+                rotateX: 20,
+                rotateY: 0
+            },
+
+
+            {
+                scroll: 1.00,
+
+                x: 4040,
+                y: 4500,
+                z: 21000,
+
+                rotateX: 23,
+                rotateY: 0
+            }
+
+        ];
+
+
+        /* =================================================
+           MOBILE CAMERA PATH
+           
+           700px AND BELOW
+           
+           THIS IS COMPLETELY INDEPENDENT FROM
+           DESKTOP AND TABLET.
+           
+           MOBILE USES MORE DISTANCE BECAUSE THE
+           PORTRAIT VIEWPORT IS MUCH NARROWER.
+        ================================================= */
+
+        const mobileCameraPath = [
+
+            /* =============================================
+               0%
+
+               OPENING
+            ============================================== */
+
+            {
+                scroll: 0.01,
+
+                x: 3840,
+                y: 4100,
+                z: 45000,
+
+                rotateX: 10,
+                rotateY: 0
+            },
+
+
+            /* =============================================
+               10%
+
+               LOCATION 02
+            ============================================== */
+
+            {
+                scroll: 0.10,
+
+                x: 1350,
+                y: 5850,
+                z: 18000,
+
+                rotateX: 8,
+                rotateY: 1
+            },
+
+
+            /* =============================================
+               25%
+
+               LOCATION 03
+            ============================================== */
+
+            {
+                scroll: 0.25,
+
+                x: 6500,
+                y: 5900,
+                z: 13000,
+
+                rotateX: 6,
+                rotateY: -2
+            },
+
+
+            /* =============================================
+               40%
+
+               LOCATION 04
+            ============================================== */
+
+            {
+                scroll: 0.40,
+
+                x: 8000,
+                y: 4450,
+                z: 2000,
+
+                rotateX: 6,
+                rotateY: -2
+            },
+
+
+            /* =============================================
+               55%
+
+               LOCATION 05
+            ============================================== */
+
+            {
+                scroll: 0.55,
+
+                x: 3400,
+                y: 3850,
+                z: -900,
+
+                rotateX: 21,
+                rotateY: -2
+            },
+
+
+            /* =============================================
+               70%
+
+               LOCATION 06
+            ============================================== */
+
+            {
+                scroll: 0.70,
+
+                x: 4500,
+                y: 2900,
+                z: 4000,
+
+                rotateX: 20,
+                rotateY: 0
+            },
+
+
+            /* =============================================
+               100%
+
+               LOCATION 07
+            ============================================== */
+
+            {
+                scroll: 1.00,
+
+                x: 4040,
+                y: 4050,
+                z: 45000,
+
+                rotateX: 23,
+                rotateY: 0
+            }
+
+        ];
+
+
+        /* =================================================
+           CHOOSE CAMERA PATH
+           
+           DESKTOP
+           TABLET
+           MOBILE
+        ================================================= */
+
+        function getCameraPath() {
+
+            const width =
+                window.innerWidth;
+
+
+            if (width <= 700) {
+
+                return mobileCameraPath;
+
+            }
+
+
+            if (width <= 1024) {
+
+                return tabletCameraPath;
+
+            }
+
+
+            return desktopCameraPath;
+
+        }
+
+
+        let cameraPath =
+            getCameraPath();
 
 
         /* =================================================
@@ -921,185 +1282,42 @@ document.addEventListener(
 
         let current = {
 
-            x: WORLD_CENTER_X,
+            x:
+                WORLD_WIDTH / 2,
 
-            y: WORLD_CENTER_Y,
+            y:
+                WORLD_HEIGHT / 2,
 
-            z: 1000,
+            z:
+                4000,
 
-            rotateX: 8,
+            rotateX:
+                8,
 
-            rotateY: 0
+            rotateY:
+                0
 
         };
 
 
         let target = {
 
-            x: WORLD_CENTER_X,
+            x:
+                WORLD_WIDTH / 2,
 
-            y: WORLD_CENTER_Y,
+            y:
+                WORLD_HEIGHT / 2,
 
-            z: 1000,
+            z:
+                4000,
 
-            rotateX: 8,
+            rotateX:
+                8,
 
-            rotateY: 0
+            rotateY:
+                0
 
         };
-
-
-        /* =================================================
-           CAMERA PATH
-
-           Converted from the previous 7680 system
-           to the new 1920 system.
-
-           SCALE FACTOR = 0.25
-        ================================================= */
-
-        const cameraPath = [
-
-            /* =============================================
-               1%
-               OPENING
-            ============================================== */
-
-            {
-                scroll: 0.01,
-
-                x: 960,
-
-                y: 750,
-
-                z: 5200,
-
-                rotateX: 20,
-
-                rotateY: 5
-            },
-
-
-            /* =============================================
-               10%
-               LOCATION 02
-            ============================================== */
-
-            {
-                scroll: 0.10,
-
-                x: 510,
-
-                y: 1515,
-
-                z: 3000,
-
-                rotateX: 8,
-
-                rotateY: 2
-            },
-
-
-            /* =============================================
-               25%
-               LOCATION 03
-            ============================================== */
-
-            {
-                scroll: 0.25,
-
-                x: 1600,
-
-                y: 1500,
-
-                z: 875,
-
-                rotateX: 6,
-
-                rotateY: -2
-            },
-
-
-            /* =============================================
-               40%
-               LOCATION 04
-            ============================================== */
-
-            {
-                scroll: 0.40,
-
-                x: 2040,
-
-                y: 1115,
-
-                z: -250,
-
-                rotateX: 6,
-
-                rotateY: -2
-            },
-
-
-            /* =============================================
-               55%
-               LOCATION 05
-            ============================================== */
-
-            {
-                scroll: 0.55,
-
-                x: 937.5,
-
-                y: 1012.5,
-
-                z: -375,
-
-                rotateX: 23,
-
-                rotateY: -2
-            },
-
-
-            /* =============================================
-               70%
-               LOCATION 06
-            ============================================== */
-
-            {
-                scroll: 0.70,
-
-                x: 1137.5,
-
-                y: 725,
-
-                z: -250,
-
-                rotateX: 21,
-
-                rotateY: 0
-            },
-
-
-            /* =============================================
-               100%
-               LOCATION 07
-            ============================================== */
-
-            {
-                scroll: 1.00,
-
-                x: 1010,
-
-                y: 1200,
-
-                z: 6250,
-
-                rotateX: 25,
-
-                rotateY: 0
-            }
-
-        ];
 
 
         /* =================================================
@@ -1119,16 +1337,25 @@ document.addEventListener(
 
 
         /* =================================================
-           CAMERA MARKERS
-
-           Markers use exactly the same
-           coordinate system as cameraPath.
+           CREATE CAMERA MARKERS
         ================================================= */
 
-        if (cameraMarkers) {
+        function createCameraMarkers() {
+
+
+            if (!cameraMarkers) {
+
+                return;
+
+            }
+
+
+            cameraMarkers.innerHTML = "";
+
 
             cameraPath.forEach(
                 (point, index) => {
+
 
                     const marker =
                         document.createElement(
@@ -1197,26 +1424,33 @@ document.addEventListener(
         }
 
 
+        createCameraMarkers();
+
+
         /* =================================================
-           DEVELOPMENT GRID — KEYBOARD TOGGLE
+           GRID KEYBOARD TOGGLE
 
            G = GRID ON / OFF
         ================================================= */
 
         if (debugGrid) {
 
+
             document.addEventListener(
                 "keydown",
                 (event) => {
+
 
                     if (
                         event.key.toLowerCase() ===
                         "g"
                     ) {
 
+
                         debugGrid.classList.toggle(
                             "is-hidden"
                         );
+
 
                     }
 
@@ -1259,17 +1493,20 @@ document.addEventListener(
             t
         ) {
 
-            const p0 = 0.0;
+            const p0 =
+                0.0;
 
-            const p1 = 0.0;
+            const p1 =
+                0.0;
 
-            const p2 = 0.98;
+            const p2 =
+                0.98;
 
-            const p3 = 1.0;
+            const p3 =
+                1.0;
 
             const oneMinusT =
                 1 - t;
-
 
             return (
 
@@ -1314,6 +1551,7 @@ document.addEventListener(
             progress
         ) {
 
+
             if (
                 progress <=
                 cameraPath[0].scroll
@@ -1349,6 +1587,7 @@ document.addEventListener(
                 i++
             ) {
 
+
                 const a =
                     cameraPath[i];
 
@@ -1363,6 +1602,7 @@ document.addEventListener(
                     progress >= a.scroll &&
                     progress <= b.scroll
                 ) {
+
 
                     const range =
                         b.scroll -
@@ -1437,6 +1677,31 @@ document.addEventListener(
 
         function updateTarget() {
 
+
+            /*
+                Re-check viewport width.
+
+                This means the correct camera path
+                is selected if the browser changes
+                orientation or window size.
+            */
+
+            const newCameraPath =
+                getCameraPath();
+
+
+            if (
+                newCameraPath !== cameraPath
+            ) {
+
+                cameraPath =
+                    newCameraPath;
+
+                createCameraMarkers();
+
+            }
+
+
             const maxScroll =
 
                 document.documentElement
@@ -1488,6 +1753,11 @@ document.addEventListener(
         ================================================= */
 
         function render() {
+
+
+            /*
+                Smooth physical camera movement.
+            */
 
             current.x =
                 lerp(
@@ -1596,6 +1866,7 @@ document.addEventListener(
         updateTarget();
 
         render();
+
 
     }
 
