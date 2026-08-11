@@ -12,7 +12,6 @@
 
 <title>Landscape World</title>
 
-
 <style>
 
 /* =====================================================
@@ -32,37 +31,22 @@
 
 html,
 body {
-
     width: 100%;
     min-height: 100%;
-
     margin: 0;
     padding: 0;
-
     background: #000;
-
 }
 
 html {
-
     overflow-x: hidden;
     overflow-y: auto;
-
 }
 
 body {
-
     overflow-x: hidden;
-
-    /*
-        Important for iOS Safari.
-        We want normal vertical document scrolling.
-    */
-
     touch-action: pan-y;
-
     -webkit-overflow-scrolling: touch;
-
 }
 
 
@@ -71,15 +55,8 @@ body {
 ===================================================== */
 
 #scroll-space {
-
     height: 3450vh;
-
-    /*
-        Prevent accidental horizontal expansion.
-    */
-
     width: 1px;
-
 }
 
 
@@ -88,19 +65,12 @@ body {
 ===================================================== */
 
 #viewport {
-
     position: fixed;
-
     left: 0;
     top: 0;
 
     width: 100%;
     height: 100vh;
-
-    /*
-        JS updates this variable for Safari.
-    */
-
     height: var(--app-height, 100vh);
 
     overflow: hidden;
@@ -108,19 +78,12 @@ body {
     background: #000;
 
     perspective: 1500px;
-
     perspective-origin: 50% 50%;
 
     -webkit-perspective: 1500px;
-
     -webkit-perspective-origin: 50% 50%;
 
-    /*
-        Helps Safari isolate the rendering area.
-    */
-
     contain: layout paint;
-
 }
 
 
@@ -129,7 +92,6 @@ body {
 ===================================================== */
 
 #world {
-
     position: absolute;
 
     left: 0;
@@ -139,76 +101,92 @@ body {
     height: 1920px;
 
     transform-style: preserve-3d;
-
     -webkit-transform-style: preserve-3d;
-
-    /*
-        Only the world itself needs promotion.
-    */
 
     will-change: transform;
 
-    /*
-        Safari optimization.
-    */
-
     backface-visibility: hidden;
-
     -webkit-backface-visibility: hidden;
-
 }
 
 
 /* =====================================================
-   LANDSCAPE LAYERS
+   LANDSCAPE PAIR
+
+   Each depth layer is a 3840 × 1920 strip.
+
+   LEFT IMAGE:
+       0 → 1920
+
+   RIGHT IMAGE:
+       1920 → 3840
+
+   The pair is transformed as one unit.
 ===================================================== */
 
-.landscape-layer {
-
+.landscape-pair {
     position: absolute;
 
-    width: 1920px;
+    width: 3840px;
     height: 1920px;
 
     left: 960px;
     top: 960px;
 
-    margin-left: -960px;
+    margin-left: -1920px;
     margin-top: -960px;
 
-        image-rendering: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 
-
-    /*
-        Your source images are 1920 × 1920.
-    */
-
-    object-fit: fill;
-
-    object-position: center center;
-
-    transform-origin: center center;
+    gap: 0;
+    column-gap: 0;
 
     transform-style: preserve-3d;
-
     -webkit-transform-style: preserve-3d;
 
-    /*
-        Safari image optimization.
-    */
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+
+    will-change: transform;
 
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
 
+
+/* =====================================================
+   LANDSCAPE IMAGES
+===================================================== */
+
+.landscape-image {
+    display: block;
+    flex: 0 0 1920px;
+
+    width: 1920px;
+    height: 1920px;
+
+    margin-left: -1px;
+    padding: 0;
+    border: 0;
+
+    object-fit: fill;
+    object-position: center center;
+
+    image-rendering: auto;
+
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
+    backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 
     pointer-events: none;
-
     user-select: none;
-
     -webkit-user-select: none;
-
     -webkit-user-drag: none;
-
 }
 
 
@@ -217,13 +195,11 @@ body {
 ===================================================== */
 
 .layer-ultra-near {
-
     transform:
         translateZ(250px)
         scale(1.00);
 
     z-index: 5;
-
 }
 
 
@@ -232,13 +208,11 @@ body {
 ===================================================== */
 
 .layer-foreground {
-
     transform:
         translateZ(0px)
         scale(1.00);
 
     z-index: 4;
-
 }
 
 
@@ -247,14 +221,12 @@ body {
 ===================================================== */
 
 .layer-middle-near {
-
     transform:
         translateX(225px)
         translateZ(-300px)
         scale(1.40);
 
     z-index: 3;
-
 }
 
 
@@ -263,14 +235,12 @@ body {
 ===================================================== */
 
 .layer-middle-far {
-
     transform:
         translateX(75px)
         translateZ(-500px)
         scale(1.90);
 
     z-index: 2;
-
 }
 
 
@@ -279,13 +249,11 @@ body {
 ===================================================== */
 
 .layer-far {
-
     transform:
         translateZ(-750px)
         scale(1.36);
 
     z-index: 1;
-
 }
 
 
@@ -294,7 +262,6 @@ body {
 ===================================================== */
 
 #vignette {
-
     position: fixed;
 
     inset: 0;
@@ -304,13 +271,11 @@ body {
     pointer-events: none;
 
     background:
-
         radial-gradient(
             ellipse at center,
             transparent 65%,
             rgba(0, 0, 0, 0.25) 100%
         );
-
 }
 
 
@@ -319,7 +284,6 @@ body {
 ===================================================== */
 
 #scroll-label {
-
     position: fixed;
 
     left: 50%;
@@ -348,7 +312,6 @@ body {
 
     transition:
         opacity 0.8s ease;
-
 }
 
 
@@ -357,7 +320,6 @@ body {
 ===================================================== */
 
 #debug-grid {
-
     position: absolute;
 
     left: 0;
@@ -367,7 +329,6 @@ body {
     height: 1920px;
 
     transform-style: preserve-3d;
-
     -webkit-transform-style: preserve-3d;
 
     pointer-events: none;
@@ -375,21 +336,18 @@ body {
     z-index: 50;
 
     opacity: 0.72;
-
 }
 
 
 #debug-grid-xy,
 #debug-grid-xz,
 #debug-grid-yz {
-
     position: absolute;
 
     left: 960px;
     top: 960px;
 
     transform-style: preserve-3d;
-
     -webkit-transform-style: preserve-3d;
 
     background-image:
@@ -407,23 +365,19 @@ body {
 
     background-size:
         50px 50px;
-
 }
 
 
 #debug-grid-xy {
-
     width: 1920px;
     height: 1920px;
 
     margin-left: -960px;
     margin-top: -960px;
-
 }
 
 
 #debug-grid-xz {
-
     width: 1920px;
     height: 600px;
 
@@ -435,12 +389,10 @@ body {
     transform:
         rotateX(90deg)
         translateZ(960px);
-
 }
 
 
 #debug-grid-yz {
-
     width: 1080px;
     height: 600px;
 
@@ -452,7 +404,6 @@ body {
     transform:
         rotateY(90deg)
         translateZ(960px);
-
 }
 
 
@@ -461,7 +412,6 @@ body {
 ===================================================== */
 
 #debug-origin {
-
     position: absolute;
 
     left: 960px;
@@ -471,14 +421,11 @@ body {
     height: 1px;
 
     transform-style: preserve-3d;
-
     -webkit-transform-style: preserve-3d;
-
 }
 
 
 #debug-origin::before {
-
     content: "";
 
     position: absolute;
@@ -494,12 +441,10 @@ body {
 
     transform:
         translateZ(1px);
-
 }
 
 
 #debug-origin::after {
-
     content: "";
 
     position: absolute;
@@ -515,7 +460,6 @@ body {
 
     transform:
         translateZ(1px);
-
 }
 
 
@@ -524,7 +468,6 @@ body {
 ===================================================== */
 
 .axis-label {
-
     position: absolute;
 
     font-family:
@@ -538,40 +481,33 @@ body {
 
     text-shadow:
         0 1px 4px rgba(0,0,0,0.9);
-
 }
 
 
 .axis-x {
-
     left: 970px;
     top: 945px;
 
     color:
         rgba(255,90,90,0.95);
-
 }
 
 
 .axis-y {
-
     left: 975px;
     top: 930px;
 
     color:
         rgba(90,255,130,0.95);
-
 }
 
 
 .axis-z {
-
     left: 985px;
     top: 960px;
 
     color:
         rgba(90,160,255,0.95);
-
 }
 
 
@@ -580,20 +516,16 @@ body {
 ===================================================== */
 
 #camera-markers {
-
     position: absolute;
 
     inset: 0;
 
     transform-style: preserve-3d;
-
     -webkit-transform-style: preserve-3d;
-
 }
 
 
 .camera-marker {
-
     position: absolute;
 
     width: 14px;
@@ -619,14 +551,11 @@ body {
         rgba(255,255,255,0.25);
 
     transform-style: preserve-3d;
-
     -webkit-transform-style: preserve-3d;
-
 }
 
 
 .camera-marker::after {
-
     content: "";
 
     position: absolute;
@@ -644,12 +573,10 @@ body {
 
     background:
         rgba(255,255,255,0.95);
-
 }
 
 
 .camera-marker-label {
-
     position: absolute;
 
     left: 14px;
@@ -680,12 +607,10 @@ body {
 
     text-shadow:
         0 1px 3px rgba(0,0,0,0.9);
-
 }
 
 
 .camera-marker-label strong {
-
     display: block;
 
     margin-bottom: 2px;
@@ -694,7 +619,6 @@ body {
 
     color:
         rgba(255,255,255,1);
-
 }
 
 
@@ -703,9 +627,7 @@ body {
 ===================================================== */
 
 #debug-grid.is-hidden {
-
     display: none;
-
 }
 
 
@@ -717,40 +639,28 @@ body {
 
     html,
     body {
-
         width: 100%;
 
         overflow-x: hidden;
 
         overscroll-behavior-x: none;
-
     }
 
 
     body {
-
         touch-action: pan-y;
 
         -webkit-overflow-scrolling: touch;
-
     }
 
 
     #scroll-space {
-
         height: 3450vh;
-
     }
 
 
     #viewport {
-
         width: 100%;
-
-        /*
-            Don't depend on 100dvh alone.
-            JS supplies --app-height.
-        */
 
         height: var(--app-height, 100vh);
 
@@ -763,38 +673,36 @@ body {
         perspective-origin: 50% 50%;
 
         -webkit-perspective-origin: 50% 50%;
-
     }
 
 
     #world {
-
         width: 1920px;
         height: 1920px;
 
         will-change: transform;
-
     }
 
 
     /*
-        The debug grid is never rendered
-        on mobile unless explicitly changed.
+        The landscape strips remain 3840px wide.
     */
 
+    .landscape-pair {
+        width: 3840px;
+        height: 1920px;
+    }
+
+
     #debug-grid {
-
         display: none !important;
-
     }
 
 
     #scroll-label {
-
         bottom: 20px;
 
         font-size: 9px;
-
     }
 
 }
@@ -807,11 +715,9 @@ body {
 @media (max-width: 400px) {
 
     #scroll-label {
-
         font-size: 8px;
 
         letter-spacing: 0.2em;
-
     }
 
 }
@@ -824,9 +730,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
 
     #scroll-label {
-
         transition: none;
-
     }
 
 }
@@ -862,62 +766,132 @@ body {
 
         <!-- =============================================
              FAR DISTANCE
+             3840 × 1920
+             landscape4-left
+             landscape4-right
         ============================================== -->
 
-        <img
-            class="landscape-layer layer-far"
-            src="landscapeimages/landscape4.webp"
-            alt=""
-            draggable="false"
-        >
+        <div class="landscape-pair layer-far">
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape4-left.webp"
+                alt=""
+                draggable="false"
+            >
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape4-right.webp"
+                alt=""
+                draggable="false"
+            >
+
+        </div>
 
 
         <!-- =============================================
              MIDDLE GROUND — FAR
+             3840 × 1920
+             landscape3-left
+             landscape3-right
         ============================================== -->
 
-        <img
-            class="landscape-layer layer-middle-far"
-            src="landscapeimages/landscape3.webp"
-            alt=""
-            draggable="false"
-        >
+        <div class="landscape-pair layer-middle-far">
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape3-left.webp"
+                alt=""
+                draggable="false"
+            >
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape3-right.webp"
+                alt=""
+                draggable="false"
+            >
+
+        </div>
 
 
         <!-- =============================================
              MIDDLE GROUND — NEAR
+             3840 × 1920
+             landscape2-left
+             landscape2-right
         ============================================== -->
 
-        <img
-            class="landscape-layer layer-middle-near"
-            src="landscapeimages/landscape2.webp"
-            alt=""
-            draggable="false"
-        >
+        <div class="landscape-pair layer-middle-near">
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape2-left.webp"
+                alt=""
+                draggable="false"
+            >
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape2-right.webp"
+                alt=""
+                draggable="false"
+            >
+
+        </div>
 
 
         <!-- =============================================
              FOREGROUND
+             3840 × 1920
+             landscape1-left
+             landscape1-right
         ============================================== -->
 
-        <img
-            class="landscape-layer layer-foreground"
-            src="landscapeimages/landscape1.webp"
-            alt=""
-            draggable="false"
-        >
+        <div class="landscape-pair layer-foreground">
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape1-left.webp"
+                alt=""
+                draggable="false"
+            >
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape1-right.webp"
+                alt=""
+                draggable="false"
+            >
+
+        </div>
 
 
         <!-- =============================================
              ULTRA FOREGROUND
+             3840 × 1920
+             landscape5-left
+             landscape5-right
         ============================================== -->
 
-        <img
-            class="landscape-layer layer-ultra-near"
-            src="landscapeimages/landscape5.webp"
-            alt=""
-            draggable="false"
-        >
+        <div class="landscape-pair layer-ultra-near">
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape5-left.webp"
+                alt=""
+                draggable="false"
+            >
+
+            <img
+                class="landscape-image"
+                src="landscapeimages/landscape5-right.webp"
+                alt=""
+                draggable="false"
+            >
+
+        </div>
 
 
         <!-- =============================================
@@ -959,7 +933,6 @@ body {
 
     </div>
 
-
 </div>
 
 
@@ -981,7 +954,6 @@ body {
 
 <script>
 
-
 /* =====================================================
    IMMERSIVE LANDSCAPE CAMERA
 ===================================================== */
@@ -989,7 +961,6 @@ body {
 document.addEventListener(
     "DOMContentLoaded",
     () => {
-
 
         const world =
             document.getElementById(
@@ -1004,28 +975,12 @@ document.addEventListener(
 
 
         if (!world) {
-
             return;
-
         }
 
 
         /* =================================================
            WORLD SYSTEM
-
-           IMPORTANT:
-
-           Your old world was 7680 × 7680.
-
-           Your new images are 1920 × 1920.
-
-           Therefore:
-
-               1920 / 7680 = 0.25
-
-           All camera coordinates are automatically
-           converted from the old coordinate system
-           into the new 1920px coordinate system.
         ================================================= */
 
         const OLD_WORLD_SIZE = 7680;
@@ -1045,18 +1000,8 @@ document.addEventListener(
             WORLD_SIZE;
 
 
-        /*
-            Perspective must scale with the world
-            as well.
-
-            Old:
-                6000px
-
-            New:
-                1500px
-        */
-
         const BASE_PERSPECTIVE = 6000;
+
 
         const SCALED_PERSPECTIVE =
             BASE_PERSPECTIVE *
@@ -1069,13 +1014,9 @@ document.addEventListener(
 
         function updateViewportHeight() {
 
-            /*
-                window.innerHeight is more reliable
-                than 100vh on several Safari versions.
-            */
-
             const height =
                 window.innerHeight;
+
 
             document.documentElement
                 .style
@@ -1092,11 +1033,6 @@ document.addEventListener(
 
         /* =================================================
            DESKTOP CAMERA PATH
-
-           THESE VALUES REMAIN IN YOUR ORIGINAL
-           7680px COORDINATE SYSTEM.
-
-           They are automatically scaled to 1920.
         ================================================= */
 
         const desktopCameraPath = [
@@ -1112,7 +1048,6 @@ document.addEventListener(
                 rotateY: 0
             },
 
-
             {
                 scroll: 0.10,
 
@@ -1124,18 +1059,16 @@ document.addEventListener(
                 rotateY: 2
             },
 
-
             {
                 scroll: 0.25,
 
                 x: 6400,
                 y: 6000,
-                z: -4200,
+                z: -3900,
 
                 rotateX: 0,
                 rotateY: -2
             },
-
 
             {
                 scroll: 0.40,
@@ -1148,7 +1081,6 @@ document.addEventListener(
                 rotateY: -2
             },
 
-
             {
                 scroll: 0.55,
 
@@ -1159,7 +1091,6 @@ document.addEventListener(
                 rotateX: -10,
                 rotateY: -2
             },
-
 
             {
                 scroll: 0.70,
@@ -1172,16 +1103,15 @@ document.addEventListener(
                 rotateY: 0
             },
 
-
             {
                 scroll: 1.00,
 
-                x: 5540,
+                x: 4200,
                 y: 3800,
-                z: 5000,
+                z: 6000,
 
-                rotateX: 30,
-                rotateY: -10
+                rotateX: 0,
+                rotateY: 3
             }
 
         ];
@@ -1189,13 +1119,11 @@ document.addEventListener(
 
         /* =================================================
            TABLET CAMERA PATH
-
-           ALSO WRITTEN IN ORIGINAL 7680 SYSTEM.
         ================================================= */
 
         const tabletCameraPath = [
 
-              {
+            {
                 scroll: 0.01,
 
                 x: 3840,
@@ -1205,7 +1133,6 @@ document.addEventListener(
                 rotateX: 10,
                 rotateY: 0
             },
-
 
             {
                 scroll: 0.10,
@@ -1218,7 +1145,6 @@ document.addEventListener(
                 rotateY: 1
             },
 
-
             {
                 scroll: 0.25,
 
@@ -1229,7 +1155,6 @@ document.addEventListener(
                 rotateX: 6,
                 rotateY: -2
             },
-
 
             {
                 scroll: 0.40,
@@ -1242,7 +1167,6 @@ document.addEventListener(
                 rotateY: -2
             },
 
-
             {
                 scroll: 0.55,
 
@@ -1253,7 +1177,6 @@ document.addEventListener(
                 rotateX: 21,
                 rotateY: -2
             },
-
 
             {
                 scroll: 0.70,
@@ -1266,7 +1189,6 @@ document.addEventListener(
                 rotateY: 0
             },
 
-
             {
                 scroll: 1,
 
@@ -1276,21 +1198,13 @@ document.addEventListener(
 
                 rotateX: 20,
                 rotateY: -15
-            },
+            }
 
         ];
 
 
         /* =================================================
            MOBILE CAMERA PATH
-
-           ALSO WRITTEN IN ORIGINAL 7680 SYSTEM.
-
-           These are intentionally independent
-           from desktop.
-
-           Because the phone is narrow, the camera
-           generally sits farther away.
         ================================================= */
 
         const mobileCameraPath = [
@@ -1306,7 +1220,6 @@ document.addEventListener(
                 rotateY: 0
             },
 
-
             {
                 scroll: 0.10,
 
@@ -1317,7 +1230,6 @@ document.addEventListener(
                 rotateX: 8,
                 rotateY: 1
             },
-
 
             {
                 scroll: 0.25,
@@ -1330,7 +1242,6 @@ document.addEventListener(
                 rotateY: -2
             },
 
-
             {
                 scroll: 0.40,
 
@@ -1341,7 +1252,6 @@ document.addEventListener(
                 rotateX: 6,
                 rotateY: -2
             },
-
 
             {
                 scroll: 0.55,
@@ -1354,43 +1264,33 @@ document.addEventListener(
                 rotateY: -2
             },
 
-
             {
                 scroll: 0.70,
 
                 x: 4500,
-                y: 1800,
+                y: 3800,
                 z: -1200,
 
-                rotateX: -25,
+                rotateX: 25,
                 rotateY: 0
             },
-
 
             {
                 scroll: 1,
 
                 x: 3540,
-                y: 4100,
+                y: 4200,
                 z: 6100,
 
-                rotateX: 20,
-                rotateY: -15
-            },
+                rotateX: 0,
+                rotateY: 0
+            }
 
         ];
 
 
         /* =================================================
            SCALE CAMERA PATH
-
-           This is the important part.
-
-           You can continue editing camera
-           coordinates using your familiar
-           original 7680 coordinate system.
-
-           The website converts them automatically.
         ================================================= */
 
         function scaleCameraPath(path) {
@@ -1454,16 +1354,12 @@ document.addEventListener(
 
 
             if (width <= 700) {
-
                 return scaledMobileCameraPath;
-
             }
 
 
             if (width <= 1024) {
-
                 return scaledTabletCameraPath;
-
             }
 
 
@@ -1545,34 +1441,22 @@ document.addEventListener(
         function createCameraMarkers() {
 
             if (!cameraMarkers) {
-
                 return;
-
             }
 
 
             cameraMarkers.innerHTML = "";
 
 
-            /*
-                Never create debug markers on mobile.
-
-                The grid is hidden there anyway.
-                This avoids unnecessary DOM work.
-            */
-
             if (
                 window.innerWidth <= 700
             ) {
-
                 return;
-
             }
 
 
             cameraPath.forEach(
                 (point, index) => {
-
 
                     const marker =
                         document.createElement(
@@ -1605,14 +1489,6 @@ document.addEventListener(
                     label.className =
                         "camera-marker-label";
 
-
-                    /*
-                        Display the ORIGINAL
-                        7680-system values.
-
-                        This keeps your development
-                        coordinates familiar.
-                    */
 
                     const originalX =
                         Math.round(
@@ -1664,7 +1540,6 @@ document.addEventListener(
                         marker
                     );
 
-
                 }
             );
 
@@ -1691,17 +1566,10 @@ document.addEventListener(
                         "g"
                     ) {
 
-                        /*
-                            Do not allow grid on
-                            mobile.
-                        */
-
                         if (
                             window.innerWidth <= 700
                         ) {
-
                             return;
-
                         }
 
 
@@ -1728,15 +1596,9 @@ document.addEventListener(
         ) {
 
             return (
-
                 a +
-
-                (
-                    b - a
-                ) *
-
+                (b - a) *
                 amount
-
             );
 
         }
@@ -1928,18 +1790,8 @@ document.addEventListener(
 
         function updateTarget() {
 
-
-            /*
-                Update Safari viewport height.
-            */
-
             updateViewportHeight();
 
-
-            /*
-                Re-check which camera path
-                should be active.
-            */
 
             const newCameraPath =
                 getCameraPath();
@@ -1970,9 +1822,7 @@ document.addEventListener(
             if (
                 maxScroll <= 0
             ) {
-
                 return;
-
             }
 
 
@@ -1993,9 +1843,7 @@ document.addEventListener(
                 scrollLabel.style.opacity =
 
                     progress > 0.03
-
                         ? "0"
-
                         : "1";
 
             }
@@ -2009,15 +1857,12 @@ document.addEventListener(
 
         function render() {
 
-
-            /*
-                Slightly faster interpolation
-                helps mobile feel less delayed.
-            */
-
             const smoothing =
+
                 window.innerWidth <= 700
+
                     ? 0.11
+
                     : 0.075;
 
 
@@ -2061,28 +1906,21 @@ document.addEventListener(
                 );
 
 
-            /*
-                IMPORTANT:
-
-                Use a single translate3d
-                followed by rotations.
-
-                This is considerably friendlier
-                to Safari than repeatedly constructing
-                several independent transforms.
-            */
-
             const translateX =
+
                 (
                     window.innerWidth / 2
                 ) -
+
                 current.x;
 
 
             const translateY =
+
                 (
                     window.innerHeight / 2
                 ) -
+
                 current.y;
 
 
@@ -2130,11 +1968,6 @@ document.addEventListener(
         );
 
 
-        /*
-            iOS Safari changes viewport size when
-            its browser chrome appears/disappears.
-        */
-
         window.addEventListener(
             "orientationchange",
             () => {
@@ -2158,7 +1991,6 @@ document.addEventListener(
         updateTarget();
 
         render();
-
 
     }
 
