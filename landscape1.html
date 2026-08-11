@@ -82,12 +82,11 @@ body {
     background: #000;
 
     /*
-        Long lens.
+        Desktop perspective.
 
-        Higher number = more compressed depth.
-
-        6000px keeps the deep camera movement
-        relatively stable, especially on mobile.
+        The camera can travel very deep through
+        the 3D world without changing the camera
+        coordinate system.
     */
 
     perspective: 6000px;
@@ -115,8 +114,6 @@ body {
 
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
-
-    will-change: transform;
 
 }
 
@@ -152,6 +149,14 @@ body {
     user-select: none;
 
     -webkit-user-drag: none;
+
+    /*
+        Helps Safari avoid rendering the reverse
+        side of these enormous image planes.
+    */
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 
 }
 
@@ -297,9 +302,6 @@ body {
 
 /* =====================================================
    DEVELOPMENT XYZ GRID
-   X = left/right
-   Y = up/down
-   Z = depth
 ===================================================== */
 
 #debug-grid {
@@ -660,6 +662,8 @@ body {
 
         width: 100%;
 
+        min-height: 100%;
+
         overflow-x: hidden;
 
         overscroll-behavior-x: none;
@@ -671,22 +675,45 @@ body {
 
         touch-action: pan-y;
 
-        -webkit-overflow-scrolling: touch;
+    }
+
+
+    /*
+        Shorter physical page on phones.
+
+        The camera path itself remains 0–100%.
+    */
+
+    #scroll-space {
+
+        height: 3000vh;
 
     }
 
 
     #viewport {
 
-        width: 100%;
+        position: fixed;
+
+        left: 0;
+        top: 0;
+
+        width: 100vw;
 
         height: 100dvh;
 
         min-height: 100vh;
 
-        perspective: 6000px;
+        overflow: hidden;
 
-        -webkit-perspective: 6000px;
+        /*
+            A shallower perspective is considerably
+            easier for iOS Safari to composite.
+        */
+
+        perspective: 4000px;
+
+        -webkit-perspective: 4000px;
 
         perspective-origin: 50% 50%;
 
@@ -697,7 +724,26 @@ body {
 
     #world {
 
-        will-change: transform;
+        width: 7680px;
+        height: 7680px;
+
+        transform-style: preserve-3d;
+
+        -webkit-transform-style: preserve-3d;
+
+    }
+
+
+    .landscape-layer {
+
+        /*
+            Do not promote every enormous image
+            into its own forced GPU layer.
+        */
+
+        backface-visibility: hidden;
+
+        -webkit-backface-visibility: hidden;
 
     }
 
@@ -724,6 +770,27 @@ body {
         font-size: 8px;
 
         letter-spacing: 0.2em;
+
+    }
+
+}
+
+
+/* =====================================================
+   SAFARI HEIGHT FALLBACK
+===================================================== */
+
+@supports (-webkit-touch-callout: none) {
+
+    @media (max-width: 700px) {
+
+        #viewport {
+
+            height: -webkit-fill-available;
+
+            min-height: 100vh;
+
+        }
 
     }
 
@@ -871,7 +938,6 @@ draggable="false"
 
 <script>
 
-
 /* =====================================================
    IMMERSIVE LANDSCAPE CAMERA
 ===================================================== */
@@ -893,11 +959,39 @@ document.addEventListener(
             );
 
 
+        const debugGrid =
+            document.getElementById(
+                "debug-grid"
+            );
+
+
+        const cameraMarkers =
+            document.getElementById(
+                "camera-markers"
+            );
+
+
         if (!world) {
 
             return;
 
         }
+
+
+        /* =================================================
+           DEVICE DETECTION
+        ================================================= */
+
+        const isMobile =
+            window.matchMedia(
+                "(max-width: 700px)"
+            ).matches;
+
+
+        const isSafari =
+            /^((?!chrome|android).)*safari/i.test(
+                navigator.userAgent
+            );
 
 
         /* =================================================
@@ -958,27 +1052,14 @@ document.addEventListener(
 
         /* =================================================
            CAMERA PATH
-        =================================================
-
-           scroll = position through the page
-
-           x      = horizontal world position
-
-           y      = vertical world position
-
-           z      = camera distance
-
-           rotateX / rotateY = camera orientation
-
         ================================================= */
 
         const cameraPath = [
 
 
             /* =============================================
-               0%
-
-               OPENING  LOCATION 01
+               1
+               OPENING
             ============================================== */
 
             {
@@ -1005,9 +1086,8 @@ document.addEventListener(
 
 
             /* =============================================
+               2
                10%
-
-               LOCATION 02
             ============================================== */
 
             {
@@ -1034,9 +1114,8 @@ document.addEventListener(
 
 
             /* =============================================
+               3
                25%
-
-                LOCATION 03
             ============================================== */
 
             {
@@ -1063,9 +1142,8 @@ document.addEventListener(
 
 
             /* =============================================
+               4
                40%
-
-               LOCATION 04
             ============================================== */
 
             {
@@ -1092,9 +1170,8 @@ document.addEventListener(
 
 
             /* =============================================
+               5
                55%
-
-               LOCATION 05
             ============================================== */
 
             {
@@ -1121,9 +1198,8 @@ document.addEventListener(
 
 
             /* =============================================
+               6
                70%
-
-               LOCATION 06
             ============================================== */
 
             {
@@ -1146,15 +1222,12 @@ document.addEventListener(
                 rotateY:
                     0
 
-
-
             },
 
 
             /* =============================================
+               7
                100%
-
-               LOCATION 07
             ============================================== */
 
             {
@@ -1183,34 +1256,23 @@ document.addEventListener(
 
 
         /* =================================================
-           DEVELOPMENT XYZ GRID
+           DEVELOPMENT GRID
         ================================================= */
-
-        const debugGrid =
-            document.getElementById(
-                "debug-grid"
-            );
-
-
-        const cameraMarkers =
-            document.getElementById(
-                "camera-markers"
-            );
 
 
         /*
-           Each grid square = 200 world pixels.
+            The grid is hidden by default.
 
-           X = horizontal
-           Y = vertical
-           Z = depth
+            On mobile, don't build the camera marker
+            DOM unless the grid is actually needed.
 
-           The marker coordinates below are the SAME
-           coordinates used by cameraPath.
+            This saves Safari some work during startup.
         */
 
-
-        if (cameraMarkers) {
+        if (
+            cameraMarkers &&
+            !isMobile
+        ) {
 
 
             cameraPath.forEach(
@@ -1233,16 +1295,6 @@ document.addEventListener(
 
                     marker.style.top =
                         `${point.y}px`;
-
-
-                    /*
-                       The page moves the world by -camera.z.
-
-                       Therefore a point with z=1500
-                       is placed at translateZ(-1500px),
-                       matching the existing camera
-                       coordinate convention.
-                    */
 
 
                     marker.style.transform =
@@ -1292,12 +1344,11 @@ document.addEventListener(
                 }
             );
 
-
         }
 
 
         /* =================================================
-           DEVELOPMENT GRID — KEYBOARD TOGGLE
+           GRID KEYBOARD TOGGLE
 
            G = GRID ON / OFF
         ================================================= */
@@ -1323,7 +1374,6 @@ document.addEventListener(
 
                     }
 
-
                 }
             );
 
@@ -1341,7 +1391,6 @@ document.addEventListener(
             amount
         ) {
 
-
             return (
 
                 a +
@@ -1353,7 +1402,6 @@ document.addEventListener(
                 amount
 
             );
-
 
         }
 
@@ -1419,7 +1467,6 @@ document.addEventListener(
 
             );
 
-
         }
 
 
@@ -1437,11 +1484,9 @@ document.addEventListener(
                 cameraPath[0].scroll
             ) {
 
-
                 return {
                     ...cameraPath[0]
                 };
-
 
             }
 
@@ -1453,13 +1498,11 @@ document.addEventListener(
                 ].scroll
             ) {
 
-
                 return {
                     ...cameraPath[
                         cameraPath.length - 1
                     ]
                 };
-
 
             }
 
@@ -1511,14 +1554,12 @@ document.addEventListener(
 
                     return {
 
-
                         x:
                             lerp(
                                 a.x,
                                 b.x,
                                 eased
                             ),
-
 
                         y:
                             lerp(
@@ -1527,14 +1568,12 @@ document.addEventListener(
                                 eased
                             ),
 
-
                         z:
                             lerp(
                                 a.z,
                                 b.z,
                                 eased
                             ),
-
 
                         rotateX:
                             lerp(
@@ -1543,7 +1582,6 @@ document.addEventListener(
                                 eased
                             ),
 
-
                         rotateY:
                             lerp(
                                 a.rotateY,
@@ -1551,15 +1589,11 @@ document.addEventListener(
                                 eased
                             )
 
-
                     };
-
 
                 }
 
-
             }
-
 
         }
 
@@ -1583,9 +1617,7 @@ document.addEventListener(
                 maxScroll <= 0
             ) {
 
-
                 return;
-
 
             }
 
@@ -1606,7 +1638,6 @@ document.addEventListener(
                 scrollLabel
             ) {
 
-
                 scrollLabel.style.opacity =
 
                     progress > 0.03
@@ -1615,9 +1646,7 @@ document.addEventListener(
 
                         : "1";
 
-
             }
-
 
         }
 
@@ -1630,16 +1659,22 @@ document.addEventListener(
 
 
             /*
-                Smooth physical camera movement
-                on top of the Bézier path.
+                Mobile Safari gets slightly more
+                damping so it doesn't have to chase
+                every tiny scroll movement.
             */
+
+            const smoothing =
+                isMobile
+                    ? 0.055
+                    : 0.075;
 
 
             current.x =
                 lerp(
                     current.x,
                     target.x,
-                    0.075
+                    smoothing
                 );
 
 
@@ -1647,7 +1682,7 @@ document.addEventListener(
                 lerp(
                     current.y,
                     target.y,
-                    0.075
+                    smoothing
                 );
 
 
@@ -1655,7 +1690,7 @@ document.addEventListener(
                 lerp(
                     current.z,
                     target.z,
-                    0.075
+                    smoothing
                 );
 
 
@@ -1663,7 +1698,7 @@ document.addEventListener(
                 lerp(
                     current.rotateX,
                     target.rotateX,
-                    0.075
+                    smoothing
                 );
 
 
@@ -1671,13 +1706,14 @@ document.addEventListener(
                 lerp(
                     current.rotateY,
                     target.rotateY,
-                    0.075
+                    smoothing
                 );
 
 
             /* =================================================
                WORLD TRANSFORM
             ================================================= */
+
 
             world.style.transform =
 
@@ -1710,6 +1746,46 @@ document.addEventListener(
                 render
             );
 
+        }
+
+
+        /* =================================================
+           SAFARI-SAFE SCROLL UPDATE
+        ================================================= */
+
+        let scrollTicking =
+            false;
+
+
+        function requestCameraUpdate() {
+
+
+            if (
+                scrollTicking
+            ) {
+
+                return;
+
+            }
+
+
+            scrollTicking =
+                true;
+
+
+            requestAnimationFrame(
+                () => {
+
+
+                    updateTarget();
+
+
+                    scrollTicking =
+                        false;
+
+
+                }
+            );
 
         }
 
@@ -1718,9 +1794,10 @@ document.addEventListener(
            EVENTS
         ================================================= */
 
+
         window.addEventListener(
             "scroll",
-            updateTarget,
+            requestCameraUpdate,
             {
                 passive: true
             }
@@ -1729,18 +1806,39 @@ document.addEventListener(
 
         window.addEventListener(
             "resize",
-            updateTarget,
+            requestCameraUpdate,
             {
                 passive: true
             }
         );
 
 
+        /*
+            iOS Safari changes the visual viewport
+            when the address bar expands/collapses.
+        */
+
+        if (
+            window.visualViewport
+        ) {
+
+
+            window.visualViewport.addEventListener(
+                "resize",
+                requestCameraUpdate
+            );
+
+
+        }
+
+
         /* =================================================
            START
         ================================================= */
 
+
         updateTarget();
+
 
         render();
 
