@@ -83,12 +83,18 @@ body {
 
     /*
         Long lens.
+
         Higher number = more compressed depth.
+
+        6000px keeps the deep camera movement
+        relatively stable, especially on mobile.
     */
 
-    perspective: 3000px;
-
+    perspective: 6000px;
     perspective-origin: 50% 50%;
+
+    -webkit-perspective: 6000px;
+    -webkit-perspective-origin: 50% 50%;
 
 }
 
@@ -108,8 +114,16 @@ body {
     height: 7680px;
 
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
+    will-change: transform;
 
 }
+
+
+/* =====================================================
+   LANDSCAPE LAYERS
+===================================================== */
 
 .landscape-layer {
 
@@ -131,12 +145,28 @@ body {
     transform-origin: center center;
 
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
 
     pointer-events: none;
 
     user-select: none;
 
     -webkit-user-drag: none;
+
+}
+
+
+/* =====================================================
+   ULTRA FOREGROUND — VERY CLOSE
+===================================================== */
+
+.layer-ultra-near {
+
+    transform:
+        translateZ(1000px)
+        scale(1.00);
+
+    z-index: 5;
 
 }
 
@@ -163,11 +193,9 @@ body {
 .layer-middle-near {
 
     transform:
-             translateX(900px)
-
-             translateZ(-1000px)
-        
-        scale(1.10);
+        translateX(900px)
+        translateZ(-1200px)
+        scale(1.40);
 
     z-index: 3;
 
@@ -181,10 +209,9 @@ body {
 .layer-middle-far {
 
     transform:
-                 translateX(300px)
-
+        translateX(300px)
         translateZ(-2000px)
-        scale(1.1);
+        scale(1.90);
 
     z-index: 2;
 
@@ -268,201 +295,359 @@ body {
 }
 
 
-
 /* =====================================================
    DEVELOPMENT XYZ GRID
-   X = left/right   Y = up/down   Z = depth
+   X = left/right
+   Y = up/down
+   Z = depth
 ===================================================== */
 
 #debug-grid {
+
     position: absolute;
+
     left: 0;
     top: 0;
+
     width: 7680px;
     height: 4320px;
+
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
     pointer-events: none;
+
     z-index: 50;
+
     opacity: 0.72;
+
 }
+
 
 #debug-grid-xy,
 #debug-grid-xz,
 #debug-grid-yz {
+
     position: absolute;
+
     left: 3840px;
     top: 2160px;
+
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
 
     background-image:
-        linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+
+        linear-gradient(
+            rgba(255,255,255,0.12) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.12) 1px,
+            transparent 1px
+        );
 
     background-size: 200px 200px;
+
 }
+
 
 #debug-grid-xy {
+
     width: 7680px;
     height: 4320px;
+
     margin-left: -3840px;
     margin-top: -2160px;
+
 }
+
 
 #debug-grid-xz {
+
     width: 7680px;
     height: 2400px;
+
     margin-left: -3840px;
     margin-top: -1200px;
+
     opacity: 0.55;
-    transform: rotateX(90deg) translateZ(2160px);
+
+    transform:
+        rotateX(90deg)
+        translateZ(2160px);
+
 }
+
 
 #debug-grid-yz {
+
     width: 4320px;
     height: 2400px;
+
     margin-left: -2160px;
     margin-top: -1200px;
+
     opacity: 0.55;
-    transform: rotateY(90deg) translateZ(3840px);
+
+    transform:
+        rotateY(90deg)
+        translateZ(3840px);
+
 }
+
+
+/* =====================================================
+   DEBUG ORIGIN
+===================================================== */
 
 #debug-origin {
+
     position: absolute;
+
     left: 3840px;
     top: 2160px;
+
     width: 1px;
     height: 1px;
+
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
 }
+
 
 #debug-origin::before {
+
     content: "";
+
     position: absolute;
+
     width: 7680px;
     height: 3px;
+
     left: -3840px;
     top: -1px;
-    background: rgba(255,70,70,0.85);
-    transform: translateZ(2px);
+
+    background:
+        rgba(255,70,70,0.85);
+
+    transform:
+        translateZ(2px);
+
 }
+
 
 #debug-origin::after {
+
     content: "";
+
     position: absolute;
+
     width: 3px;
     height: 4320px;
+
     left: -1px;
     top: -2160px;
-    background: rgba(80,255,120,0.85);
-    transform: translateZ(2px);
+
+    background:
+        rgba(80,255,120,0.85);
+
+    transform:
+        translateZ(2px);
+
 }
+
+
+/* =====================================================
+   AXIS LABELS
+===================================================== */
 
 .axis-label {
+
     position: absolute;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     font-size: 16px;
+
     font-weight: bold;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+
+    text-shadow:
+        0 1px 4px rgba(0,0,0,0.9);
+
 }
+
 
 .axis-x {
+
     left: 3850px;
     top: 2130px;
-    color: rgba(255,90,90,0.95);
+
+    color:
+        rgba(255,90,90,0.95);
+
 }
+
 
 .axis-y {
+
     left: 3860px;
     top: 2100px;
-    color: rgba(90,255,130,0.95);
+
+    color:
+        rgba(90,255,130,0.95);
+
 }
+
 
 .axis-z {
+
     left: 3880px;
     top: 2160px;
-    color: rgba(90,160,255,0.95);
+
+    color:
+        rgba(90,160,255,0.95);
+
 }
+
+
+/* =====================================================
+   CAMERA MARKERS
+===================================================== */
 
 #camera-markers {
+
     position: absolute;
+
     inset: 0;
+
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
 }
+
 
 .camera-marker {
+
     position: absolute;
+
     width: 22px;
     height: 22px;
+
     margin-left: -11px;
     margin-top: -11px;
-    border: 2px solid rgba(255,255,255,0.95);
+
+    border:
+        2px solid rgba(255,255,255,0.95);
+
     border-radius: 50%;
-    background: rgba(0,0,0,0.65);
+
+    background:
+        rgba(0,0,0,0.65);
+
     box-shadow:
-        0 0 0 5px rgba(255,255,255,0.08),
-        0 0 18px rgba(255,255,255,0.25);
+
+        0 0 0 5px
+        rgba(255,255,255,0.08),
+
+        0 0 18px
+        rgba(255,255,255,0.25);
+
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
 }
+
 
 .camera-marker::after {
+
     content: "";
+
     position: absolute;
+
     left: 50%;
     top: 50%;
+
     width: 6px;
     height: 6px;
+
     margin-left: -3px;
     margin-top: -3px;
+
     border-radius: 50%;
-    background: rgba(255,255,255,0.95);
+
+    background:
+        rgba(255,255,255,0.95);
+
 }
+
 
 .camera-marker-label {
+
     position: absolute;
+
     left: 18px;
     top: -10px;
+
     min-width: 190px;
+
     padding: 7px 9px;
-    font-family: "Courier New", monospace;
+
+    font-family:
+        "Courier New",
+        monospace;
+
     font-size: 11px;
+
     line-height: 1.45;
-    color: rgba(255,255,255,0.92);
-    background: rgba(0,0,0,0.72);
-    border: 1px solid rgba(255,255,255,0.2);
+
+    color:
+        rgba(255,255,255,0.92);
+
+    background:
+        rgba(0,0,0,0.72);
+
+    border:
+        1px solid rgba(255,255,255,0.2);
+
     white-space: nowrap;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+
+    text-shadow:
+        0 1px 3px rgba(0,0,0,0.9);
+
 }
+
 
 .camera-marker-label strong {
+
     display: block;
+
     margin-bottom: 2px;
+
     font-size: 12px;
-    color: rgba(255,255,255,1);
+
+    color:
+        rgba(255,255,255,1);
+
 }
 
-#debug-toggle {
-    position: fixed;
-    right: 18px;
-    top: 18px;
-    z-index: 500;
-    padding: 9px 12px;
-    border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(0,0,0,0.72);
-    color: rgba(255,255,255,0.85);
-    font-family: "Courier New", monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    cursor: pointer;
-    user-select: none;
-}
 
-#debug-toggle:hover {
-    background: rgba(255,255,255,0.12);
-}
+/* =====================================================
+   GRID HIDDEN BY DEFAULT
+===================================================== */
 
 #debug-grid.is-hidden {
+
     display: none;
+
 }
+
 
 /* =====================================================
    MOBILE
@@ -470,11 +655,75 @@ body {
 
 @media (max-width: 700px) {
 
+    html,
+    body {
+
+        width: 100%;
+
+        overflow-x: hidden;
+
+        overscroll-behavior-x: none;
+
+    }
+
+
+    body {
+
+        touch-action: pan-y;
+
+        -webkit-overflow-scrolling: touch;
+
+    }
+
+
+    #viewport {
+
+        width: 100%;
+
+        height: 100dvh;
+
+        min-height: 100vh;
+
+        perspective: 6000px;
+
+        -webkit-perspective: 6000px;
+
+        perspective-origin: 50% 50%;
+
+        -webkit-perspective-origin: 50% 50%;
+
+    }
+
+
+    #world {
+
+        will-change: transform;
+
+    }
+
+
     #scroll-label {
 
         bottom: 20px;
 
         font-size: 9px;
+
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE DEVICES
+===================================================== */
+
+@media (max-width: 400px) {
+
+    #scroll-label {
+
+        font-size: 8px;
+
+        letter-spacing: 0.2em;
 
     }
 
@@ -498,79 +747,111 @@ body {
 
 <div id="viewport">
 
-<button id="debug-toggle" type="button">GRID ON</button>
-
-
-<!-- =================================================
+<!-- =====================================================
      WORLD
-================================================= -->
+===================================================== -->
 
 <div id="world">
 
+<!-- =============================================
+     FAR DISTANCE
+============================================== -->
 
-    <!-- =============================================
-         FAR DISTANCE
-    ============================================== -->
+<img
+class="landscape-layer layer-far"
+src="landscapeimages/landscape4.webp"
+alt=""
+draggable="false"
 
-    <img
-        class="landscape-layer layer-far"
-        src="landscapeimages/landscape4.webp"
-        alt=""
-        draggable="false"
-    >
+>
 
+<!-- =============================================
+     MIDDLE GROUND — FAR
+============================================== -->
 
-    <!-- =============================================
-         MIDDLE GROUND — FAR
-    ============================================== -->
+<img
+class="landscape-layer layer-middle-far"
+src="landscapeimages/landscape3.webp"
+alt=""
+draggable="false"
 
-    <img
-        class="landscape-layer layer-middle-far"
-        src="landscapeimages/landscape3.webp"
-        alt=""
-        draggable="false"
-    >
+>
 
+<!-- =============================================
+     MIDDLE GROUND — NEAR
+============================================== -->
 
-    <!-- =============================================
-         MIDDLE GROUND — NEAR
-    ============================================== -->
+<img
+class="landscape-layer layer-middle-near"
+src="landscapeimages/landscape2.webp"
+alt=""
+draggable="false"
 
-    <img
-        class="landscape-layer layer-middle-near"
-        src="landscapeimages/landscape2.webp"
-        alt=""
-        draggable="false"
-    >
+>
 
+<!-- =============================================
+     FOREGROUND
+============================================== -->
 
-    <!-- =============================================
-         FOREGROUND
-    ============================================== -->
+<img
+class="landscape-layer layer-foreground"
+src="landscapeimages/landscape1.webp"
+alt=""
+draggable="false"
 
-    <img
-        class="landscape-layer layer-foreground"
-        src="landscapeimages/landscape1.webp"
-        alt=""
-        draggable="false"
-    >
+>
 
-    <!-- DEVELOPMENT XYZ GRID -->
-    <div id="debug-grid" aria-hidden="true">
-        <div id="debug-grid-xy"></div>
-        <div id="debug-grid-xz"></div>
-        <div id="debug-grid-yz"></div>
-        <div id="debug-origin">
-            <span class="axis-label axis-x">X</span>
-            <span class="axis-label axis-y">Y</span>
-            <span class="axis-label axis-z">Z</span>
-        </div>
-        <div id="camera-markers"></div>
-    </div>
+<!-- =============================================
+     ULTRA FOREGROUND — VERY CLOSE
+============================================== -->
 
+<img
+class="landscape-layer layer-ultra-near"
+src="landscapeimages/landscape5.webp"
+alt=""
+draggable="false"
+
+>
+
+<!-- =============================================
+     DEVELOPMENT XYZ GRID
+============================================== -->
+
+<div
+    id="debug-grid"
+    class="is-hidden"
+    aria-hidden="true"
+>
+
+```
+<div id="debug-grid-xy"></div>
+
+<div id="debug-grid-xz"></div>
+
+<div id="debug-grid-yz"></div>
+
+<div id="debug-origin">
+
+    <span class="axis-label axis-x">
+        X
+    </span>
+
+    <span class="axis-label axis-y">
+        Y
+    </span>
+
+    <span class="axis-label axis-z">
+        Z
+    </span>
 
 </div>
 
+<div id="camera-markers"></div>
+```
+
+</div>
+
+</div>
 
 </div>
 
@@ -589,6 +870,7 @@ body {
 </div>
 
 <script>
+
 
 /* =====================================================
    IMMERSIVE LANDSCAPE CAMERA
@@ -612,7 +894,9 @@ document.addEventListener(
 
 
         if (!world) {
+
             return;
+
         }
 
 
@@ -634,30 +918,40 @@ document.addEventListener(
 
         let current = {
 
-            x: WORLD_WIDTH / 2,
+            x:
+                WORLD_WIDTH / 2,
 
-            y: WORLD_HEIGHT / 2,
+            y:
+                WORLD_HEIGHT / 2,
 
-            z: 4000,
+            z:
+                4000,
 
-            rotateX: 8,
+            rotateX:
+                8,
 
-            rotateY: 0
+            rotateY:
+                0
 
         };
 
 
         let target = {
 
-            x: WORLD_WIDTH / 2,
+            x:
+                WORLD_WIDTH / 2,
 
-            y: WORLD_HEIGHT / 2,
+            y:
+                WORLD_HEIGHT / 2,
 
-            z: 4000,
+            z:
+                4000,
 
-            rotateX: 8,
+            rotateX:
+                8,
 
-            rotateY: 0
+            rotateY:
+                0
 
         };
 
@@ -684,166 +978,208 @@ document.addEventListener(
             /* =============================================
                0%
 
-               OPENING
+               OPENING  LOCATION 01
             ============================================== */
 
             {
-                scroll: 0.01,
 
-                x: 3840,
+                scroll:
+                    0.01,
 
-                y: 2460,
+                x:
+                    3840,
 
-                z: 10800,
+                y:
+                    3000,
 
-                rotateX: 8,
+                z:
+                    20800,
 
-                rotateY: 0
+                rotateX:
+                    20,
+
+                rotateY:
+                    5
 
             },
 
 
             /* =============================================
-               15%
-
-               LOCATION 01
-            ============================================== */
-
-            {
-                scroll: 0.15,
-
-                x: 3140,
-
-                y: 5060,
-
-                z: 10000,
-
-                rotateX: 8,
-
-                rotateY: 0
-
-            },
-
-
-
-            /* =============================================
-               22%
-
-               LOCATION 02.5
-            ============================================== */
-
-
-            {
-                scroll: 0.22,
-
-                x: 6200,
-
-                y: 5300,
-
-                z: 3000,
-
-                rotateX: 6,
-
-                rotateY: -2
-
-            },
-
-            /* =============================================
-               40%
+               10%
 
                LOCATION 02
             ============================================== */
 
-
             {
-                scroll: 0.40,
 
-                x: 7210,
+                scroll:
+                    0.10,
 
-                y: 4250,
+                x:
+                    2040,
 
-                z: 1800,
+                y:
+                    6060,
 
-                rotateX: 6,
+                z:
+                    12000,
 
-                rotateY: -2
+                rotateX:
+                    8,
+
+                rotateY:
+                    2
 
             },
+
+
+            /* =============================================
+               25%
+
+                LOCATION 03
+            ============================================== */
+
+            {
+
+                scroll:
+                    0.25,
+
+                x:
+                    6400,
+
+                y:
+                    6000,
+
+                z:
+                    3500,
+
+                rotateX:
+                    6,
+
+                rotateY:
+                    -2
+
+            },
+
+
+            /* =============================================
+               40%
+
+               LOCATION 04
+            ============================================== */
+
+            {
+
+                scroll:
+                    0.40,
+
+                x:
+                    8160,
+
+                y:
+                    4460,
+
+                z:
+                    -1000,
+
+                rotateX:
+                    6,
+
+                rotateY:
+                    -2
+
+            },
+
 
             /* =============================================
                55%
 
-               LOCATION 03
+               LOCATION 05
             ============================================== */
 
-
             {
-                scroll: 0.55,
 
-                x: 3600,
+                scroll:
+                    0.55,
 
-                y: 3400,
+                x:
+                    3750,
 
-                z: 1500,
+                y:
+                    4050,
 
-                rotateX: 6,
+                z:
+                    -1500,
 
-                rotateY: -2
+                rotateX:
+                    23,
+
+                rotateY:
+                    -2
 
             },
-
-            
 
 
             /* =============================================
                70%
 
-               LOCATION 04
+               LOCATION 06
             ============================================== */
 
-
             {
-                scroll: 0.70,
 
-                x: 4300,
+                scroll:
+                    0.70,
 
-                y: 2800,
+                x:
+                    4550,
 
-                z: 1500,
+                y:
+                    2900,
 
-                rotateX: 6,
+                z:
+                    -1000,
 
-                rotateY: -2
+                rotateX:
+                    21,
+
+                rotateY:
+                    0
+
+
 
             },
 
 
-                    /* =============================================
-               90%
+            /* =============================================
+               100%
 
-               LOCATION 05
+               LOCATION 07
             ============================================== */
 
-
             {
-                scroll: 0.90,
 
-                x: 3840,
+                scroll:
+                    1.00,
 
-                y: 2460,
+                x:
+                    4040,
 
-                z: 9800,
+                y:
+                    4800,
 
-                rotateX: 20,
+                z:
+                    25000,
 
-                rotateY: 0
+                rotateX:
+                    25,
 
-            },
+                rotateY:
+                    0
 
-
+            }
 
         ];
-
 
 
         /* =================================================
@@ -851,13 +1187,15 @@ document.addEventListener(
         ================================================= */
 
         const debugGrid =
-            document.getElementById("debug-grid");
+            document.getElementById(
+                "debug-grid"
+            );
+
 
         const cameraMarkers =
-            document.getElementById("camera-markers");
-
-        const debugToggle =
-            document.getElementById("debug-toggle");
+            document.getElementById(
+                "camera-markers"
+            );
 
 
         /*
@@ -871,88 +1209,127 @@ document.addEventListener(
            coordinates used by cameraPath.
         */
 
+
         if (cameraMarkers) {
+
 
             cameraPath.forEach(
                 (point, index) => {
 
+
                     const marker =
-                        document.createElement("div");
+                        document.createElement(
+                            "div"
+                        );
+
 
                     marker.className =
                         "camera-marker";
 
+
                     marker.style.left =
                         `${point.x}px`;
+
 
                     marker.style.top =
                         `${point.y}px`;
 
+
                     /*
                        The page moves the world by -camera.z.
-                       Therefore a point with z=1500 is placed
-                       at translateZ(-1500px), matching the
-                       existing camera coordinate convention.
+
+                       Therefore a point with z=1500
+                       is placed at translateZ(-1500px),
+                       matching the existing camera
+                       coordinate convention.
                     */
+
 
                     marker.style.transform =
                         `translateZ(${-point.z}px)`;
 
 
                     const label =
-                        document.createElement("div");
+                        document.createElement(
+                            "div"
+                        );
+
 
                     label.className =
                         "camera-marker-label";
 
+
                     label.innerHTML =
+
                         `<strong>
                             NODE ${String(index + 1).padStart(2, "0")}
                             — ${Math.round(point.scroll * 100)}%
                         </strong>
+
                         X ${Math.round(point.x)}
                         &nbsp;&nbsp;
                         Y ${Math.round(point.y)}
                         &nbsp;&nbsp;
                         Z ${Math.round(point.z)}
+
                         <br>
+
                         ROT X ${point.rotateX}°
                         &nbsp;&nbsp;
                         ROT Y ${point.rotateY}°`;
 
-                    marker.appendChild(label);
-                    cameraMarkers.appendChild(marker);
+
+                    marker.appendChild(
+                        label
+                    );
+
+
+                    cameraMarkers.appendChild(
+                        marker
+                    );
+
 
                 }
             );
 
+
         }
 
 
-        /*
-           Grid ON / OFF
-        */
+        /* =================================================
+           DEVELOPMENT GRID — KEYBOARD TOGGLE
 
-        if (debugToggle && debugGrid) {
+           G = GRID ON / OFF
+        ================================================= */
 
-            debugToggle.addEventListener(
-                "click",
-                () => {
+        if (debugGrid) {
 
-                    const hidden =
+
+            document.addEventListener(
+                "keydown",
+                (event) => {
+
+
+                    if (
+                        event.key.toLowerCase() ===
+                        "g"
+                    ) {
+
+
                         debugGrid.classList.toggle(
                             "is-hidden"
                         );
 
-                    debugToggle.textContent =
-                        hidden
-                            ? "GRID OFF"
-                            : "GRID ON";
+
+                    }
+
 
                 }
             );
 
+
         }
+
 
         /* =================================================
            LINEAR INTERPOLATION
@@ -964,42 +1341,46 @@ document.addEventListener(
             amount
         ) {
 
+
             return (
+
                 a +
+
                 (
                     b - a
                 ) *
+
                 amount
+
             );
+
 
         }
 
 
         /* =================================================
            WIDE BEZIER EASE
-        =================================================
-
-           This creates an extremely broad cinematic
-           ease between camera locations.
-
-           p1 near 0
-           p2 near 1
-
-           means the camera changes very slowly at
-           the beginning and end of each segment.
         ================================================= */
 
         function bezierEase(
             t
         ) {
 
-            const p0 = 0.0;
 
-            const p1 = 0.0;
+            const p0 =
+                0.0;
 
-            const p2 = 0.98;
 
-            const p3 = 1.0;
+            const p1 =
+                0.0;
+
+
+            const p2 =
+                0.98;
+
+
+            const p3 =
+                1.0;
 
 
             const oneMinusT =
@@ -1038,8 +1419,8 @@ document.addEventListener(
 
             );
 
-        }
 
+        }
 
 
         /* =================================================
@@ -1051,25 +1432,19 @@ document.addEventListener(
         ) {
 
 
-            /*
-                Before beginning.
-            */
-
             if (
                 progress <=
                 cameraPath[0].scroll
             ) {
 
+
                 return {
                     ...cameraPath[0]
                 };
 
+
             }
 
-
-            /*
-                After end.
-            */
 
             if (
                 progress >=
@@ -1078,18 +1453,16 @@ document.addEventListener(
                 ].scroll
             ) {
 
+
                 return {
                     ...cameraPath[
                         cameraPath.length - 1
                     ]
                 };
 
+
             }
 
-
-            /*
-                Find current segment.
-            */
 
             for (
                 let i = 0;
@@ -1121,17 +1494,14 @@ document.addEventListener(
 
 
                     const localProgress =
+
                         (
                             progress -
                             a.scroll
                         ) /
+
                         range;
 
-
-                    /*
-                        Wide cinematic Bézier
-                        easing.
-                    */
 
                     const eased =
                         bezierEase(
@@ -1181,11 +1551,15 @@ document.addEventListener(
                                 eased
                             )
 
+
                     };
+
 
                 }
 
+
             }
+
 
         }
 
@@ -1198,8 +1572,10 @@ document.addEventListener(
 
 
             const maxScroll =
+
                 document.documentElement
                     .scrollHeight -
+
                 window.innerHeight;
 
 
@@ -1207,12 +1583,15 @@ document.addEventListener(
                 maxScroll <= 0
             ) {
 
+
                 return;
+
 
             }
 
 
             const progress =
+
                 window.scrollY /
                 maxScroll;
 
@@ -1227,12 +1606,18 @@ document.addEventListener(
                 scrollLabel
             ) {
 
+
                 scrollLabel.style.opacity =
+
                     progress > 0.03
+
                         ? "0"
+
                         : "1";
 
+
             }
+
 
         }
 
@@ -1247,10 +1632,8 @@ document.addEventListener(
             /*
                 Smooth physical camera movement
                 on top of the Bézier path.
-
-                This gives the camera additional
-                inertia.
             */
+
 
             current.x =
                 lerp(
@@ -1299,19 +1682,25 @@ document.addEventListener(
             world.style.transform =
 
                 `translate3d(
+
                     calc(
                         ${window.innerWidth / 2}px -
                         ${current.x}px
                     ),
+
                     calc(
                         ${window.innerHeight / 2}px -
                         ${current.y}px
                     ),
+
                     ${-current.z}px
+
                 )
+
                 rotateX(
                     ${current.rotateX}deg
                 )
+
                 rotateY(
                     ${current.rotateY}deg
                 )`;
@@ -1320,6 +1709,7 @@ document.addEventListener(
             requestAnimationFrame(
                 render
             );
+
 
         }
 
@@ -1357,7 +1747,6 @@ document.addEventListener(
 
     }
 
-    
 );
 
 </script>
