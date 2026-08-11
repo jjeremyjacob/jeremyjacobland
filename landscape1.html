@@ -81,18 +81,10 @@ body {
 
     background: #000;
 
-    /*
-        Desktop perspective.
-
-        The camera can travel very deep through
-        the 3D world without changing the camera
-        coordinate system.
-    */
-
-    perspective: 6000px;
+    perspective: 1500px;
     perspective-origin: 50% 50%;
 
-    -webkit-perspective: 6000px;
+    -webkit-perspective: 1500px;
     -webkit-perspective-origin: 50% 50%;
 
 }
@@ -109,11 +101,13 @@ body {
     left: 0;
     top: 0;
 
-    width: 7680px;
-    height: 7680px;
+    width: 1920px;
+    height: 1920px;
 
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
+
+    will-change: transform;
 
 }
 
@@ -126,14 +120,14 @@ body {
 
     position: absolute;
 
-    width: 7680px;
-    height: 7680px;
+    width: 1920px;
+    height: 1920px;
 
-    left: 3840px;
-    top: 3840px;
+    left: 960px;
+    top: 960px;
 
-    margin-left: -3840px;
-    margin-top: -3840px;
+    margin-left: -960px;
+    margin-top: -960px;
 
     object-fit: fill;
 
@@ -150,14 +144,6 @@ body {
 
     -webkit-user-drag: none;
 
-    /*
-        Helps Safari avoid rendering the reverse
-        side of these enormous image planes.
-    */
-
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-
 }
 
 
@@ -168,7 +154,7 @@ body {
 .layer-ultra-near {
 
     transform:
-        translateZ(1000px)
+        translateZ(250px)
         scale(1.00);
 
     z-index: 5;
@@ -198,8 +184,8 @@ body {
 .layer-middle-near {
 
     transform:
-        translateX(900px)
-        translateZ(-1200px)
+        translateX(225px)
+        translateZ(-300px)
         scale(1.40);
 
     z-index: 3;
@@ -214,8 +200,8 @@ body {
 .layer-middle-far {
 
     transform:
-        translateX(300px)
-        translateZ(-2000px)
+        translateX(75px)
+        translateZ(-500px)
         scale(1.90);
 
     z-index: 2;
@@ -230,7 +216,7 @@ body {
 .layer-far {
 
     transform:
-        translateZ(-3000px)
+        translateZ(-750px)
         scale(1.36);
 
     z-index: 1;
@@ -302,6 +288,7 @@ body {
 
 /* =====================================================
    DEVELOPMENT XYZ GRID
+   WORLD = 1920 × 1920
 ===================================================== */
 
 #debug-grid {
@@ -311,8 +298,8 @@ body {
     left: 0;
     top: 0;
 
-    width: 7680px;
-    height: 4320px;
+    width: 1920px;
+    height: 1920px;
 
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
@@ -332,8 +319,8 @@ body {
 
     position: absolute;
 
-    left: 3840px;
-    top: 2160px;
+    left: 960px;
+    top: 960px;
 
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
@@ -351,52 +338,64 @@ body {
             transparent 1px
         );
 
-    background-size: 200px 200px;
+    background-size: 50px 50px;
 
 }
 
+
+/* =====================================================
+   XY PLANE
+===================================================== */
 
 #debug-grid-xy {
 
-    width: 7680px;
-    height: 4320px;
+    width: 1920px;
+    height: 1920px;
 
-    margin-left: -3840px;
-    margin-top: -2160px;
+    margin-left: -960px;
+    margin-top: -960px;
 
 }
 
 
+/* =====================================================
+   XZ PLANE
+===================================================== */
+
 #debug-grid-xz {
 
-    width: 7680px;
-    height: 2400px;
+    width: 1920px;
+    height: 600px;
 
-    margin-left: -3840px;
-    margin-top: -1200px;
+    margin-left: -960px;
+    margin-top: -300px;
 
     opacity: 0.55;
 
     transform:
         rotateX(90deg)
-        translateZ(2160px);
+        translateZ(960px);
 
 }
 
 
+/* =====================================================
+   YZ PLANE
+===================================================== */
+
 #debug-grid-yz {
 
-    width: 4320px;
-    height: 2400px;
+    width: 600px;
+    height: 600px;
 
-    margin-left: -2160px;
-    margin-top: -1200px;
+    margin-left: -300px;
+    margin-top: -300px;
 
     opacity: 0.55;
 
     transform:
         rotateY(90deg)
-        translateZ(3840px);
+        translateZ(960px);
 
 }
 
@@ -409,8 +408,8 @@ body {
 
     position: absolute;
 
-    left: 3840px;
-    top: 2160px;
+    left: 960px;
+    top: 960px;
 
     width: 1px;
     height: 1px;
@@ -427,10 +426,10 @@ body {
 
     position: absolute;
 
-    width: 7680px;
-    height: 3px;
+    width: 1920px;
+    height: 2px;
 
-    left: -3840px;
+    left: -960px;
     top: -1px;
 
     background:
@@ -448,11 +447,11 @@ body {
 
     position: absolute;
 
-    width: 3px;
-    height: 4320px;
+    width: 2px;
+    height: 1920px;
 
     left: -1px;
-    top: -2160px;
+    top: -960px;
 
     background:
         rgba(80,255,120,0.85);
@@ -476,7 +475,7 @@ body {
         Helvetica,
         sans-serif;
 
-    font-size: 16px;
+    font-size: 12px;
 
     font-weight: bold;
 
@@ -488,8 +487,8 @@ body {
 
 .axis-x {
 
-    left: 3850px;
-    top: 2130px;
+    left: 970px;
+    top: 940px;
 
     color:
         rgba(255,90,90,0.95);
@@ -499,8 +498,8 @@ body {
 
 .axis-y {
 
-    left: 3860px;
-    top: 2100px;
+    left: 980px;
+    top: 920px;
 
     color:
         rgba(90,255,130,0.95);
@@ -510,8 +509,8 @@ body {
 
 .axis-z {
 
-    left: 3880px;
-    top: 2160px;
+    left: 990px;
+    top: 960px;
 
     color:
         rgba(90,160,255,0.95);
@@ -539,11 +538,11 @@ body {
 
     position: absolute;
 
-    width: 22px;
-    height: 22px;
+    width: 12px;
+    height: 12px;
 
-    margin-left: -11px;
-    margin-top: -11px;
+    margin-left: -6px;
+    margin-top: -6px;
 
     border:
         2px solid rgba(255,255,255,0.95);
@@ -555,10 +554,10 @@ body {
 
     box-shadow:
 
-        0 0 0 5px
+        0 0 0 3px
         rgba(255,255,255,0.08),
 
-        0 0 18px
+        0 0 10px
         rgba(255,255,255,0.25);
 
     transform-style: preserve-3d;
@@ -576,11 +575,11 @@ body {
     left: 50%;
     top: 50%;
 
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
 
-    margin-left: -3px;
-    margin-top: -3px;
+    margin-left: -2px;
+    margin-top: -2px;
 
     border-radius: 50%;
 
@@ -594,20 +593,20 @@ body {
 
     position: absolute;
 
-    left: 18px;
-    top: -10px;
+    left: 12px;
+    top: -8px;
 
-    min-width: 190px;
+    min-width: 150px;
 
-    padding: 7px 9px;
+    padding: 5px 7px;
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 11px;
+    font-size: 9px;
 
-    line-height: 1.45;
+    line-height: 1.4;
 
     color:
         rgba(255,255,255,0.92);
@@ -632,7 +631,7 @@ body {
 
     margin-bottom: 2px;
 
-    font-size: 12px;
+    font-size: 10px;
 
     color:
         rgba(255,255,255,1);
@@ -662,8 +661,6 @@ body {
 
         width: 100%;
 
-        min-height: 100%;
-
         overflow-x: hidden;
 
         overscroll-behavior-x: none;
@@ -675,45 +672,22 @@ body {
 
         touch-action: pan-y;
 
-    }
-
-
-    /*
-        Shorter physical page on phones.
-
-        The camera path itself remains 0–100%.
-    */
-
-    #scroll-space {
-
-        height: 3000vh;
+        -webkit-overflow-scrolling: touch;
 
     }
 
 
     #viewport {
 
-        position: fixed;
-
-        left: 0;
-        top: 0;
-
-        width: 100vw;
+        width: 100%;
 
         height: 100dvh;
 
         min-height: 100vh;
 
-        overflow: hidden;
+        perspective: 1500px;
 
-        /*
-            A shallower perspective is considerably
-            easier for iOS Safari to composite.
-        */
-
-        perspective: 4000px;
-
-        -webkit-perspective: 4000px;
+        -webkit-perspective: 1500px;
 
         perspective-origin: 50% 50%;
 
@@ -724,26 +698,7 @@ body {
 
     #world {
 
-        width: 7680px;
-        height: 7680px;
-
-        transform-style: preserve-3d;
-
-        -webkit-transform-style: preserve-3d;
-
-    }
-
-
-    .landscape-layer {
-
-        /*
-            Do not promote every enormous image
-            into its own forced GPU layer.
-        */
-
-        backface-visibility: hidden;
-
-        -webkit-backface-visibility: hidden;
+        will-change: transform;
 
     }
 
@@ -770,27 +725,6 @@ body {
         font-size: 8px;
 
         letter-spacing: 0.2em;
-
-    }
-
-}
-
-
-/* =====================================================
-   SAFARI HEIGHT FALLBACK
-===================================================== */
-
-@supports (-webkit-touch-callout: none) {
-
-    @media (max-width: 700px) {
-
-        #viewport {
-
-            height: -webkit-fill-available;
-
-            min-height: 100vh;
-
-        }
 
     }
 
@@ -946,7 +880,6 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-
         const world =
             document.getElementById(
                 "world"
@@ -958,6 +891,220 @@ document.addEventListener(
                 "scroll-label"
             );
 
+
+        if (!world) {
+            return;
+        }
+
+
+        /* =================================================
+           WORLD DIMENSIONS
+
+           IMPORTANT:
+           EVERYTHING NOW USES THE 1920 SYSTEM.
+        ================================================= */
+
+        const WORLD_WIDTH = 1920;
+
+        const WORLD_HEIGHT = 1920;
+
+        const WORLD_CENTER_X =
+            WORLD_WIDTH / 2;
+
+        const WORLD_CENTER_Y =
+            WORLD_HEIGHT / 2;
+
+
+        /* =================================================
+           CAMERA STATE
+        ================================================= */
+
+        let current = {
+
+            x: WORLD_CENTER_X,
+
+            y: WORLD_CENTER_Y,
+
+            z: 1000,
+
+            rotateX: 8,
+
+            rotateY: 0
+
+        };
+
+
+        let target = {
+
+            x: WORLD_CENTER_X,
+
+            y: WORLD_CENTER_Y,
+
+            z: 1000,
+
+            rotateX: 8,
+
+            rotateY: 0
+
+        };
+
+
+        /* =================================================
+           CAMERA PATH
+
+           Converted from the previous 7680 system
+           to the new 1920 system.
+
+           SCALE FACTOR = 0.25
+        ================================================= */
+
+        const cameraPath = [
+
+            /* =============================================
+               1%
+               OPENING
+            ============================================== */
+
+            {
+                scroll: 0.01,
+
+                x: 960,
+
+                y: 750,
+
+                z: 5200,
+
+                rotateX: 20,
+
+                rotateY: 5
+            },
+
+
+            /* =============================================
+               10%
+               LOCATION 02
+            ============================================== */
+
+            {
+                scroll: 0.10,
+
+                x: 510,
+
+                y: 1515,
+
+                z: 3000,
+
+                rotateX: 8,
+
+                rotateY: 2
+            },
+
+
+            /* =============================================
+               25%
+               LOCATION 03
+            ============================================== */
+
+            {
+                scroll: 0.25,
+
+                x: 1600,
+
+                y: 1500,
+
+                z: 875,
+
+                rotateX: 6,
+
+                rotateY: -2
+            },
+
+
+            /* =============================================
+               40%
+               LOCATION 04
+            ============================================== */
+
+            {
+                scroll: 0.40,
+
+                x: 2040,
+
+                y: 1115,
+
+                z: -250,
+
+                rotateX: 6,
+
+                rotateY: -2
+            },
+
+
+            /* =============================================
+               55%
+               LOCATION 05
+            ============================================== */
+
+            {
+                scroll: 0.55,
+
+                x: 937.5,
+
+                y: 1012.5,
+
+                z: -375,
+
+                rotateX: 23,
+
+                rotateY: -2
+            },
+
+
+            /* =============================================
+               70%
+               LOCATION 06
+            ============================================== */
+
+            {
+                scroll: 0.70,
+
+                x: 1137.5,
+
+                y: 725,
+
+                z: -250,
+
+                rotateX: 21,
+
+                rotateY: 0
+            },
+
+
+            /* =============================================
+               100%
+               LOCATION 07
+            ============================================== */
+
+            {
+                scroll: 1.00,
+
+                x: 1010,
+
+                y: 1200,
+
+                z: 6250,
+
+                rotateX: 25,
+
+                rotateY: 0
+            }
+
+        ];
+
+
+        /* =================================================
+           DEVELOPMENT XYZ GRID
+        ================================================= */
 
         const debugGrid =
             document.getElementById(
@@ -971,313 +1118,17 @@ document.addEventListener(
             );
 
 
-        if (!world) {
-
-            return;
-
-        }
-
-
         /* =================================================
-           DEVICE DETECTION
+           CAMERA MARKERS
+
+           Markers use exactly the same
+           coordinate system as cameraPath.
         ================================================= */
 
-        const isMobile =
-            window.matchMedia(
-                "(max-width: 700px)"
-            ).matches;
-
-
-        const isSafari =
-            /^((?!chrome|android).)*safari/i.test(
-                navigator.userAgent
-            );
-
-
-        /* =================================================
-           WORLD DIMENSIONS
-        ================================================= */
-
-        const WORLD_WIDTH =
-            7680;
-
-
-        const WORLD_HEIGHT =
-            4320;
-
-
-        /* =================================================
-           CAMERA STATE
-        ================================================= */
-
-        let current = {
-
-            x:
-                WORLD_WIDTH / 2,
-
-            y:
-                WORLD_HEIGHT / 2,
-
-            z:
-                4000,
-
-            rotateX:
-                8,
-
-            rotateY:
-                0
-
-        };
-
-
-        let target = {
-
-            x:
-                WORLD_WIDTH / 2,
-
-            y:
-                WORLD_HEIGHT / 2,
-
-            z:
-                4000,
-
-            rotateX:
-                8,
-
-            rotateY:
-                0
-
-        };
-
-
-        /* =================================================
-           CAMERA PATH
-        ================================================= */
-
-        const cameraPath = [
-
-
-            /* =============================================
-               1
-               OPENING
-            ============================================== */
-
-            {
-
-                scroll:
-                    0.01,
-
-                x:
-                    3840,
-
-                y:
-                    3000,
-
-                z:
-                    20800,
-
-                rotateX:
-                    20,
-
-                rotateY:
-                    5
-
-            },
-
-
-            /* =============================================
-               2
-               10%
-            ============================================== */
-
-            {
-
-                scroll:
-                    0.10,
-
-                x:
-                    2040,
-
-                y:
-                    6060,
-
-                z:
-                    12000,
-
-                rotateX:
-                    8,
-
-                rotateY:
-                    2
-
-            },
-
-
-            /* =============================================
-               3
-               25%
-            ============================================== */
-
-            {
-
-                scroll:
-                    0.25,
-
-                x:
-                    6400,
-
-                y:
-                    6000,
-
-                z:
-                    3500,
-
-                rotateX:
-                    6,
-
-                rotateY:
-                    -2
-
-            },
-
-
-            /* =============================================
-               4
-               40%
-            ============================================== */
-
-            {
-
-                scroll:
-                    0.40,
-
-                x:
-                    8160,
-
-                y:
-                    4460,
-
-                z:
-                    -1000,
-
-                rotateX:
-                    6,
-
-                rotateY:
-                    -2
-
-            },
-
-
-            /* =============================================
-               5
-               55%
-            ============================================== */
-
-            {
-
-                scroll:
-                    0.55,
-
-                x:
-                    3750,
-
-                y:
-                    4050,
-
-                z:
-                    -1500,
-
-                rotateX:
-                    23,
-
-                rotateY:
-                    -2
-
-            },
-
-
-            /* =============================================
-               6
-               70%
-            ============================================== */
-
-            {
-
-                scroll:
-                    0.70,
-
-                x:
-                    4550,
-
-                y:
-                    2900,
-
-                z:
-                    -1000,
-
-                rotateX:
-                    21,
-
-                rotateY:
-                    0
-
-            },
-
-
-            /* =============================================
-               7
-               100%
-            ============================================== */
-
-            {
-
-                scroll:
-                    1.00,
-
-                x:
-                    4040,
-
-                y:
-                    4800,
-
-                z:
-                    25000,
-
-                rotateX:
-                    25,
-
-                rotateY:
-                    0
-
-            }
-
-        ];
-
-
-        /* =================================================
-           DEVELOPMENT GRID
-        ================================================= */
-
-
-        /*
-            The grid is hidden by default.
-
-            On mobile, don't build the camera marker
-            DOM unless the grid is actually needed.
-
-            This saves Safari some work during startup.
-        */
-
-        if (
-            cameraMarkers &&
-            !isMobile
-        ) {
-
+        if (cameraMarkers) {
 
             cameraPath.forEach(
                 (point, index) => {
-
 
                     const marker =
                         document.createElement(
@@ -1340,7 +1191,6 @@ document.addEventListener(
                         marker
                     );
 
-
                 }
             );
 
@@ -1348,35 +1198,30 @@ document.addEventListener(
 
 
         /* =================================================
-           GRID KEYBOARD TOGGLE
+           DEVELOPMENT GRID — KEYBOARD TOGGLE
 
            G = GRID ON / OFF
         ================================================= */
 
         if (debugGrid) {
 
-
             document.addEventListener(
                 "keydown",
                 (event) => {
-
 
                     if (
                         event.key.toLowerCase() ===
                         "g"
                     ) {
 
-
                         debugGrid.classList.toggle(
                             "is-hidden"
                         );
-
 
                     }
 
                 }
             );
-
 
         }
 
@@ -1414,22 +1259,13 @@ document.addEventListener(
             t
         ) {
 
+            const p0 = 0.0;
 
-            const p0 =
-                0.0;
+            const p1 = 0.0;
 
+            const p2 = 0.98;
 
-            const p1 =
-                0.0;
-
-
-            const p2 =
-                0.98;
-
-
-            const p3 =
-                1.0;
-
+            const p3 = 1.0;
 
             const oneMinusT =
                 1 - t;
@@ -1478,7 +1314,6 @@ document.addEventListener(
             progress
         ) {
 
-
             if (
                 progress <=
                 cameraPath[0].scroll
@@ -1514,7 +1349,6 @@ document.addEventListener(
                 i++
             ) {
 
-
                 const a =
                     cameraPath[i];
 
@@ -1529,7 +1363,6 @@ document.addEventListener(
                     progress >= a.scroll &&
                     progress <= b.scroll
                 ) {
-
 
                     const range =
                         b.scroll -
@@ -1604,7 +1437,6 @@ document.addEventListener(
 
         function updateTarget() {
 
-
             const maxScroll =
 
                 document.documentElement
@@ -1657,24 +1489,11 @@ document.addEventListener(
 
         function render() {
 
-
-            /*
-                Mobile Safari gets slightly more
-                damping so it doesn't have to chase
-                every tiny scroll movement.
-            */
-
-            const smoothing =
-                isMobile
-                    ? 0.055
-                    : 0.075;
-
-
             current.x =
                 lerp(
                     current.x,
                     target.x,
-                    smoothing
+                    0.075
                 );
 
 
@@ -1682,7 +1501,7 @@ document.addEventListener(
                 lerp(
                     current.y,
                     target.y,
-                    smoothing
+                    0.075
                 );
 
 
@@ -1690,7 +1509,7 @@ document.addEventListener(
                 lerp(
                     current.z,
                     target.z,
-                    smoothing
+                    0.075
                 );
 
 
@@ -1698,7 +1517,7 @@ document.addEventListener(
                 lerp(
                     current.rotateX,
                     target.rotateX,
-                    smoothing
+                    0.075
                 );
 
 
@@ -1706,14 +1525,13 @@ document.addEventListener(
                 lerp(
                     current.rotateY,
                     target.rotateY,
-                    smoothing
+                    0.075
                 );
 
 
             /* =================================================
                WORLD TRANSFORM
             ================================================= */
-
 
             world.style.transform =
 
@@ -1750,54 +1568,12 @@ document.addEventListener(
 
 
         /* =================================================
-           SAFARI-SAFE SCROLL UPDATE
-        ================================================= */
-
-        let scrollTicking =
-            false;
-
-
-        function requestCameraUpdate() {
-
-
-            if (
-                scrollTicking
-            ) {
-
-                return;
-
-            }
-
-
-            scrollTicking =
-                true;
-
-
-            requestAnimationFrame(
-                () => {
-
-
-                    updateTarget();
-
-
-                    scrollTicking =
-                        false;
-
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
            EVENTS
         ================================================= */
 
-
         window.addEventListener(
             "scroll",
-            requestCameraUpdate,
+            updateTarget,
             {
                 passive: true
             }
@@ -1806,42 +1582,20 @@ document.addEventListener(
 
         window.addEventListener(
             "resize",
-            requestCameraUpdate,
+            updateTarget,
             {
                 passive: true
             }
         );
 
 
-        /*
-            iOS Safari changes the visual viewport
-            when the address bar expands/collapses.
-        */
-
-        if (
-            window.visualViewport
-        ) {
-
-
-            window.visualViewport.addEventListener(
-                "resize",
-                requestCameraUpdate
-            );
-
-
-        }
-
-
         /* =================================================
            START
         ================================================= */
 
-
         updateTarget();
 
-
         render();
-
 
     }
 
