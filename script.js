@@ -1,359 +1,409 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-
 /* =================================================
-   LOADING SCREEN CONTROL
+LOADING SCREEN CONTROL
 ================================================= */
 
 const loadingScreen =
-    document.querySelector(".loading-screen");
+document.querySelector(".loading-screen");
 
 const audioControls =
-    document.getElementById("audioControls");
+document.getElementById("audioControls");
 
 if (loadingScreen) {
 
-    if (sessionStorage.getItem("visited")) {
 
-        loadingScreen.remove();
+if (sessionStorage.getItem("visited")) {
 
-    } else {
+    loadingScreen.remove();
 
-        sessionStorage.setItem("visited", "true");
+} else {
 
-        setTimeout(() => {
+    sessionStorage.setItem("visited", "true");
 
-            if (audioControls) {
-                audioControls.classList.add("visible");
-            }
+    setTimeout(() => {
 
-        }, 5600);
-    }
+        if (audioControls) {
+
+            audioControls.classList.add(
+                "visible"
+            );
+
+        }
+
+    }, 5600);
+
 }
 
 
+}
+
 /* =================================================
-   RESET SCROLL
+RESET SCROLL
 ================================================= */
 
 if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
+
+
+history.scrollRestoration = "manual";
+
+
 }
 
 window.scrollTo(0, 0);
 
-
 /* =================================================
-   SETUP
+SETUP
 ================================================= */
 
 const panels =
-    document.querySelectorAll(".panel");
+document.querySelectorAll(".panel");
 
 const SCROLL_FACTOR = 1.5;
 
-
 /* =================================================
-   VARIABLE RANDOM FONTS
+VARIABLE RANDOM FONTS
 ================================================= */
 
 const randomFontText = (element) => {
 
-    if (!element) return;
 
-    const fonts = [
-        '"Courier Prime", monospace',
-        '"Courier New", monospace',
-        '"Baskerville", serif',
-        '"Georgia", serif',
-        '"Times New Roman", serif',
-        'Helvetica, Arial, sans-serif',
-        '"Helvetica Neue", sans-serif',
-        'Arial, sans-serif',
-        '"Gill Sans", sans-serif'
+if (!element) return;
+
+const fonts = [
+
+    '"Courier Prime", monospace',
+
+    '"Courier New", monospace',
+
+    '"Baskerville", serif',
+
+    '"Georgia", serif',
+
+    '"Times New Roman", serif',
+
+    'Helvetica, Arial, sans-serif',
+
+    '"Helvetica Neue", sans-serif',
+
+    'Arial, sans-serif',
+
+    '"Gill Sans", sans-serif'
+
+];
+
+const text =
+    element.placeholder ||
+    element.textContent.trim();
+
+if (!text) return;
+
+element.innerHTML = "";
+
+let currentFont =
+    fonts[
+        Math.floor(
+            Math.random() *
+            fonts.length
+        )
     ];
 
-    const text =
-        element.placeholder ||
-        element.textContent.trim();
+[...text].forEach(letter => {
 
-    if (!text) return;
+    const span =
+        document.createElement("span");
 
-    element.innerHTML = "";
+    span.textContent =
+        letter === " "
+            ? "\u00A0"
+            : letter;
 
-    let currentFont =
-        fonts[
-            Math.floor(
-                Math.random() * fonts.length
-            )
-        ];
+    if (Math.random() > 0.75) {
 
-    [...text].forEach(letter => {
+        currentFont =
+            fonts[
+                Math.floor(
+                    Math.random() *
+                    fonts.length
+                )
+            ];
 
-        const span =
-            document.createElement("span");
+    }
 
-        span.textContent =
-            letter === " "
-                ? "\u00A0"
-                : letter;
+    span.style.fontFamily =
+        currentFont;
 
-        if (Math.random() > 0.75) {
+    span.style.fontWeight = "400";
 
-            currentFont =
-                fonts[
-                    Math.floor(
-                        Math.random() * fonts.length
-                    )
-                ];
-        }
+    span.style.display =
+        "inline-block";
 
-        span.style.fontFamily =
-            currentFont;
+    element.appendChild(span);
 
-        span.style.fontWeight = "400";
-        span.style.display = "inline-block";
+});
 
-        element.appendChild(span);
-
-    });
 
 };
 
-
 /* =================================================
-   ALPHABET DECODE TEXT
+ALPHABET DECODE TEXT
 ================================================= */
 
 const decodeText = (element) => {
 
-    if (!element) return;
 
-    const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+if (!element) return;
 
-    const text =
-        element.textContent.trim();
+const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    if (!text) return;
+const text =
+    element.textContent.trim();
 
-    element.innerHTML = "";
+if (!text) return;
 
-    [...text].forEach((character, index) => {
+element.innerHTML = "";
 
-        const span =
-            document.createElement("span");
+[...text].forEach((character, index) => {
 
-        span.style.display =
-            "inline-block";
+    const span =
+        document.createElement("span");
 
-        if (character === " ") {
+    span.style.display =
+        "inline-block";
 
-            span.textContent = "\u00A0";
-            element.appendChild(span);
-
-            return;
-        }
+    if (character === " ") {
 
         span.textContent =
-            characters[
-                Math.floor(
-                    Math.random() *
-                    characters.length
-                )
-            ];
+            "\u00A0";
 
         element.appendChild(span);
 
-        let cycles = 0;
+        return;
 
-        const maxCycles =
-            4 +
+    }
+
+    span.textContent =
+        characters[
             Math.floor(
-                Math.random() * 7
-            );
+                Math.random() *
+                characters.length
+            )
+        ];
 
-        const delay =
-            index * 35;
+    element.appendChild(span);
 
-        setTimeout(() => {
+    let cycles = 0;
 
-            const interval =
-                setInterval(() => {
+    const maxCycles =
+        4 +
+        Math.floor(
+            Math.random() * 7
+        );
 
-                    if (cycles >= maxCycles) {
+    const delay =
+        index * 35;
 
-                        clearInterval(interval);
+    setTimeout(() => {
 
-                        span.textContent =
-                            character;
+        const interval =
+            setInterval(() => {
 
-                        return;
-                    }
+                if (cycles >= maxCycles) {
+
+                    clearInterval(interval);
 
                     span.textContent =
-                        characters[
-                            Math.floor(
-                                Math.random() *
-                                characters.length
-                            )
-                        ];
+                        character;
 
-                    cycles++;
+                    return;
 
-                }, 60);
+                }
 
-        }, delay);
+                span.textContent =
+                    characters[
+                        Math.floor(
+                            Math.random() *
+                            characters.length
+                        )
+                    ];
 
-    });
+                cycles++;
+
+            }, 60);
+
+    }, delay);
+
+});
+
 
 };
 
-
 /* =================================================
-   PAGE HEIGHT
+PAGE HEIGHT
 ================================================= */
 
 function getPanelHeight() {
 
-    if (!panels.length) {
-        return window.innerHeight;
-    }
 
-    return panels[0]
-        .getBoundingClientRect()
-        .height;
+if (!panels.length) {
+
+    return window.innerHeight;
+
 }
 
+return panels[0]
+    .getBoundingClientRect()
+    .height;
+
+
+}
 
 function setPageHeight() {
 
-    const totalPanels =
-        panels.length;
 
-    const panelHeight =
-        getPanelHeight();
+const totalPanels =
+    panels.length;
 
-    document.body.style.height =
-        `${(
+const panelHeight =
+    getPanelHeight();
+
+document.body.style.height =
+    `${
+        (
             (totalPanels - 1) *
             SCROLL_FACTOR +
             1
-        ) * panelHeight}px`;
+        ) *
+        panelHeight
+    }px`;
+
+
 }
 
-
 /* =================================================
-   IMAGE LOADING
+IMAGE LOADING
 ================================================= */
 
 const loadedPanels =
-    new WeakSet();
+new WeakSet();
 
 const imageObserver =
-    new IntersectionObserver(
-        (entries) => {
+new IntersectionObserver(
 
-            entries.forEach(entry => {
 
-                if (!entry.isIntersecting) {
-                    return;
+(entries) => {
+
+    entries.forEach(entry => {
+
+        if (!entry.isIntersecting) {
+            return;
+        }
+
+        const panel =
+            entry.target;
+
+        if (loadedPanels.has(panel)) {
+            return;
+        }
+
+        let image =
+            panel.dataset.image;
+
+        if (!image) {
+            return;
+        }
+
+        if (
+            window.innerWidth <= 768 &&
+            image.includes(".webp")
+        ) {
+
+            image =
+                image.replace(
+                    ".webp",
+                    "-mobile.webp"
+                );
+
+        }
+
+        const img =
+            document.createElement("img");
+
+        img.className =
+            "panel-image";
+
+        img.alt = "";
+
+        img.decoding =
+            "async";
+
+        panel.appendChild(img);
+
+        img.src =
+            image;
+
+        img.onload =
+            async () => {
+
+                try {
+
+                    await img.decode();
+
                 }
 
-                const panel =
-                    entry.target;
-
-                if (loadedPanels.has(panel)) {
-                    return;
-                }
-
-                let image =
-                    panel.dataset.image;
-
-                if (!image) {
-                    return;
-                }
-
-
-                /* MOBILE IMAGE */
-
-                if (
-                    window.innerWidth <= 768 &&
-                    image.includes(".webp")
-                ) {
-
-                    image =
-                        image.replace(
-                            ".webp",
-                            "-mobile.webp"
-                        );
-                }
-
-
-                const img =
-                    document.createElement("img");
-
-                img.className =
-                    "panel-image";
-
-                img.alt = "";
-
-                img.decoding = "async";
-
-                panel.appendChild(img);
-
-
-                /* LOAD */
-
-                img.src = image;
-
-
-                img.onload = async () => {
-
-                    try {
-                        await img.decode();
-                    }
-                    catch (error) {
-
-                        console.warn(
-                            "IMAGE DECODE FAILED:",
-                            image
-                        );
-
-                    }
-
-                    img.classList.add("loaded");
-
-                };
-
-
-                img.onerror = () => {
+                catch (error) {
 
                     console.warn(
-                        "IMAGE FAILED:",
+                        "IMAGE DECODE FAILED:",
                         image
                     );
 
-                };
+                }
+
+                img.classList.add(
+                    "loaded"
+                );
+
+                updateImageParallax();
+
+            };
+
+        img.onerror =
+            () => {
+
+                console.warn(
+                    "IMAGE FAILED:",
+                    image
+                );
+
+            };
+
+        loadedPanels.add(panel);
+
+        imageObserver.unobserve(
+            panel
+        );
+
+    });
+
+},
+
+{
+    rootMargin:
+        "200px 0px"
+}
 
 
-                loadedPanels.add(panel);
-
-                imageObserver.unobserve(panel);
-
-            });
-
-        },
-        {
-            rootMargin: "200px 0px"
-        }
-    );
-
+);
 
 panels.forEach(panel => {
-    imageObserver.observe(panel);
-});
 
+
+imageObserver.observe(panel);
+
+
+});
 
 /* =================================================
 VIDEO LOADING
@@ -361,16 +411,6 @@ VIDEO LOADING
 
 const loadedVideos =
 new WeakSet();
-
-/*
-GET THE CORRECT VIDEO FRAME
-
-On mobile we prefer .mobile-frame,
-but fall back to any iframe[data-src].
-This prevents Panel 10 from failing simply
-because the mobile iframe doesn't have the
-expected class.
-*/
 
 function getVideoFrame(panel) {
 
@@ -383,27 +423,58 @@ const mobile =
 if (mobile) {
 
     return (
-        panel.querySelector(".mobile-frame") ||
-        panel.querySelector("iframe[data-src]") ||
-        panel.querySelector("iframe")
+
+        panel.querySelector(
+            ".mobile-frame"
+        )
+
+        ||
+
+        panel.querySelector(
+            "iframe[data-src]"
+        )
+
+        ||
+
+        panel.querySelector(
+            "iframe"
+        )
+
     );
 
 }
 
 return (
-    panel.querySelector(".desktop-frame") ||
-    panel.querySelector("iframe[data-src]") ||
-    panel.querySelector("iframe")
+
+    panel.querySelector(
+        ".desktop-frame"
+    )
+
+    ||
+
+    panel.querySelector(
+        "iframe[data-src]"
+    )
+
+    ||
+
+    panel.querySelector(
+        "iframe"
+    )
+
 );
 
 
 }
 
-/*
+/* =================================================
 LOAD VIDEO
-*/
+================================================= */
 
-function loadVideo(panel, priority = false) {
+function loadVideo(
+panel,
+priority = false
+) {
 
 
 if (!panel) return null;
@@ -419,13 +490,8 @@ if (!frame) {
     );
 
     return null;
+
 }
-
-
-/*
-If the iframe already has a src,
-it is already loaded.
-*/
 
 if (
     frame.src &&
@@ -438,14 +504,8 @@ if (
 
 }
 
-
-/*
-Get the deferred source.
-*/
-
 const source =
     frame.dataset.src;
-
 
 if (!source) {
 
@@ -457,13 +517,6 @@ if (!source) {
     return null;
 
 }
-
-
-/*
-PRIORITY VIDEO
-
-Panel 10 uses this.
-*/
 
 if (priority) {
 
@@ -484,57 +537,41 @@ if (priority) {
 
 }
 
+frame.onload =
+    () => {
 
-/*
-VIDEO READY
-*/
+        const videoFrame =
+            frame.closest(
+                ".video-frame"
+            );
 
-frame.onload = () => {
+        if (videoFrame) {
 
-    const videoFrame =
-        frame.closest(".video-frame");
+            videoFrame.classList.add(
+                "video-ready"
+            );
 
-    if (videoFrame) {
+        }
 
-        videoFrame.classList.add(
-            "video-ready"
+        console.log(
+            "VIDEO READY:",
+            panel.className
         );
 
-    }
+    };
 
-    console.log(
-        "VIDEO READY:",
-        panel.className
-    );
+frame.onerror =
+    () => {
 
-};
+        console.warn(
+            "VIDEO FRAME FAILED:",
+            panel.className
+        );
 
+    };
 
-/*
-VIDEO ERROR
-*/
-
-frame.onerror = () => {
-
-    console.warn(
-        "VIDEO FRAME FAILED:",
-        panel.className
-    );
-
-};
-
-
-/*
-SET SRC
-*/
-
-frame.src = source;
-
-
-/*
-Keep the source available for
-the Panel 10 retry system.
-*/
+frame.src =
+    source;
 
 frame.dataset.originalSrc =
     source;
@@ -543,7 +580,6 @@ frame.removeAttribute(
     "data-src"
 );
 
-
 loadedVideos.add(panel);
 
 return frame;
@@ -551,48 +587,52 @@ return frame;
 
 }
 
-/*
+/* =================================================
 NORMAL VIDEO OBSERVER
-*/
+================================================= */
 
 const videoObserver =
 new IntersectionObserver(
+
+
 (entries) => {
 
+    entries.forEach(entry => {
 
-        entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+            return;
+        }
 
-            if (!entry.isIntersecting) {
-                return;
-            }
+        const panel =
+            entry.target;
 
-            const panel =
-                entry.target;
+        if (
+            loadedVideos.has(panel)
+        ) {
+            return;
+        }
 
-            if (loadedVideos.has(panel)) {
-                return;
-            }
+        loadVideo(panel);
 
-            loadVideo(panel);
+        videoObserver.unobserve(
+            panel
+        );
 
-            videoObserver.unobserve(panel);
+    });
 
-        });
+},
 
-    },
-    {
-        rootMargin: "800px 0px"
-    }
+{
+    rootMargin:
+        "800px 0px"
+}
+
+
 );
 
-
-/*
-OBSERVE NORMAL VIDEOS
-
-Panel 10 is intentionally excluded
-from lazy loading because it needs
-to be immediately available.
-*/
+/* =================================================
+OBSERVE VIDEOS
+================================================= */
 
 panels.forEach(panel => {
 
@@ -606,33 +646,26 @@ if (!frame) {
     return;
 }
 
-
-/*
-PANEL 10
-
-Always load immediately.
-*/
-
 if (
-    panel.classList.contains("panel-10")
+    panel.classList.contains(
+        "panel-10"
+    )
 ) {
 
-    loadVideo(panel, true);
+    loadVideo(
+        panel,
+        true
+    );
 
     return;
 
 }
 
-
-/*
-ALL OTHER VIDEOS
-
-Continue using lazy loading.
-*/
-
 if (frame.dataset.src) {
 
-    videoObserver.observe(panel);
+    videoObserver.observe(
+        panel
+    );
 
 }
 
@@ -649,35 +682,19 @@ document.querySelector(".panel-10");
 if (panel10) {
 
 
-/*
-Find the actual iframe again,
-including the mobile fallback.
-*/
-
 const panel10Frame =
     getVideoFrame(panel10);
 
-
 if (panel10Frame) {
 
-    /*
-    Store the original URL immediately.
-    */
-
-    if (panel10Frame.dataset.src) {
+    if (
+        panel10Frame.dataset.src
+    ) {
 
         panel10Frame.dataset.originalSrc =
             panel10Frame.dataset.src;
 
     }
-
-
-    /*
-    MOBILE CHECK
-
-    If the video still hasn't initialized,
-    force the iframe to reload.
-    */
 
     setTimeout(() => {
 
@@ -692,24 +709,21 @@ if (panel10Frame) {
                 "video-ready"
             );
 
-
         if (!ready) {
 
             console.warn(
                 "PANEL 10 VIDEO NOT READY — RETRYING"
             );
 
-
             const source =
                 panel10Frame.dataset.originalSrc ||
                 panel10Frame.dataset.src ||
                 panel10Frame.src;
 
-
             if (source) {
 
-                panel10Frame.src = "about:blank";
-
+                panel10Frame.src =
+                    "about:blank";
 
                 requestAnimationFrame(() => {
 
@@ -729,891 +743,918 @@ if (panel10Frame) {
 
 }
 
-
-
 /* =================================================
-   THEATER 003 — PANEL 07
+THEATER 003 — PANEL 07
 ================================================= */
 
 const theater003 =
-    document.querySelector(
-        ".panel-07 .theater003"
-    );
+document.querySelector(
+".panel-07 .panel-07-theater"
+);
 
 if (theater003) {
 
-    theater003.classList.add(
-        "theater-ready"
-    );
+
+theater003.classList.add(
+    "theater-ready"
+);
+
 
 }
 
-
 /* =================================================
-   PANEL MOVEMENT
+PANEL MOVEMENT
 ================================================= */
 
 function updatePanels() {
 
-    const height =
-        getPanelHeight();
 
-    const mobile =
-        "ontouchstart" in window ||
-        navigator.maxTouchPoints > 0;
+const height =
+    getPanelHeight();
 
+const mobile =
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0;
 
-    let scrollY;
+let scrollY;
 
+if (mobile) {
 
-    /*
-       MOBILE / TOUCH REVERSED SCROLL
-    */
+    const maxScroll =
+        document.documentElement
+            .scrollHeight -
+        document.documentElement
+            .clientHeight;
 
-    if (mobile) {
+    scrollY =
+        maxScroll -
+        window.scrollY;
 
-        const maxScroll =
-            document.documentElement.scrollHeight -
-            document.documentElement.clientHeight;
+}
 
-        scrollY =
-            maxScroll -
-            window.scrollY;
+else {
 
-    }
-    else {
+    scrollY =
+        window.scrollY;
 
-        scrollY =
-            window.scrollY;
+}
 
-    }
+panels.forEach((panel, index) => {
 
-
-    panels.forEach((panel, index) => {
-
-        /*
-           FIRST PANEL
-        */
-
-        if (index === 0) {
-
-            panel.style.transform =
-                "translateY(0)";
-
-            return;
-        }
-
-
-        const start =
-            (index - 1) *
-            height *
-            SCROLL_FACTOR;
-
-
-        const progress =
-            (
-                scrollY -
-                start
-            ) /
-            (
-                height *
-                SCROLL_FACTOR
-            );
-
-
-        /*
-           DISMISS SCROLL ARROW
-        */
-
-        if (
-            index === 1 &&
-            progress > 0
-        ) {
-
-            dismissScrollArrow();
-
-        }
-
-
-        const position =
-            Math.min(
-                0,
-                Math.max(
-                    -100,
-                    -100 +
-                    progress * 100
-                )
-            );
-
+    if (index === 0) {
 
         panel.style.transform =
-            `translateY(${position}%)`;
+            "translateY(0)";
+
+        return;
+
+    }
+
+    const start =
+        (index - 1) *
+        height *
+        SCROLL_FACTOR;
+
+    const progress =
+        (
+            scrollY -
+            start
+        ) /
+        (
+            height *
+            SCROLL_FACTOR
+        );
+
+    if (
+        index === 1 &&
+        progress > 0
+    ) {
+
+        dismissScrollArrow();
+
+    }
+
+    const position =
+        Math.min(
+            0,
+            Math.max(
+                -100,
+                -100 +
+                progress * 100
+            )
+        );
+
+    panel.style.transform =
+        `translateY(${position}%)`;
 
 
-        /*
-           EMAIL ARRIVAL
-        */
+    /* EMAIL ARRIVAL */
 
-        if (index === 9) {
+    if (index === 9) {
 
-            const email =
-                panel.querySelector(
-                    ".email-arrival"
+        const email =
+            panel.querySelector(
+                ".email-arrival"
+            );
+
+        if (email) {
+
+            const emailProgress =
+                Math.min(
+                    1,
+                    Math.max(
+                        0,
+                        (position + 100) / 100
+                    )
                 );
 
-            if (email) {
+            const move =
+                -180 +
+                emailProgress * 180;
 
-                const emailProgress =
-                    Math.min(
-                        1,
-                        Math.max(
-                            0,
-                            (position + 100) / 100
-                        )
-                    );
+            email.style.transform =
+                `translateY(${move}px)`;
 
-
-                const move =
-                    -180 +
-                    emailProgress * 180;
-
-
-                email.style.transform =
-                    `translateY(${move}px)`;
-
-                email.style.opacity = 1;
-
-            }
+            email.style.opacity = 1;
 
         }
 
-    });
-
-}
-
-
-/* =================================================
-   FLOATING PANEL OBJECTS
-================================================= */
-
-const floatingElements =
-    document.querySelectorAll(
-        ".panel-07 .panel-content-left, " +
-        ".panel-09 .social-links"
-    );
-
-
-function updateFloatingObjects() {
-
-    const mobile =
-        "ontouchstart" in window ||
-        navigator.maxTouchPoints > 0;
-
-
-    let scrollY;
-
-
-    if (mobile) {
-
-        const maxScroll =
-            document.documentElement.scrollHeight -
-            document.documentElement.clientHeight;
-
-        scrollY =
-            maxScroll -
-            window.scrollY;
-
     }
-    else {
-
-        scrollY =
-            window.scrollY;
-
-    }
-
-
-    floatingElements.forEach(element => {
-
-        const speed = 0.08;
-
-        element.style.translate =
-            `0 ${scrollY * speed}px`;
-
-    });
-
-}
-
-
-/* =================================================
-   SCROLL
-================================================= */
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        updatePanels();
-        updateImageParallax();
-        updateFloatingObjects();
-
-    },
-    {
-        passive: true
-    }
-);
-
-
-/* =================================================
-   RESIZE
-================================================= */
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        setPageHeight();
-
-        updatePanels();
-        updateImageParallax();
-        updateFloatingObjects();
-
-    }
-);
-
-
-/* =================================================
-   INITIAL POSITION
-================================================= */
-
-requestAnimationFrame(() => {
-
-    setPageHeight();
-
-
-    if (
-        "ontouchstart" in window ||
-        navigator.maxTouchPoints > 0
-    ) {
-
-        window.scrollTo(
-            0,
-            document.documentElement.scrollHeight -
-            document.documentElement.clientHeight
-        );
-
-    }
-    else {
-
-        window.scrollTo(0, 0);
-
-    }
-
-
-    updatePanels();
-    updateImageParallax();
-    updateFloatingObjects();
 
 });
 
 
+}
+
 /* =================================================
-   TICKER TEXT
+IMAGE PARALLAX
+================================================= */
+
+function updateImageParallax() {
+
+
+const images =
+    document.querySelectorAll(
+        ".panel[data-image] > .panel-image"
+    );
+
+if (!images.length) {
+    return;
+}
+
+images.forEach(image => {
+
+    const panel =
+        image.closest(".panel");
+
+    if (!panel) {
+        return;
+    }
+
+    const rect =
+        panel.getBoundingClientRect();
+
+    const progress =
+        (
+            window.innerHeight -
+            rect.top
+        ) /
+        (
+            window.innerHeight +
+            rect.height
+        );
+
+    const movement =
+        (progress - 0.5) * 40;
+
+    image.style.transform =
+        `translate3d(0, ${movement}px, 0)`;
+
+});
+
+
+}
+
+/* =================================================
+FLOATING PANEL OBJECTS
+================================================= */
+
+const floatingElements =
+document.querySelectorAll(
+".panel-07 .panel-content-left, " +
+".panel-09 .social-links"
+);
+
+function updateFloatingObjects() {
+
+
+const mobile =
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0;
+
+let scrollY;
+
+if (mobile) {
+
+    const maxScroll =
+        document.documentElement
+            .scrollHeight -
+        document.documentElement
+            .clientHeight;
+
+    scrollY =
+        maxScroll -
+        window.scrollY;
+
+}
+
+else {
+
+    scrollY =
+        window.scrollY;
+
+}
+
+floatingElements.forEach(element => {
+
+    const speed =
+        0.08;
+
+    element.style.translate =
+        `0 ${scrollY * speed}px`;
+
+});
+
+
+}
+
+/* =================================================
+SCROLL
+================================================= */
+
+window.addEventListener(
+"scroll",
+() => {
+
+
+    updatePanels();
+
+    updateImageParallax();
+
+    updateFloatingObjects();
+
+},
+{
+    passive: true
+}
+
+
+);
+
+/* =================================================
+RESIZE
+================================================= */
+
+window.addEventListener(
+"resize",
+() => {
+
+
+    setPageHeight();
+
+    updatePanels();
+
+    updateImageParallax();
+
+    updateFloatingObjects();
+
+}
+
+
+);
+
+/* =================================================
+INITIAL POSITION
+================================================= */
+
+requestAnimationFrame(() => {
+
+
+setPageHeight();
+
+if (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0
+) {
+
+    window.scrollTo(
+        0,
+        document.documentElement
+            .scrollHeight -
+        document.documentElement
+            .clientHeight
+    );
+
+}
+
+else {
+
+    window.scrollTo(0, 0);
+
+}
+
+updatePanels();
+
+updateImageParallax();
+
+updateFloatingObjects();
+
+
+});
+
+/* =================================================
+TICKER TEXT
 ================================================= */
 
 document
-    .querySelectorAll(
-        ".ticker-wrap .ticker-item, " +
-        ".loading-ticker-track .ticker-item"
-    )
-    .forEach(item => {
+.querySelectorAll(
+".ticker-wrap .ticker-item, " +
+".loading-ticker-track .ticker-item"
+)
+.forEach(item => {
 
-        decodeText(item);
 
-    });
+decodeText(item);
 
+
+});
 
 /* =================================================
-   RANDOM FONT ELEMENTS
+RANDOM FONT ELEMENTS
 ================================================= */
 
 document
-    .querySelectorAll(".random-font")
-    .forEach(item => {
+.querySelectorAll(".random-font")
+.forEach(item => {
 
-        randomFontText(item);
 
-    });
+randomFontText(item);
 
+
+});
 
 /* =================================================
-   TRANSMISSION FIELDS
+TRANSMISSION FIELDS
 ================================================= */
 
 document
-    .querySelectorAll(
-        ".message-field, " +
-        ".message-form button"
-    )
-    .forEach(field => {
+.querySelectorAll(
+".message-field, " +
+".message-form button"
+)
+.forEach(field => {
 
-        randomFontText(field);
 
-    });
+randomFontText(field);
 
+
+});
 
 /* =================================================
-   MACHINE CHATTER
+MACHINE CHATTER
 ================================================= */
 
 const chatter =
-    document.querySelector(
-        ".machine-chatter"
-    );
-
+document.querySelector(
+".machine-chatter"
+);
 
 if (
-    chatter &&
-    window.innerWidth > 768
+chatter &&
+window.innerWidth > 768
 ) {
 
-    const messages = [
 
-        "SIGNAL: TRANSMITTING..",
-        "SOURCE UNKNOWN",
-        "SEARCHING...",
-        "NO RECORD FOUND",
-        "THE PRINCESS /// STATUS: LOST"
+const messages = [
 
-    ];
+    "SIGNAL: TRANSMITTING..",
 
+    "SOURCE UNKNOWN",
 
-    const startChatter = () => {
+    "SEARCHING...",
 
-        const chatterOverlay =
-            document.querySelector(
-                ".machine-chatter-overlay"
-            );
+    "NO RECORD FOUND",
 
+    "THE PRINCESS /// STATUS: LOST"
 
-        if (chatterOverlay) {
+];
 
-            chatterOverlay.classList.add(
-                "active"
-            );
+const startChatter = () => {
 
-        }
+    const chatterOverlay =
+        document.querySelector(
+            ".machine-chatter-overlay"
+        );
 
+    if (chatterOverlay) {
 
-        function updateChatter() {
+        chatterOverlay.classList.add(
+            "active"
+        );
 
-            const message =
-                messages[
-                    Math.floor(
-                        Math.random() *
-                        messages.length
-                    )
-                ];
+    }
 
+    function updateChatter() {
 
-            const characters =
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const message =
+            messages[
+                Math.floor(
+                    Math.random() *
+                    messages.length
+                )
+            ];
 
+        const characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            chatter.style.opacity = "0";
+        chatter.style.opacity = "0";
 
+        setTimeout(() => {
 
-            setTimeout(() => {
+            chatter.innerHTML = "";
 
-                chatter.innerHTML = "";
+            [...message].forEach(
+                (character, index) => {
 
+                    const span =
+                        document.createElement(
+                            "span"
+                        );
 
-                [...message].forEach(
-                    (character, index) => {
-
-                        const span =
-                            document.createElement(
-                                "span"
-                            );
-
-
-                        if (
-                            character === " "
-                        ) {
-
-                            span.textContent =
-                                "\u00A0";
-
-                            chatter.appendChild(
-                                span
-                            );
-
-                            return;
-                        }
-
+                    if (
+                        character === " "
+                    ) {
 
                         span.textContent =
-                            characters[
-                                Math.floor(
-                                    Math.random() *
-                                    characters.length
-                                )
-                            ];
-
+                            "\u00A0";
 
                         chatter.appendChild(
                             span
                         );
 
-
-                        let cycles = 0;
-
-
-                        const maxCycles =
-                            3 +
-                            Math.floor(
-                                Math.random() * 8
-                            );
-
-
-                        const interval =
-                            setInterval(() => {
-
-                                if (
-                                    cycles >=
-                                    maxCycles
-                                ) {
-
-                                    clearInterval(
-                                        interval
-                                    );
-
-                                    span.textContent =
-                                        character;
-
-                                    return;
-                                }
-
-
-                                span.textContent =
-                                    characters[
-                                        Math.floor(
-                                            Math.random() *
-                                            characters.length
-                                        )
-                                    ];
-
-
-                                cycles++;
-
-                            }, 45 + index * 8);
+                        return;
 
                     }
-                );
 
+                    span.textContent =
+                        characters[
+                            Math.floor(
+                                Math.random() *
+                                characters.length
+                            )
+                        ];
 
-                chatter.style.opacity =
-                    ".55";
+                    chatter.appendChild(
+                        span
+                    );
 
-            }, 300);
+                    let cycles = 0;
 
-        }
+                    const maxCycles =
+                        3 +
+                        Math.floor(
+                            Math.random() * 8
+                        );
 
+                    const interval =
+                        setInterval(() => {
 
-        updateChatter();
+                            if (
+                                cycles >=
+                                maxCycles
+                            ) {
 
+                                clearInterval(
+                                    interval
+                                );
 
-        setInterval(
-            updateChatter,
-            15000
-        );
+                                span.textContent =
+                                    character;
 
-    };
+                                return;
 
+                            }
 
-    /*
-       MATCH LOADING EXIT
-    */
+                            span.textContent =
+                                characters[
+                                    Math.floor(
+                                        Math.random() *
+                                        characters.length
+                                    )
+                                ];
 
-    if (
-        sessionStorage.getItem("visited")
-    ) {
+                            cycles++;
 
-        setTimeout(
-            startChatter,
-            500
-        );
+                        }, 45 + index * 8);
+
+                }
+            );
+
+            chatter.style.opacity =
+                ".55";
+
+        }, 300);
 
     }
-    else {
 
-        setTimeout(
-            startChatter,
-            7000
-        );
+    updateChatter();
 
-    }
-
-}
-
-
-/* =================================================
-   TRANSMIT DRAWER
-================================================= */
-
-const transmitButton =
-    document.getElementById(
-        "transmitButton"
+    setInterval(
+        updateChatter,
+        15000
     );
 
-const transmissionContainer =
-    document.getElementById(
-        "transmissionContainer"
-    );
+};
 
 
 if (
-    transmitButton &&
-    transmissionContainer
+    sessionStorage.getItem(
+        "visited"
+    )
 ) {
 
-    transmitButton.addEventListener(
-        "click",
-        () => {
+    setTimeout(
+        startChatter,
+        500
+    );
 
-            const isOpen =
-                transmissionContainer.classList.toggle(
-                    "active"
-                );
+}
 
+else {
 
-            transmitButton.innerHTML =
-                isOpen
-                    ? "H<br>I<br>D<br>E<br><br>T<br>R<br>A<br>N<br>S<br>M<br>I<br>S<br>S<br>I<br>O<br>N<br>S"
-                    : "S<br>E<br>N<br>D<br><br>T<br>R<br>A<br>N<br>S<br>M<br>I<br>S<br>S<br>I<br>O<br>N<br>S";
-
-        }
+    setTimeout(
+        startChatter,
+        7000
     );
 
 }
 
 
+}
+
 /* =================================================
-   FORM SUBMISSION
+TRANSMIT DRAWER
+================================================= */
+
+const transmitButton =
+document.getElementById(
+"transmitButton"
+);
+
+const transmissionContainer =
+document.getElementById(
+"transmissionContainer"
+);
+
+if (
+transmitButton &&
+transmissionContainer
+) {
+
+
+transmitButton.addEventListener(
+    "click",
+    () => {
+
+        const isOpen =
+            transmissionContainer.classList.toggle(
+                "active"
+            );
+
+        transmitButton.innerHTML =
+            isOpen
+
+                ? "H<br>I<br>D<br>E<br><br>T<br>R<br>A<br>N<br>S<br>M<br>I<br>S<br>S<br>I<br>O<br>N"
+
+                : "S<br>E<br>N<br>D<br><br>T<br>R<br>A<br>N<br>S<br>M<br>I<br>S<br>S<br>I<br>O<br>N";
+
+    }
+);
+
+
+}
+
+/* =================================================
+FORM SUBMISSION
 ================================================= */
 
 const form =
-    document.querySelector(
-        ".message-form"
-    );
-
+document.querySelector(
+".message-form"
+);
 
 if (form) {
 
-    form.addEventListener(
-        "submit",
-        async (event) => {
 
-            event.preventDefault();
+form.addEventListener(
+    "submit",
+    async (event) => {
 
+        event.preventDefault();
 
-            const data =
-                new FormData(form);
+        const data =
+            new FormData(form);
 
+        try {
 
-            try {
+            const response =
+                await fetch(
+                    form.action,
+                    {
+                        method: "POST",
 
-                const response =
-                    await fetch(
-                        form.action,
-                        {
-                            method: "POST",
-                            body: data,
-                            headers: {
-                                "Accept":
-                                    "application/json"
-                            }
+                        body: data,
+
+                        headers: {
+                            "Accept":
+                                "application/json"
                         }
-                    );
-
-
-                if (response.ok) {
-
-                    form.reset();
-
-
-                    const button =
-                        form.querySelector(
-                            "button"
-                        );
-
-
-                    if (button) {
-                        button.textContent =
-                            "SENT";
                     }
+                );
 
-                }
-                else {
+            if (response.ok) {
 
-                    throw new Error(
-                        "Transmission failed"
-                    );
-
-                }
-
-            }
-            catch (error) {
-
-                console.log(error);
-
+                form.reset();
 
                 const button =
                     form.querySelector(
                         "button"
                     );
 
-
                 if (button) {
+
                     button.textContent =
-                        "FAILED";
+                        "SENT";
+
                 }
 
             }
 
+            else {
+
+                throw new Error(
+                    "Transmission failed"
+                );
+
+            }
+
         }
-    );
+
+        catch (error) {
+
+            console.log(error);
+
+            const button =
+                form.querySelector(
+                    "button"
+                );
+
+            if (button) {
+
+                button.textContent =
+                    "FAILED";
+
+            }
+
+        }
+
+    }
+);
+
 
 }
 
-
 /* =================================================
-   IMAGE ARCHIVE DRAWER
+IMAGE ARCHIVE DRAWER
 ================================================= */
 
 const galleryButton =
-    document.getElementById(
-        "galleryButton"
-    );
+document.getElementById(
+"galleryButton"
+);
 
 const galleryDrawer =
-    document.getElementById(
-        "galleryDrawer"
-    );
+document.getElementById(
+"galleryDrawer"
+);
 
 const galleryClose =
-    document.getElementById(
-        "galleryClose"
-    );
-
-
-if (
-    galleryButton &&
-    galleryDrawer
-) {
-
-    galleryButton.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                galleryDrawer.classList.toggle(
-                    "open"
-                );
-
-
-            document.body.classList.toggle(
-                "foundings-mode",
-                isOpen
-            );
-
-
-            galleryButton.innerHTML =
-                isOpen
-                    ? "F<br>O<br>U<br>N<br>D<br>I<br>N<br>G<br>S"
-                    : "F<br>I<br>N<br>D<br>I<br>N<br>G<br>S";
-
-        }
-    );
-
-}
-
+document.getElementById(
+"galleryClose"
+);
 
 if (
-    galleryClose &&
-    galleryDrawer
+galleryButton &&
+galleryDrawer
 ) {
 
-    galleryClose.addEventListener(
-        "click",
-        () => {
 
-            galleryDrawer.classList.remove(
+galleryButton.addEventListener(
+    "click",
+    () => {
+
+        const isOpen =
+            galleryDrawer.classList.toggle(
                 "open"
             );
 
+        document.body.classList.toggle(
+            "foundings-mode",
+            isOpen
+        );
 
-            document.body.classList.remove(
-                "foundings-mode"
-            );
+        galleryButton.innerHTML =
+            isOpen
 
+                ? "F<br>O<br>U<br>N<br>D<br>I<br>N<br>G<br>S"
 
-            galleryButton.innerHTML =
-                "F<br>I<br>N<br>D<br>I<br>N<br>G<br>S";
+                : "F<br>I<br>N<br>D<br>I<br>N<br>G<br>S";
 
-        }
-    );
+    }
+);
+
 
 }
 
+if (
+galleryClose &&
+galleryDrawer
+) {
+
+
+galleryClose.addEventListener(
+    "click",
+    () => {
+
+        galleryDrawer.classList.remove(
+            "open"
+        );
+
+        document.body.classList.remove(
+            "foundings-mode"
+        );
+
+        galleryButton.innerHTML =
+            "F<br>I<br>N<br>D<br>I<br>N<br>G<br>S";
+
+    }
+);
+
+
+}
 
 /* =================================================
-   DRAWER PULL
+DRAWER PULL
 ================================================= */
 
 const drawerPullButton =
-    document.getElementById(
-        "drawerPullButton"
-    );
+document.getElementById(
+"drawerPullButton"
+);
 
 const drawerPullDrawer =
-    document.getElementById(
-        "drawerPullDrawer"
-    );
+document.getElementById(
+"drawerPullDrawer"
+);
 
 const drawerPullClose =
-    document.getElementById(
-        "drawerPullClose"
-    );
-
-
-if (
-    drawerPullButton &&
-    drawerPullDrawer
-) {
-
-    drawerPullButton.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                drawerPullDrawer.classList.toggle(
-                    "open"
-                );
-
-
-            drawerPullButton.classList.toggle(
-                "active",
-                isOpen
-            );
-
-        }
-    );
-
-}
-
+document.getElementById(
+"drawerPullClose"
+);
 
 if (
-    drawerPullClose &&
-    drawerPullDrawer
+drawerPullButton &&
+drawerPullDrawer
 ) {
 
-    drawerPullClose.addEventListener(
-        "click",
-        () => {
 
-            drawerPullDrawer.classList.remove(
+drawerPullButton.addEventListener(
+    "click",
+    () => {
+
+        const isOpen =
+            drawerPullDrawer.classList.toggle(
                 "open"
             );
 
+        drawerPullButton.classList.toggle(
+            "active",
+            isOpen
+        );
 
-            drawerPullButton.classList.remove(
-                "active"
-            );
+    }
+);
 
-        }
-    );
 
 }
 
+if (
+drawerPullClose &&
+drawerPullDrawer
+) {
+
+
+drawerPullClose.addEventListener(
+    "click",
+    () => {
+
+        drawerPullDrawer.classList.remove(
+            "open"
+        );
+
+        drawerPullButton.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+}
 
 /* =================================================
-   WAVES AUDIO DRAWER
+WAVES AUDIO DRAWER
 ================================================= */
 
 const audioDrawerTab =
-    document.getElementById(
-        "audioDrawerTab"
-    );
-
+document.getElementById(
+"audioDrawerTab"
+);
 
 if (
-    audioControls &&
-    audioDrawerTab
+audioControls &&
+audioDrawerTab
 ) {
 
-    audioDrawerTab.addEventListener(
-        "click",
-        () => {
 
-            audioControls.classList.toggle(
-                "open"
-            );
+audioDrawerTab.addEventListener(
+    "click",
+    () => {
 
+        audioControls.classList.toggle(
+            "open"
+        );
 
-            audioDrawerTab.classList.toggle(
-                "active"
-            );
+        audioDrawerTab.classList.toggle(
+            "active"
+        );
 
-        }
-    );
+    }
+);
+
 
 }
 
-
 /* =================================================
-   SCROLL ARROW
+SCROLL ARROW
 ================================================= */
 
 const scrollArrow =
-    document.querySelector(
-        ".panel-01 .scroll-arrow"
-    );
+document.querySelector(
+".panel-01 .scroll-arrow"
+);
 
-
-let arrowDismissed = false;
-
+let arrowDismissed =
+false;
 
 function dismissScrollArrow() {
 
-    if (arrowDismissed) {
-        return;
-    }
 
+if (arrowDismissed) {
+    return;
+}
 
-    arrowDismissed = true;
+arrowDismissed = true;
 
+if (scrollArrow) {
 
-    if (scrollArrow) {
+    scrollArrow.classList.add(
+        "gone"
+    );
 
-        scrollArrow.classList.add(
-            "gone"
-        );
+    setTimeout(() => {
 
+        scrollArrow.remove();
 
-        setTimeout(() => {
-
-            scrollArrow.remove();
-
-        }, 700);
-
-    }
+    }, 700);
 
 }
 
 
-/* =================================================
-   END
-================================================= */
+}
 
+/* =================================================
+END
+================================================= */
 
 });
