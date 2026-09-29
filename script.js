@@ -1744,7 +1744,7 @@ document.addEventListener("DOMContentLoaded", () => {
    JEREMYJACOBLAND — X TRANSMISSIONS
    ============================================================ */
 
-const X_TRANSMISSION_ENDPOINT = "data/x-posts.json";
+const X_TRANSMISSION_ENDPOINT = "/api/x-posts";
 
 const X_TRANSMISSION_REFRESH =
     5 * 60 * 1000;
@@ -2119,6 +2119,20 @@ function startXTransmissionUpdates() {
 
 }
 
+
+/* ============================================================
+   INITIALIZE
+   ============================================================ */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        startXTransmissionUpdates();
+
+    }
+);
+
     /* ========================================================
        INITIALIZATION
     ======================================================== */
@@ -2130,8 +2144,6 @@ function startXTransmissionUpdates() {
     setupVideoPlayButtons();
 
     initializeLoadingScreen();
-
-    startXTransmissionUpdates();
 
 
     /*
@@ -2159,5 +2171,10 @@ function startXTransmissionUpdates() {
 
     }
 
+
+    /*
+       Make the first panel available when
+       navigation begins.
+    */
 
 });

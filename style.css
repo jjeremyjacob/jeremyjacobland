@@ -1065,286 +1065,41 @@ body::after {
 
 
 /* ============================================================
-   PANEL 09 — JEREMYJACOBLAND X TRANSMISSIONS
+   SOCIAL LINKS — PANEL 09
    ============================================================ */
 
-.panel-09 {
-    background: transparent !important;
-    background-image: none !important;
+.panel-09 .panel-content {
+    gap: 20px;
 }
 
+.xtwitterx {
+    background: #45291c;
 
-/* ============================================================
-   TRANSMISSION CONTAINER
-   ============================================================ */
+    border: none;
 
-.x-transmission {
-    position: absolute;
+    color: #ae8574;
 
-    inset: 0;
+    font-family: inherit;
 
-    width: 100%;
-    height: 100%;
+    width: 50px;
+    height: 250px;
 
-    padding:
-        9vh
-        12vw
-        calc(9vh + var(--ticker-height))
-        12vw;
+    font-size: 13px;
 
-    overflow: hidden;
+    letter-spacing: 4px;
 
-    background: transparent;
+    line-height: 1.15;
 
-    color: #ffffff;
-
-    font-family:
-        "Courier New",
-        Courier,
-        monospace;
+    cursor: pointer;
 
     display: flex;
 
-    flex-direction: column;
+    align-items: center;
 
     justify-content: center;
 
-    align-items: flex-start;
-
-    gap: 42px;
-
-    z-index: 20;
-
-    pointer-events: none;
+    writing-mode: vertical-lr;
 }
-
-
-/* ============================================================
-   INDIVIDUAL POST
-   ============================================================ */
-
-.x-post {
-    position: relative;
-
-    width: auto;
-    max-width: 720px;
-
-    color: #ffffff;
-
-    background: transparent;
-
-    font-family: inherit;
-
-    font-size: 15px;
-
-    font-weight: 400;
-
-    line-height: 1.5;
-
-    letter-spacing: .01em;
-
-    text-align: left;
-
-    opacity: 0;
-
-    transform:
-        translateY(12px);
-
-    animation:
-        xTransmissionIn
-        .8s
-        ease
-        forwards;
-}
-
-
-/* ============================================================
-   POST TEXT
-   ============================================================ */
-
-.x-post-text {
-    color: #ffffff;
-
-    background: transparent;
-
-    font-family: inherit;
-
-    font-size: inherit;
-
-    font-weight: inherit;
-
-    line-height: inherit;
-
-    letter-spacing: inherit;
-
-    white-space: pre-wrap;
-
-    overflow-wrap: anywhere;
-}
-
-
-/* ============================================================
-   POST DATE
-   ============================================================ */
-
-.x-post-date {
-    margin-top: 10px;
-
-    color: rgba(255, 255, 255, .4);
-
-    background: transparent;
-
-    font-family: inherit;
-
-    font-size: 9px;
-
-    line-height: 1;
-
-    letter-spacing: .08em;
-
-    text-transform: uppercase;
-}
-
-
-/* ============================================================
-   TRANSMISSION STATUS
-   ============================================================ */
-
-.x-transmission-status {
-    color: rgba(255, 255, 255, .35);
-
-    background: transparent;
-
-    font-family: inherit;
-
-    font-size: 11px;
-
-    line-height: 1.5;
-
-    letter-spacing: .08em;
-
-    text-transform: uppercase;
-
-    opacity: .7;
-
-    animation:
-        xTransmissionPulse
-        2s
-        ease-in-out
-        infinite;
-}
-
-
-/* ============================================================
-   ANIMATION
-   ============================================================ */
-
-@keyframes xTransmissionIn {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(12px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
-}
-
-@keyframes xTransmissionPulse {
-
-    0%,
-    100% {
-        opacity: .25;
-    }
-
-    50% {
-        opacity: .7;
-    }
-}
-
-
-/* ============================================================
-   MOBILE
-   ============================================================ */
-
-@media (max-width: 768px) {
-
-    .x-transmission {
-        padding:
-            8vh
-            12vw
-            calc(8vh + var(--ticker-height))
-            12vw;
-
-        gap: 30px;
-    }
-
-    .x-post {
-        max-width: 82vw;
-
-        font-size: 12px;
-
-        line-height: 1.55;
-    }
-
-    .x-post-date {
-        margin-top: 8px;
-
-        font-size: 8px;
-    }
-
-    .x-transmission-status {
-        font-size: 9px;
-
-        letter-spacing: .06em;
-    }
-}
-
-
-/* ============================================================
-   VERY SMALL SCREENS
-   ============================================================ */
-
-@media (max-width: 380px) {
-
-    .x-transmission {
-        padding-left: 10vw;
-        padding-right: 10vw;
-    }
-
-    .x-post {
-        max-width: 84vw;
-
-        font-size: 11px;
-    }
-}
-
-
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .x-post {
-        animation: none;
-
-        opacity: 1;
-
-        transform: none;
-    }
-
-    .x-transmission-status {
-        animation: none;
-    }
-}
-   
 
 
 /* ============================================================
