@@ -1,1 +1,59 @@
+name: Update X Posts
 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Fetch X posts
+        env:
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+        run: |
+          USER_ID=$(curl -s \
+            -H "Authorization: Bearer $X_BEARER_TOKEN" \
+            "https://api.x.com/2/users/by/username/jeremyjacobland" \
+            | python -c "import sys,json; print(json.load(sys.stdin)['data']['id'])")
+
+          curl -s \
+            -H "Authorization: Bearer $X_BEARER_TOKEN" \
+            "https://api.x.com/2/users/$USER_ID/tweets?max_results=10&tweet.fields=created_at,text" \
+            > /tmp/x-response.json
+
+          python - <<'PY'
+          import json
+
+          with open("/tmp/x-response.json", "r") as f:
+              data = json.load(f)
+
+          posts = data.get("data", [])
+
+          output = []
+
+          for post in posts:
+              output.append({
+                  "text": post.get("text", ""),
+                  "created_at": post.get("created_at", "")
+              })
+
+          with open("data/x-posts.json", "w") as f:
+              json.dump(output, f, indent=2)
+          PY
+
+      - name: Save updated posts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/x-posts.json
+          git diff --cached --quiet || git commit -m "Update X posts"
+          git push
