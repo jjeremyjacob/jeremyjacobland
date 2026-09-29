@@ -155,7 +155,7 @@ body::after {
     inset: 0;
 
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
 
     overflow: hidden;
 
@@ -170,7 +170,7 @@ body::after {
     -webkit-backface-visibility: hidden;
 
     transform:
-        translate3d(0, -100vh, 0);
+        translate3d(0, -100dvh, 0);
 
     transition:
         transform .9s cubic-bezier(.77, 0, .18, 1);
@@ -197,7 +197,7 @@ body::after {
 
 .panel.is-leaving-back {
     transform:
-        translate3d(0, -100vh, 0);
+        translate3d(0, -100dvh, 0);
 }
 
 

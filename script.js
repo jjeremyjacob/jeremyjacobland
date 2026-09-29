@@ -596,7 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 panel.style.transform =
-                    "translate3d(0, -100vh, 0)";
+                    "translate3d(0, -100dvh, 0)";
 
                 panel.style.zIndex =
                     "1";
@@ -726,7 +726,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
                     panel.style.transform =
-                        "translate3d(0, -100vh, 0)";
+                        "translate3d(0, -100dvh, 0)";
 
                     panel.style.zIndex =
                         "1";
@@ -775,7 +775,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         targetPanel.style.transform =
-            "translate3d(0, -100vh, 0)";
+            "translate3d(0, -100dvh, 0)";
 
         targetPanel.style.zIndex =
             "3";
@@ -802,7 +802,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (previousPanel) {
 
                     previousPanel.style.transform =
-                        "translate3d(0, -100vh, 0)";
+                        "translate3d(0, -100dvh, 0)";
 
                 }
 
