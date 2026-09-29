@@ -524,7 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!panel) return;
 
 
-        loadPanelImage(
+        (
             panel
         );
 
