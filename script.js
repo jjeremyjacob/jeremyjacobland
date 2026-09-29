@@ -1,1660 +1,2163 @@
+/* ============================================================
+   JEREMY JACOBLAND
+
+   SCRIPT.JS
+
+   ============================================================ */
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
-/* =================================================
-LOADING SCREEN CONTROL
-================================================= */
+    "use strict";
 
-const loadingScreen =
-document.querySelector(".loading-screen");
 
-const audioControls =
-document.getElementById("audioControls");
+    /* ========================================================
+       ELEMENTS
+    ======================================================== */
 
-if (loadingScreen) {
+    const loadingScreen =
+        document.querySelector(".loading-screen");
 
-
-if (sessionStorage.getItem("visited")) {
-
-    loadingScreen.remove();
-
-} else {
-
-    sessionStorage.setItem("visited", "true");
-
-    setTimeout(() => {
-
-        if (audioControls) {
-
-            audioControls.classList.add(
-                "visible"
-            );
-
-        }
-
-    }, 5600);
-
-}
-
-
-}
-
-/* =================================================
-RESET SCROLL
-================================================= */
-
-if ("scrollRestoration" in history) {
-
-
-history.scrollRestoration = "manual";
-
-
-}
-
-window.scrollTo(0, 0);
-
-/* =================================================
-SETUP
-================================================= */
-
-const panels =
-document.querySelectorAll(".panel");
-
-const SCROLL_FACTOR = 1.5;
-
-/* =================================================
-VARIABLE RANDOM FONTS
-================================================= */
-
-const randomFontText = (element) => {
-
-
-if (!element) return;
-
-const fonts = [
-
-    '"Courier Prime", monospace',
-
-    '"Courier New", monospace',
-
-    '"Baskerville", serif',
-
-    '"Georgia", serif',
-
-    '"Times New Roman", serif',
-
-    'Helvetica, Arial, sans-serif',
-
-    '"Helvetica Neue", sans-serif',
-
-    'Arial, sans-serif',
-
-    '"Gill Sans", sans-serif'
-
-];
-
-const text =
-    element.placeholder ||
-    element.textContent.trim();
-
-if (!text) return;
-
-element.innerHTML = "";
-
-let currentFont =
-    fonts[
-        Math.floor(
-            Math.random() *
-            fonts.length
-        )
-    ];
-
-[...text].forEach(letter => {
-
-    const span =
-        document.createElement("span");
-
-    span.textContent =
-        letter === " "
-            ? "\u00A0"
-            : letter;
-
-    if (Math.random() > 0.75) {
-
-        currentFont =
-            fonts[
-                Math.floor(
-                    Math.random() *
-                    fonts.length
-                )
-            ];
-
-    }
-
-    span.style.fontFamily =
-        currentFont;
-
-    span.style.fontWeight = "400";
-
-    span.style.display =
-        "inline-block";
-
-    element.appendChild(span);
-
-});
-
-
-};
-
-/* =================================================
-ALPHABET DECODE TEXT
-================================================= */
-
-const decodeText = (element) => {
-
-
-if (!element) return;
-
-const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-const text =
-    element.textContent.trim();
-
-if (!text) return;
-
-element.innerHTML = "";
-
-[...text].forEach((character, index) => {
-
-    const span =
-        document.createElement("span");
-
-    span.style.display =
-        "inline-block";
-
-    if (character === " ") {
-
-        span.textContent =
-            "\u00A0";
-
-        element.appendChild(span);
-
-        return;
-
-    }
-
-    span.textContent =
-        characters[
-            Math.floor(
-                Math.random() *
-                characters.length
-            )
-        ];
-
-    element.appendChild(span);
-
-    let cycles = 0;
-
-    const maxCycles =
-        4 +
-        Math.floor(
-            Math.random() * 7
+    const panels =
+        Array.from(
+            document.querySelectorAll(".panel")
         );
 
-    const delay =
-        index * 35;
+    const audioToggle =
+        document.getElementById("audioToggle");
 
-    setTimeout(() => {
+    const layerButtons =
+        Array.from(
+            document.querySelectorAll(
+                ".layer-button[data-panel]"
+            )
+        );
 
-        const interval =
-            setInterval(() => {
-
-                if (cycles >= maxCycles) {
-
-                    clearInterval(interval);
-
-                    span.textContent =
-                        character;
-
-                    return;
-
-                }
-
-                span.textContent =
-                    characters[
-                        Math.floor(
-                            Math.random() *
-                            characters.length
-                        )
-                    ];
-
-                cycles++;
-
-            }, 60);
-
-    }, delay);
-
-});
+    const scrollArrow =
+        document.querySelector(".scroll-arrow");
 
 
-};
+    /* ========================================================
+       STATE
+    ======================================================== */
 
-/* =================================================
-PAGE HEIGHT
-================================================= */
+    let currentPanel = -1;
 
-function getPanelHeight() {
+    let navigationLocked = false;
 
+    const PANEL_TRANSITION = 900;
 
-if (!panels.length) {
+    let touchStartY = 0;
 
-    return window.innerHeight;
+    let touchStartX = 0;
 
-}
+    let radioOn = false;
 
-return panels[0]
-    .getBoundingClientRect()
-    .height;
+    let activeAudioPanel = null;
 
-
-}
-
-function setPageHeight() {
+    const vimeoPlayers =
+        new Map();
 
 
-const totalPanels =
-    panels.length;
+    /* ========================================================
+       LOADING SCREEN
+    ======================================================== */
 
-const panelHeight =
-    getPanelHeight();
+    function hideLoadingScreen() {
 
-document.body.style.height =
-    `${
-        (
-            (totalPanels - 1) *
-            SCROLL_FACTOR +
-            1
-        ) *
-        panelHeight
-    }px`;
+        if (!loadingScreen) return;
 
+        loadingScreen.classList.add(
+            "is-hidden"
+        );
 
-}
+        window.setTimeout(() => {
 
-/* =================================================
-IMAGE LOADING
-================================================= */
+            loadingScreen.style.display =
+                "none";
 
-const loadedPanels =
-new WeakSet();
+        }, 1000);
 
-const imageObserver =
-new IntersectionObserver(
+    }
 
 
-(entries) => {
+    function initializeLoadingScreen() {
 
-    entries.forEach(entry => {
+        if (!loadingScreen) return;
 
-        if (!entry.isIntersecting) {
+        window.setTimeout(
+            hideLoadingScreen,
+            1800
+        );
+
+    }
+
+
+    /* ========================================================
+       PANEL IMAGES
+    ======================================================== */
+
+    function loadPanelImage(panel) {
+
+        if (!panel) return;
+
+        if (
+            panel.dataset.imageLoaded === "true"
+        ) {
             return;
         }
 
-        const panel =
-            entry.target;
-
-        if (loadedPanels.has(panel)) {
-            return;
-        }
-
-        let image =
+        const imageSource =
             panel.dataset.image;
 
-        if (!image) {
+        if (!imageSource) {
+
+            panel.dataset.imageLoaded =
+                "true";
+
             return;
-        }
-
-        if (
-            window.innerWidth <= 768 &&
-            image.includes(".webp")
-        ) {
-
-            image =
-                image.replace(
-                    ".webp",
-                    "-mobile.webp"
-                );
 
         }
 
-        const img =
-            document.createElement("img");
 
-        img.className =
-            "panel-image";
+        const mobile =
+            window.innerWidth <= 768;
 
-        img.alt = "";
 
-        img.decoding =
-            "async";
+        let source =
+            imageSource;
 
-        panel.appendChild(img);
 
-        img.src =
-            image;
+        /*
+           Look for a mobile-specific image.
 
-        img.onload =
-            async () => {
+           Example:
+           section3.webp
+           section3-mobile.webp
+        */
 
-                try {
+        if (mobile) {
 
-                    await img.decode();
+            const dot =
+                source.lastIndexOf(".");
 
-                }
+            if (dot !== -1) {
 
-                catch (error) {
+                const mobileSource =
+                    source.slice(0, dot)
+                    +
+                    "-mobile"
+                    +
+                    source.slice(dot);
 
-                    console.warn(
-                        "IMAGE DECODE FAILED:",
-                        image
-                    );
-
-                }
-
-                img.classList.add(
-                    "loaded"
-                );
-
-                updateImageParallax();
-
-            };
-
-        img.onerror =
-            () => {
-
-                console.warn(
-                    "IMAGE FAILED:",
-                    image
-                );
-
-            };
-
-        loadedPanels.add(panel);
-
-        imageObserver.unobserve(
-            panel
-        );
-
-    });
-
-},
-
-{
-    rootMargin:
-        "200px 0px"
-}
-
-
-);
-
-panels.forEach(panel => {
-
-
-imageObserver.observe(panel);
-
-
-});
-
-/* =================================================
-VIDEO LOADING
-================================================= */
-
-const loadedVideos =
-new WeakSet();
-
-function getVideoFrame(panel) {
-
-
-if (!panel) return null;
-
-const mobile =
-    window.innerWidth <= 768;
-
-if (mobile) {
-
-    return (
-
-        panel.querySelector(
-            ".mobile-frame"
-        )
-
-        ||
-
-        panel.querySelector(
-            "iframe[data-src]"
-        )
-
-        ||
-
-        panel.querySelector(
-            "iframe"
-        )
-
-    );
-
-}
-
-return (
-
-    panel.querySelector(
-        ".desktop-frame"
-    )
-
-    ||
-
-    panel.querySelector(
-        "iframe[data-src]"
-    )
-
-    ||
-
-    panel.querySelector(
-        "iframe"
-    )
-
-);
-
-
-}
-
-/* =================================================
-LOAD VIDEO
-================================================= */
-
-function loadVideo(
-panel,
-priority = false
-) {
-
-
-if (!panel) return null;
-
-const frame =
-    getVideoFrame(panel);
-
-if (!frame) {
-
-    console.warn(
-        "NO VIDEO FRAME FOUND:",
-        panel.className
-    );
-
-    return null;
-
-}
-
-if (
-    frame.src &&
-    !frame.dataset.src
-) {
-
-    loadedVideos.add(panel);
-
-    return frame;
-
-}
-
-const source =
-    frame.dataset.src;
-
-if (!source) {
-
-    console.warn(
-        "NO VIDEO SOURCE FOUND:",
-        panel.className
-    );
-
-    return null;
-
-}
-
-if (priority) {
-
-    frame.setAttribute(
-        "loading",
-        "eager"
-    );
-
-    frame.setAttribute(
-        "fetchpriority",
-        "high"
-    );
-
-    frame.setAttribute(
-        "importance",
-        "high"
-    );
-
-}
-
-frame.onload =
-    () => {
-
-        const videoFrame =
-            frame.closest(
-                ".video-frame"
-            );
-
-        if (videoFrame) {
-
-            videoFrame.classList.add(
-                "video-ready"
-            );
-
-        }
-
-        console.log(
-            "VIDEO READY:",
-            panel.className
-        );
-
-    };
-
-frame.onerror =
-    () => {
-
-        console.warn(
-            "VIDEO FRAME FAILED:",
-            panel.className
-        );
-
-    };
-
-frame.src =
-    source;
-
-frame.dataset.originalSrc =
-    source;
-
-frame.removeAttribute(
-    "data-src"
-);
-
-loadedVideos.add(panel);
-
-return frame;
-
-
-}
-
-/* =================================================
-NORMAL VIDEO OBSERVER
-================================================= */
-
-const videoObserver =
-new IntersectionObserver(
-
-
-(entries) => {
-
-    entries.forEach(entry => {
-
-        if (!entry.isIntersecting) {
-            return;
-        }
-
-        const panel =
-            entry.target;
-
-        if (
-            loadedVideos.has(panel)
-        ) {
-            return;
-        }
-
-        loadVideo(panel);
-
-        videoObserver.unobserve(
-            panel
-        );
-
-    });
-
-},
-
-{
-    rootMargin:
-        "800px 0px"
-}
-
-
-);
-
-/* =================================================
-OBSERVE VIDEOS
-================================================= */
-
-panels.forEach(panel => {
-
-
-const frame =
-    panel.querySelector(
-        "iframe[data-src], iframe"
-    );
-
-if (!frame) {
-    return;
-}
-
-if (
-    panel.classList.contains(
-        "panel-10"
-    )
-) {
-
-    loadVideo(
-        panel,
-        true
-    );
-
-    return;
-
-}
-
-if (frame.dataset.src) {
-
-    videoObserver.observe(
-        panel
-    );
-
-}
-
-
-});
-
-/* =================================================
-PANEL 10 MOBILE VIDEO FAILSAFE
-================================================= */
-
-const panel10 =
-document.querySelector(".panel-10");
-
-if (panel10) {
-
-
-const panel10Frame =
-    getVideoFrame(panel10);
-
-if (panel10Frame) {
-
-    if (
-        panel10Frame.dataset.src
-    ) {
-
-        panel10Frame.dataset.originalSrc =
-            panel10Frame.dataset.src;
-
-    }
-
-    setTimeout(() => {
-
-        const videoFrame =
-            panel10.querySelector(
-                ".video-frame"
-            );
-
-        const ready =
-            videoFrame &&
-            videoFrame.classList.contains(
-                "video-ready"
-            );
-
-        if (!ready) {
-
-            console.warn(
-                "PANEL 10 VIDEO NOT READY — RETRYING"
-            );
-
-            const source =
-                panel10Frame.dataset.originalSrc ||
-                panel10Frame.dataset.src ||
-                panel10Frame.src;
-
-            if (source) {
-
-                panel10Frame.src =
-                    "about:blank";
-
-                requestAnimationFrame(() => {
-
-                    panel10Frame.src =
-                        source;
-
-                });
+                source =
+                    mobileSource;
 
             }
 
         }
 
-    }, 5000);
 
-}
+        panel.style.backgroundImage =
+            `url("${source}")`;
 
-
-}
-
-/* =================================================
-THEATER 003 — PANEL 07
-================================================= */
-
-const theater003 =
-document.querySelector(
-".panel-07 .panel-07-theater"
-);
-
-if (theater003) {
-
-
-theater003.classList.add(
-    "theater-ready"
-);
-
-
-}
-
-/* =================================================
-PANEL MOVEMENT
-================================================= */
-
-function updatePanels() {
-
-
-const height =
-    getPanelHeight();
-
-const mobile =
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0;
-
-let scrollY;
-
-if (mobile) {
-
-    const maxScroll =
-        document.documentElement
-            .scrollHeight -
-        document.documentElement
-            .clientHeight;
-
-    scrollY =
-        maxScroll -
-        window.scrollY;
-
-}
-
-else {
-
-    scrollY =
-        window.scrollY;
-
-}
-
-panels.forEach((panel, index) => {
-
-    if (index === 0) {
-
-        panel.style.transform =
-            "translateY(0)";
-
-        return;
+        panel.dataset.imageLoaded =
+            "true";
 
     }
 
-    const start =
-        (index - 1) *
-        height *
-        SCROLL_FACTOR;
 
-    const progress =
-        (
-            scrollY -
-            start
-        ) /
-        (
-            height *
-            SCROLL_FACTOR
-        );
+    /* ========================================================
+       VIDEO FRAME
+    ======================================================== */
 
-    if (
-        index === 1 &&
-        progress > 0
-    ) {
+    function getVideoFrame(panel) {
 
-        dismissScrollArrow();
+        if (!panel) return null;
 
-    }
+        const mobile =
+            window.innerWidth <= 768;
 
-    const position =
-        Math.min(
-            0,
-            Math.max(
-                -100,
-                -100 +
-                progress * 100
+
+        if (mobile) {
+
+            return (
+                panel.querySelector(
+                    ".mobile-frame"
+                )
+                ||
+                panel.querySelector(
+                    "iframe[data-src]"
+                )
+                ||
+                panel.querySelector(
+                    "iframe"
+                )
+            );
+
+        }
+
+
+        return (
+            panel.querySelector(
+                ".desktop-frame"
+            )
+            ||
+            panel.querySelector(
+                "iframe[data-src]"
+            )
+            ||
+            panel.querySelector(
+                "iframe"
             )
         );
 
-    panel.style.transform =
-        `translateY(${position}%)`;
+    }
 
 
-    /* EMAIL ARRIVAL */
+    /* ========================================================
+       VIDEO LOADING
+    ======================================================== */
 
-    if (index === 9) {
+    function loadVideo(
+        panel,
+        priority = false
+    ) {
 
-        const email =
-            panel.querySelector(
-                ".email-arrival"
+        if (!panel) return null;
+
+        const frame =
+            getVideoFrame(panel);
+
+        if (!frame) return null;
+
+
+        /*
+           This particular iframe is already loaded.
+
+           Never replace its src.
+           Never reload it.
+        */
+
+        if (
+            frame.src &&
+            !frame.dataset.src
+        ) {
+
+            return frame;
+
+        }
+
+
+        const source =
+            frame.dataset.src;
+
+        if (!source) {
+
+            return frame;
+
+        }
+
+
+        frame.setAttribute(
+            "loading",
+            "eager"
+        );
+
+
+        if (priority) {
+
+            frame.setAttribute(
+                "fetchpriority",
+                "high"
             );
 
-        if (email) {
+        }
 
-            const emailProgress =
-                Math.min(
-                    1,
-                    Math.max(
-                        0,
-                        (position + 100) / 100
-                    )
+
+        frame.onload = () => {
+
+            const videoFrame =
+                frame.closest(
+                    ".video-frame"
                 );
 
-            const move =
-                -180 +
-                emailProgress * 180;
+            if (videoFrame) {
 
-            email.style.transform =
-                `translateY(${move}px)`;
+                videoFrame.classList.add(
+                    "video-ready"
+                );
 
-            email.style.opacity = 1;
+            }
+
+        };
+
+
+        frame.src =
+            source;
+
+        frame.dataset.originalSrc =
+            source;
+
+        frame.removeAttribute(
+            "data-src"
+        );
+
+
+        return frame;
+
+    }
+
+
+    /* ========================================================
+       VIMEO PLAYER
+    ======================================================== */
+
+    function getVimeoPlayer(frame) {
+
+        if (!frame) return null;
+
+
+        /*
+           Return the existing player.
+
+           This is important.
+
+           We never create a second Vimeo
+           player for the same iframe.
+        */
+
+        if (
+            vimeoPlayers.has(frame)
+        ) {
+
+            return vimeoPlayers.get(
+                frame
+            );
+
+        }
+
+
+        if (
+            !frame.src ||
+            frame.src === "about:blank"
+        ) {
+
+            return null;
+
+        }
+
+
+        if (
+            typeof Vimeo === "undefined" ||
+            !Vimeo.Player
+        ) {
+
+            return null;
+
+        }
+
+
+        const player =
+            new Vimeo.Player(frame);
+
+
+        vimeoPlayers.set(
+            frame,
+            player
+        );
+
+
+        return player;
+
+    }
+
+
+    /* ========================================================
+       PLAY BUTTONS
+    ======================================================== */
+
+    function setupVideoPlayButtons() {
+
+        const buttons =
+            document.querySelectorAll(
+                ".video-play-button"
+            );
+
+
+        buttons.forEach((button) => {
+
+            button.textContent =
+                "PLAY";
+
+            button.setAttribute(
+                "aria-label",
+                "Play video"
+            );
+
+
+            button.addEventListener(
+                "click",
+                (event) => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    const panel =
+                        button.closest(
+                            ".panel"
+                        );
+
+
+                    if (!panel) return;
+
+
+                    /*
+                       Make sure the Vimeo iframe
+                       has been loaded before creating
+                       the Vimeo player.
+                    */
+
+                    const frame =
+                        loadVideo(panel);
+
+
+                    if (!frame) return;
+
+
+                    const player =
+                        getVimeoPlayer(frame);
+
+
+                    if (!player) return;
+
+
+                    player.getPaused()
+                        .then((paused) => {
+
+                            if (paused) {
+
+                                player.play()
+                                    .then(() => {
+
+                                        button.textContent =
+                                            "PAUSE";
+
+                                        button.setAttribute(
+                                            "aria-label",
+                                            "Pause video"
+                                        );
+
+                                    })
+                                    .catch(() => {
+
+                                        button.textContent =
+                                            "PLAY";
+
+                                        button.setAttribute(
+                                            "aria-label",
+                                            "Play video"
+                                        );
+
+                                    });
+
+                            } else {
+
+                                player.pause()
+                                    .then(() => {
+
+                                        button.textContent =
+                                            "PLAY";
+
+                                        button.setAttribute(
+                                            "aria-label",
+                                            "Play video"
+                                        );
+
+                                    })
+                                    .catch(() => {
+
+                                        button.textContent =
+                                            "PLAY";
+
+                                        button.setAttribute(
+                                            "aria-label",
+                                            "Play video"
+                                        );
+
+                                    });
+
+                            }
+
+                        })
+                        .catch(() => {
+
+                            button.textContent =
+                                "PLAY";
+
+                            button.setAttribute(
+                                "aria-label",
+                                "Play video"
+                            );
+
+                        });
+
+                }
+            );
+
+        });
+
+    }
+
+
+    /* ========================================================
+       PREPARE PANEL
+    ======================================================== */
+
+    function preparePanel(index) {
+
+        const panel =
+            panels[index];
+
+        if (!panel) return;
+
+
+        loadPanelImage(
+            panel
+        );
+
+
+        const frame =
+            getVideoFrame(
+                panel
+            );
+
+
+        if (frame) {
+
+            loadVideo(
+                panel,
+                index === currentPanel
+            );
+
+        }
+
+
+        /*
+           Preload the next panel's image/video.
+
+           We load it but DO NOT play it.
+        */
+
+        const next =
+            panels[index + 1];
+
+
+        if (!next) return;
+
+
+        loadPanelImage(
+            next
+        );
+
+
+        const nextFrame =
+            getVideoFrame(
+                next
+            );
+
+
+        if (nextFrame) {
+
+            loadVideo(
+                next
+            );
 
         }
 
     }
 
-});
+
+    /* ========================================================
+       INITIAL PANEL STATE
+    ======================================================== */
+
+    function setInitialPanels() {
+
+        panels.forEach(
+            (panel, index) => {
+
+                panel.classList.remove(
+                    "is-visible",
+                    "is-coming-down",
+                    "is-leaving-back"
+                );
+
+                panel.style.transform =
+                    "translate3d(0, -100vh, 0)";
+
+                panel.style.zIndex =
+                    "1";
+
+            }
+        );
 
 
-}
-
-/* =================================================
-IMAGE PARALLAX
-================================================= */
-
-function updateImageParallax() {
+        currentPanel = -1;
 
 
-const images =
-    document.querySelectorAll(
-        ".panel[data-image] > .panel-image"
-    );
+        updateLayerNavigation();
 
-if (!images.length) {
-    return;
-}
-
-images.forEach(image => {
-
-    const panel =
-        image.closest(".panel");
-
-    if (!panel) {
-        return;
     }
 
-    const rect =
-        panel.getBoundingClientRect();
 
-    const progress =
-        (
-            window.innerHeight -
-            rect.top
-        ) /
-        (
-            window.innerHeight +
-            rect.height
-        );
+    /* ========================================================
+       LAYER NAVIGATION
+    ======================================================== */
 
-    const movement =
-        (progress - 0.5) * 40;
+    function updateLayerNavigation() {
 
-    image.style.transform =
-        `translate3d(0, ${movement}px, 0)`;
+        layerButtons.forEach(
+            button => {
 
-});
+                const index =
+                    Number(
+                        button.dataset.panel
+                    );
 
 
-}
+                const active =
+                    index === currentPanel;
 
-/* =================================================
-FLOATING PANEL OBJECTS
-================================================= */
 
-const floatingElements =
-document.querySelectorAll(
-".panel-07 .panel-content-left, " +
-".panel-09 .social-links"
-);
+                button.classList.toggle(
+                    "is-active",
+                    active
+                );
 
-function updateFloatingObjects() {
 
+                if (active) {
 
-const mobile =
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0;
+                    button.setAttribute(
+                        "aria-current",
+                        "true"
+                    );
 
-let scrollY;
+                } else {
 
-if (mobile) {
+                    button.removeAttribute(
+                        "aria-current"
+                    );
 
-    const maxScroll =
-        document.documentElement
-            .scrollHeight -
-        document.documentElement
-            .clientHeight;
+                }
 
-    scrollY =
-        maxScroll -
-        window.scrollY;
-
-}
-
-else {
-
-    scrollY =
-        window.scrollY;
-
-}
-
-floatingElements.forEach(element => {
-
-    const speed =
-        0.08;
-
-    element.style.translate =
-        `0 ${scrollY * speed}px`;
-
-});
-
-
-}
-
-/* =================================================
-SCROLL
-================================================= */
-
-window.addEventListener(
-"scroll",
-() => {
-
-
-    updatePanels();
-
-    updateImageParallax();
-
-    updateFloatingObjects();
-
-},
-{
-    passive: true
-}
-
-
-);
-
-/* =================================================
-RESIZE
-================================================= */
-
-window.addEventListener(
-"resize",
-() => {
-
-
-    setPageHeight();
-
-    updatePanels();
-
-    updateImageParallax();
-
-    updateFloatingObjects();
-
-}
-
-
-);
-
-/* =================================================
-INITIAL POSITION
-================================================= */
-
-requestAnimationFrame(() => {
-
-
-setPageHeight();
-
-if (
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0
-) {
-
-    window.scrollTo(
-        0,
-        document.documentElement
-            .scrollHeight -
-        document.documentElement
-            .clientHeight
-    );
-
-}
-
-else {
-
-    window.scrollTo(0, 0);
-
-}
-
-updatePanels();
-
-updateImageParallax();
-
-updateFloatingObjects();
-
-
-});
-
-/* =================================================
-TICKER TEXT
-================================================= */
-
-document
-.querySelectorAll(
-".ticker-wrap .ticker-item, " +
-".loading-ticker-track .ticker-item"
-)
-.forEach(item => {
-
-
-decodeText(item);
-
-
-});
-
-/* =================================================
-RANDOM FONT ELEMENTS
-================================================= */
-
-document
-.querySelectorAll(".random-font")
-.forEach(item => {
-
-
-randomFontText(item);
-
-
-});
-
-/* =================================================
-TRANSMISSION FIELDS
-================================================= */
-
-document
-.querySelectorAll(
-".message-field, " +
-".message-form button"
-)
-.forEach(field => {
-
-
-randomFontText(field);
-
-
-});
-
-/* =================================================
-MACHINE CHATTER
-================================================= */
-
-const chatter =
-document.querySelector(
-".machine-chatter"
-);
-
-if (
-chatter &&
-window.innerWidth > 768
-) {
-
-
-const messages = [
-
-    "SIGNAL: TRANSMITTING..",
-
-    "SOURCE UNKNOWN",
-
-    "SEARCHING...",
-
-    "NO RECORD FOUND",
-
-    "THE PRINCESS /// STATUS: LOST"
-
-];
-
-const startChatter = () => {
-
-    const chatterOverlay =
-        document.querySelector(
-            ".machine-chatter-overlay"
-        );
-
-    if (chatterOverlay) {
-
-        chatterOverlay.classList.add(
-            "active"
+            }
         );
 
     }
 
-    function updateChatter() {
 
-        const message =
-            messages[
-                Math.floor(
-                    Math.random() *
-                    messages.length
-                )
-            ];
+    /* ========================================================
+       PANEL NAVIGATION
+    ======================================================== */
 
-        const characters =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    function goToPanel(
+        targetIndex,
+        direction = "forward"
+    ) {
 
-        chatter.style.opacity = "0";
+        if (navigationLocked) return;
 
-        setTimeout(() => {
+        if (
+            targetIndex < 0 ||
+            targetIndex >= panels.length
+        ) {
 
-            chatter.innerHTML = "";
+            return;
 
-            [...message].forEach(
-                (character, index) => {
+        }
 
-                    const span =
-                        document.createElement(
-                            "span"
+
+        if (
+            targetIndex === currentPanel
+        ) {
+
+            return;
+
+        }
+
+
+        navigationLocked = true;
+
+
+        const previousIndex =
+            currentPanel;
+
+
+        const previousPanel =
+            previousIndex >= 0
+                ? panels[previousIndex]
+                : null;
+
+
+        const targetPanel =
+            panels[targetIndex];
+
+
+        /*
+           Reset panels that are not involved
+           in this transition.
+        */
+
+        panels.forEach(
+            (panel, index) => {
+
+                if (
+                    index !== previousIndex &&
+                    index !== targetIndex
+                ) {
+
+                    panel.classList.remove(
+                        "is-visible",
+                        "is-coming-down",
+                        "is-leaving-back"
+                    );
+
+                    panel.style.transform =
+                        "translate3d(0, -100vh, 0)";
+
+                    panel.style.zIndex =
+                        "1";
+
+                }
+
+            }
+        );
+
+
+        /*
+           Previous panel stays visible while
+           the new panel comes down.
+        */
+
+        if (previousPanel) {
+
+            previousPanel.classList.remove(
+                "is-coming-down"
+            );
+
+            previousPanel.classList.add(
+                "is-visible"
+            );
+
+            previousPanel.style.transform =
+                "translate3d(0, 0, 0)";
+
+            previousPanel.style.zIndex =
+                "2";
+
+        }
+
+
+        /*
+           Put the new panel above the viewport.
+        */
+
+        targetPanel.classList.remove(
+            "is-visible",
+            "is-leaving-back"
+        );
+
+        targetPanel.classList.add(
+            "is-coming-down"
+        );
+
+        targetPanel.style.transform =
+            "translate3d(0, -100vh, 0)";
+
+        targetPanel.style.zIndex =
+            "3";
+
+
+        /*
+           Force layout so the browser recognizes
+           the starting position before transition.
+        */
+
+        void targetPanel.offsetHeight;
+
+
+        /*
+           Animate the new panel downward.
+        */
+
+        requestAnimationFrame(
+            () => {
+
+                targetPanel.style.transform =
+                    "translate3d(0, 0, 0)";
+
+                if (previousPanel) {
+
+                    previousPanel.style.transform =
+                        "translate3d(0, -100vh, 0)";
+
+                }
+
+            }
+        );
+
+
+        currentPanel =
+            targetIndex;
+
+
+        updateLayerNavigation();
+
+
+        /*
+           Load the panel's image/video.
+
+           This does NOT automatically play the video.
+        */
+
+        preparePanel(
+            targetIndex
+        );
+
+
+        /*
+           Change audio focus only.
+
+           We do NOT pause the old video.
+        */
+
+        updateRadioForActivePanel();
+
+
+        window.setTimeout(
+            () => {
+
+                if (previousPanel) {
+
+                    previousPanel.classList.remove(
+                        "is-visible",
+                        "is-coming-down"
+                    );
+
+                    previousPanel.classList.add(
+                        "is-leaving-back"
+                    );
+
+                    previousPanel.style.zIndex =
+                        "1";
+
+                }
+
+
+                targetPanel.classList.remove(
+                    "is-coming-down"
+                );
+
+                targetPanel.classList.add(
+                    "is-visible"
+                );
+
+                targetPanel.style.transform =
+                    "translate3d(0, 0, 0)";
+
+                targetPanel.style.zIndex =
+                    "2";
+
+
+                navigationLocked =
+                    false;
+
+            },
+            PANEL_TRANSITION + 50
+        );
+
+    }
+
+
+    function nextPanel() {
+
+        if (
+            currentPanel >=
+            panels.length - 1
+        ) {
+
+            return;
+
+        }
+
+
+        goToPanel(
+            currentPanel + 1,
+            "forward"
+        );
+
+    }
+
+
+    function previousPanel() {
+
+        if (
+            currentPanel <= 0
+        ) {
+
+            return;
+
+        }
+
+
+        goToPanel(
+            currentPanel - 1,
+            "back"
+        );
+
+    }
+
+
+    /* ========================================================
+       LAYER BUTTONS
+    ======================================================== */
+
+    layerButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    const target =
+                        Number(
+                            button.dataset.panel
                         );
+
 
                     if (
-                        character === " "
+                        Number.isNaN(target)
                     ) {
-
-                        span.textContent =
-                            "\u00A0";
-
-                        chatter.appendChild(
-                            span
-                        );
 
                         return;
 
                     }
 
-                    span.textContent =
-                        characters[
-                            Math.floor(
-                                Math.random() *
-                                characters.length
-                            )
-                        ];
 
-                    chatter.appendChild(
-                        span
+                    const direction =
+                        target > currentPanel
+                            ? "forward"
+                            : "back";
+
+
+                    goToPanel(
+                        target,
+                        direction
                     );
 
-                    let cycles = 0;
+                }
+            );
 
-                    const maxCycles =
-                        3 +
-                        Math.floor(
-                            Math.random() * 8
+        }
+    );
+
+
+    /* ========================================================
+       AUDIO BUTTON
+    ======================================================== */
+
+    function updateAudioButton() {
+
+        if (!audioToggle) return;
+
+
+        audioToggle.classList.toggle(
+            "is-on",
+            radioOn
+        );
+
+
+        audioToggle.setAttribute(
+            "aria-pressed",
+            String(radioOn)
+        );
+
+
+        audioToggle.textContent =
+            radioOn
+                ? "audio"
+                : "audio";
+
+    }
+
+
+    function muteAllPanelVideos() {
+
+        vimeoPlayers.forEach(
+            player => {
+
+                player.setMuted(
+                    true
+                )
+                .catch(
+                    () => {}
+                );
+
+            }
+        );
+
+
+        activeAudioPanel =
+            null;
+
+    }
+
+
+    function updateRadioForActivePanel() {
+
+        /*
+           Audio OFF:
+           mute everything.
+
+           We do NOT pause anything.
+        */
+
+        if (!radioOn) {
+
+            muteAllPanelVideos();
+
+            return;
+
+        }
+
+
+        if (currentPanel < 0) {
+
+            muteAllPanelVideos();
+
+            return;
+
+        }
+
+
+        const panel =
+            panels[currentPanel];
+
+
+        if (!panel) {
+
+            muteAllPanelVideos();
+
+            return;
+
+        }
+
+
+        const frame =
+            getVideoFrame(panel);
+
+
+        if (!frame) {
+
+            muteAllPanelVideos();
+
+            return;
+
+        }
+
+
+        /*
+           Make sure the iframe exists.
+        */
+
+        loadVideo(
+            panel,
+            true
+        );
+
+
+        const player =
+            getVimeoPlayer(frame);
+
+
+        if (!player) {
+
+            muteAllPanelVideos();
+
+            return;
+
+        }
+
+
+        /*
+           Mute every other Vimeo player.
+           None of them are paused.
+        */
+
+        vimeoPlayers.forEach(
+            (otherPlayer, otherFrame) => {
+
+                if (
+                    otherPlayer === player
+                ) {
+
+                    return;
+
+                }
+
+
+                otherPlayer
+                    .setMuted(true)
+                    .catch(
+                        () => {}
+                    );
+
+            }
+        );
+
+
+        /*
+           Unmute the active panel.
+        */
+
+        player
+            .setMuted(false)
+            .then(
+                () => {
+
+                    activeAudioPanel =
+                        currentPanel;
+
+                }
+            )
+            .catch(
+                () => {}
+            );
+
+
+        player
+            .setVolume(1)
+            .catch(
+                () => {}
+            );
+
+
+        /*
+           If the user has explicitly started
+           this video, let it continue.
+
+           We do not automatically start it
+           merely because audio is enabled.
+        */
+
+    }
+
+
+    if (audioToggle) {
+
+        audioToggle.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                radioOn =
+                    !radioOn;
+
+
+                updateAudioButton();
+
+
+                updateRadioForActivePanel();
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       PANEL CLICK NAVIGATION
+    ======================================================== */
+
+    panels.forEach(
+        panel => {
+
+            panel.addEventListener(
+                "click",
+                event => {
+
+                    /*
+                       Don't treat controls as panel
+                       navigation.
+                    */
+
+                    if (
+                        event.target.closest(
+                            ".layer-navigation"
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    if (
+                        event.target.closest(
+                            "a, button, iframe, .theater-frame, .theater003, .drawer-sigil, .scroll-arrow, .video-play-button"
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const clickY =
+                        event.clientY;
+
+
+                    const viewportMiddle =
+                        window.innerHeight / 2;
+
+
+                    /*
+                       Top half = previous
+                       Bottom half = next
+                    */
+
+                    if (
+                        clickY <
+                        viewportMiddle
+                    ) {
+
+                        previousPanel();
+
+                        return;
+
+                    }
+
+
+                    nextPanel();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* ========================================================
+       KEYBOARD NAVIGATION
+    ======================================================== */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            /*
+               Don't hijack typing or controls.
+            */
+
+            const tag =
+                event.target.tagName;
+
+
+            if (
+                tag === "INPUT" ||
+                tag === "TEXTAREA" ||
+                tag === "SELECT"
+            ) {
+
+                return;
+
+            }
+
+
+            switch (
+                event.key
+            ) {
+
+                case "ArrowDown":
+
+                case "ArrowRight":
+
+                case " ":
+
+                    event.preventDefault();
+
+                    nextPanel();
+
+                    break;
+
+
+                case "ArrowUp":
+
+                case "ArrowLeft":
+
+                    event.preventDefault();
+
+                    previousPanel();
+
+                    break;
+
+            }
+
+        }
+    );
+
+
+    /* ========================================================
+       TOUCH / SWIPE NAVIGATION
+    ======================================================== */
+
+    document.addEventListener(
+        "touchstart",
+        event => {
+
+            if (
+                !event.touches ||
+                !event.touches.length
+            ) {
+
+                return;
+
+            }
+
+
+            touchStartY =
+                event.touches[0].clientY;
+
+
+            touchStartX =
+                event.touches[0].clientX;
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    document.addEventListener(
+        "touchend",
+        event => {
+
+            if (
+                !event.changedTouches ||
+                !event.changedTouches.length
+            ) {
+
+                return;
+
+            }
+
+
+            const endY =
+                event.changedTouches[0].clientY;
+
+
+            const endX =
+                event.changedTouches[0].clientX;
+
+
+            const deltaY =
+                touchStartY - endY;
+
+
+            const deltaX =
+                touchStartX - endX;
+
+
+            /*
+               Ignore mostly-horizontal gestures.
+            */
+
+            if (
+                Math.abs(deltaY) <
+                Math.abs(deltaX)
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+               Ignore tiny movements.
+            */
+
+            if (
+                Math.abs(deltaY) < 50
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+               Swipe up = next.
+               Swipe down = previous.
+            */
+
+            if (deltaY > 0) {
+
+                nextPanel();
+
+            } else {
+
+                previousPanel();
+
+            }
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    /* ========================================================
+       SCROLL ARROW
+    ======================================================== */
+
+    if (scrollArrow) {
+
+        scrollArrow.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+                nextPanel();
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       DRAWER / RADIO BUTTON
+    ======================================================== */
+
+    const drawerToggle =
+        document.getElementById(
+            "drawerToggle"
+        );
+
+
+    if (drawerToggle) {
+
+        drawerToggle.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                radioOn =
+                    !radioOn;
+
+
+                drawerToggle.classList.toggle(
+                    "is-on",
+                    radioOn
+                );
+
+
+                drawerToggle.setAttribute(
+                    "aria-pressed",
+                    String(radioOn)
+                );
+
+
+                drawerToggle.setAttribute(
+                    "aria-label",
+                    radioOn
+                        ? "Turn radio off"
+                        : "Turn radio on"
+                );
+
+
+                updateAudioButton();
+
+
+                updateRadioForActivePanel();
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       MACHINE CHATTER
+    ======================================================== */
+
+    const machineChatterOverlay =
+        document.querySelector(
+            ".machine-chatter-overlay"
+        );
+
+    const machineChatter =
+        document.querySelector(
+            ".machine-chatter"
+        );
+
+
+    const chatterMessages = [
+
+        "STATUS UPDATING...",
+
+        "SIGNAL STABLE...",
+
+        "RECEIVING TRANSMISSION...",
+
+        "ROOM INDEXED...",
+
+        "COLLECTION CONTINUES...",
+
+        "SIGNAL MOVING...",
+
+        "TRANSMISSION RECEIVED..."
+
+    ];
+
+
+    function showMachineChatter() {
+
+        if (
+            !machineChatterOverlay ||
+            !machineChatter
+        ) {
+
+            return;
+
+        }
+
+
+        const message =
+            chatterMessages[
+                Math.floor(
+                    Math.random() *
+                    chatterMessages.length
+                )
+            ];
+
+
+        machineChatter.textContent =
+            message;
+
+
+        machineChatterOverlay.classList.add(
+            "is-visible"
+        );
+
+
+        window.setTimeout(
+            () => {
+
+                machineChatterOverlay.classList.remove(
+                    "is-visible"
+                );
+
+            },
+            1200
+        );
+
+    }
+
+
+    function hideMachineChatter() {
+
+        if (
+            !machineChatterOverlay
+        ) {
+
+            return;
+
+        }
+
+
+        machineChatterOverlay.classList.remove(
+            "is-visible"
+        );
+
+    }
+
+
+    /* ========================================================
+       OPTIONAL VIMEO FRAME WAIT
+    ======================================================== */
+
+    function waitForVideoFrame(
+        panel,
+        callback,
+        attempts = 20
+    ) {
+
+        if (!panel) return;
+
+
+        const frame =
+            getVideoFrame(panel);
+
+
+        if (
+            frame &&
+            frame.src &&
+            frame.src !== "about:blank"
+        ) {
+
+            callback(frame);
+
+            return;
+
+        }
+
+
+        if (attempts <= 0) {
+
+            return;
+
+        }
+
+
+        window.setTimeout(
+            () => {
+
+                waitForVideoFrame(
+                    panel,
+                    callback,
+                    attempts - 1
+                );
+
+            },
+            100
+        );
+
+    }
+
+
+    /* ========================================================
+       RESIZE
+    ======================================================== */
+
+    let resizeTimer = null;
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            window.clearTimeout(
+                resizeTimer
+            );
+
+
+            resizeTimer =
+                window.setTimeout(
+                    () => {
+
+                        /*
+                           Do not do anything if the
+                           user hasn't entered a panel.
+                        */
+
+                        if (
+                            currentPanel < 0
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const panel =
+                            panels[currentPanel];
+
+
+                        if (!panel) return;
+
+
+                        /*
+                           The desktop/mobile iframe
+                           can change at 768px.
+
+                           If the active viewport frame
+                           hasn't loaded yet, load it.
+
+                           Do not destroy the old Vimeo
+                           player.
+                        */
+
+                        const frame =
+                            getVideoFrame(panel);
+
+
+                        if (!frame) return;
+
+
+                        loadVideo(
+                            panel,
+                            true
                         );
 
-                    const interval =
-                        setInterval(() => {
 
-                            if (
-                                cycles >=
-                                maxCycles
-                            ) {
+                        /*
+                           Audio focus is reapplied
+                           without pausing anything.
+                        */
 
-                                clearInterval(
-                                    interval
-                                );
+                        if (radioOn) {
 
-                                span.textContent =
-                                    character;
+                            updateRadioForActivePanel();
 
-                                return;
-
-                            }
-
-                            span.textContent =
-                                characters[
-                                    Math.floor(
-                                        Math.random() *
-                                        characters.length
-                                    )
-                                ];
-
-                            cycles++;
-
-                        }, 45 + index * 8);
-
-                }
-            );
-
-            chatter.style.opacity =
-                ".55";
-
-        }, 300);
-
-    }
-
-    updateChatter();
-
-    setInterval(
-        updateChatter,
-        15000
-    );
-
-};
-
-
-if (
-    sessionStorage.getItem(
-        "visited"
-    )
-) {
-
-    setTimeout(
-        startChatter,
-        500
-    );
-
-}
-
-else {
-
-    setTimeout(
-        startChatter,
-        7000
-    );
-
-}
-
-
-}
-
-/* =================================================
-TRANSMIT DRAWER
-================================================= */
-
-const transmitButton =
-document.getElementById(
-"transmitButton"
-);
-
-const transmissionContainer =
-document.getElementById(
-"transmissionContainer"
-);
-
-if (
-transmitButton &&
-transmissionContainer
-) {
-
-
-transmitButton.addEventListener(
-    "click",
-    () => {
-
-        const isOpen =
-            transmissionContainer.classList.toggle(
-                "active"
-            );
-
-        transmitButton.innerHTML =
-            isOpen
-
-                ? "H<br>I<br>D<br>E<br><br>T<br>R<br>A<br>N<br>S<br>M<br>I<br>S<br>S<br>I<br>O<br>N"
-
-                : "S<br>E<br>N<br>D<br><br>T<br>R<br>A<br>N<br>S<br>M<br>I<br>S<br>S<br>I<br>O<br>N";
-
-    }
-);
-
-
-}
-
-/* =================================================
-FORM SUBMISSION
-================================================= */
-
-const form =
-document.querySelector(
-".message-form"
-);
-
-if (form) {
-
-
-form.addEventListener(
-    "submit",
-    async (event) => {
-
-        event.preventDefault();
-
-        const data =
-            new FormData(form);
-
-        try {
-
-            const response =
-                await fetch(
-                    form.action,
-                    {
-                        method: "POST",
-
-                        body: data,
-
-                        headers: {
-                            "Accept":
-                                "application/json"
                         }
-                    }
+
+                    },
+                    150
                 );
 
-            if (response.ok) {
+        }
+    );
 
-                form.reset();
+    /* ============================================================
+   JEREMYJACOBLAND — X TRANSMISSIONS
+   ============================================================ */
 
-                const button =
-                    form.querySelector(
-                        "button"
+const X_TRANSMISSION_ENDPOINT = "/api/x-posts";
+
+const X_TRANSMISSION_REFRESH =
+    5 * 60 * 1000;
+
+let xTransmissionTimer = null;
+let xTransmissionLoading = false;
+
+
+/* ============================================================
+   GET ELEMENT
+   ============================================================ */
+
+function getXTransmission() {
+
+    return document.getElementById(
+        "xTransmission"
+    );
+
+}
+
+
+/* ============================================================
+   FORMAT DATE
+   ============================================================ */
+
+function formatXDate(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const date =
+        new Date(dateString);
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return "";
+    }
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        }
+    );
+
+}
+
+
+/* ============================================================
+   RENDER POSTS
+   ============================================================ */
+
+function renderXTransmissions(posts) {
+
+    const container =
+        getXTransmission();
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (
+        !Array.isArray(posts) ||
+        posts.length === 0
+    ) {
+
+        const status =
+            document.createElement(
+                "div"
+            );
+
+        status.className =
+            "x-transmission-status";
+
+        status.textContent =
+            "no transmissions received";
+
+        container.appendChild(
+            status
+        );
+
+        return;
+    }
+
+
+    posts.forEach(
+        (post, index) => {
+
+            if (
+                !post ||
+                !post.text
+            ) {
+                return;
+            }
+
+
+            const article =
+                document.createElement(
+                    "article"
+                );
+
+            article.className =
+                "x-post";
+
+
+            article.style.animationDelay =
+                `${index * 120}ms`;
+
+
+            const text =
+                document.createElement(
+                    "div"
+                );
+
+            text.className =
+                "x-post-text";
+
+
+            /*
+             * textContent is intentional.
+             *
+             * It prevents anything contained
+             * in an X post from being interpreted
+             * as HTML.
+             */
+
+            text.textContent =
+                post.text;
+
+
+            article.appendChild(
+                text
+            );
+
+
+            if (post.created_at) {
+
+                const date =
+                    document.createElement(
+                        "div"
                     );
 
-                if (button) {
+                date.className =
+                    "x-post-date";
 
-                    button.textContent =
-                        "SENT";
+                date.textContent =
+                    formatXDate(
+                        post.created_at
+                    );
 
-                }
-
-            }
-
-            else {
-
-                throw new Error(
-                    "Transmission failed"
+                article.appendChild(
+                    date
                 );
 
             }
 
-        }
 
-        catch (error) {
-
-            console.log(error);
-
-            const button =
-                form.querySelector(
-                    "button"
-                );
-
-            if (button) {
-
-                button.textContent =
-                    "FAILED";
-
-            }
-
-        }
-
-    }
-);
-
-
-}
-
-/* =================================================
-IMAGE ARCHIVE DRAWER
-================================================= */
-
-const galleryButton =
-document.getElementById(
-"galleryButton"
-);
-
-const galleryDrawer =
-document.getElementById(
-"galleryDrawer"
-);
-
-const galleryClose =
-document.getElementById(
-"galleryClose"
-);
-
-if (
-galleryButton &&
-galleryDrawer
-) {
-
-
-galleryButton.addEventListener(
-    "click",
-    () => {
-
-        const isOpen =
-            galleryDrawer.classList.toggle(
-                "open"
+            container.appendChild(
+                article
             );
 
-        document.body.classList.toggle(
-            "foundings-mode",
-            isOpen
-        );
-
-        galleryButton.innerHTML =
-            isOpen
-
-                ? "F<br>O<br>U<br>N<br>D<br>I<br>N<br>G<br>S"
-
-                : "F<br>I<br>N<br>D<br>I<br>N<br>G<br>S";
-
-    }
-);
-
-
-}
-
-if (
-galleryClose &&
-galleryDrawer
-) {
-
-
-galleryClose.addEventListener(
-    "click",
-    () => {
-
-        galleryDrawer.classList.remove(
-            "open"
-        );
-
-        document.body.classList.remove(
-            "foundings-mode"
-        );
-
-        galleryButton.innerHTML =
-            "F<br>I<br>N<br>D<br>I<br>N<br>G<br>S";
-
-    }
-);
-
-
-}
-
-/* =================================================
-DRAWER PULL
-================================================= */
-
-const drawerPullButton =
-document.getElementById(
-"drawerPullButton"
-);
-
-const drawerPullDrawer =
-document.getElementById(
-"drawerPullDrawer"
-);
-
-const drawerPullClose =
-document.getElementById(
-"drawerPullClose"
-);
-
-if (
-drawerPullButton &&
-drawerPullDrawer
-) {
-
-
-drawerPullButton.addEventListener(
-    "click",
-    () => {
-
-        const isOpen =
-            drawerPullDrawer.classList.toggle(
-                "open"
-            );
-
-        drawerPullButton.classList.toggle(
-            "active",
-            isOpen
-        );
-
-    }
-);
-
-
-}
-
-if (
-drawerPullClose &&
-drawerPullDrawer
-) {
-
-
-drawerPullClose.addEventListener(
-    "click",
-    () => {
-
-        drawerPullDrawer.classList.remove(
-            "open"
-        );
-
-        drawerPullButton.classList.remove(
-            "active"
-        );
-
-    }
-);
-
-
-}
-
-/* =================================================
-WAVES AUDIO DRAWER
-================================================= */
-
-const audioDrawerTab =
-document.getElementById(
-"audioDrawerTab"
-);
-
-if (
-audioControls &&
-audioDrawerTab
-) {
-
-
-audioDrawerTab.addEventListener(
-    "click",
-    () => {
-
-        audioControls.classList.toggle(
-            "open"
-        );
-
-        audioDrawerTab.classList.toggle(
-            "active"
-        );
-
-    }
-);
-
-
-}
-
-/* =================================================
-SCROLL ARROW
-================================================= */
-
-const scrollArrow =
-document.querySelector(
-".panel-01 .scroll-arrow"
-);
-
-let arrowDismissed =
-false;
-
-function dismissScrollArrow() {
-
-
-if (arrowDismissed) {
-    return;
-}
-
-arrowDismissed = true;
-
-if (scrollArrow) {
-
-    scrollArrow.classList.add(
-        "gone"
+        }
     );
 
-    setTimeout(() => {
+}
 
-        scrollArrow.remove();
 
-    }, 700);
+/* ============================================================
+   LOADING STATE
+   ============================================================ */
+
+function showXTransmissionLoading() {
+
+    const container =
+        getXTransmission();
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    const status =
+        document.createElement(
+            "div"
+        );
+
+    status.className =
+        "x-transmission-status";
+
+    status.textContent =
+        "receiving transmission...";
+
+
+    container.appendChild(
+        status
+    );
 
 }
 
 
+/* ============================================================
+   ERROR STATE
+   ============================================================ */
+
+function showXTransmissionError() {
+
+    const container =
+        getXTransmission();
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    const status =
+        document.createElement(
+            "div"
+        );
+
+    status.className =
+        "x-transmission-status";
+
+    status.textContent =
+        "transmission unavailable";
+
+
+    container.appendChild(
+        status
+    );
+
 }
 
-/* =================================================
-END
-================================================= */
+
+/* ============================================================
+   FETCH X POSTS
+   ============================================================ */
+
+async function loadXTransmissions() {
+
+    if (xTransmissionLoading) {
+        return;
+    }
+
+
+    xTransmissionLoading = true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                X_TRANSMISSION_ENDPOINT,
+                {
+                    method: "GET",
+
+                    cache: "no-store",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `X transmission request failed: ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+         * Supports either:
+         *
+         * [
+         *   { text: "..." }
+         * ]
+         *
+         * or:
+         *
+         * {
+         *   posts: [
+         *     { text: "..." }
+         *   ]
+         * }
+         */
+
+        const posts =
+            Array.isArray(data)
+                ? data
+                : data.posts;
+
+
+        renderXTransmissions(
+            posts || []
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Jeremy Jacobland X transmission error:",
+            error
+        );
+
+
+        showXTransmissionError();
+
+    } finally {
+
+        xTransmissionLoading = false;
+
+    }
+
+}
+
+
+/* ============================================================
+   START AUTOMATIC UPDATES
+   ============================================================ */
+
+function startXTransmissionUpdates() {
+
+    if (xTransmissionTimer) {
+
+        clearInterval(
+            xTransmissionTimer
+        );
+
+    }
+
+
+    /*
+     * Load immediately.
+     */
+
+    loadXTransmissions();
+
+
+    /*
+     * Check again every five minutes.
+     */
+
+    xTransmissionTimer =
+        setInterval(
+            loadXTransmissions,
+            X_TRANSMISSION_REFRESH
+        );
+
+}
+
+    /* ========================================================
+       INITIALIZATION
+    ======================================================== */
+
+    updateAudioButton();
+
+    setInitialPanels();
+
+    setupVideoPlayButtons();
+
+    initializeLoadingScreen();
+
+    startXTransmissionUpdates();
+
+
+    /*
+       Preload the first video iframe so that it
+       is ready when the visitor reaches it.
+
+       IMPORTANT:
+       This only loads the iframe.
+       It does NOT start playback.
+    */
+
+    const firstVideoPanel =
+        panels.find(
+            panel =>
+                getVideoFrame(panel)
+        );
+
+
+    if (firstVideoPanel) {
+
+        loadVideo(
+            firstVideoPanel,
+            false
+        );
+
+    }
+
 
 });
