@@ -266,97 +266,97 @@
 
 <body>
 
-
-<!-- ============================================================
+    <!-- ============================================================
      LAYER NAVIGATION
-============================================================ -->
+     ============================================================ -->
 
-<nav
-    class="layer-navigation"
-    aria-label="Layer navigation"
->
+<nav class="layer-navigation" aria-label="Layer navigation">
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="0"
+        aria-label="Layer 1"
     >◐</button>
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="1"
+        aria-label="Layer 2"
     >●</button>
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="2"
+        aria-label="Layer 3"
     >◐</button>
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="3"
+        aria-label="Layer 4"
     >o</button>
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="4"
+        aria-label="Layer 5"
     >◇</button>
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="5"
+        aria-label="Layer 6"
     >⊙</button>
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="6"
+        aria-label="Layer 7"
     >◈</button>
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="7"
+        aria-label="Layer 8"
     >◍</button>
 
     <button
-        type="button"
         class="layer-button"
+        type="button"
         data-panel="8"
+        aria-label="Layer 9"
     >◒</button>
 
     <button
-        type="button"
         class="layer-button"
-        data-panel="9"
-    >◕</button>
-
-    <button
         type="button"
-        class="layer-button audio-button"
-        id="audioToggle"
-        aria-pressed="false"
-    >audio</button>
+        data-panel="9"
+        aria-label="Layer 10"
+    >◕</button>
 
 </nav>
 
-
 <!-- ============================================================
-     DRAWER / RADIO
-============================================================ -->
+     AUDIO TOGGLE
+     ============================================================ -->
 
 <button
-    class="drawer-sigil"
-    id="drawerToggle"
+    class="audio-button"
+    id="audioToggle"
     type="button"
-    aria-label="Turn radio on"
+    aria-label="Toggle audio"
     aria-pressed="false"
-></button>
+>
+    AUDIO
+</button>
 
 
 <!-- ============================================================
@@ -379,11 +379,11 @@
     <div class="loading-text">
 
         <div>
-            TRANSMITTING...
+            transmitting...
         </div>
 
         <div>
-            SIGNAL FOUND...
+            signal found...
         </div>
 
     </div>
@@ -473,12 +473,13 @@
     aria-label="Hello? from Jeremy Jacobland"
 >
 
+
     <div class="video-frame">
 
         <iframe
             class="desktop-frame"
-            title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1137275717?h=ae09ec6f88&autoplay=1&loop=1&muted=1&controls=0"
+            title="Hello? from Jeremy Jacobland"
+            src="https://player.vimeo.com/video/1028422645?autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
@@ -487,13 +488,21 @@
 
         <iframe
             class="mobile-frame"
-            title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1137275717?h=ae09ec6f88&autoplay=1&loop=1&muted=1&controls=0"
+            title="Hello? from Jeremy Jacobland"
+            src="https://player.vimeo.com/video/1028422645?autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
             referrerpolicy="strict-origin-when-cross-origin"
         ></iframe>
+
+        <button
+            class="video-play-button"
+            type="button"
+            aria-label="Play video"
+        >▶</button>
+
+    </div>
 
 
 </section>
@@ -508,12 +517,14 @@
     data-image="images/section2.webp"
 >
 
+
+
     <div class="video-frame">
 
         <iframe
             class="desktop-frame"
-            title="Hello? from Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1028422645?autoplay=0&loop=1&muted=1&controls=0"
+            title="Jeremy Jacobland"
+            src="https://player.vimeo.com/video/1087705034?h=3f9dcfa763&autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
@@ -522,15 +533,14 @@
 
         <iframe
             class="mobile-frame"
-            title="Hello? from Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1028422645?autoplay=0&loop=1&muted=1&controls=0"
+            title="Jeremy Jacobland"
+            src="https://player.vimeo.com/video/1087705034?h=3f9dcfa763&autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
             referrerpolicy="strict-origin-when-cross-origin"
         ></iframe>
-
-        <button
+                <button
             class="video-play-button"
             type="button"
             aria-label="Play video"
@@ -567,7 +577,7 @@
         <iframe
             class="desktop-frame"
             title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1213384018?autoplay=0&loop=1&muted=1&controls=0"
+            src="https://player.vimeo.com/video/1213384018?autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
@@ -577,7 +587,7 @@
         <iframe
             class="mobile-frame"
             title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1213384019?autoplay=0&loop=1&muted=1&controls=0"
+            src="https://player.vimeo.com/video/1213384019?autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
@@ -601,10 +611,41 @@
 
 <section
     class="panel panel-05"
-    data-image="images/section5.webp"
->
+    data-image="images/section5.webp">
+
+<div class="video-frame">
+
+    <iframe
+        class="desktop-frame"
+        title="Jeremy Jacobland"
+        src="https://player.vimeo.com/video/1060061860?h=a33262d69a&autoplay=0&loop=1&muted=1&controls=0&autopause=0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        playsinline
+        frameborder="0"
+        referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+
+    <iframe
+        class="mobile-frame"
+        title="Jeremy Jacobland"
+        src="https://player.vimeo.com/video/1060061860?h=a33262d69a&autoplay=0&loop=1&muted=1&controls=0&autopause=0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        playsinline
+        frameborder="0"
+        referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+
+            <button
+            class="video-play-button"
+            type="button"
+            aria-label="Play video"
+        >▶</button>
+</div>
+
+
 
 </section>
+
 
 
 <!-- ============================================================
@@ -616,37 +657,39 @@
     data-image="images/section6.webp"
 >
 
-    <div class="video-frame">
 
-        <iframe
-            class="desktop-frame"
-            title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1215625456?autoplay=0&loop=1&muted=1&controls=0"
-            allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-            playsinline
-            frameborder="0"
-            referrerpolicy="strict-origin-when-cross-origin"
-        ></iframe>
+<div class="video-frame">
 
-        <iframe
-            class="mobile-frame"
-            title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1215625709?autoplay=0&loop=1&muted=1&controls=0"
-            allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-            playsinline
-            frameborder="0"
-            referrerpolicy="strict-origin-when-cross-origin"
-        ></iframe>
+    <iframe
+        class="desktop-frame"
+        title="Jeremy Jacobland"
+        src="https://player.vimeo.com/video/1212723719?h=4a42674769&autoplay=0&loop=1&muted=1&controls=0&autopause=0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        playsinline
+        frameborder="0"
+        referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
 
-        <button
+    <iframe
+        class="mobile-frame"
+        title="Jeremy Jacobland"
+        src="https://player.vimeo.com/video/1212723719?h=4a42674769&autoplay=0&loop=1&muted=1&controls=0&autopause=0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        playsinline
+        frameborder="0"
+        referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+
+            <button
             class="video-play-button"
             type="button"
             aria-label="Play video"
         >▶</button>
+</div>
 
-    </div>
 
 </section>
+
 
 
 <!-- ============================================================
@@ -688,7 +731,7 @@
         <iframe
             class="desktop-frame"
             title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1137629264?h=c3d59d2c2e&autoplay=1&loop=1&muted=1&controls=0"
+            src="https://player.vimeo.com/video/1137629264?h=c3d59d2c2e&autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
@@ -698,14 +741,18 @@
         <iframe
             class="mobile-frame"
             title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1137629264?h=c3d59d2c2e&autoplay=1&loop=1&muted=1&controls=0"
+            src="https://player.vimeo.com/video/1137629264?h=c3d59d2c2e&autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
             referrerpolicy="strict-origin-when-cross-origin"
         ></iframe>
 
-
+        <button
+            class="video-play-button"
+            type="button"
+            aria-label="Play video"
+        >▶</button>
 
     </div>
 </section>
@@ -772,7 +819,7 @@
         <iframe
             class="desktop-frame"
             title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1213384107?autoplay=0&loop=1&muted=1&controls=0"
+            src="https://player.vimeo.com/video/1213384107?autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"
@@ -782,7 +829,7 @@
         <iframe
             class="mobile-frame"
             title="Jeremy Jacobland"
-            data-src="https://player.vimeo.com/video/1213384047?autoplay=0&loop=1&muted=1&controls=0"
+            src="https://player.vimeo.com/video/1213384107?autoplay=0&loop=1&muted=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
             playsinline
             frameborder="0"

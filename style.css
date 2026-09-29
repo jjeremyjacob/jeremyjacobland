@@ -1192,7 +1192,14 @@ body::after {
    ============================================================ */
 
 .audio-button {
-    margin-top: 8px;
+    position: fixed;
+
+    left: 38px;
+    bottom: 22px;
+
+    z-index: 100001;
+
+    margin: 0;
 
     width: 32px;
     height: 22px;
@@ -1204,15 +1211,26 @@ body::after {
 
     font-family: inherit;
 
-    font-size: 10px;
+    font-size: 13px;
 
     line-height: 22px;
 
     text-align: left;
+
+    cursor: pointer;
+
+    background: transparent;
+
+    border: none;
+
+    padding: 0;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 .audio-button:hover {
     color: #ffffff;
+
     opacity: 1;
 
     transform:
@@ -1221,6 +1239,7 @@ body::after {
 
 .audio-button.is-on {
     color: #ffffff;
+
     opacity: 1;
 }
 
@@ -1253,10 +1272,13 @@ body::after {
 @media (max-width: 768px) {
 
     .audio-button {
+        left: 20px;
+        bottom: 22px;
+
         width: 28px;
         height: 20px;
 
-        font-size: 8px;
+        font-size: 13px;
 
         line-height: 20px;
     }
@@ -1265,7 +1287,6 @@ body::after {
         left: -6px;
     }
 }
-
 
 /* ============================================================
    LAYER NAVIGATION
@@ -1401,7 +1422,7 @@ body::after {
         width: 28px;
         height: 20px;
 
-        font-size: 8px;
+        font-size: 13px;
 
         line-height: 20px;
     }

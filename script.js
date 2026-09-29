@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
         buttons.forEach((button) => {
 
             button.textContent =
-                "PLAY";
+                "play";
 
             button.setAttribute(
                 "aria-label",
@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     .then(() => {
 
                                         button.textContent =
-                                            "PAUSE";
+                                            "pause";
 
                                         button.setAttribute(
                                             "aria-label",
@@ -454,7 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     .catch(() => {
 
                                         button.textContent =
-                                            "PLAY";
+                                            "play";
 
                                         button.setAttribute(
                                             "aria-label",
@@ -469,7 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     .then(() => {
 
                                         button.textContent =
-                                            "PLAY";
+                                            "play";
 
                                         button.setAttribute(
                                             "aria-label",
@@ -480,7 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     .catch(() => {
 
                                         button.textContent =
-                                            "PLAY";
+                                            "play";
 
                                         button.setAttribute(
                                             "aria-label",
@@ -495,7 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         .catch(() => {
 
                             button.textContent =
-                                "PLAY";
+                                "play";
 
                             button.setAttribute(
                                 "aria-label",
