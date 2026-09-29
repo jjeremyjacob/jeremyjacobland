@@ -1517,3 +1517,33 @@ body::after {
 .video-play-button.is-hidden {
     display: block;
 }
+
+/* ============================================================
+   MOBILE FRAME
+   ============================================================ */
+
+@media (max-width: 768px) {
+    
+html,
+body {
+    overflow: hidden;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+}
+
+main {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.panel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
