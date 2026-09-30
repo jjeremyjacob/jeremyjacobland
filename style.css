@@ -44,6 +44,7 @@ html {
         fixed;
 }
 
+
 body {
     margin: 0;
     padding: 0;
@@ -79,6 +80,35 @@ textarea {
 button,
 a {
     touch-action: manipulation;
+}
+
+/* ============================================================
+   RANDOMIZED TYPOGRAPHY
+   ============================================================ */
+
+.random-letter {
+    display: inline-block;
+
+    font-family: inherit;
+
+    transform:
+        translate(
+            var(--random-x),
+            var(--random-y)
+        )
+        scale(
+            var(--random-x-scale),
+            var(--random-y-scale)
+        )
+        rotate(
+            var(--random-rotate)
+        );
+
+    opacity:
+        var(--random-opacity);
+
+    transform-origin:
+        center center;
 }
 
 
@@ -818,6 +848,7 @@ body::after {
         forwards;
 }
 
+
 .loading-text div:nth-child(1) {
     animation-delay: .1s;
 }
@@ -1193,14 +1224,14 @@ body::after {
 .audio-button {
     position: fixed;
 
-    left: 38px;
-    bottom: 52px;
+    left: 5px;
+    bottom: 50px;
 
     z-index: 100001;
 
     margin: 0;
 
-    width: 32px;
+    width: 102px;
     height: 22px;
 
     color:
@@ -1210,7 +1241,7 @@ body::after {
 
     font-family: inherit;
 
-    font-size: 15px;
+    font-size: 18px;
 
     line-height: 22px;
 
@@ -1343,7 +1374,7 @@ transform:
 
     font-family: inherit;
 
-    font-size:  30px;
+    font-size:  24px;
 
     line-height: 22px;
 
@@ -1427,7 +1458,7 @@ transform:
         width: 28px;
         height: 50px;
 
-        font-size: 25px;
+        font-size: 20px;
 
         line-height: 20px;
     }
@@ -1560,3 +1591,4 @@ main {
     height: 100%;
     overflow: hidden;
 }
+
