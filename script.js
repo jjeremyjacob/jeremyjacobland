@@ -254,16 +254,69 @@ function loadVideo(
 
 
     /*
-       This particular iframe is already loaded.
+       Attach the ready handler BEFORE doing
+       anything with the iframe.
+    */
 
-       Never replace its src.
-       Never reload it.
+    frame.onload = () => {
+
+        frame.dataset.videoReady =
+            "true";
+
+
+        const videoFrame =
+            frame.closest(
+                ".video-frame"
+            );
+
+
+        if (videoFrame) {
+
+            videoFrame.classList.add(
+                "video-ready"
+            );
+
+        }
+
+    };
+
+
+    /*
+       This iframe is already loaded.
+
+       Do not replace its src.
+       Do not reload it.
     */
 
     if (
         frame.src &&
         !frame.dataset.src
     ) {
+
+        /*
+           If the iframe was already loaded
+           before this function was called,
+           remove the loading dots immediately.
+        */
+
+        const videoFrame =
+            frame.closest(
+                ".video-frame"
+            );
+
+
+        if (videoFrame) {
+
+            videoFrame.classList.add(
+                "video-ready"
+            );
+
+        }
+
+
+        frame.dataset.videoReady =
+            "true";
+
 
         return frame;
 
@@ -294,24 +347,6 @@ function loadVideo(
         );
 
     }
-
-
-    frame.onload = () => {
-
-        const videoFrame =
-            frame.closest(
-                ".video-frame"
-            );
-
-        if (videoFrame) {
-
-            videoFrame.classList.add(
-                "video-ready"
-            );
-
-        }
-
-    };
 
 
     frame.src =
