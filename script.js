@@ -54,64 +54,59 @@ let activeAudioPanel = null;
 const vimeoPlayers =
     new Map();
 
-    
 
-    /* ========================================================
-LOADING SCREEN
+/* ========================================================
+   LOADING SCREEN
 ======================================================== */
 
 function hideLoadingScreen() {
 
-
-if (!loadingScreen) return;
-
-
-/*
-   Make the loading screen behave like
-   the panels: move it completely upward
-   out of the viewport.
-*/
-
-loadingScreen.style.transition =
-    "transform 1800ms ease-in-out";
-
-loadingScreen.style.transform =
-    "translate3d(0, -120dvh, 0)";
+    if (!loadingScreen) return;
 
 
-window.setTimeout(() => {
+    /*
+       Make the loading screen behave like
+       the panels: move it completely upward
+       out of the viewport.
+    */
 
-    loadingScreen.style.display =
-        "none";
+    loadingScreen.style.transition =
+        "transform 1800ms ease-in-out";
 
-}, 1800);
+    loadingScreen.style.transform =
+        "translate3d(0, -120dvh, 0)";
 
+
+    window.setTimeout(() => {
+
+        loadingScreen.style.display =
+            "none";
+
+    }, 1800);
 
 }
+
 
 function initializeLoadingScreen() {
 
-
-if (!loadingScreen) return;
-
-
-/*
-   Keep the loading screen covering panel 1
-   until loading is complete.
-*/
-
-loadingScreen.style.transform =
-    "translate3d(0, 0, 0)";
+    if (!loadingScreen) return;
 
 
-window.setTimeout(
-    hideLoadingScreen,
-    1800
-);
+    /*
+       Keep the loading screen covering panel 1
+       until loading is complete.
+    */
 
+    loadingScreen.style.transform =
+        "translate3d(0, 0, 0)";
+
+
+    window.setTimeout(
+        hideLoadingScreen,
+        1800
+    );
 
 }
-
 
 
 /* ========================================================
@@ -293,17 +288,6 @@ function loadVideo(
         !frame.dataset.src
     ) {
 
-        const existingPlayer =
-    getVimeoPlayer(frame);
-
-if (existingPlayer) {
-
-    disableVimeoCaptions(
-        existingPlayer
-    );
-
-}
-
         /*
            If the iframe was already loaded
            before this function was called,
@@ -380,24 +364,6 @@ if (existingPlayer) {
    VIMEO PLAYER
 ======================================================== */
 
-function disableVimeoCaptions(player) {
-
-    if (!player) return;
-
-
-    /*
-       Explicitly disable Vimeo's text track.
-
-       This is more reliable on mobile than relying
-       only on ?cc=0 in the iframe URL.
-    */
-
-    player.disableTextTrack()
-        .catch(() => {});
-
-}
-
-
 function getVimeoPlayer(frame) {
 
     if (!frame) return null;
@@ -447,42 +413,6 @@ function getVimeoPlayer(frame) {
         new Vimeo.Player(frame);
 
 
-    /*
-       Wait until Vimeo is fully initialized,
-       then explicitly turn captions off.
-
-       This applies independently to the
-       desktop and mobile Vimeo iframe.
-    */
-
-    player.ready()
-        .then(() => {
-
-            disableVimeoCaptions(
-                player
-            );
-
-        })
-        .catch(() => {});
-
-
-    /*
-       Also disable captions whenever Vimeo
-       reports that the video has loaded.
-    */
-
-    player.on(
-        "loaded",
-        () => {
-
-            disableVimeoCaptions(
-                player
-            );
-
-        }
-    );
-
-
     vimeoPlayers.set(
         frame,
         player
@@ -492,7 +422,6 @@ function getVimeoPlayer(frame) {
     return player;
 
 }
-
 
 
 /* ========================================================
@@ -644,11 +573,6 @@ function preparePanel(index) {
         panels[index];
 
     if (!panel) return;
-
-
-    (
-        panel
-    );
 
 
     const frame =
@@ -1698,409 +1622,418 @@ window.addEventListener(
     }
 );
 
+
 /* ============================================================
-
-
-JEREMYJACOBLAND — X TRANSMISSIONS
+   JEREMYJACOBLAND — X TRANSMISSIONS
 ============================================================ */
 
-const X_TRANSMISSION_ENDPOINT = "/api/x-posts";
+const X_TRANSMISSION_ENDPOINT =
+    "/api/x-posts";
 
 const X_TRANSMISSION_REFRESH =
-5 * 60 * 1000;
+    5 * 60 * 1000;
 
 let xTransmissionTimer = null;
 let xTransmissionLoading = false;
 
+
 /* ============================================================
-GET ELEMENT
+   GET ELEMENT
 ============================================================ */
 
 function getXTransmission() {
 
-
-return document.getElementById(
-    "xTransmission"
-);
-
+    return document.getElementById(
+        "xTransmission"
+    );
 
 }
 
+
 /* ============================================================
-FORMAT DATE
+   FORMAT DATE
 ============================================================ */
 
 function formatXDate(dateString) {
 
-
-if (!dateString) {
-    return "";
-}
-
-const date =
-    new Date(dateString);
-
-if (
-    Number.isNaN(
-        date.getTime()
-    )
-) {
-    return "";
-}
-
-return date.toLocaleDateString(
-    undefined,
-    {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
+    if (!dateString) {
+        return "";
     }
-);
 
+
+    const date =
+        new Date(dateString);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "";
+
+    }
+
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        }
+    );
 
 }
+
 
 /* ============================================================
-RENDER POSTS
+   RENDER POSTS
 ============================================================ */
 
 function renderXTransmissions(posts) {
 
+    const container =
+        getXTransmission();
 
-const container =
-    getXTransmission();
 
-if (!container) {
-    return;
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (
+        !Array.isArray(posts) ||
+        posts.length === 0
+    ) {
+
+        const status =
+            document.createElement(
+                "div"
+            );
+
+
+        status.className =
+            "x-transmission-status";
+
+
+        status.textContent =
+            "no transmissions received";
+
+
+        container.appendChild(
+            status
+        );
+
+
+        return;
+
+    }
+
+
+    posts.forEach(
+        (post, index) => {
+
+            if (
+                !post ||
+                !post.text
+            ) {
+
+                return;
+
+            }
+
+
+            const article =
+                document.createElement(
+                    "article"
+                );
+
+
+            article.className =
+                "x-post";
+
+
+            article.style.animationDelay =
+                `${index * 120}ms`;
+
+
+            const text =
+                document.createElement(
+                    "div"
+                );
+
+
+            text.className =
+                "x-post-text";
+
+
+            /*
+             * textContent is intentional.
+             *
+             * It prevents anything contained
+             * in an X post from being interpreted
+             * as HTML.
+             */
+
+            text.textContent =
+                post.text;
+
+
+            article.appendChild(
+                text
+            );
+
+
+            if (post.created_at) {
+
+                const date =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                date.className =
+                    "x-post-date";
+
+
+                date.textContent =
+                    formatXDate(
+                        post.created_at
+                    );
+
+
+                article.appendChild(
+                    date
+                );
+
+            }
+
+
+            container.appendChild(
+                article
+            );
+
+        }
+    );
+
 }
 
 
-container.innerHTML = "";
+/* ============================================================
+   LOADING STATE
+============================================================ */
+
+function showXTransmissionLoading() {
+
+    const container =
+        getXTransmission();
 
 
-if (
-    !Array.isArray(posts) ||
-    posts.length === 0
-) {
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
 
     const status =
         document.createElement(
             "div"
         );
 
+
     status.className =
         "x-transmission-status";
 
+
     status.textContent =
-        "no transmissions received";
+        "receiving transmission...";
+
 
     container.appendChild(
         status
     );
 
-    return;
 }
 
-
-posts.forEach(
-    (post, index) => {
-
-        if (
-            !post ||
-            !post.text
-        ) {
-            return;
-        }
-
-
-        const article =
-            document.createElement(
-                "article"
-            );
-
-        article.className =
-            "x-post";
-
-
-        article.style.animationDelay =
-            `${index * 120}ms`;
-
-
-        const text =
-            document.createElement(
-                "div"
-            );
-
-        text.className =
-            "x-post-text";
-
-
-        /*
-         * textContent is intentional.
-         *
-         * It prevents anything contained
-         * in an X post from being interpreted
-         * as HTML.
-         */
-
-        text.textContent =
-            post.text;
-
-
-        article.appendChild(
-            text
-        );
-
-
-        if (post.created_at) {
-
-            const date =
-                document.createElement(
-                    "div"
-                );
-
-            date.className =
-                "x-post-date";
-
-            date.textContent =
-                formatXDate(
-                    post.created_at
-                );
-
-            article.appendChild(
-                date
-            );
-
-        }
-
-
-        container.appendChild(
-            article
-        );
-
-    }
-);
-
-
-}
 
 /* ============================================================
-LOADING STATE
-============================================================ */
-
-function showXTransmissionLoading() {
-
-
-const container =
-    getXTransmission();
-
-if (!container) {
-    return;
-}
-
-
-container.innerHTML = "";
-
-
-const status =
-    document.createElement(
-        "div"
-    );
-
-status.className =
-    "x-transmission-status";
-
-status.textContent =
-    "receiving transmission...";
-
-
-container.appendChild(
-    status
-);
-
-
-}
-
-/* ============================================================
-ERROR STATE
+   ERROR STATE
 ============================================================ */
 
 function showXTransmissionError() {
 
-
-const container =
-    getXTransmission();
-
-if (!container) {
-    return;
-}
+    const container =
+        getXTransmission();
 
 
-container.innerHTML = "";
+    if (!container) {
+        return;
+    }
 
 
-const status =
-    document.createElement(
-        "div"
+    container.innerHTML = "";
+
+
+    const status =
+        document.createElement(
+            "div"
+        );
+
+
+    status.className =
+        "x-transmission-status";
+
+
+    status.textContent =
+        "transmission unavailable";
+
+
+    container.appendChild(
+        status
     );
 
-status.className =
-    "x-transmission-status";
-
-status.textContent =
-    "transmission unavailable";
-
-
-container.appendChild(
-    status
-);
-
-
 }
 
+
 /* ============================================================
-FETCH X POSTS
+   FETCH X POSTS
 ============================================================ */
 
 async function loadXTransmissions() {
 
-
-if (xTransmissionLoading) {
-    return;
-}
-
-
-xTransmissionLoading = true;
+    if (xTransmissionLoading) {
+        return;
+    }
 
 
-try {
+    xTransmissionLoading = true;
 
-    const response =
-        await fetch(
-            X_TRANSMISSION_ENDPOINT,
-            {
-                method: "GET",
 
-                cache: "no-store",
+    try {
 
-                headers: {
-                    "Accept":
-                        "application/json"
+        const response =
+            await fetch(
+                X_TRANSMISSION_ENDPOINT,
+                {
+                    method: "GET",
+
+                    cache: "no-store",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
                 }
-            }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `X transmission request failed: ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+         * Supports either:
+         *
+         * [
+         *   { text: "..." }
+         * ]
+         *
+         * or:
+         *
+         * {
+         *   posts: [
+         *     { text: "..." }
+         *   ]
+         * }
+         */
+
+        const posts =
+            Array.isArray(data)
+                ? data
+                : data.posts;
+
+
+        renderXTransmissions(
+            posts || []
         );
 
 
-    if (!response.ok) {
+    } catch (error) {
 
-        throw new Error(
-            `X transmission request failed: ${response.status}`
+        console.error(
+            "Jeremy Jacobland X transmission error:",
+            error
+        );
+
+
+        showXTransmissionError();
+
+
+    } finally {
+
+        xTransmissionLoading = false;
+
+    }
+
+}
+
+
+/* ============================================================
+   START AUTOMATIC UPDATES
+============================================================ */
+
+function startXTransmissionUpdates() {
+
+    if (xTransmissionTimer) {
+
+        clearInterval(
+            xTransmissionTimer
         );
 
     }
 
 
-    const data =
-        await response.json();
+    /*
+     * Load immediately.
+     */
+
+    loadXTransmissions();
 
 
     /*
-     * Supports either:
-     *
-     * [
-     *   { text: "..." }
-     * ]
-     *
-     * or:
-     *
-     * {
-     *   posts: [
-     *     { text: "..." }
-     *   ]
-     * }
+     * Check again every five minutes.
      */
 
-    const posts =
-        Array.isArray(data)
-            ? data
-            : data.posts;
-
-
-    renderXTransmissions(
-        posts || []
-    );
-
-
-} catch (error) {
-
-    console.error(
-        "Jeremy Jacobland X transmission error:",
-        error
-    );
-
-
-    showXTransmissionError();
-
-} finally {
-
-    xTransmissionLoading = false;
+    xTransmissionTimer =
+        setInterval(
+            loadXTransmissions,
+            X_TRANSMISSION_REFRESH
+        );
 
 }
 
-
-}
 
 /* ============================================================
-START AUTOMATIC UPDATES
+   INITIALIZE X TRANSMISSIONS
 ============================================================ */
 
-function startXTransmissionUpdates() {
-
-
-if (xTransmissionTimer) {
-
-    clearInterval(
-        xTransmissionTimer
-    );
-
-}
-
-
-/*
- * Load immediately.
- */
-
-loadXTransmissions();
-
-
-/*
- * Check again every five minutes.
- */
-
-xTransmissionTimer =
-    setInterval(
-        loadXTransmissions,
-        X_TRANSMISSION_REFRESH
-    );
-
-
-}
-
-/* ============================================================
-INITIALIZE
-============================================================ */
-
-document.addEventListener(
-"DOMContentLoaded",
-() => {
-
-
-    startXTransmissionUpdates();
-
-}
-
-
-);
+startXTransmissionUpdates();
 
 
 /* ========================================================
