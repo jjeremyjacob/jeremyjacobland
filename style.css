@@ -1422,6 +1422,8 @@ transform:
         left: 20px;
 
         gap: 4px;
+            z-index: 1000001;
+
     }
 
     .layer-button {
