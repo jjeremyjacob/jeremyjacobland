@@ -414,17 +414,17 @@ function getVimeoPlayer(frame) {
     }
 
 
-    const player =
-        new Vimeo.Player(frame);
+const player =
+    new Vimeo.Player(frame);
 
+player.setTextTrack(null).catch(() => {});
 
-    vimeoPlayers.set(
-        frame,
-        player
-    );
+vimeoPlayers.set(
+    frame,
+    player
+);
 
-
-    return player;
+return player;
 
 }
 
