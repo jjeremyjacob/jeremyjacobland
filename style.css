@@ -1426,9 +1426,9 @@ transform:
 
     .layer-button {
         width: 28px;
-        height: 50px;
+        height: 35px;
 
-        font-size: 20px;
+        font-size: 18px;
 
         line-height: 20px;
     }
