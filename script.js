@@ -293,6 +293,17 @@ function loadVideo(
         !frame.dataset.src
     ) {
 
+        const existingPlayer =
+    getVimeoPlayer(frame);
+
+if (existingPlayer) {
+
+    disableVimeoCaptions(
+        existingPlayer
+    );
+
+}
+
         /*
            If the iframe was already loaded
            before this function was called,
@@ -369,6 +380,24 @@ function loadVideo(
    VIMEO PLAYER
 ======================================================== */
 
+function disableVimeoCaptions(player) {
+
+    if (!player) return;
+
+
+    /*
+       Explicitly disable Vimeo's text track.
+
+       This is more reliable on mobile than relying
+       only on ?cc=0 in the iframe URL.
+    */
+
+    player.disableTextTrack()
+        .catch(() => {});
+
+}
+
+
 function getVimeoPlayer(frame) {
 
     if (!frame) return null;
@@ -414,19 +443,56 @@ function getVimeoPlayer(frame) {
     }
 
 
-const player =
-    new Vimeo.Player(frame);
+    const player =
+        new Vimeo.Player(frame);
 
-player.setTextTrack(null).catch(() => {});
 
-vimeoPlayers.set(
-    frame,
-    player
-);
+    /*
+       Wait until Vimeo is fully initialized,
+       then explicitly turn captions off.
 
-return player;
+       This applies independently to the
+       desktop and mobile Vimeo iframe.
+    */
+
+    player.ready()
+        .then(() => {
+
+            disableVimeoCaptions(
+                player
+            );
+
+        })
+        .catch(() => {});
+
+
+    /*
+       Also disable captions whenever Vimeo
+       reports that the video has loaded.
+    */
+
+    player.on(
+        "loaded",
+        () => {
+
+            disableVimeoCaptions(
+                player
+            );
+
+        }
+    );
+
+
+    vimeoPlayers.set(
+        frame,
+        player
+    );
+
+
+    return player;
 
 }
+
 
 
 /* ========================================================
